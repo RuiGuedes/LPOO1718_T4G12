@@ -14,9 +14,18 @@ public class BasicGameLogic {
 				{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'}, {'X','X','X',' ','X','X','X','X',' ','X'}, 
 				{'X',' ','I',' ','I',' ','X','K',' ','X'}, {'X','X','X','X','X','X','X','X','X','X'} };
 
+		//Guard route
+		char[][] guardRoute = { {1,7}, {2,7},{3,7},{4,7},{5,7},{5,6},{5,5},{5,4},{5,3},{5,2},{5,1},{6,1},{6,2},
+				{6,3},{6,4},{6,5},{6,6},{6,7},{6,8},{5,8},{4,8},{3,8},{2,8},{1,8}};
+
 		//Hero position
-		int x = 1;
-		int y = 1;
+		int xH = 1;
+		int yH = 1;
+
+		//Hero position
+		int xG = 1;
+		int yG = 8;
+		int guardIterator = 0;
 
 		char input = ' ';
 
@@ -35,54 +44,64 @@ public class BasicGameLogic {
 			switch(input)
 			{
 			case 'w':
-				if(map[x-1][y] == ' '){
-					map[x][y] = ' ';
-					x--;
-					map[x][y] = 'H';
+				if(map[xH-1][yH] == ' '){
+					map[xH][yH] = ' ';
+					xH--;
+					map[xH][yH] = 'H';
 				}
 				break;
 			case 's':
-				if(map[x+1][y] == ' '){
-					map[x][y] = ' ';
-					x++;
-					map[x][y] = 'H';
+				if(map[xH+1][yH] == ' '){
+					map[xH][yH] = ' ';
+					xH++;
+					map[xH][yH] = 'H';
 				}
 				break;
 			case 'a':
-				if(map[x][y-1] == ' '){
-					map[x][y] = ' ';
-					y--;
-					map[x][y] = 'H';
+				if(map[xH][yH-1] == ' '){
+					map[xH][yH] = ' ';
+					yH--;
+					map[xH][yH] = 'H';
 				}
-				else if(map[x][y-1] == 'K')
+				else if(map[xH][yH-1] == 'K')
 				{
-					map[x][y] = ' ';
-					y--;
-					map[x][y] = 'H';
+					map[xH][yH] = ' ';
+					yH--;
+					map[xH][yH] = 'H';
 
 					//Open doors
 					map[5][0] = 'S';
 					map[6][0] = 'S';
 				}
-				else if(map[x][y-1] == 'S')
+				else if(map[xH][yH-1] == 'S')
 				{
 					System.out.println("\n        VICTORY !!!");
 					input = 'e';
 				}
 				break;
 			case 'd':
-				if(map[x][y+1] == ' '){
-					map[x][y] = ' ';
-					y++;
-					map[x][y] = 'H';
+				if(map[xH][yH+1] == ' '){
+					map[xH][yH] = ' ';
+					yH++;
+					map[xH][yH] = 'H';
 				}
 				break;
 			default:
 				break;
 			}
-			
-			if((map[x+1][y] == 'G') || (map[x-1][y] == 'G') || (map[x][y+1] == 'G') || (map[x][y-1] == 'G'))
+
+			map[xG][yG] = ' ';
+			xG = guardRoute[guardIterator][0];
+			yG = guardRoute[guardIterator][1];
+			map[xG][yG] = 'G';
+			guardIterator++;
+			if(guardIterator == guardRoute.length)
+				guardIterator = 0;
+
+
+			if((map[xH+1][yH] == 'G') || (map[xH-1][yH] == 'G') || (map[xH][yH+1] == 'G') || (map[xH][yH-1] == 'G'))
 			{
+				printGameMap(map);
 				System.out.println("\n        GAME OVER :(");
 				input = 'e';
 			}
@@ -103,4 +122,6 @@ public class BasicGameLogic {
 	}
 
 }
+
+
 

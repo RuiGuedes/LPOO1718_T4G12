@@ -7,6 +7,12 @@ public class BasicGameLogic {
 
 	public static void main(String[] args) {
 
+		firstDungeon();
+
+	}
+
+	public static int firstDungeon() {
+
 		//Game map
 		char[][] map = { {'X','X','X','X','X','X','X','X','X','X'}, {'X','H',' ',' ','I',' ','X',' ','G','X'},
 				{'X','X','X',' ','X','X','X',' ',' ','X'}, {'X',' ','I',' ','I',' ','X',' ',' ','X'}, 
@@ -33,13 +39,7 @@ public class BasicGameLogic {
 		{	
 			printGameMap(map);
 
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-			System.out.print("Up(w)\nDown(s)\nLeft(a)\nRight(d)\nExit(e)\n\nCommand: ");
-			try {
-				input = (reader.readLine()).charAt(0);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			input = readInput();
 
 			switch(input)
 			{
@@ -75,7 +75,7 @@ public class BasicGameLogic {
 				}
 				else if(map[xH][yH-1] == 'S')
 				{
-					System.out.println("\n        VICTORY !!!");
+					System.out.println("\n  VICTORY !!!");
 					input = 'e';
 				}
 				break;
@@ -102,12 +102,34 @@ public class BasicGameLogic {
 			if((map[xH+1][yH] == 'G') || (map[xH-1][yH] == 'G') || (map[xH][yH+1] == 'G') || (map[xH][yH-1] == 'G'))
 			{
 				printGameMap(map);
-				System.out.println("\n        GAME OVER :(");
+				System.out.println("\n  GAME OVER :(");
 				input = 'e';
 			}
 
+			
 		}
+		
+		return 0; 
+	}
+	
+	public static char readInput() {
 
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		System.out.print("Up(w)\nDown(s)\nLeft(a)\nRight(d)\nExit(e)\n\nCommand: ");
+		char input = ' ';
+		try {
+			input = (reader.readLine()).charAt(0);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return input;
+	}
+
+	public static char[][] heroMovement(char[][] map, char move)
+	{
+
+
+		return map;
 	}
 
 	public static void printGameMap(char[][] map) {

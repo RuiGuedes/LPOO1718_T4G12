@@ -7,18 +7,25 @@ public class BasicGameLogic {
 
 	public static void main(String[] args) {
 
-		firstDungeon();
-
+		if(firstDungeon() == 0)
+			secondDungeon();
+	
 	}
 
 	public static int firstDungeon() {
 
 		//Game map
-		char[][] map = { {'X','X','X','X','X','X','X','X','X','X'}, {'X','H',' ',' ','I',' ','X',' ','G','X'},
-				{'X','X','X',' ','X','X','X',' ',' ','X'}, {'X',' ','I',' ','I',' ','X',' ',' ','X'}, 
-				{'X','X','X',' ','X','X','X',' ',' ','X'}, {'I',' ',' ',' ',' ',' ',' ',' ',' ','X'}, 
-				{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'}, {'X','X','X',' ','X','X','X','X',' ','X'}, 
-				{'X',' ','I',' ','I',' ','X','K',' ','X'}, {'X','X','X','X','X','X','X','X','X','X'} };
+		char[][] map = { 
+				{'X','X','X','X','X','X','X','X','X','X'},
+				{'X','H',' ',' ','I',' ','X',' ','G','X'},
+				{'X','X','X',' ','X','X','X',' ',' ','X'}, 
+				{'X',' ','I',' ','I',' ','X',' ',' ','X'}, 
+				{'X','X','X',' ','X','X','X',' ',' ','X'}, 
+				{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'}, 
+				{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'},
+				{'X','X','X',' ','X','X','X','X',' ','X'}, 
+				{'X',' ','I',' ','I',' ','X','K',' ','X'}, 
+				{'X','X','X','X','X','X','X','X','X','X'} };
 
 		//Guard route
 		char[][] guardRoute = { {1,7}, {2,7},{3,7},{4,7},{5,7},{5,6},{5,5},{5,4},{5,3},{5,2},{5,1},{6,1},{6,2},
@@ -31,8 +38,9 @@ public class BasicGameLogic {
 		//Hero position
 		int xG = 1;
 		int yG = 8;
-		int guardIterator = 0;
 
+		//Variables
+		int guardIterator = 0;
 		char input = ' ';
 
 		while(input != 'e')
@@ -103,19 +111,24 @@ public class BasicGameLogic {
 			{
 				printGameMap(map);
 				System.out.println("\n  GAME OVER :(");
-				input = 'e';
-			}
-
-			
+				return 1;
+			}	
 		}
 		
-		return 0; 
+		return 0;
 	}
+	
+	public static int secondDungeon() {
+		
+		
+		return 0;
+	}
+	
 	
 	public static char readInput() {
 
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-		System.out.print("Up(w)\nDown(s)\nLeft(a)\nRight(d)\nExit(e)\n\nCommand: ");
+		System.out.print("\nCommands: Up(w) - Down(s) - Left(a) - Right(d) - Exit(e)\n\nCommand: ");
 		char input = ' ';
 		try {
 			input = (reader.readLine()).charAt(0);
@@ -123,13 +136,6 @@ public class BasicGameLogic {
 			e.printStackTrace();
 		}
 		return input;
-	}
-
-	public static char[][] heroMovement(char[][] map, char move)
-	{
-
-
-		return map;
 	}
 
 	public static void printGameMap(char[][] map) {

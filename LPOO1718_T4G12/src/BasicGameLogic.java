@@ -8,9 +8,8 @@ public class BasicGameLogic {
 
 	public static void main(String[] args) {
 
-		//if(firstDungeon() == 0)
-		secondDungeon();
-
+		if(firstDungeon() == 0)
+			secondDungeon();
 	}
 
 	public static int firstDungeon() {
@@ -43,6 +42,7 @@ public class BasicGameLogic {
 		//Variables
 		int guardIterator = 0;
 		char input = ' ';
+		boolean gameOver = false;
 
 		while(input != 'e')
 		{	
@@ -50,6 +50,7 @@ public class BasicGameLogic {
 
 			input = readInput();
 
+			//Hero Movement
 			switch(input)
 			{
 			case 'w':
@@ -72,8 +73,7 @@ public class BasicGameLogic {
 					yH--;
 					map[xH][yH] = 'H';
 				}
-				else if(map[xH][yH-1] == 'K')
-				{
+				else if(map[xH][yH-1] == 'K') {
 					map[xH][yH] = ' ';
 					yH--;
 					map[xH][yH] = 'H';
@@ -82,9 +82,7 @@ public class BasicGameLogic {
 					map[5][0] = 'S';
 					map[6][0] = 'S';
 				}
-				else if(map[xH][yH-1] == 'S')
-				{
-					System.out.println("\n  VICTORY !!!");
+				else if(map[xH][yH-1] == 'S') {
 					input = 'e';
 				}
 				break;
@@ -99,19 +97,23 @@ public class BasicGameLogic {
 				break;
 			}
 
-			map[xG][yG] = ' ';
+			//Guard Movement
+			if(map[xG][yG] != 'H')
+				map[xG][yG] = ' ';
 			xG = guardRoute[guardIterator][0];
 			yG = guardRoute[guardIterator][1];
+			if(map[xG][yG] == 'H')
+				gameOver = true;
 			map[xG][yG] = 'G';
 			guardIterator++;
 			if(guardIterator == guardRoute.length)
 				guardIterator = 0;
 
 
-			if((map[xH+1][yH] == 'G') || (map[xH-1][yH] == 'G') || (map[xH][yH+1] == 'G') || (map[xH][yH-1] == 'G'))
+			if((map[xH+1][yH] == 'G') || (map[xH-1][yH] == 'G') || (map[xH][yH+1] == 'G') || (map[xH][yH-1] == 'G') || gameOver)
 			{
 				printGameMap(map);
-				System.out.println("\n  GAME OVER :(");
+				System.out.println("\nGAME OVER :(");
 				return 1;
 			}	
 		}
@@ -125,7 +127,7 @@ public class BasicGameLogic {
 		char[][] map = { 
 				{'X','X','X','X','X','X','X','X','X'},
 				{'I',' ',' ',' ','O',' ',' ','k','X'},
-				{'X',' ',' ',' ',' ',' ',' ',' ','X'}, 
+				{'X',' ',' ',' ','*',' ',' ',' ','X'}, 
 				{'X',' ',' ',' ',' ',' ',' ',' ','X'}, 
 				{'X',' ',' ',' ',' ',' ',' ',' ','X'}, 
 				{'X',' ',' ',' ',' ',' ',' ',' ','X'}, 
@@ -141,9 +143,14 @@ public class BasicGameLogic {
 		int xO = 1;
 		int yO = 4;
 
+		//Club position
+		int xC = 2;
+		int yC = 4;
+
 		//Variables
 		char input = ' ';
-		boolean keyStatus = false; 
+		boolean keyStatus = false;
+		boolean gameOver = false;
 
 		while(input != 'e')
 		{	
@@ -193,7 +200,7 @@ public class BasicGameLogic {
 				}
 				else if(map[xH][yH-1] == 'S')
 				{
-					System.out.println("\n  VICTORY !!!");
+					System.out.println("\nVICTORY !!!");
 					input = 'e';
 				}
 				break;
@@ -208,10 +215,18 @@ public class BasicGameLogic {
 				break;
 			}
 
-			//Ogre Movement
+			//Ogre/Club variables
 			Random rand = new Random();
-			int move = rand.nextInt(4) + 1;
+			int club;
+			int move;
 
+			//Generates club new position
+			do	{
+				move = rand.nextInt(4) + 1;
+			}while(((move == 1) && (xO == 1)) || ((move == 2) && (xO == 7)) || ((move == 3) && (yO == 1)) || ((move == 4) && (yO == 7)));
+
+
+			//Ogre Movement
 			switch(move)
 			{
 			case 1:	//Moves up
@@ -262,17 +277,79 @@ public class BasicGameLogic {
 				break;
 			}
 
-			if((map[xH+1][yH] == 'O') || (map[xH-1][yH] == 'O') || (map[xH][yH+1] == 'O') || (map[xH][yH-1] == 'O'))
+			//Generates club new position
+			do	{
+				club = rand.nextInt(4) + 1;
+			}while(((club == 1) && (xO == 1)) || ((club == 2) && (xO == 7)) || ((club == 3) && (yO == 1)) || ((club == 4) && (yO == 7)));
+
+			//Erases club last position
+			if((xC == 1) && (yC == 7) && keyStatus && (map[xC][yC] != 'O') && (map[xC][yC] != 'H'))
+				map[xC][yC] = 'K';
+			else if((xC == 1) && (yC == 7) && (map[xC][yC] != 'O') && (map[xC][yC] != 'H'))
+				map[xC][yC] = 'k';
+			else if((map[xC][yC] != 'H') && (map[xC][yC] != 'X') && (map[xC][yC] != 'O') && (map[xC][yC] != 'I'))
+				map[xC][yC] = ' ';
+
+			//Club new position
+			switch(club)
+			{
+			case 1:	//Lands on top
+				if(map[xO-1][yO] == ' ')
+					map[xO-1][yO] = '*';
+				else if((map[xO-1][yO] == 'k') || (map[xO-1][yO] == 'K'))
+					map[xO-1][yO] = '$';
+				else if(map[xO-1][yO] == 'H') {
+					map[xO-1][yO] = '*';	
+					gameOver = true;
+				}
+				xC = xO - 1;
+				yC = yO;
+				break;
+			case 2:	//Lands on bottom
+				if(map[xO+1][yO] == ' ')
+					map[xO+1][yO] = '*';
+				else if(map[xO+1][yO] == 'H') {
+					map[xO+1][yO] = '*';	
+					gameOver = true;
+				}
+				xC = xO + 1;
+				yC = yO;
+				break;
+			case 3:	//Lands on left
+				if(map[xO][yO-1] == ' ')
+					map[xO][yO-1] = '*';
+				else if(map[xO][yO-1] == 'H') {
+					map[xO][yO-1] = '*';	
+					gameOver = true;
+				}
+				yC = yO - 1;
+				xC = xO;
+				break;
+			case 4:	//Lands on right
+				if(map[xO][yO+1] == ' ')
+					map[xO][yO+1] = '*';
+				else if((map[xO][yO+1] == 'k') || (map[xO][yO+1] == 'K'))
+					map[xO][yO+1] = '$';
+				else if(map[xO][yO+1] == 'H') {
+					map[xO][yO+1] = '*';	
+					gameOver = true;
+				}
+				yC = yO + 1;
+				xC = xO;
+				break;
+			}
+
+			//Checks game status
+			if((map[xH+1][yH] == 'O') || (map[xH-1][yH] == 'O') || (map[xH][yH+1] == 'O') || (map[xH][yH-1] == 'O') || gameOver)
 			{
 				printGameMap(map);
-				System.out.println("\n  GAME OVER :(");
+				System.out.println("\nGAME OVER :(");
 				return 1;
 			}	
 		}
 
 		return 0;
 	}
-
 
 	public static char readInput() {
 
@@ -286,6 +363,7 @@ public class BasicGameLogic {
 		}
 		return input;
 	}
+
 
 	public static void printGameMap(char[][] map) {
 

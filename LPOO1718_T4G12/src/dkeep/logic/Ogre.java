@@ -1,9 +1,14 @@
 package dkeep.logic;
 
-public class Ogre {
+public class Ogre extends Elements {
 
+	public char state = 'O';
+	public int clubX = 2;
+	public int clubY = 4;
+	
 	public Ogre() {
-		// TODO Auto-generated constructor stub
+		this.x = 1;
+		this.y = 4;
 	}
 
 }

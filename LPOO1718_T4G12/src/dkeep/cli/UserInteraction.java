@@ -4,12 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import dkeep.logic.*;
+
 public class UserInteraction {
 
 	public static void main(String[] args) {
 		
-//		if(firstDungeon() == 0)
-//			secondDungeon();
+		Game game = new Game();
+	
 	}
 	
 	public static char readInput() {

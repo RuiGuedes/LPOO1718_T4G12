@@ -6,11 +6,11 @@ import java.util.Random;
 
 public class BasicGameLogic {
 
-	public static void main(String[] args) {
-
-		if(firstDungeon() == 0)
-			secondDungeon();
-	}
+//	public static void main(String[] args) {
+//
+//		if(firstDungeon() == 0)
+//			secondDungeon();
+//	}
 
 	public static int firstDungeon() {
 

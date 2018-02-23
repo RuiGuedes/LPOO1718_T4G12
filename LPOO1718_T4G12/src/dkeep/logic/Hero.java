@@ -20,11 +20,11 @@ public class Hero extends Elements {
 		switch(input)
 		{
 		case 'w':
-			if(Game.LEVEL == 1) 
+			if(Game.LEVEL == 1) {
 				if(tmpMap[x-1][y] == ' ')
 					x--;
+			}
 			else {
-				System.out.println("ENTORU");
 				if((tmpMap[x-1][y] == ' ') || (tmpMap[x-1][y] == 'K'))
 					x--;
 				else if(tmpMap[x][y+1] == 'k') {
@@ -42,19 +42,19 @@ public class Hero extends Elements {
 				if(tmpMap[x][y-1] == 'k') {
 					y--;
 					Lever.leverState = 'K';
+					Door.openDoors();
 				}
 				else if((tmpMap[x][y-1] == ' ') || (tmpMap[x][y-1] == 'K'))
 					y--;
-				else if(tmpMap[x][y-1] == 'S') {
+				else if(tmpMap[x][y-1] == 'S') 
 					Game.LEVEL = 2;
-				}
 			}
 			else {
 				if(tmpMap[x][y-1] == ' ')
 					y--;
 				else if(tmpMap[x][y-1] == 'I') {
 					if(Lever.leverState == 'K') {
-						//Ative door
+						Game.door[0].state = 'S';
 					}
 				}
 				else if(tmpMap[x][y-1] == 'S')
@@ -62,9 +62,10 @@ public class Hero extends Elements {
 			}
 			break;
 		case 'd':
-			if(Game.LEVEL == 1) 
+			if(Game.LEVEL == 1) {
 				if(tmpMap[x][y+1] == ' ')
 					y++;
+			}
 			else {
 				if((tmpMap[x][y+1] == ' ') || (tmpMap[x][y+1] == 'K'))
 					y++;
@@ -73,10 +74,10 @@ public class Hero extends Elements {
 					Lever.leverState = 'K';
 				}
 			}
-			break;
-		default:
-			break;
-		}
+		break;
+	default:
+		break;
 	}
+}
 
 }

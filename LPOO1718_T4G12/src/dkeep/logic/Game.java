@@ -12,13 +12,13 @@ public class Game {
 	public static enum GameState { PLAYING, GAMEOVER, VICTORY };
 	
 	public static GameState gameState = GameState.PLAYING;
-	public static int LEVEL;
+	public static int LEVEL = 1;
 	
 	public GameMap map;
 	public Hero hero;
 	public Guard guard;
 	public Ogre ogre;
-	public Door[] door;
+	public static Door[] door;
 	public Lever lever;
 	
 	public Game() {
@@ -70,19 +70,6 @@ public class Game {
 		}
 		
 		return tmpMap;
-	}
-	
-	public Door[] openDoors(Door[] tmpDoor) {
-		
-		for(int i = 0; i < tmpDoor.length; i++) {
-			
-			if((i == 3) || (i == 4))
-				tmpDoor[i].state = 'S';
-			else
-				tmpDoor[i].state = ' ';
-		}
-		
-		return tmpDoor;
 	}
 	
 }

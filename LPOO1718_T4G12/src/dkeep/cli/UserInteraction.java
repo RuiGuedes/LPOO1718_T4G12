@@ -11,16 +11,15 @@ public class UserInteraction {
 
 	public static void main(String[] args) {
 
-		if(firstDungeon() == 0)
+		if(firstDungeon())
 			secondDungeon();
 
 	}
 
 
-	public static int firstDungeon() {
+	public static boolean firstDungeon() {
 
 		//Variables
-		Game.LEVEL = 1;
 		Game firsGame = new Game();
 		char input = ' ';
 
@@ -32,38 +31,26 @@ public class UserInteraction {
 			input = readInput();
 
 			firsGame.hero.heroMovement(input, firsGame.updateMap(firsGame.map.getMap()));
-			
-			if(Lever.leverState == 'K')
-				firsGame.door = firsGame.openDoors(firsGame.door);
 
 		}
 		
 		if((input != 'e') && (Game.gameState == GameState.PLAYING))
-			return 0;
-	
-		return 1;
+			return true;
+		else 
+			return false;
 	}
 	
-	public static int secondDungeon() {
+	public static void secondDungeon() {
 
 		//Variables
-		Game.LEVEL = 2;
 		Game secondGame = new Game();
 		char input = ' ';
 		
 		//Reset Variables
 		Lever.leverState = 'k';
-		
-		System.out.println(Lever.leverState);
-		
-		
+			
 		while((input != 'e') && (Game.gameState == GameState.PLAYING)) 
 		{
-			
-			if(Game.LEVEL == 2)
-				System.out.println(Game.LEVEL);
-			
-			System.out.println(secondGame.hero.x + "  " + secondGame.hero.y);
 			
 			GameMap.print(secondGame.updateMap(secondGame.map.getMap()));
 			
@@ -72,8 +59,7 @@ public class UserInteraction {
 			secondGame.hero.heroMovement(input, secondGame.updateMap(secondGame.map.getMap()));
 
 		}
-	
-		return 1;
+
 	}
 
 

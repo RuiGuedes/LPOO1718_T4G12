@@ -2,7 +2,7 @@ package dkeep.logic;
 
 public class Lever extends Elements {
 	
-	public char state = 'k';
+	public static char leverState = 'k';
 	
 	public Lever() {
 

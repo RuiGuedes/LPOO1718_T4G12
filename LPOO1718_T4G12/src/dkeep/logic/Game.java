@@ -9,7 +9,9 @@ import dkeep.logic.Door;
 
 public class Game {
 	
-	public enum GameState { PLAYING, GAMEOVER, VICTORY };
+	public static enum GameState { PLAYING, GAMEOVER, VICTORY };
+	
+	public static GameState gameState = GameState.PLAYING;
 	public static int LEVEL = 1;
 	
 	public GameMap map;
@@ -22,6 +24,7 @@ public class Game {
 	public Game() {
 		
 		map = new GameMap();
+		
 		hero = new Hero();
 		lever = new Lever();
 		
@@ -42,8 +45,25 @@ public class Game {
 			ogre = new Ogre();
 			door[0] = new Door(new int[] {1,0});
 		}
-			
-		map.printGameMap(hero, guard);
+		
+	}
+	
+	public char[][] updateMap(char[][] tmpMap) {
+		
+		tmpMap[hero.x][hero.y] = 'H';
+		tmpMap[lever.x][lever.y] = Lever.leverState;
+		
+		for(int i = 0; i < door.length; i++)
+			tmpMap[door[i].x][door[i].y] = door[i].state;
+		
+		if(Game.LEVEL == 1)
+			tmpMap[guard.x][guard.y] = 'G';
+		else { 
+			tmpMap[ogre.x][ogre.y] = ogre.state;
+			tmpMap[ogre.clubX][ogre.clubY] = ogre.club;
+		}
+		
+		return tmpMap;
 	}
 	
 

@@ -3,6 +3,8 @@ package dkeep.logic;
 public class Ogre extends Elements {
 
 	public char state = 'O';
+	public char club = '*';
+	
 	public int clubX = 2;
 	public int clubY = 4;
 	

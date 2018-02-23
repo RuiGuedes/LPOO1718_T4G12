@@ -12,7 +12,7 @@ public class Game {
 	public static enum GameState { PLAYING, GAMEOVER, VICTORY };
 	
 	public static GameState gameState = GameState.PLAYING;
-	public static int LEVEL = 1;
+	public static int LEVEL;
 	
 	public GameMap map;
 	public Hero hero;
@@ -43,6 +43,8 @@ public class Game {
 		}
 		else {
 			ogre = new Ogre();
+			
+			door = new Door[1];
 			door[0] = new Door(new int[] {1,0});
 		}
 		
@@ -50,8 +52,12 @@ public class Game {
 	
 	public char[][] updateMap(char[][] tmpMap) {
 		
-		tmpMap[hero.x][hero.y] = 'H';
-		tmpMap[lever.x][lever.y] = Lever.leverState;
+		if((hero.x == lever.x) && (hero.y == lever.y))
+			tmpMap[hero.x][hero.y] = 'H';
+		else {
+			tmpMap[hero.x][hero.y] = 'H';
+			tmpMap[lever.x][lever.y] = Lever.leverState;
+		}
 		
 		for(int i = 0; i < door.length; i++)
 			tmpMap[door[i].x][door[i].y] = door[i].state;
@@ -66,5 +72,17 @@ public class Game {
 		return tmpMap;
 	}
 	
-
+	public Door[] openDoors(Door[] tmpDoor) {
+		
+		for(int i = 0; i < tmpDoor.length; i++) {
+			
+			if((i == 3) || (i == 4))
+				tmpDoor[i].state = 'S';
+			else
+				tmpDoor[i].state = ' ';
+		}
+		
+		return tmpDoor;
+	}
+	
 }

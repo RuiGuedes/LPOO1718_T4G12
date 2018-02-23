@@ -11,24 +11,71 @@ public class UserInteraction {
 
 	public static void main(String[] args) {
 
+		if(firstDungeon() == 0)
+			secondDungeon();
+
+	}
+
+
+	public static int firstDungeon() {
+
 		//Variables
-		Game game = new Game();
-		
+		Game.LEVEL = 1;
+		Game firsGame = new Game();
 		char input = ' ';
+
+		while((input != 'e') && (Game.gameState == GameState.PLAYING) && (Game.LEVEL != 2)) 
+		{
+
+			GameMap.print(firsGame.updateMap(firsGame.map.getMap()));
+
+			input = readInput();
+
+			firsGame.hero.heroMovement(input, firsGame.updateMap(firsGame.map.getMap()));
+			
+			if(Lever.leverState == 'K')
+				firsGame.door = firsGame.openDoors(firsGame.door);
+
+		}
+		
+		if((input != 'e') && (Game.gameState == GameState.PLAYING))
+			return 0;
+	
+		return 1;
+	}
+	
+	public static int secondDungeon() {
+
+		//Variables
+		Game.LEVEL = 2;
+		Game secondGame = new Game();
+		char input = ' ';
+		
+		//Reset Variables
+		Lever.leverState = 'k';
+		
+		System.out.println(Lever.leverState);
+		
 		
 		while((input != 'e') && (Game.gameState == GameState.PLAYING)) 
 		{
 			
-			GameMap.print(game.updateMap(game.map.getMap()));
+			if(Game.LEVEL == 2)
+				System.out.println(Game.LEVEL);
+			
+			System.out.println(secondGame.hero.x + "  " + secondGame.hero.y);
+			
+			GameMap.print(secondGame.updateMap(secondGame.map.getMap()));
 			
 			input = readInput();
-			
-			game.hero.heroMovement(input, game.updateMap(game.map.getMap()));
-			
-			
-		}
 
+			secondGame.hero.heroMovement(input, secondGame.updateMap(secondGame.map.getMap()));
+
+		}
+	
+		return 1;
 	}
+
 
 	public static char readInput() {
 

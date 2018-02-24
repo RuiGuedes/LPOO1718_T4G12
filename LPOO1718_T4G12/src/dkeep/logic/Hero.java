@@ -2,15 +2,19 @@ package dkeep.logic;
 
 public class Hero extends Elements {
 
+	public char state;
+	
 	public Hero() {
 
 		if(Game.LEVEL == 1) {
 			this.x = 1;
 			this.y = 1;
+			state = 'H';
 		}
 		else {
 			this.x = 7;
 			this.y = 1;
+			state = 'A';
 		}
 	}
 

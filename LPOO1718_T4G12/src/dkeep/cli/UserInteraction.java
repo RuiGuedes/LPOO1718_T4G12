@@ -10,7 +10,7 @@ import dkeep.logic.Game.GameState;
 public class UserInteraction {
 
 	public static void main(String[] args) {
-		if(firstDungeon())
+		//if(firstDungeon())
 			secondDungeon();
 	}
 
@@ -80,7 +80,8 @@ public class UserInteraction {
 			secondGame.hero.heroMovement(input, secondGame.updateMap(secondGame.map.getMap()));
 			
 			//Moves the ogre and club in a randoom direction
-			secondGame.ogre.ogreMovement(secondGame.updateMap(secondGame.map.getMap()));
+			for(int i = 0; i < secondGame.horde; i++)
+				secondGame.ogre.get(i).ogreMovement(secondGame.hero.x, secondGame.hero.y, secondGame.updateMap(secondGame.map.getMap()));
 			
 			//Check the status game in order to continue playing or not
 			secondGame.checkGameStatus();

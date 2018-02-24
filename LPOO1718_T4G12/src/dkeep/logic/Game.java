@@ -12,7 +12,7 @@ public class Game {
 	public static enum GameState { PLAYING, GAMEOVER, VICTORY };
 	
 	public static GameState gameState = GameState.PLAYING;
-	public static int LEVEL = 1;
+	public static int LEVEL = 2;
 	
 	public GameMap map;
 	public Hero hero;
@@ -48,6 +48,26 @@ public class Game {
 			door[0] = new Door(new int[] {1,0});
 		}
 		
+	}
+	
+	public void checkGameStatus() {
+		
+		if(Game.LEVEL == 1) {
+			if(guard.x == hero.x) {
+				if((guard.y == (hero.y + 1)) || (guard.y == (hero.y - 1))) {
+					gameState = GameState.GAMEOVER;
+				}
+			}
+			else if(guard.y == hero.y) {
+				if((guard.x == (hero.x + 1)) || (guard.x == (hero.x - 1))) {
+					gameState = GameState.GAMEOVER;
+				}
+			}
+		}
+		else
+		{
+			
+		}
 	}
 	
 	public char[][] updateMap(char[][] tmpMap) {

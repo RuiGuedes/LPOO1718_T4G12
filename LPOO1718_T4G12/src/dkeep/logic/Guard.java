@@ -11,5 +11,16 @@ public class Guard extends Elements {
 		this.x = guardRoute[position][0];
 		this.y = guardRoute[position][1];
 	}
+	
+	public void guardMovement() {
+		
+		if(position == 23)
+			position = 0;
+		else
+			position++;
+		
+		this.x = guardRoute[position][0];
+		this.y = guardRoute[position][1];
+	}
 
 }

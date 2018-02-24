@@ -36,7 +36,7 @@ public class GameMap {
 	}
 
 	public static void print(char[][] map) {
-
+		
 		for(int i = 0; i < map.length; i++)
 		{
 			for(int k = 0; k < map[i].length; k++)

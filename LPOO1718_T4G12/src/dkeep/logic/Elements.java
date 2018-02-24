@@ -6,7 +6,7 @@ public class Elements {
 	public int y;
 	
 	public Elements() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public boolean equals(int x, int y) {

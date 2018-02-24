@@ -1,8 +1,7 @@
 package dkeep.logic;
 
 public class GameMap {
-	
-	
+		
 	public GameMap() {
 		
 	}

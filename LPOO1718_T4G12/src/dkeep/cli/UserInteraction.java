@@ -10,7 +10,7 @@ import dkeep.logic.Game.GameState;
 public class UserInteraction {
 
 	public static void main(String[] args) {
-		//if(firstDungeon())
+		if(firstDungeon())
 			secondDungeon();
 	}
 
@@ -62,8 +62,6 @@ public class UserInteraction {
 	public static void secondDungeon() {
 
 		//Variables
-		
-		System.out.println("sadsada");
 		Game secondGame = new Game();
 		Lever.leverState = 'k';
 		char input = ' ';
@@ -96,7 +94,6 @@ public class UserInteraction {
 
 	}
 
-
 	public static char readInput() {
 
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -109,6 +106,7 @@ public class UserInteraction {
 		}
 		
 		System.out.println();
+				
 		return input;
 	}
 

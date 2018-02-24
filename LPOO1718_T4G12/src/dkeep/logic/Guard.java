@@ -7,7 +7,7 @@ public class Guard extends Elements {
 	public int position = 0;
 
 	public char state = 'G';
-	public String guardType;
+	public String guardType;				
 	public int stop = 0;					//Number of plays that the Drunken guard stays still
 	public boolean direction = true; 		//False for reverse direction 
 
@@ -80,7 +80,7 @@ public class Guard extends Elements {
 				}
 			}
 		}
-		else {
+		else if(guardType == "Suspicious") {
 
 			if(stop == 0) {
 				

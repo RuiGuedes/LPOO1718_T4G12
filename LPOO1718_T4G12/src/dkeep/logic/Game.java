@@ -15,7 +15,7 @@ public class Game {
 
 	//Global data members
 	public static GameState gameState = GameState.PLAYING;
-	public static int LEVEL = 2;
+	public static int LEVEL = 1;
 
 	//Generic Data members
 	public GameMap map;
@@ -29,7 +29,7 @@ public class Game {
 
 	//Ogre data members
 	public ArrayList<Ogre> ogre;
-	public int horde = 3;
+	public int horde = 2;
 
 	public Game() {
 
@@ -117,18 +117,15 @@ public class Game {
 				tmpMap[lever.x][lever.y] = Lever.leverState;
 		}
 		else {
-
 			for(int i = 0; i < horde; i++) 
 			{
 				tmpMap[ogre.get(i).x][ogre.get(i).y] = ogre.get(i).state;
 				if(tmpMap[ogre.get(i).clubX][ogre.get(i).clubY] != 'O')
 					tmpMap[ogre.get(i).clubX][ogre.get(i).clubY] = ogre.get(i).club;
-
 			}
 
 			if(tmpMap[lever.x][lever.y] == ' ')
 				tmpMap[lever.x][lever.y] = Lever.leverState;
-
 		}
 
 		return tmpMap;

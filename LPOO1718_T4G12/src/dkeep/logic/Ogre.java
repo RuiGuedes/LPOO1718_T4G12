@@ -86,24 +86,26 @@ public class Ogre extends Elements {
 			}
 		}
 		
-		if(stop != 2)
+		if(stop != 2) {
+			club = '*';
 			clubMovement(tmpMap);
+		}
+
 	}
 
 	public void clubMovement(char[][] tmpMap) {
 
 		//Variables
 		Random rand = new Random();
-		int club;
+		int move;
 
 		//Generates club new position
 		do	{
-			club = rand.nextInt(4) + 1;
-		}while(((club == 1) && (x == 1)) || ((club == 2) && (x == 7)) || ((club == 3) && (y == 1)) || ((club == 4) && (y == 7)));
-
+			move = rand.nextInt(4) + 1;
+		}while(((move == 1) && (x == 1)) || ((move == 2) && (x == 7)) || ((move == 3) && (y == 1)) || ((move == 4) && (y == 7)));
 
 		//Club new position
-		switch(club)
+		switch(move)
 		{
 		case 1:	//Lands on top
 			if((tmpMap[x-1][y] == 'k') || (tmpMap[x-1][y] == 'K'))

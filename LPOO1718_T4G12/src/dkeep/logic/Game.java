@@ -6,17 +6,22 @@ import dkeep.logic.Guard;
 import dkeep.logic.Ogre;
 import dkeep.logic.Lever;
 import dkeep.logic.Door;
+import java.util.Random;
 
 public class Game {
 	
 	public static enum GameState { PLAYING, GAMEOVER, VICTORY };
 	
 	public static GameState gameState = GameState.PLAYING;
-	public static int LEVEL = 2;
+	public static int LEVEL = 1;
 	
 	public GameMap map;
 	public Hero hero;
-	public Guard guard;
+	
+	//Guard data members
+	public int guardRouting;
+	public Guard[] guard;
+	
 	public Ogre ogre;
 	public static Door[] door;
 	public Lever lever;
@@ -30,9 +35,16 @@ public class Game {
 		
 		if(LEVEL == 1) {
 			
+			//Variables
+			Random rand = new Random();
 			int[][] coordinates = { {1,4}, {3,2}, {3,4}, {5,0}, {6,0}, {8,2}, {8,4} };
+			guardRouting = rand.nextInt(3);
 			
-			guard = new Guard();
+			guard = new Guard[3];
+			
+			guard[0] = new Guard("Rookie");
+			guard[1] = new Guard("Drunken");
+			guard[2] = new Guard("Suspicious");
 			
 			door = new Door[coordinates.length];
 			
@@ -53,13 +65,15 @@ public class Game {
 	public void checkGameStatus() {
 		
 		if(Game.LEVEL == 1) {
-			if(guard.x == hero.x) {
-				if((guard.y == (hero.y + 1)) || (guard.y == (hero.y - 1))) {
+			if(guard[guardRouting].x == hero.x) {
+				if(((guard[guardRouting].y == (hero.y + 1)) && (guard[guardRouting].state == 'G')) || 
+					((guard[guardRouting].y == (hero.y - 1)) && (guard[guardRouting].state == 'G'))) {
 					gameState = GameState.GAMEOVER;
 				}
 			}
-			else if(guard.y == hero.y) {
-				if((guard.x == (hero.x + 1)) || (guard.x == (hero.x - 1))) {
+			else if(guard[guardRouting].y == hero.y) {
+				if(((guard[guardRouting].x == (hero.x + 1)) &&  (guard[guardRouting].state == 'G')) ||
+					((guard[guardRouting].x == (hero.x - 1)) &&  (guard[guardRouting].state == 'G'))) {
 					gameState = GameState.GAMEOVER;
 				}
 			}
@@ -87,7 +101,7 @@ public class Game {
 			tmpMap[door[i].x][door[i].y] = door[i].state;
 		
 		if(Game.LEVEL == 1) {
-			tmpMap[guard.x][guard.y] = 'G';
+			tmpMap[guard[guardRouting].x][guard[guardRouting].y] = guard[guardRouting].state;
 			
 			if(!((hero.x == lever.x) && (hero.y == lever.y)))
 				tmpMap[lever.x][lever.y] = Lever.leverState;

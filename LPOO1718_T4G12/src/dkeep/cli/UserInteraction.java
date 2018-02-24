@@ -10,7 +10,7 @@ import dkeep.logic.Game.GameState;
 public class UserInteraction {
 
 	public static void main(String[] args) {
-		//if(firstDungeon())
+		if(firstDungeon())
 			secondDungeon();
 	}
 
@@ -20,7 +20,7 @@ public class UserInteraction {
 		Game firstGame = new Game();
 		char input = ' ';
 
-		while((input != 'e') && (Game.gameState == GameState.PLAYING) && (Game.LEVEL != 2)) 
+		while((input != 'e') && (Game.gameState == GameState.PLAYING)) 
 		{
 			
 			//Print the updated map
@@ -32,8 +32,17 @@ public class UserInteraction {
 			//Moves the hero in the respective direction
 			firstGame.hero.heroMovement(input, firstGame.updateMap(firstGame.map.getMap()));
 			
+			//Check if level is complete
+			if(Game.LEVEL == 2)
+				break;
+			
 			//Executes guard route
-			firstGame.guard.guardMovement();
+			if(firstGame.guard[firstGame.guardRouting].guardMovement()) {
+				if(firstGame.guardRouting == 2)
+					firstGame.guardRouting = 0;
+				else
+					firstGame.guardRouting++;
+			}
 			
 			//Check the status game in order to continue playing or not
 			firstGame.checkGameStatus();
@@ -53,6 +62,8 @@ public class UserInteraction {
 	public static void secondDungeon() {
 
 		//Variables
+		
+		System.out.println("sadsada");
 		Game secondGame = new Game();
 		Lever.leverState = 'k';
 		char input = ' ';

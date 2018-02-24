@@ -64,29 +64,42 @@ public class Game {
 				}
 			}
 		}
-		else
+		else if(Game.LEVEL == 2)
 		{
-			
+			if(ogre.x == hero.x) {
+				if((ogre.y == (hero.y + 1)) || (ogre.y == (hero.y - 1))) {
+					gameState = GameState.GAMEOVER;
+				}
+			}
+			else if(ogre.y == hero.y) {
+				if((ogre.x == (hero.x + 1)) || (ogre.x == (hero.x - 1))) {
+					gameState = GameState.GAMEOVER;
+				}
+			}
 		}
 	}
 	
 	public char[][] updateMap(char[][] tmpMap) {
 		
-		if((hero.x == lever.x) && (hero.y == lever.y))
-			tmpMap[hero.x][hero.y] = 'H';
-		else {
-			tmpMap[hero.x][hero.y] = 'H';
-			tmpMap[lever.x][lever.y] = Lever.leverState;
-		}
+		tmpMap[hero.x][hero.y] = 'H';
 		
 		for(int i = 0; i < door.length; i++)
 			tmpMap[door[i].x][door[i].y] = door[i].state;
 		
-		if(Game.LEVEL == 1)
+		if(Game.LEVEL == 1) {
 			tmpMap[guard.x][guard.y] = 'G';
-		else { 
+			
+			if(!((hero.x == lever.x) && (hero.y == lever.y)))
+				tmpMap[lever.x][lever.y] = Lever.leverState;
+		}
+		else {
+			
 			tmpMap[ogre.x][ogre.y] = ogre.state;
 			tmpMap[ogre.clubX][ogre.clubY] = ogre.club;
+			
+			if((!((hero.x == lever.x) && (hero.y == lever.y))) && (!((ogre.x == lever.x) && (ogre.y == lever.y))) &&
+					(!((ogre.clubX == lever.x) && (ogre.clubY == lever.y))))
+				tmpMap[lever.x][lever.y] = Lever.leverState;	
 		}
 		
 		return tmpMap;

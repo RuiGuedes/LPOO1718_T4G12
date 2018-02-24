@@ -17,28 +17,28 @@ public class UserInteraction {
 	public static boolean firstDungeon() {
 
 		//Variables
-		Game firsGame = new Game();
+		Game firstGame = new Game();
 		char input = ' ';
 
 		while((input != 'e') && (Game.gameState == GameState.PLAYING) && (Game.LEVEL != 2)) 
 		{
 			
 			//Print the updated map
-			GameMap.print(firsGame.updateMap(firsGame.map.getMap()));
+			GameMap.print(firstGame.updateMap(firstGame.map.getMap()));
 			
 			//Read user input
 			input = readInput();
 			
 			//Moves the hero in the respective direction
-			firsGame.hero.heroMovement(input, firsGame.updateMap(firsGame.map.getMap()));
+			firstGame.hero.heroMovement(input, firstGame.updateMap(firstGame.map.getMap()));
 			
 			//Executes guard route
-			firsGame.guard.guardMovement();
+			firstGame.guard.guardMovement();
 			
 			//Check the status game in order to continue playing or not
-			firsGame.checkGameStatus();
+			firstGame.checkGameStatus();
 			if(Game.gameState == GameState.GAMEOVER) {
-				GameMap.print(firsGame.updateMap(firsGame.map.getMap()));
+				GameMap.print(firstGame.updateMap(firstGame.map.getMap()));
 				System.out.println("\nGame Over !");
 			}
 		}
@@ -68,8 +68,19 @@ public class UserInteraction {
 			//Moves the hero in the respective direction
 			secondGame.hero.heroMovement(input, secondGame.updateMap(secondGame.map.getMap()));
 			
+			//Moves the ogre and club in a randoom direction
 			secondGame.ogre.ogreMovement(secondGame.updateMap(secondGame.map.getMap()));
+			
+			//Check the status game in order to continue playing or not
+			secondGame.checkGameStatus();
+			if(Game.gameState == GameState.GAMEOVER) {
+				GameMap.print(secondGame.updateMap(secondGame.map.getMap()));
+				System.out.println("\nGame Over !");
+			}
 		}
+		
+		if(Game.gameState == GameState.VICTORY)
+			System.out.println("Victory !");
 
 	}
 

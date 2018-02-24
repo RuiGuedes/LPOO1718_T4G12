@@ -27,7 +27,7 @@ public class Hero extends Elements {
 			else {
 				if((tmpMap[x-1][y] == ' ') || (tmpMap[x-1][y] == 'K'))
 					x--;
-				else if(tmpMap[x][y+1] == 'k') {
+				else if(tmpMap[x-1][y] == 'k') {
 					x--;
 					Lever.leverState = 'K';
 				}

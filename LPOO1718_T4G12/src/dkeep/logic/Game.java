@@ -75,29 +75,25 @@ public class Game {
 	public void checkGameStatus() {
 
 		if(Game.LEVEL == 1) {
-			if(guard[guardRouting].x == hero.x) {
-				if(((guard[guardRouting].y == (hero.y + 1)) && (guard[guardRouting].state == 'G')) || 
-						((guard[guardRouting].y == (hero.y - 1)) && (guard[guardRouting].state == 'G'))) {
-					gameState = GameState.GAMEOVER;
-				}
+			if((guard[guardRouting].x == hero.x) && (guard[guardRouting].state == 'G') && 
+					((guard[guardRouting].y == (hero.y + 1)) || (guard[guardRouting].y == (hero.y - 1)))) {
+				gameState = GameState.GAMEOVER;
 			}
-			else if(guard[guardRouting].y == hero.y) {
-				if(((guard[guardRouting].x == (hero.x + 1)) &&  (guard[guardRouting].state == 'G')) ||
-						((guard[guardRouting].x == (hero.x - 1)) &&  (guard[guardRouting].state == 'G'))) {
-					gameState = GameState.GAMEOVER;
-				}
+			else if((guard[guardRouting].y == hero.y) && (guard[guardRouting].state == 'G') &&
+					( (guard[guardRouting].x == (hero.x + 1)) || (guard[guardRouting].x == (hero.x - 1)))) {
+				gameState = GameState.GAMEOVER;
 			}
 		}
 		else if(Game.LEVEL == 2)
 		{	
 			for(int i = 0; i < horde; i++) 
 			{
-				if( ((ogre.get(i).x == hero.x) && (ogre.get(i).y == (hero.y + 1))) || ((ogre.get(i).x == hero.x) && (ogre.get(i).y == (hero.y - 1))) ||
-						((ogre.get(i).y == hero.y) && (ogre.get(i).x == (hero.x + 1))) || ((ogre.get(i).y == hero.y) && (ogre.get(i).x == (hero.x - 1))))
-				{
-					if((ogre.get(i).state == 'O') || ((ogre.get(i).clubX == hero.x) && (ogre.get(i).clubY == hero.y)))
+//				if( ((ogre.get(i).x == hero.x) && ((ogre.get(i).y == (hero.y + 1)) || (ogre.get(i).y == (hero.y - 1)))) ||
+//						((ogre.get(i).y == hero.y) && ((ogre.get(i).x == (hero.x + 1)) || (ogre.get(i).x == (hero.x - 1)))))
+//				{
+					if(/*(ogre.get(i).state == 'O') ||*/ ((ogre.get(i).clubX == hero.x) && (ogre.get(i).clubY == hero.y)))
 						gameState = GameState.GAMEOVER;
-				}
+//				}
 
 			}
 		}

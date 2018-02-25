@@ -88,12 +88,12 @@ public class Game {
 		{	
 			for(int i = 0; i < horde; i++) 
 			{
-//				if( ((ogre.get(i).x == hero.x) && ((ogre.get(i).y == (hero.y + 1)) || (ogre.get(i).y == (hero.y - 1)))) ||
-//						((ogre.get(i).y == hero.y) && ((ogre.get(i).x == (hero.x + 1)) || (ogre.get(i).x == (hero.x - 1)))))
-//				{
-					if(/*(ogre.get(i).state == 'O') ||*/ ((ogre.get(i).clubX == hero.x) && (ogre.get(i).clubY == hero.y)))
+				if( ((ogre.get(i).x == hero.x) && ((ogre.get(i).y == (hero.y + 1)) || (ogre.get(i).y == (hero.y - 1)))) ||
+						((ogre.get(i).y == hero.y) && ((ogre.get(i).x == (hero.x + 1)) || (ogre.get(i).x == (hero.x - 1)))))
+				{
+					if((ogre.get(i).state == 'O') || ((ogre.get(i).clubX == hero.x) && (ogre.get(i).clubY == hero.y)))
 						gameState = GameState.GAMEOVER;
-//				}
+				}
 
 			}
 		}
@@ -126,5 +126,4 @@ public class Game {
 
 		return tmpMap;
 	}
-
 }

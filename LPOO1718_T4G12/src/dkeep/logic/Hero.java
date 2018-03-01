@@ -4,20 +4,26 @@ public class Hero extends Elements {
 
 	public char state;
 	
-	public Hero() {
-
-		if(Game.LEVEL == 1) {
-			this.x = 1;
-			this.y = 1;
-			state = 'H';
-		}
-		else {
-			this.x = 7;
-			this.y = 1;
-			state = 'A';
-		}
+//	public Hero() {
+//
+//		if(Game.LEVEL == 1) {
+//			this.x = 1;
+//			this.y = 1;
+//			state = 'H';
+//		}
+//		else {
+//			this.x = 7;
+//			this.y = 1;
+//			state = 'A';
+//		}
+//	}
+	
+	public Hero(int x, int y, char state) {
+		this.x = x;
+		this.y = y;
+		this.state = state;
 	}
-
+	
 	public void heroMovement(char input, char[][] tmpMap) {
 
 		//Hero Movement
@@ -40,7 +46,7 @@ public class Hero extends Elements {
 					y--;
 				else if(tmpMap[x][y-1] == 'I') {
 					if(Lever.leverState == 'K') {
-						Game.door[0].state = 'S';
+						//Game.door[0].state = 'S';
 					}
 				}
 				else if(tmpMap[x][y-1] == 'k') {
@@ -65,5 +71,8 @@ public class Hero extends Elements {
 		break;
 	}
 }
-
+	
+	public boolean isHeroAtPosition(int x, int y) {
+		return ((this.x == x) && (this.y == y));
+	}
 }

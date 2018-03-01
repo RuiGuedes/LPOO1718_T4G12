@@ -20,7 +20,7 @@ public class Game {
 	//Generic Data members
 	public GameMap map;
 	public Hero hero;
-	public static Door[] door;
+	public static ArrayList<Door> door;
 	public Lever lever;
 
 	//Guard data members
@@ -35,41 +35,109 @@ public class Game {
 
 		map = new GameMap();
 
-		hero = new Hero();
-		lever = new Lever();
+		initElements();
 
-		if(LEVEL == 1) {
+		//hero = new Hero();
+		//lever = new Lever();
+
+//		if(LEVEL == 1) {
 
 			//Variables
-			Random rand = new Random();
-			int[][] coordinates = { {1,4}, {3,2}, {3,4}, {5,0}, {6,0}, {8,2}, {8,4} };
-			guardRouting = rand.nextInt(3);
+			//Random rand = new Random();
+			//int[][] coordinates = { {1,4}, {3,2}, {3,4}, {5,0}, {6,0}, {8,2}, {8,4} };
+			//guardRouting = rand.nextInt(3);
 
-			//Create 3 different types of guard
-			guard = new Guard[3];
-			guard[0] = new Guard("Rookie");
-			guard[1] = new Guard("Drunken");
-			guard[2] = new Guard("Suspicious");
+			//			//Create 3 different types of guard
+			//			guard = new Guard[3];
+			//			guard[0] = new Guard("Rookie");
+			//			guard[1] = new Guard("Drunken");
+			//			guard[2] = new Guard("Suspicious");
 
-			door = new Door[coordinates.length];
+			//			door = new Door[coordinates.length];
+			//
+			//			for(int i = 0; i < coordinates.length; i++) {
+			//				door[i] = new Door(coordinates[i]);
+			//			}
 
-			for(int i = 0; i < coordinates.length; i++) {
-				door[i] = new Door(coordinates[i]);
+//		}
+//		else {
+//
+//			//Create a certain amount of ogres
+//			ogre = new ArrayList<Ogre>(horde);
+//
+//			for(int i = 0; i < horde; i++)
+//				ogre.add(new Ogre());
+//
+//			door = new Door[1];
+//			door[0] = new Door(new int[] {1,0});
+//		}
+
+	}
+
+	public void initElements() {
+
+		char[][] tmpMap = map.getMap();
+
+		door = new ArrayList<Door>();
+		ogre = new ArrayList<Ogre>();
+		
+		for(int i = 0; i < tmpMap.length; i++)
+		{
+			for(int j = 0; j < tmpMap[i].length; j++) 
+			{
+				if(tmpMap[i][j] == 'H') {
+					hero = new Hero(i,j,'H');
+				}
+				else if(tmpMap[i][j] == 'A') {
+					hero = new Hero(i,j,'A');
+				}
+				else if(tmpMap[i][j] == 'k') {
+					lever = new Lever(i,j);
+				}
+				else if(tmpMap[i][j] == 'G') {
+					if(LEVEL == 1) {
+
+						char[] guardRoute = { 'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 
+								'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w' }; 
+
+						Random rand = new Random();
+						guardRouting = rand.nextInt(3);
+
+						//Create 3 different types of guard
+						guard = new Guard[3];
+						guard[0] = new Guard(i,j,"Rookie",guardRoute);
+						guard[1] = new Guard(i,j,"Drunken",guardRoute);
+						guard[2] = new Guard(i,j,"Suspicious",guardRoute);
+					}
+					else {
+						guard = new Guard[1];
+						guard[0] = new Guard(i,j,"Rookie", null);
+					}
+				}
+				else if(tmpMap[i][j] == 'I') {
+					door.add(new Door(i,j));
+				}
+				else if(tmpMap[i][j] == 'O') {
+					
+					int tmpX = i;
+					int tmpY = j;
+					
+					if((tmpMap[i+1][j]) == '*') 
+						tmpX++;
+					else if((tmpMap[i-1][j]) == '*')
+						tmpX--;
+					else if((tmpMap[i][j+1]) == '*')
+						tmpY++;
+					else if((tmpMap[i][j-1]) == '*')
+						tmpY--;
+					
+					ogre.add(new Ogre(i,j,tmpX,tmpY));
+				}
+
+				if(tmpMap[i][j] != 'X')
+					tmpMap[i][j] = ' ';
 			}
-
 		}
-		else {
-
-			//Create a certain amount of ogres
-			ogre = new ArrayList<Ogre>(horde);
-
-			for(int i = 0; i < horde; i++)
-				ogre.add(new Ogre());
-
-			door = new Door[1];
-			door[0] = new Door(new int[] {1,0});
-		}
-
 	}
 
 	public void checkGameStatus() {
@@ -103,8 +171,8 @@ public class Game {
 
 		tmpMap[hero.x][hero.y] = hero.state;
 
-		for(int i = 0; i < door.length; i++)
-			tmpMap[door[i].x][door[i].y] = door[i].state;
+		for(int i = 0; i < door.size(); i++)
+			tmpMap[door.get(i).x][door.get(i).y] = door.get(i).state;
 
 		if(Game.LEVEL == 1) {
 			tmpMap[guard[guardRouting].x][guard[guardRouting].y] = guard[guardRouting].state;

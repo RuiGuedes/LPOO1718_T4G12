@@ -12,9 +12,11 @@ public class Ogre extends Elements {
 
 	public int stop = 0;
 
-	public Ogre() {
-		this.x = 1;
-		this.y = 4;
+	public Ogre(int x, int y, int clubX, int clubY) {
+		this.x = x;
+		this.y = y;
+		this.clubX = clubX;
+		this.clubY = clubY;
 	}
 
 	public void ogreMovement(int heroX, int heroY, char[][] tmpMap) {

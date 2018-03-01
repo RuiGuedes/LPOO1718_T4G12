@@ -4,18 +4,18 @@ public class Door extends Elements {
 
 	public char state = 'I';
 
-	public Door(int[] coordinates) {
-		this.x = coordinates[0];
-		this.y = coordinates[1];
+	public Door(int x, int y) {
+		this.x = x;
+		this.y = y;
 	}
 
 	public static void openDoors() {
-		for(int i = 0; i < Game.door.length; i++) {
+		for(int i = 0; i < Game.door.size(); i++) {
 
-			if((i == 3) || (i == 4))
-				Game.door[i].state = 'S';
-			else
-				Game.door[i].state = ' ';
+//			if((i == 3) || (i == 4))
+//				Game.door.set(i,'S');
+//			else
+//				Game.door[i].state = ' ';
 		}
 	}
 }

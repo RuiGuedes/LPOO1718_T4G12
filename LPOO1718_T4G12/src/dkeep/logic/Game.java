@@ -29,14 +29,12 @@ public class Game {
 
 	//Ogre data members
 	public ArrayList<Ogre> ogre;
-	public int horde = 2;
+	public int horde = 1;
 
-	public Game() {
-
-		map = new GameMap();
+	public Game(GameMap gameMap) {
+		map = gameMap;
 		
 		initElements();
-
 	}
 
 	public void initElements() {
@@ -67,9 +65,8 @@ public class Game {
 								'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'}; 
 
 						Random rand = new Random();
-//						guardRouting = rand.nextInt(3);
-						guardRouting = 2;
-						System.out.println("Guard routing " + guardRouting);
+						guardRouting = rand.nextInt(3);
+					
 						//Create 3 different types of guard
 						guard = new Guard[3];
 						guard[0] = new Guard(i,j,"Rookie",guardRoute);
@@ -78,11 +75,12 @@ public class Game {
 					}
 					else {
 						guard = new Guard[1];
-						guard[0] = new Guard(i,j,"Rookie", null);
+						guardRouting = 0;
+						guard[guardRouting] = new Guard(i,j,"Rookie", null);
 					}
 				}
 				else if(tmpMap[i][j] == 'I') {
-					door.add(new Door(i,j));
+					door.add(new Door(i,j,'I'));
 				}
 				else if(tmpMap[i][j] == 'O') {
 					
@@ -109,9 +107,9 @@ public class Game {
 		map.setMap(tmpMap);
 	}
 
-	public void checkGameStatus() {
+	public void checkGameStatus(String gameType) {
 
-		if(Game.LEVEL == 1) {
+		if(gameType == "Guard") {
 			if((guard[guardRouting].x == hero.x) && (guard[guardRouting].state == 'G') && 
 					((guard[guardRouting].y == (hero.y + 1)) || (guard[guardRouting].y == (hero.y - 1)))) {
 				gameState = GameState.GAMEOVER;
@@ -121,7 +119,7 @@ public class Game {
 				gameState = GameState.GAMEOVER;
 			}
 		}
-		else if(Game.LEVEL == 2)
+		else if(gameType == "Ogre")
 		{	
 			for(int i = 0; i < horde; i++) 
 			{

@@ -17,12 +17,12 @@ public class UserInteraction {
 	public static boolean firstDungeon() {
 
 		//Variables
-		Game firstGame = new Game();
+		GameMap gameMap = new GameMap();
+		Game firstGame = new Game(gameMap);
 		char input = ' ';
 
 		while((input != 'e') && (Game.gameState == GameState.PLAYING)) 
 		{
-			
 			//Print the updated map
 			GameMap.print(firstGame.updateMap(firstGame.map.getMap()));
 			
@@ -45,7 +45,7 @@ public class UserInteraction {
 			}
 			
 			//Check the status game in order to continue playing or not
-			firstGame.checkGameStatus();
+			firstGame.checkGameStatus("Guard");
 			if(Game.gameState == GameState.GAMEOVER) {
 				GameMap.print(firstGame.updateMap(firstGame.map.getMap()));
 				System.out.println("\nGame Over !");
@@ -60,12 +60,13 @@ public class UserInteraction {
 	}
 	
 	public static void secondDungeon() {
-
+		
 		//Variables
-		Game secondGame = new Game();
+		GameMap gameMap = new GameMap();
+		Game secondGame = new Game(gameMap);
 		Lever.leverState = 'k';
 		char input = ' ';
-			
+		
 		while((input != 'e') && (Game.gameState == GameState.PLAYING)) 
 		{
 			//Print the updated map
@@ -82,7 +83,7 @@ public class UserInteraction {
 				secondGame.ogre.get(i).ogreMovement(secondGame.hero.x, secondGame.hero.y, secondGame.updateMap(secondGame.map.getMap()));
 			
 			//Check the status game in order to continue playing or not
-			secondGame.checkGameStatus();
+			secondGame.checkGameStatus("Ogre");
 			if(Game.gameState == GameState.GAMEOVER) {
 				GameMap.print(secondGame.updateMap(secondGame.map.getMap()));
 				System.out.println("\nGame Over !");

@@ -19,13 +19,13 @@ public class GameMap {
 
 	private static char[][] keep = { 
 			{'X','X','X','X','X','X','X','X','X'},
-			{' ',' ',' ',' ',' ',' ',' ',' ','X'},
-			{'X',' ',' ',' ',' ',' ',' ',' ','X'}, 
+			{'I',' ',' ',' ','O',' ',' ','k','X'},
+			{'X',' ',' ',' ','*',' ',' ',' ','X'}, 
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'}, 
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'}, 
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'}, 
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
-			{'X',' ',' ',' ',' ',' ',' ',' ','X'}, 
+			{'X','A',' ',' ',' ',' ',' ',' ','X'}, 
 			{'X','X','X','X','X','X','X','X','X'} };
 
 	private char[][] map;
@@ -35,12 +35,7 @@ public class GameMap {
 	}
 	
 	public GameMap(char[][] givenMap) {
-		if(Game.LEVEL == 1) {
-			dungeon = givenMap;
-		}
-		else if(Game.LEVEL == 2){
-			keep = givenMap;
-		}
+		map = givenMap;
 	}
 
 	public static char[][] deepCopy(char[][] original) {

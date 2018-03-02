@@ -20,102 +20,132 @@ public class Guard extends Elements {
 		this.guardRoute = guardRoute;
 	}
 
-//	public boolean guardMovement() {
-//
-//		//Variables
-//		Random rand = new Random();
-//		
-//		if(guardType == "Rookie") {
-//
-//			if(position == 23)
-//				position = 0;
-//			else
-//				position++;
-//
-//			this.x = guardRoute[position][0];
-//			this.y = guardRoute[position][1];
-//
-//			if(position == 0)
-//				return true;
-//
-//		}
-//		else if(guardType == "Drunken") {
-//
-//			int tmp = rand.nextInt(10) + 1;
-//
-//			if(stop == 0) {
-//				if(tmp > 7) { 
-//					state = 'g';
-//					stop = rand.nextInt(4) + 1;
-//				}
-//				else {
-//					if((position == 23) && direction) {
-//						position = 0;
-//						return true;
-//					}
-//					else if((position == 0) && (direction == false))
-//						position = 23;
-//					else if(direction)
-//						position++;
-//					else
-//						position--;
-//
-//					this.x = guardRoute[position][0];
-//					this.y = guardRoute[position][1];
-//
-//				}
-//			}
-//			else {
-//				stop--;
-//
-//				if(stop == 0) {
-//
-//					state = 'G';
-//					tmp = rand.nextInt(2);
-//
-//					if(tmp == 1)
-//						direction = false;
-//					else
-//						direction = true;
-//				}
-//			}
-//		}
-//		else if(guardType == "Suspicious") {
-//
-//			if(stop == 0) {
-//				
-//				if(position == 23)
-//					position = 0;
-//				else
-//					position++;
-//				
-//				this.x = guardRoute[position][0];
-//				this.y = guardRoute[position][1];
-//
-//				stop = rand.nextInt(2);
-//
-//				if(position == 23) {
-//					position = 0;
-//					stop = 0;
-//					return true;
-//				}
-//
-//			}
-//			else {
-//				stop--;
-//
-//				if(position == 0)
-//					position = 23;
-//				else
-//					position--;
-//
-//				this.x = guardRoute[position][0];
-//				this.y = guardRoute[position][1];
-//
-//			}
-//		}
-//
-//		return false;
-//	}
+	public boolean guardMovement() {
+
+		//Variables
+		Random rand = new Random();
+
+		if(guardType == "Rookie") {
+
+			if(guardRoute[position] == 'w')
+				x--;
+			else if(guardRoute[position] == 's')
+				this.x++;
+			else if(guardRoute[position] == 'a')
+				y--;
+			else if(guardRoute[position] == 'd')
+				this.y++;
+
+			if(position == 23) {
+				position = 0;
+				return true;
+			}
+			else
+				position++;
+
+		}
+		else if(guardType == "Drunken") {
+
+			int tmp = rand.nextInt(10) + 1;
+
+			if(stop == 0) {
+				if(tmp > 8) { 
+					state = 'g';
+					stop = rand.nextInt(3) + 1;
+				}
+				else {
+
+					if((position == 0) && !direction)
+						direction = true;
+
+					if(direction) {
+						if(guardRoute[position] == 'w')
+							this.x--;
+						else if(guardRoute[position] == 's')
+							this.x++;
+						else if(guardRoute[position] == 'a')
+							this.y--;
+						else if(guardRoute[position] == 'd')
+							this.y++;
+					}
+					else {
+						if(guardRoute[position-1] == 's')
+							this.x--;
+						else if(guardRoute[position-1] == 'w')
+							this.x++;
+						else if(guardRoute[position-1] == 'd')
+							this.y--;
+						else if(guardRoute[position-1] == 'a')
+							this.y++;
+					}
+
+					if((position == 23) && direction) {
+						position = 0;
+						return true;
+					}
+					else if(direction)
+						position++;
+					else
+						position--;
+				}
+			}
+			else {
+				stop--;
+
+				if(stop == 0) {
+
+					state = 'G';
+					tmp = rand.nextInt(2);
+
+					if(tmp == 1)
+						direction = false;
+					else
+						direction = true;
+				}
+			}
+
+		}
+		else if(guardType == "Suspicious") {
+
+			if(stop == 0) {
+
+				if(guardRoute[position] == 'w')
+					this.x--;
+				else if(guardRoute[position] == 's')
+					this.x++;
+				else if(guardRoute[position] == 'a')
+					this.y--;
+				else if(guardRoute[position] == 'd')
+					this.y++;
+
+				
+				stop = rand.nextInt(2);
+				
+				if(position == 23) {
+					position = 0;
+					stop = 0;
+					return true;
+				}
+				else 
+					position++;
+			}
+			else {
+				
+				if(guardRoute[position-1] == 's')
+					this.x--;
+				else if(guardRoute[position-1] == 'w')
+					this.x++;
+				else if(guardRoute[position-1] == 'd')
+					this.y--;
+				else if(guardRoute[position-1] == 'a')
+					this.y++;
+				
+				stop = 0;
+				position--;
+			}
+		}
+
+		return false;
+	}
 
 }

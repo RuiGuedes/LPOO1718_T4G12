@@ -7,14 +7,14 @@ public class GameMap {
 
 	private static char[][] dungeon = { 
 			{'X','X','X','X','X','X','X','X','X','X'},
-			{'X',' ',' ',' ',' ',' ','X',' ',' ','X'},
+			{'X','H',' ',' ','I',' ','X',' ','G','X'},
 			{'X','X','X',' ','X','X','X',' ',' ','X'}, 
-			{'X',' ',' ',' ',' ',' ','X',' ',' ','X'}, 
+			{'X',' ','I',' ','I',' ','X',' ',' ','X'}, 
 			{'X','X','X',' ','X','X','X',' ',' ','X'}, 
-			{' ',' ',' ',' ',' ',' ',' ',' ',' ','X'}, 
-			{' ',' ',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'}, 
+			{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X','X','X',' ','X','X','X','X',' ','X'}, 
-			{'X',' ',' ',' ',' ',' ','X',' ',' ','X'}, 
+			{'X',' ','I',' ','I',' ','X','k',' ','X'}, 
 			{'X','X','X','X','X','X','X','X','X','X'} };
 
 	private static char[][] keep = { 
@@ -31,7 +31,7 @@ public class GameMap {
 	private char[][] map;
 
 	public GameMap() {
-		
+		this.getOriginalMap();
 	}
 	
 	public GameMap(char[][] givenMap) {
@@ -68,6 +68,10 @@ public class GameMap {
 	
 	public char[][] getMap() {
 		return deepCopy(map);
+	}
+	
+	public void setMap(char[][] newMap) {
+		map = newMap;
 	}
 
 	public static void print(char[][] map) {

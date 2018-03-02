@@ -34,50 +34,15 @@ public class Game {
 	public Game() {
 
 		map = new GameMap();
-
+		
 		initElements();
-
-		//hero = new Hero();
-		//lever = new Lever();
-
-//		if(LEVEL == 1) {
-
-			//Variables
-			//Random rand = new Random();
-			//int[][] coordinates = { {1,4}, {3,2}, {3,4}, {5,0}, {6,0}, {8,2}, {8,4} };
-			//guardRouting = rand.nextInt(3);
-
-			//			//Create 3 different types of guard
-			//			guard = new Guard[3];
-			//			guard[0] = new Guard("Rookie");
-			//			guard[1] = new Guard("Drunken");
-			//			guard[2] = new Guard("Suspicious");
-
-			//			door = new Door[coordinates.length];
-			//
-			//			for(int i = 0; i < coordinates.length; i++) {
-			//				door[i] = new Door(coordinates[i]);
-			//			}
-
-//		}
-//		else {
-//
-//			//Create a certain amount of ogres
-//			ogre = new ArrayList<Ogre>(horde);
-//
-//			for(int i = 0; i < horde; i++)
-//				ogre.add(new Ogre());
-//
-//			door = new Door[1];
-//			door[0] = new Door(new int[] {1,0});
-//		}
 
 	}
 
 	public void initElements() {
-
+		
 		char[][] tmpMap = map.getMap();
-
+	
 		door = new ArrayList<Door>();
 		ogre = new ArrayList<Ogre>();
 		
@@ -86,6 +51,7 @@ public class Game {
 			for(int j = 0; j < tmpMap[i].length; j++) 
 			{
 				if(tmpMap[i][j] == 'H') {
+					tmpMap[i][j] = ' ';
 					hero = new Hero(i,j,'H');
 				}
 				else if(tmpMap[i][j] == 'A') {
@@ -97,12 +63,13 @@ public class Game {
 				else if(tmpMap[i][j] == 'G') {
 					if(LEVEL == 1) {
 
-						char[] guardRoute = { 'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 
-								'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w' }; 
+						char[] guardRoute = {'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 
+								'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'}; 
 
 						Random rand = new Random();
-						guardRouting = rand.nextInt(3);
-
+//						guardRouting = rand.nextInt(3);
+						guardRouting = 2;
+						System.out.println("Guard routing " + guardRouting);
 						//Create 3 different types of guard
 						guard = new Guard[3];
 						guard[0] = new Guard(i,j,"Rookie",guardRoute);
@@ -138,6 +105,8 @@ public class Game {
 					tmpMap[i][j] = ' ';
 			}
 		}
+		
+		map.setMap(tmpMap);
 	}
 
 	public void checkGameStatus() {

@@ -19,9 +19,9 @@ public class TestDungeonGameLogic {
 	public void testMoveHeroIntoFreeCell() {
 		GameMap gameMap = new GameMap(map);
 		Game game = new Game(gameMap);
-		assertTrue("Sucess !",game.hero.isHeroAtPosition(1,1));
+		assertTrue("Sucess !",game.hero.equals(1,1));
 		game.hero.heroMovement('s', map);
-		assertTrue("Sucess !",game.hero.isHeroAtPosition(2,1));
+		assertTrue("Sucess !",game.hero.equals(2,1));
 		
 	}
 	
@@ -29,9 +29,9 @@ public class TestDungeonGameLogic {
 	public void testMoveHeroIntoWall() {
 		GameMap gameMap = new GameMap(map);
 		Game game = new Game(gameMap);
-		assertTrue("Sucess !",game.hero.isHeroAtPosition(1,1));
+		assertTrue("Sucess !",game.hero.equals(1,1));
 		game.hero.heroMovement('a', map);
-		assertTrue("Sucess !",game.hero.isHeroAtPosition(1,1));
+		assertTrue("Sucess !",game.hero.equals(1,1));
 		
 	}
 	
@@ -50,22 +50,23 @@ public class TestDungeonGameLogic {
 	public void testHeroFailToExit() {
 		GameMap gameMap = new GameMap(map);
 		Game game = new Game(gameMap);
-		assertTrue("Sucess !",game.hero.isHeroAtPosition(1,1));
+		assertTrue("Sucess !",game.hero.equals(1,1));
 		game.hero.heroMovement('s', map);
-		assertTrue("Sucess !",game.hero.isHeroAtPosition(2,1));
+		assertTrue("Sucess !",game.hero.equals(2,1));
 		game.hero.heroMovement('a', map);
-		assertTrue("Sucess !",game.hero.isHeroAtPosition(2,1));
+		assertTrue("Sucess !",game.hero.equals(2,1));
 	}
 	
 	@Test
 	public void testLeverActiveOpenExitDoors() {
 		GameMap gameMap = new GameMap(map);
 		Game game = new Game(gameMap);
-		assertTrue("Sucess !",game.hero.isHeroAtPosition(1,1));
+		assertTrue("Sucess !",game.hero.equals(1,1));
 		game.hero.heroMovement('s', map);
 		game.hero.heroMovement('s', map);
-		assertEquals("Sucess !", Game.door.get(0).state, 'S');
-		assertEquals("Sucess !", Game.door.get(1).state, 'S');
+		assertEquals("Sucess !", Lock.lockState, 'K');
+//		assertEquals("Sucess !", Game.door.get(0).state, 'S');
+//		assertEquals("Sucess !", Game.door.get(1).state, 'S');
 	}
 
 }

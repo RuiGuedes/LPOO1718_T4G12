@@ -4,7 +4,7 @@ import dkeep.logic.GameMap;
 import dkeep.logic.Hero;
 import dkeep.logic.Guard;
 import dkeep.logic.Ogre;
-import dkeep.logic.Lever;
+import dkeep.logic.Lock;
 import dkeep.logic.Door;
 import java.util.Random;
 import java.util.ArrayList;
@@ -15,13 +15,13 @@ public class Game {
 
 	//Global data members
 	public static GameState gameState = GameState.PLAYING;
-	public static int LEVEL = 1;
+	public static int LEVEL = 0;
 
 	//Generic Data members
 	public GameMap map;
 	public Hero hero;
 	public static ArrayList<Door> door;
-	public Lever lever;
+	public Lock lock;
 
 	//Guard data members
 	public int guardRouting;
@@ -56,7 +56,12 @@ public class Game {
 					hero = new Hero(i,j,'A');
 				}
 				else if(tmpMap[i][j] == 'k') {
-					lever = new Lever(i,j);
+					if(Game.LEVEL == 1)
+						lock = new Lock(i,j,false);
+					else if(Game.LEVEL == 2)
+						lock = new Lock(i,j,true);
+					else	//Allows to choose the type of lock by changing it lockType
+						lock = new Lock(i,j,false);
 				}
 				else if(tmpMap[i][j] == 'G') {
 					if(LEVEL == 1) {
@@ -144,8 +149,8 @@ public class Game {
 		if(Game.LEVEL == 1) {
 			tmpMap[guard[guardRouting].x][guard[guardRouting].y] = guard[guardRouting].state;
 
-			if(!((hero.x == lever.x) && (hero.y == lever.y)))
-				tmpMap[lever.x][lever.y] = Lever.leverState;
+			if(!((hero.x == lock.x) && (hero.y == lock.y)))
+				tmpMap[lock.x][lock.y] = Lock.lockState;
 		}
 		else {
 			for(int i = 0; i < horde; i++) 
@@ -155,8 +160,8 @@ public class Game {
 					tmpMap[ogre.get(i).clubX][ogre.get(i).clubY] = ogre.get(i).club;
 			}
 
-			if(tmpMap[lever.x][lever.y] == ' ')
-				tmpMap[lever.x][lever.y] = Lever.leverState;
+			if(tmpMap[lock.x][lock.y] == ' ')
+				tmpMap[lock.x][lock.y] = Lock.lockState;
 		}
 
 		return tmpMap;

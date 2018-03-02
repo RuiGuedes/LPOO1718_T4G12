@@ -17,6 +17,7 @@ public class UserInteraction {
 	public static boolean firstDungeon() {
 
 		//Variables
+		Game.LEVEL = 1;
 		GameMap gameMap = new GameMap();
 		Game firstGame = new Game(gameMap);
 		char input = ' ';
@@ -33,7 +34,7 @@ public class UserInteraction {
 			firstGame.hero.heroMovement(input, firstGame.updateMap(firstGame.map.getMap()));
 			
 			//Check if level is complete
-			if(Game.LEVEL == 2)
+			if(Game.gameState == Game.GameState.VICTORY)
 				break;
 			
 			//Executes guard route
@@ -53,7 +54,7 @@ public class UserInteraction {
 		}
 		
 		//Returns true if first dungeon is completed, false if game over
-		if((input != 'e') && (Game.gameState == GameState.PLAYING))
+		if((input != 'e') && (Game.gameState == GameState.VICTORY))
 			return true;
 		else 
 			return false;
@@ -62,9 +63,11 @@ public class UserInteraction {
 	public static void secondDungeon() {
 		
 		//Variables
+		Game.LEVEL = 2;
+		Game.gameState = GameState.PLAYING;
 		GameMap gameMap = new GameMap();
 		Game secondGame = new Game(gameMap);
-		Lever.leverState = 'k';
+		Lock.lockState = 'k';
 		char input = ' ';
 		
 		while((input != 'e') && (Game.gameState == GameState.PLAYING)) 

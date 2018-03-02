@@ -12,6 +12,7 @@ public class Hero extends Elements {
 	
 	public void heroMovement(char input, char[][] tmpMap) {
 
+		
 		//Hero Movement
 		switch(input)
 		{

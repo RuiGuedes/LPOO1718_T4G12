@@ -57,11 +57,11 @@ public class Game {
 				}
 				else if(tmpMap[i][j] == 'k') {
 					if(Game.LEVEL == 1)
-						lock = new Lock(i,j,false,'k');
+						lock = new Lock(i,j,false);
 					else if(Game.LEVEL == 2)
-						lock = new Lock(i,j,true,'k');
+						lock = new Lock(i,j,true);
 					else	//Allows to choose the type of lock by changing it lockType
-						lock = new Lock(i,j,false,'k');
+						lock = new Lock(i,j,false);
 				}
 				else if(tmpMap[i][j] == 'G') {
 					if(LEVEL == 1) {

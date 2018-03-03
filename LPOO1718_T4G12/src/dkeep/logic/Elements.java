@@ -10,6 +10,9 @@ public class Elements {
 	}
 	
 	public boolean equals(int x, int y) {
-		return (this.x == x) && (this.y == y);
+		if((this.x == x) && (this.y == y))
+			return true;
+		else
+			return false;
 	}
 }

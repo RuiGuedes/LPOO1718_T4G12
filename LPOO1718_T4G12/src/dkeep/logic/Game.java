@@ -61,7 +61,7 @@ public class Game {
 						lock = new Lock(i,j,false);
 				}
 				else if(tmpMap[i][j] == 'G') {
-					if(LEVEL == 1) {
+					if(Game.LEVEL == 1) {
 
 						char[] guardRoute = {'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 
 								'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'}; 
@@ -82,7 +82,7 @@ public class Game {
 					}
 				}
 				else if(tmpMap[i][j] == 'I') {
-					if((i == 0) || (j == 0) || (i == (tmpMap.length-1)) || (j == tmpMap[i].length)) 
+					if((i == 0) || (j == 0) || (i == (tmpMap.length-1)) || (j == (tmpMap.length-1))) 
 						door.add(new Door(i,j,'I',true));	//Exit Door
 					else
 						door.add(new Door(i,j,'I',false));	//Normal Door

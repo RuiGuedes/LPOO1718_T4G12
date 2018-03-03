@@ -49,7 +49,7 @@ public class Hero extends Elements {
 				y--;
 			else if(tmpMap[x][y-1] == 'I') {
 				if(Lock.lockStatus) {
-					Door tmp = new Door(Game.door.get(0).x, Game.door.get(0).y, 'S');
+					Door tmp = new Door(Game.door.get(0).x, Game.door.get(0).y, 'S',Game.door.get(0).type);
 					Game.door.set(0,tmp);
 				}
 			}

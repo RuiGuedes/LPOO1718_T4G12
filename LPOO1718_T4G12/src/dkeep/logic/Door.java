@@ -3,24 +3,25 @@ package dkeep.logic;
 public class Door extends Elements {
 
 	public char state;
+	public boolean type;
 
-	public Door(int x, int y, char state) {
+	public Door(int x, int y, char state, boolean type) {
 		this.x = x;
 		this.y = y;
 		this.state = state;
+		this.type = type;
 	}
 
 	public static void openDoors() {
 		for(int i = 0; i < Game.door.size(); i++) {
+			Door tmp;
 
-			if((i == 3) || (i == 4)) {
-				Door tmp = new Door(Game.door.get(i).x, Game.door.get(i).y, 'S');
-				Game.door.set(i,tmp);
-			}
-			else {
-				Door tmp = new Door(Game.door.get(i).x, Game.door.get(i).y, ' ');
-				Game.door.set(i,tmp);
-			}
+			if(Game.door.get(i).type)
+				tmp = new Door(Game.door.get(i).x, Game.door.get(i).y, 'S', Game.door.get(i).type);
+			else 
+				tmp = new Door(Game.door.get(i).x, Game.door.get(i).y, ' ', Game.door.get(i).type);
+			
+			Game.door.set(i,tmp);
 		}
 	}
 }

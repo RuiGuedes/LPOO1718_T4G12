@@ -69,6 +69,7 @@ public class UserInteraction {
 		Game secondGame = new Game(gameMap);
 		Lock.lockState = 'k';
 		char input = ' ';
+
 		
 		while((input != 'e') && (Game.gameState == GameState.PLAYING)) 
 		{

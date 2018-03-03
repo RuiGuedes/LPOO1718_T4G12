@@ -57,11 +57,11 @@ public class Game {
 				}
 				else if(tmpMap[i][j] == 'k') {
 					if(Game.LEVEL == 1)
-						lock = new Lock(i,j,false);
+						lock = new Lock(i,j,false,'k');
 					else if(Game.LEVEL == 2)
-						lock = new Lock(i,j,true);
+						lock = new Lock(i,j,true,'k');
 					else	//Allows to choose the type of lock by changing it lockType
-						lock = new Lock(i,j,false);
+						lock = new Lock(i,j,false,'k');
 				}
 				else if(tmpMap[i][j] == 'G') {
 					if(LEVEL == 1) {
@@ -85,7 +85,10 @@ public class Game {
 					}
 				}
 				else if(tmpMap[i][j] == 'I') {
-					door.add(new Door(i,j,'I'));
+					if((i == 0) || (j == 0) || (i == (tmpMap.length-1)) || (j == tmpMap[i].length)) 
+						door.add(new Door(i,j,'I',true));	//Exit Door
+					else
+						door.add(new Door(i,j,'I',false));	//Normal Door
 				}
 				else if(tmpMap[i][j] == 'O') {
 					
@@ -146,13 +149,13 @@ public class Game {
 		for(int i = 0; i < door.size(); i++)
 			tmpMap[door.get(i).x][door.get(i).y] = door.get(i).state;
 
-		if(Game.LEVEL == 1) {
+		if(guard != null) {
 			tmpMap[guard[guardRouting].x][guard[guardRouting].y] = guard[guardRouting].state;
 
 			if(!((hero.x == lock.x) && (hero.y == lock.y)))
 				tmpMap[lock.x][lock.y] = Lock.lockState;
 		}
-		else {
+		else if(ogre.size() != 0) {
 			for(int i = 0; i < horde; i++) 
 			{
 				tmpMap[ogre.get(i).x][ogre.get(i).y] = ogre.get(i).state;

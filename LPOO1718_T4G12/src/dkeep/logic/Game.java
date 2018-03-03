@@ -14,7 +14,7 @@ public class Game {
 	public static enum GameState { PLAYING, GAMEOVER, VICTORY };
 
 	//Global data members
-	public static GameState gameState = GameState.PLAYING;
+	public static GameState gameState;
 	public static int LEVEL = 0;
 
 	//Generic Data members
@@ -32,6 +32,7 @@ public class Game {
 	public int horde = 1;
 
 	public Game(GameMap gameMap) {
+		Game.gameState = GameState.PLAYING;
 		map = gameMap;
 		
 		initElements();
@@ -48,12 +49,8 @@ public class Game {
 		{
 			for(int j = 0; j < tmpMap[i].length; j++) 
 			{
-				if(tmpMap[i][j] == 'H') {
-					tmpMap[i][j] = ' ';
-					hero = new Hero(i,j,'H');
-				}
-				else if(tmpMap[i][j] == 'A') {
-					hero = new Hero(i,j,'A');
+				if((tmpMap[i][j] == 'H') || (tmpMap[i][j] == 'A')) {
+					hero = new Hero(i,j,tmpMap[i][j]);
 				}
 				else if(tmpMap[i][j] == 'k') {
 					if(Game.LEVEL == 1)

@@ -36,7 +36,7 @@ public class Guard extends Elements {
 			else if(guardRoute[position] == 'd')
 				this.y++;
 
-			if(position == 23) {
+			if(position == (guardRoute.length - 1)) {
 				position = 0;
 				return true;
 			}
@@ -79,7 +79,7 @@ public class Guard extends Elements {
 							this.y++;
 					}
 
-					if((position == 23) && direction) {
+					if((position == (guardRoute.length - 1)) && direction) {
 						position = 0;
 						return true;
 					}
@@ -121,7 +121,7 @@ public class Guard extends Elements {
 				
 				stop = rand.nextInt(2);
 				
-				if(position == 23) {
+				if(position == (guardRoute.length - 1)) {
 					position = 0;
 					stop = 0;
 					return true;
@@ -147,5 +147,9 @@ public class Guard extends Elements {
 
 		return false;
 	}
-
+	
+	public void changeGuardRoute(char[] guardRoute) {
+		this.guardRoute = guardRoute;
+	}
+	
 }

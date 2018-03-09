@@ -34,17 +34,98 @@ public class Game {
 	public Game(GameMap gameMap) {
 		Game.gameState = GameState.PLAYING;
 		map = gameMap;
-		
+
 		initElements();
 	}
-
-	public void initElements() {
-		
-		char[][] tmpMap = map.getMap();
 	
+	public Game(GameMap gameMap, String guardType, int ogresNumber) {
+		Game.gameState = GameState.PLAYING;
+		map = gameMap;
+
+		initElements(guardType,ogresNumber);
+	}
+	
+	public void initElements(String guardType, int ogresNumber) {
+
+		char[][] tmpMap = map.getMap();
+
 		door = new ArrayList<Door>();
 		ogre = new ArrayList<Ogre>();
-		
+
+		for(int i = 0; i < tmpMap.length; i++)
+		{
+			for(int j = 0; j < tmpMap[i].length; j++) 
+			{
+				if((tmpMap[i][j] == 'H') || (tmpMap[i][j] == 'A')) {
+					hero = new Hero(i,j,tmpMap[i][j]);
+				}
+				else if(tmpMap[i][j] == 'k') {
+					if(Game.LEVEL == 1)
+						lock = new Lock(i,j,false);
+					else if(Game.LEVEL == 2)
+						lock = new Lock(i,j,true);
+					else	//Allows to choose the type of lock by changing it lockType
+						lock = new Lock(i,j,false);
+				}
+				else if(tmpMap[i][j] == 'G') {
+					if(Game.LEVEL == 1) {
+
+						char[] guardRoute = {'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 
+								'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'}; 
+
+						//Create guard
+						guard = new Guard[1];
+						guardRouting = 0;
+						guard[0] = new Guard(i,j,guardType,guardRoute);
+					}
+					else {
+						guard = new Guard[1];
+						guardRouting = 0;
+						guard[guardRouting] = new Guard(i,j,guardType, null);
+					}
+				}
+				else if(tmpMap[i][j] == 'I') {
+					if((i == 0) || (j == 0) || (i == (tmpMap.length-1)) || (j == (tmpMap.length-1))) 
+						door.add(new Door(i,j,'I',true));	//Exit Door
+					else
+						door.add(new Door(i,j,'I',false));	//Normal Door
+				}
+				else if(tmpMap[i][j] == 'O') {
+
+					int tmpX = i;
+					int tmpY = j;
+
+					if((tmpMap[i+1][j]) == '*') 
+						tmpX++;
+					else if((tmpMap[i-1][j]) == '*')
+						tmpX--;
+					else if((tmpMap[i][j+1]) == '*')
+						tmpY++;
+					else if((tmpMap[i][j-1]) == '*')
+						tmpY--;
+					
+					while(ogresNumber > 0) {
+						ogre.add(new Ogre(i,j,tmpX,tmpY));
+						ogresNumber--;
+					}
+				}
+
+				if(tmpMap[i][j] != 'X')
+					tmpMap[i][j] = ' ';
+			}
+		}
+
+		map.setMap(tmpMap);
+	}
+
+
+	public void initElements() {
+
+		char[][] tmpMap = map.getMap();
+
+		door = new ArrayList<Door>();
+		ogre = new ArrayList<Ogre>();
+
 		for(int i = 0; i < tmpMap.length; i++)
 		{
 			for(int j = 0; j < tmpMap[i].length; j++) 
@@ -68,7 +149,7 @@ public class Game {
 
 						Random rand = new Random();
 						guardRouting = rand.nextInt(3);
-					 
+
 						//Create 3 different types of guard
 						guard = new Guard[3];
 						guard[0] = new Guard(i,j,"Rookie",guardRoute);
@@ -88,10 +169,10 @@ public class Game {
 						door.add(new Door(i,j,'I',false));	//Normal Door
 				}
 				else if(tmpMap[i][j] == 'O') {
-					
+
 					int tmpX = i;
 					int tmpY = j;
-					
+
 					if((tmpMap[i+1][j]) == '*') 
 						tmpX++;
 					else if((tmpMap[i-1][j]) == '*')
@@ -100,7 +181,7 @@ public class Game {
 						tmpY++;
 					else if((tmpMap[i][j-1]) == '*')
 						tmpY--;
-					
+
 					ogre.add(new Ogre(i,j,tmpX,tmpY));
 				}
 
@@ -108,7 +189,7 @@ public class Game {
 					tmpMap[i][j] = ' ';
 			}
 		}
-		
+
 		map.setMap(tmpMap);
 	}
 
@@ -166,18 +247,18 @@ public class Game {
 
 		return tmpMap;
 	}
-	
+
 	public String mapToString(char[][] map) {
-		
+
 		String result = "";
-		
+
 		for(int i = 0; i < map.length; i++) {
 			for(int j = 0; j < map[i].length; j++) 
 				result += map[i][j] + " ";
-			
+
 			result += "\n";
 		}
-		
+
 		return result;
 	}
 }

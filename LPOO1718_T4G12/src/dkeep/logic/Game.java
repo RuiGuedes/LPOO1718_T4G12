@@ -68,7 +68,7 @@ public class Game {
 
 						Random rand = new Random();
 						guardRouting = rand.nextInt(3);
-					
+					 
 						//Create 3 different types of guard
 						guard = new Guard[3];
 						guard[0] = new Guard(i,j,"Rookie",guardRoute);

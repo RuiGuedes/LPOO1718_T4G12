@@ -85,9 +85,9 @@ public class GameInterface {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{427, 245, 0};
-		gridBagLayout.rowHeights = new int[]{134, 395, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowHeights = new int[]{134, 429, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 
 		JPanel panel = new JPanel();
@@ -146,6 +146,8 @@ public class GameInterface {
 
 		JPanel panel_2 = new JPanel();
 		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
+		gbc_panel_2.weightx = 1.0;
+		gbc_panel_2.weighty = 1.0;
 		gbc_panel_2.insets = new Insets(0, 0, 0, 5);
 		gbc_panel_2.fill = GridBagConstraints.BOTH;
 		gbc_panel_2.gridx = 0;
@@ -153,7 +155,7 @@ public class GameInterface {
 		frame.getContentPane().add(panel_2, gbc_panel_2);
 		GridBagLayout gbl_panel_2 = new GridBagLayout();
 		gbl_panel_2.columnWidths = new int[]{17, 391, 0};
-		gbl_panel_2.rowHeights = new int[]{377, 20, 0};
+		gbl_panel_2.rowHeights = new int[]{349, 20, 0};
 		gbl_panel_2.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		panel_2.setLayout(gbl_panel_2);
@@ -161,6 +163,7 @@ public class GameInterface {
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(255, 255, 255));
 		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
+		gbc_panel_3.weighty = 1.0;
 		gbc_panel_3.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_3.fill = GridBagConstraints.BOTH;
 		gbc_panel_3.gridx = 1;
@@ -176,6 +179,9 @@ public class GameInterface {
 		mapa = new JTextArea();
 		mapa.setFont(new Font("Courier New", Font.BOLD, 13));
 		GridBagConstraints gbc_mapa = new GridBagConstraints();
+		gbc_mapa.weightx = 1.0;
+		gbc_mapa.gridwidth = 2;
+		gbc_mapa.weighty = 1.0;
 		gbc_mapa.insets = new Insets(0, 0, 0, 5);
 		gbc_mapa.anchor = GridBagConstraints.NORTHWEST;
 		gbc_mapa.gridx = 0;
@@ -185,20 +191,23 @@ public class GameInterface {
 		messages = new JLabel("You can start a new game");
 		messages.setFont(new Font("Courier New", Font.BOLD, 11));
 		GridBagConstraints gbc_messages = new GridBagConstraints();
-		gbc_messages.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_messages.weightx = 1.0;
+		gbc_messages.weighty = 0.1;
+		gbc_messages.anchor = GridBagConstraints.WEST;
 		gbc_messages.gridx = 1;
 		gbc_messages.gridy = 1;
 		panel_2.add(messages, gbc_messages);
 
 		JPanel panel_1 = new JPanel();
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.weighty = 1.0;
 		gbc_panel_1.fill = GridBagConstraints.BOTH;
 		gbc_panel_1.gridx = 1;
 		gbc_panel_1.gridy = 1;
 		frame.getContentPane().add(panel_1, gbc_panel_1);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[]{78, 89, 81, 0};
-		gbl_panel_1.rowHeights = new int[]{23, 120, 0, 0, 0, 108, 0, 0};
+		gbl_panel_1.rowHeights = new int[]{23, 34, 55, 56, 0, 98, 0, 0};
 		gbl_panel_1.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_1.setLayout(gbl_panel_1);
@@ -216,6 +225,7 @@ public class GameInterface {
 		});
 		Up.setEnabled(false);
 		GridBagConstraints gbc_Up = new GridBagConstraints();
+		gbc_Up.weighty = 0.1;
 		gbc_Up.insets = new Insets(0, 0, 5, 5);
 		gbc_Up.gridx = 1;
 		gbc_Up.gridy = 2;
@@ -234,6 +244,7 @@ public class GameInterface {
 		});
 		Left.setEnabled(false);
 		GridBagConstraints gbc_Left = new GridBagConstraints();
+		gbc_Left.weightx = 1.0;
 		gbc_Left.anchor = GridBagConstraints.EAST;
 		gbc_Left.insets = new Insets(0, 0, 5, 5);
 		gbc_Left.gridx = 0;
@@ -253,6 +264,7 @@ public class GameInterface {
 		});
 		Right.setEnabled(false);
 		GridBagConstraints gbc_Right = new GridBagConstraints();
+		gbc_Right.weightx = 1.0;
 		gbc_Right.anchor = GridBagConstraints.WEST;
 		gbc_Right.insets = new Insets(0, 0, 5, 0);
 		gbc_Right.gridx = 2;
@@ -272,6 +284,7 @@ public class GameInterface {
 		});
 		Down.setEnabled(false);
 		GridBagConstraints gbc_Down = new GridBagConstraints();
+		gbc_Down.weighty = 0.1;
 		gbc_Down.insets = new Insets(0, 0, 5, 5);
 		gbc_Down.gridx = 1;
 		gbc_Down.gridy = 4;
@@ -284,6 +297,7 @@ public class GameInterface {
 			}
 		});
 		GridBagConstraints gbc_Exit = new GridBagConstraints();
+		gbc_Exit.weighty = 1.0;
 		gbc_Exit.insets = new Insets(0, 0, 0, 5);
 		gbc_Exit.gridx = 1;
 		gbc_Exit.gridy = 6;
@@ -318,6 +332,7 @@ public class GameInterface {
 			}
 		});
 		GridBagConstraints gbc_NewGame = new GridBagConstraints();
+		gbc_NewGame.weighty = 1.0;
 		gbc_NewGame.insets = new Insets(0, 0, 5, 5);
 		gbc_NewGame.anchor = GridBagConstraints.NORTHWEST;
 		gbc_NewGame.gridx = 1;

@@ -227,6 +227,11 @@ public class GameInterface {
 		panel_1.add(Down, gbc_Down);
 		
 		JButton Exit = new JButton("Exit");
+		Exit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
 		GridBagConstraints gbc_Exit = new GridBagConstraints();
 		gbc_Exit.insets = new Insets(0, 0, 0, 5);
 		gbc_Exit.gridx = 1;

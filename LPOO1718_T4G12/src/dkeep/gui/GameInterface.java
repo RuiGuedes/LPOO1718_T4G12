@@ -1,5 +1,7 @@
 package dkeep.gui;
 
+import dkeep.logic.*;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -32,6 +34,8 @@ import java.awt.CardLayout;
 import javax.swing.JTextArea;
 import javax.swing.JScrollBar;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GameInterface {
 
@@ -158,13 +162,14 @@ public class GameInterface {
 		gbl_panel_3.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panel_3.setLayout(gbl_panel_3);
 		
-		JTextArea txtrS = new JTextArea();
-		GridBagConstraints gbc_txtrS = new GridBagConstraints();
-		gbc_txtrS.insets = new Insets(0, 0, 0, 5);
-		gbc_txtrS.anchor = GridBagConstraints.NORTHWEST;
-		gbc_txtrS.gridx = 0;
-		gbc_txtrS.gridy = 0;
-		panel_3.add(txtrS, gbc_txtrS);
+		JTextArea mapa = new JTextArea();
+		mapa.setFont(new Font("Courier New", Font.BOLD, 13));
+		GridBagConstraints gbc_mapa = new GridBagConstraints();
+		gbc_mapa.insets = new Insets(0, 0, 0, 5);
+		gbc_mapa.anchor = GridBagConstraints.NORTHWEST;
+		gbc_mapa.gridx = 0;
+		gbc_mapa.gridy = 0;
+		panel_3.add(mapa, gbc_mapa);
 		
 		JLabel Messages = new JLabel("You can start a new game");
 		Messages.setFont(new Font("Courier New", Font.BOLD, 11));
@@ -181,20 +186,11 @@ public class GameInterface {
 		gbc_panel_1.gridy = 1;
 		frame.getContentPane().add(panel_1, gbc_panel_1);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
-		gbl_panel_1.columnWidths = new int[]{34, 0, 36, 36, 0, 0, 34, 0};
+		gbl_panel_1.columnWidths = new int[]{41, 0, 36, 36, 0, 0, 34, 0};
 		gbl_panel_1.rowHeights = new int[]{34, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_panel_1.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_1.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_1.setLayout(gbl_panel_1);
-		
-		JButton Button = new JButton("New game");
-		Button.setFont(new Font("Courier New", Font.BOLD, 11));
-		GridBagConstraints gbc_Button = new GridBagConstraints();
-		gbc_Button.gridwidth = 3;
-		gbc_Button.insets = new Insets(0, 0, 5, 5);
-		gbc_Button.gridx = 2;
-		gbc_Button.gridy = 0;
-		panel_1.add(Button, gbc_Button);
 		
 		JButton Up = new JButton("Up");
 		Up.setFont(new Font("Courier New", Font.BOLD, 11));
@@ -241,10 +237,42 @@ public class GameInterface {
 		JButton Exit = new JButton("Exit");
 		Exit.setFont(new Font("Courier New", Font.BOLD, 11));
 		GridBagConstraints gbc_Exit = new GridBagConstraints();
+		gbc_Exit.anchor = GridBagConstraints.SOUTH;
 		gbc_Exit.gridwidth = 3;
 		gbc_Exit.insets = new Insets(0, 0, 0, 5);
 		gbc_Exit.gridx = 2;
 		gbc_Exit.gridy = 12;
 		panel_1.add(Exit, gbc_Exit);
+		
+		JButton Button = new JButton("New game");
+		Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Number.setEnabled(false);;
+				Personality.setEnabled(false);;
+				Up.setEnabled(true);
+				Down.setEnabled(true);
+				Left.setEnabled(true);
+				Right.setEnabled(true);
+				
+				//Variables
+				Game.LEVEL = 1;
+				GameMap gameMap = new GameMap();
+				Game firstGame = new Game(gameMap);
+				
+				String map = firstGame.mapToString(firstGame.updateMap(firstGame.map.getMap()));
+				
+				mapa.setText(map);
+				
+				
+			}
+		});
+		Button.setFont(new Font("Courier New", Font.BOLD, 11));
+		GridBagConstraints gbc_Button = new GridBagConstraints();
+		gbc_Button.gridwidth = 3;
+		gbc_Button.insets = new Insets(0, 0, 5, 5);
+		gbc_Button.gridx = 2;
+		gbc_Button.gridy = 0;
+		panel_1.add(Button, gbc_Button);
 	}
 }

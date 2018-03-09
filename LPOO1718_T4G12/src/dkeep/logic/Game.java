@@ -166,4 +166,18 @@ public class Game {
 
 		return tmpMap;
 	}
+	
+	public String mapToString(char[][] map) {
+		
+		String result = "";
+		
+		for(int i = 0; i < map.length; i++) {
+			for(int j = 0; j < map[i].length; j++) 
+				result += map[i][j] + " ";
+			
+			result += "\n";
+		}
+		
+		return result;
+	}
 }

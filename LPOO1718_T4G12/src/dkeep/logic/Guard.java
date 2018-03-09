@@ -26,7 +26,7 @@ public class Guard extends Elements {
 		Random rand = new Random();
 
 		if(guardType == "Rookie") {
-
+			
 			if(guardRoute[position] == 'w')
 				x--;
 			else if(guardRoute[position] == 's')

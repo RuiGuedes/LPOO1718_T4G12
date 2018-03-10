@@ -14,6 +14,7 @@ import java.awt.Color;
 import javax.swing.DropMode;
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSplitPane;
 import java.awt.GridBagLayout;
@@ -22,6 +23,8 @@ import java.awt.Insets;
 import java.awt.GridLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.InputVerifier;
+
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
@@ -31,12 +34,16 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 import java.awt.CardLayout;
 import javax.swing.JTextArea;
 import javax.swing.JScrollBar;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 
 public class GameInterface {
 
@@ -306,6 +313,18 @@ public class GameInterface {
 		NewGame = new JButton("New Game");
 		NewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					int numberOfOgres = Integer.parseInt(ogresNumber.getText());
+					
+					if((numberOfOgres > 5) || (numberOfOgres < 1))
+						throw new NumberFormatException();
+				}
+				catch (NumberFormatException exception){
+					info.setText("Number of ogres: Invalid input !");
+					return;
+				}
+
 				startGame();
 			}
 		});
@@ -317,7 +336,7 @@ public class GameInterface {
 		gbc_NewGame.gridy = 0;
 		InteractionPanel.add(NewGame, gbc_NewGame);
 	}
-	
+
 	public void startGame() {
 
 		//Enable variables
@@ -366,7 +385,7 @@ public class GameInterface {
 			ogresNumber.setEnabled(true);
 			return;
 		}
-		
+
 		//Executes enemy movement
 		if(Game.LEVEL == 1) 
 			game.guard[game.guardRouting].guardMovement();	
@@ -398,4 +417,6 @@ public class GameInterface {
 		}
 
 	}
+
+	
 }

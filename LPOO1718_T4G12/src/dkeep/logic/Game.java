@@ -41,7 +41,7 @@ public class Game {
 	public Game(GameMap gameMap, String guardType, int ogresNumber) {
 		Game.gameState = GameState.PLAYING;
 		map = gameMap;
-
+		
 		initElements(guardType,ogresNumber);
 	}
 	
@@ -51,7 +51,8 @@ public class Game {
 
 		door = new ArrayList<Door>();
 		ogre = new ArrayList<Ogre>();
-
+		horde = ogresNumber;
+		
 		for(int i = 0; i < tmpMap.length; i++)
 		{
 			for(int j = 0; j < tmpMap[i].length; j++) 
@@ -103,7 +104,7 @@ public class Game {
 						tmpY++;
 					else if((tmpMap[i][j-1]) == '*')
 						tmpY--;
-					
+					System.out.println(ogre.size());
 					while(ogresNumber > 0) {
 						ogre.add(new Ogre(i,j,tmpX,tmpY));
 						ogresNumber--;
@@ -117,7 +118,6 @@ public class Game {
 
 		map.setMap(tmpMap);
 	}
-
 
 	public void initElements() {
 

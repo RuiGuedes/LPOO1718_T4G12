@@ -40,17 +40,23 @@ import java.awt.event.ActionEvent;
 
 public class GameInterface {
 
+	/////////////
+	// PRIVATE //
+	/////////////
 	private JFrame frame;
 	private JTextField ogresNumber;
 	private JComboBox guardPersonality;
-	private JTextArea mapa;
-	private JLabel messages;
+	private JTextArea playground;
+	private JLabel info;
 	private JButton Down;
 	private JButton Up;
 	private JButton Left;
 	private JButton Right;
 	private JButton NewGame;
 
+	////////////
+	// PUBLIC //
+	////////////
 	public Game game;
 
 	/**
@@ -90,20 +96,20 @@ public class GameInterface {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 
-		JPanel panel = new JPanel();
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.gridwidth = 2;
-		gbc_panel.insets = new Insets(0, 0, 5, 0);
-		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.gridx = 0;
-		gbc_panel.gridy = 0;
-		frame.getContentPane().add(panel, gbc_panel);
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{34, 136, 45, 23, 0};
-		gbl_panel.rowHeights = new int[]{51, 52, 0};
-		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		panel.setLayout(gbl_panel);
+		JPanel SettingsPanel = new JPanel();
+		GridBagConstraints gbc_SettingsPanel = new GridBagConstraints();
+		gbc_SettingsPanel.gridwidth = 2;
+		gbc_SettingsPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_SettingsPanel.fill = GridBagConstraints.BOTH;
+		gbc_SettingsPanel.gridx = 0;
+		gbc_SettingsPanel.gridy = 0;
+		frame.getContentPane().add(SettingsPanel, gbc_SettingsPanel);
+		GridBagLayout gbl_SettingsPanel = new GridBagLayout();
+		gbl_SettingsPanel.columnWidths = new int[]{34, 136, 45, 23, 0};
+		gbl_SettingsPanel.rowHeights = new int[]{51, 52, 0};
+		gbl_SettingsPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_SettingsPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		SettingsPanel.setLayout(gbl_SettingsPanel);
 
 		JLabel Ogres = new JLabel("Number of Ogres");
 		Ogres.setFont(new Font("Courier New", Font.BOLD, 11));
@@ -113,7 +119,7 @@ public class GameInterface {
 		gbc_Ogres.insets = new Insets(0, 0, 5, 5);
 		gbc_Ogres.gridx = 1;
 		gbc_Ogres.gridy = 0;
-		panel.add(Ogres, gbc_Ogres);
+		SettingsPanel.add(Ogres, gbc_Ogres);
 
 		ogresNumber = new JTextField();
 		GridBagConstraints gbc_ogresNumber = new GridBagConstraints();
@@ -121,7 +127,7 @@ public class GameInterface {
 		gbc_ogresNumber.fill = GridBagConstraints.HORIZONTAL;
 		gbc_ogresNumber.gridx = 2;
 		gbc_ogresNumber.gridy = 0;
-		panel.add(ogresNumber, gbc_ogresNumber);
+		SettingsPanel.add(ogresNumber, gbc_ogresNumber);
 		ogresNumber.setColumns(1);
 
 		JLabel Guard = new JLabel("Guard personality");
@@ -131,7 +137,7 @@ public class GameInterface {
 		gbc_Guard.insets = new Insets(0, 0, 0, 5);
 		gbc_Guard.gridx = 1;
 		gbc_Guard.gridy = 1;
-		panel.add(Guard, gbc_Guard);
+		SettingsPanel.add(Guard, gbc_Guard);
 
 		guardPersonality = new JComboBox();
 		guardPersonality.setFont(new Font("Courier New", Font.PLAIN, 11));
@@ -142,80 +148,79 @@ public class GameInterface {
 		gbc_guardPersonality.gridwidth = 2;
 		gbc_guardPersonality.gridx = 2;
 		gbc_guardPersonality.gridy = 1;
-		panel.add(guardPersonality, gbc_guardPersonality);
+		SettingsPanel.add(guardPersonality, gbc_guardPersonality);
 
-		JPanel panel_2 = new JPanel();
-		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
-		gbc_panel_2.weightx = 1.0;
-		gbc_panel_2.weighty = 1.0;
-		gbc_panel_2.insets = new Insets(0, 0, 0, 5);
-		gbc_panel_2.fill = GridBagConstraints.BOTH;
-		gbc_panel_2.gridx = 0;
-		gbc_panel_2.gridy = 1;
-		frame.getContentPane().add(panel_2, gbc_panel_2);
-		GridBagLayout gbl_panel_2 = new GridBagLayout();
-		gbl_panel_2.columnWidths = new int[]{17, 391, 0};
-		gbl_panel_2.rowHeights = new int[]{349, 20, 0};
-		gbl_panel_2.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		panel_2.setLayout(gbl_panel_2);
+		JPanel GamePanel = new JPanel();
+		GridBagConstraints gbc_GamePanel = new GridBagConstraints();
+		gbc_GamePanel.weightx = 1.0;
+		gbc_GamePanel.weighty = 1.0;
+		gbc_GamePanel.insets = new Insets(0, 0, 0, 5);
+		gbc_GamePanel.fill = GridBagConstraints.BOTH;
+		gbc_GamePanel.gridx = 0;
+		gbc_GamePanel.gridy = 1;
+		frame.getContentPane().add(GamePanel, gbc_GamePanel);
+		GridBagLayout gbl_GamePanel = new GridBagLayout();
+		gbl_GamePanel.columnWidths = new int[]{17, 391, 0};
+		gbl_GamePanel.rowHeights = new int[]{349, 20, 0};
+		gbl_GamePanel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_GamePanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		GamePanel.setLayout(gbl_GamePanel);
 
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(255, 255, 255));
-		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
-		gbc_panel_3.weighty = 1.0;
-		gbc_panel_3.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_3.fill = GridBagConstraints.BOTH;
-		gbc_panel_3.gridx = 1;
-		gbc_panel_3.gridy = 0;
-		panel_2.add(panel_3, gbc_panel_3);
-		GridBagLayout gbl_panel_3 = new GridBagLayout();
-		gbl_panel_3.columnWidths = new int[]{161, 68, 0};
-		gbl_panel_3.rowHeights = new int[]{22, 0};
-		gbl_panel_3.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_3.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-		panel_3.setLayout(gbl_panel_3);
+		JPanel PlaygroundPanel = new JPanel();
+		PlaygroundPanel.setBackground(new Color(255, 255, 255));
+		GridBagConstraints gbc_PlaygroundPanel = new GridBagConstraints();
+		gbc_PlaygroundPanel.weighty = 1.0;
+		gbc_PlaygroundPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_PlaygroundPanel.fill = GridBagConstraints.BOTH;
+		gbc_PlaygroundPanel.gridx = 1;
+		gbc_PlaygroundPanel.gridy = 0;
+		GamePanel.add(PlaygroundPanel, gbc_PlaygroundPanel);
+		GridBagLayout gbl_PlaygroundPanel = new GridBagLayout();
+		gbl_PlaygroundPanel.columnWidths = new int[]{161, 68, 0};
+		gbl_PlaygroundPanel.rowHeights = new int[]{22, 0};
+		gbl_PlaygroundPanel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_PlaygroundPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		PlaygroundPanel.setLayout(gbl_PlaygroundPanel);
 
-		mapa = new JTextArea();
-		mapa.setFont(new Font("Courier New", Font.BOLD, 13));
-		GridBagConstraints gbc_mapa = new GridBagConstraints();
-		gbc_mapa.weightx = 1.0;
-		gbc_mapa.gridwidth = 2;
-		gbc_mapa.weighty = 1.0;
-		gbc_mapa.insets = new Insets(0, 0, 0, 5);
-		gbc_mapa.anchor = GridBagConstraints.NORTHWEST;
-		gbc_mapa.gridx = 0;
-		gbc_mapa.gridy = 0;
-		panel_3.add(mapa, gbc_mapa);
+		playground = new JTextArea();
+		playground.setFont(new Font("Courier New", Font.BOLD, 13));
+		GridBagConstraints gbc_playground = new GridBagConstraints();
+		gbc_playground.weightx = 1.0;
+		gbc_playground.gridwidth = 2;
+		gbc_playground.weighty = 1.0;
+		gbc_playground.insets = new Insets(0, 0, 0, 5);
+		gbc_playground.anchor = GridBagConstraints.NORTHWEST;
+		gbc_playground.gridx = 0;
+		gbc_playground.gridy = 0;
+		PlaygroundPanel.add(playground, gbc_playground);
 
-		messages = new JLabel("You can start a new game");
-		messages.setFont(new Font("Courier New", Font.BOLD, 11));
-		GridBagConstraints gbc_messages = new GridBagConstraints();
-		gbc_messages.weightx = 1.0;
-		gbc_messages.weighty = 0.1;
-		gbc_messages.anchor = GridBagConstraints.WEST;
-		gbc_messages.gridx = 1;
-		gbc_messages.gridy = 1;
-		panel_2.add(messages, gbc_messages);
+		info = new JLabel("You can start a new game");
+		info.setFont(new Font("Courier New", Font.BOLD, 11));
+		GridBagConstraints gbc_info = new GridBagConstraints();
+		gbc_info.weightx = 1.0;
+		gbc_info.weighty = 0.1;
+		gbc_info.anchor = GridBagConstraints.WEST;
+		gbc_info.gridx = 1;
+		gbc_info.gridy = 1;
+		GamePanel.add(info, gbc_info);
 
-		JPanel panel_1 = new JPanel();
-		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		gbc_panel_1.weighty = 1.0;
-		gbc_panel_1.fill = GridBagConstraints.BOTH;
-		gbc_panel_1.gridx = 1;
-		gbc_panel_1.gridy = 1;
-		frame.getContentPane().add(panel_1, gbc_panel_1);
-		GridBagLayout gbl_panel_1 = new GridBagLayout();
-		gbl_panel_1.columnWidths = new int[]{78, 89, 81, 0};
-		gbl_panel_1.rowHeights = new int[]{23, 34, 55, 56, 0, 98, 0, 0};
-		gbl_panel_1.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel_1.setLayout(gbl_panel_1);
+		JPanel InteractionPanel = new JPanel();
+		GridBagConstraints gbc_InteractionPanel = new GridBagConstraints();
+		gbc_InteractionPanel.weighty = 1.0;
+		gbc_InteractionPanel.fill = GridBagConstraints.BOTH;
+		gbc_InteractionPanel.gridx = 1;
+		gbc_InteractionPanel.gridy = 1;
+		frame.getContentPane().add(InteractionPanel, gbc_InteractionPanel);
+		GridBagLayout gbl_InteractionPanel = new GridBagLayout();
+		gbl_InteractionPanel.columnWidths = new int[]{78, 89, 81, 0};
+		gbl_InteractionPanel.rowHeights = new int[]{23, 34, 55, 56, 0, 78, 0, 0};
+		gbl_InteractionPanel.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_InteractionPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		InteractionPanel.setLayout(gbl_InteractionPanel);
 
 		Up = new JButton("Up");
 		Up.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
 				//Moves the hero in the respective direction
 				game.hero.heroMovement('w', game.updateMap(game.map.getMap()));	
 
@@ -225,16 +230,14 @@ public class GameInterface {
 		});
 		Up.setEnabled(false);
 		GridBagConstraints gbc_Up = new GridBagConstraints();
-		gbc_Up.weighty = 0.1;
 		gbc_Up.insets = new Insets(0, 0, 5, 5);
 		gbc_Up.gridx = 1;
 		gbc_Up.gridy = 2;
-		panel_1.add(Up, gbc_Up);
+		InteractionPanel.add(Up, gbc_Up);
 
 		Left = new JButton("Left");
 		Left.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
 				//Moves the hero in the respective direction
 				game.hero.heroMovement('a', game.updateMap(game.map.getMap()));	
 
@@ -249,12 +252,11 @@ public class GameInterface {
 		gbc_Left.insets = new Insets(0, 0, 5, 5);
 		gbc_Left.gridx = 0;
 		gbc_Left.gridy = 3;
-		panel_1.add(Left, gbc_Left);
+		InteractionPanel.add(Left, gbc_Left);
 
 		Right = new JButton("Right");
 		Right.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
 				//Moves the hero in the respective direction
 				game.hero.heroMovement('d', game.updateMap(game.map.getMap()));	
 
@@ -269,12 +271,11 @@ public class GameInterface {
 		gbc_Right.insets = new Insets(0, 0, 5, 0);
 		gbc_Right.gridx = 2;
 		gbc_Right.gridy = 3;
-		panel_1.add(Right, gbc_Right);
+		InteractionPanel.add(Right, gbc_Right);
 
 		Down = new JButton("Down");
 		Down.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
 				//Moves the hero in the respective direction
 				game.hero.heroMovement('s', game.updateMap(game.map.getMap()));	
 
@@ -284,11 +285,10 @@ public class GameInterface {
 		});
 		Down.setEnabled(false);
 		GridBagConstraints gbc_Down = new GridBagConstraints();
-		gbc_Down.weighty = 0.1;
 		gbc_Down.insets = new Insets(0, 0, 5, 5);
 		gbc_Down.gridx = 1;
 		gbc_Down.gridy = 4;
-		panel_1.add(Down, gbc_Down);
+		InteractionPanel.add(Down, gbc_Down);
 
 		JButton Exit = new JButton("Exit");
 		Exit.addActionListener(new ActionListener() {
@@ -297,47 +297,51 @@ public class GameInterface {
 			}
 		});
 		GridBagConstraints gbc_Exit = new GridBagConstraints();
-		gbc_Exit.weighty = 1.0;
+		gbc_Exit.weighty = 3.0;
 		gbc_Exit.insets = new Insets(0, 0, 0, 5);
 		gbc_Exit.gridx = 1;
 		gbc_Exit.gridy = 6;
-		panel_1.add(Exit, gbc_Exit);
+		InteractionPanel.add(Exit, gbc_Exit);
 
 		NewGame = new JButton("New Game");
 		NewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				//Enable variables
-				Up.setEnabled(true);
-				Down.setEnabled(true);
-				Left.setEnabled(true);
-				Right.setEnabled(true);
-				mapa.setEnabled(true);
-
-				//Variables
-				Game.LEVEL = 1;
-				GameMap gameMap = new GameMap();
-				game = new Game(gameMap, (String)guardPersonality.getSelectedItem(), Integer.parseInt(ogresNumber.getText()));
-
-				//Set text
-				mapa.setText(game.mapToString(game.updateMap(game.map.getMap())));
-
-				//Disable variables
-				ogresNumber.setEnabled(false);
-				guardPersonality.setEnabled(false);
-				NewGame.setEnabled(false);
-
-				//Set message text
-				messages.setText("You can play now");
+				startGame();
 			}
 		});
 		GridBagConstraints gbc_NewGame = new GridBagConstraints();
-		gbc_NewGame.weighty = 1.0;
+		gbc_NewGame.weighty = 2.0;
 		gbc_NewGame.insets = new Insets(0, 0, 5, 5);
 		gbc_NewGame.anchor = GridBagConstraints.NORTHWEST;
 		gbc_NewGame.gridx = 1;
 		gbc_NewGame.gridy = 0;
-		panel_1.add(NewGame, gbc_NewGame);
+		InteractionPanel.add(NewGame, gbc_NewGame);
+	}
+	
+	public void startGame() {
+
+		//Enable variables
+		Up.setEnabled(true);
+		Down.setEnabled(true);
+		Left.setEnabled(true);
+		Right.setEnabled(true);
+		playground.setEnabled(true);
+
+		//Game Variables
+		Game.LEVEL = 1;
+		GameMap gameMap = new GameMap();
+		game = new Game(gameMap, (String)guardPersonality.getSelectedItem(), Integer.parseInt(ogresNumber.getText()));
+
+		//Set text
+		playground.setText(game.mapToString(game.updateMap(game.map.getMap())));
+
+		//Disable variables
+		ogresNumber.setEnabled(false);
+		guardPersonality.setEnabled(false);
+		NewGame.setEnabled(false);
+
+		//Set message text
+		info.setText("You can play now");
 	}
 
 	public void automaticSteps() {
@@ -351,28 +355,28 @@ public class GameInterface {
 			Lock.lockState = 'k';
 		}
 		else if((Game.gameState == Game.GameState.VICTORY) && (Game.LEVEL == 2)) {
-			messages.setText("Victory !");
-			mapa.setEnabled(false);
+			info.setText("Victory !");
+			playground.setEnabled(false);
 			Up.setEnabled(false);
 			Down.setEnabled(false);
 			Left.setEnabled(false);
 			Right.setEnabled(false);
+			NewGame.setEnabled(true);
+			guardPersonality.setEnabled(true);
+			ogresNumber.setEnabled(true);
 			return;
 		}
-			
-
-		if(Game.LEVEL == 1) {
-			//Executes guard route
-			game.guard[game.guardRouting].guardMovement();
-		}
+		
+		//Executes enemy movement
+		if(Game.LEVEL == 1) 
+			game.guard[game.guardRouting].guardMovement();	
 		else if(Game.LEVEL == 2) {
-			//Moves the ogre and club in a randoom direction
 			for(int i = 0; i < game.horde; i++)
 				game.ogre.get(i).ogreMovement(game.hero.x, game.hero.y, game.updateMap(game.map.getMap()));
 		}
- 
-		//Update map text
-		mapa.setText(game.mapToString(game.updateMap(game.map.getMap())));
+
+		//Update playground text
+		playground.setText(game.mapToString(game.updateMap(game.map.getMap())));
 
 		//Check the status game in order to continue playing or not
 		if(Game.LEVEL == 1)
@@ -380,9 +384,10 @@ public class GameInterface {
 		else
 			game.checkGameStatus("Ogre");
 
+		//Check game status after enemy movement
 		if(Game.gameState == GameState.GAMEOVER) {
-			messages.setText("Game over !");
-			mapa.setEnabled(false);
+			info.setText("Game over !");
+			playground.setEnabled(false);
 			Up.setEnabled(false);
 			Down.setEnabled(false);
 			Left.setEnabled(false);

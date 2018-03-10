@@ -3,11 +3,54 @@ package dkeep.test;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-public class TestOgreRandoomBehaviour {
+import dkeep.logic.Game;
+import dkeep.logic.GameMap;
 
+public class TestOgreRandoomBehaviour {
+	
+	char[][] map = {
+			{'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'},
+			{'X', ' ', ' ', ' ', 'O', ' ', ' ', ' ', 'X'},
+			{'X', ' ', ' ', ' ', '*', ' ', ' ', ' ', 'X'},
+			{'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+			{'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+			{'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+			{'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+			{'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+			{'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'},
+	};
+	
+	boolean[][] visited = {
+			{false, false, false, true, false, false, false},
+			{false, false, false, false, false, false, false},
+			{false, false, false, false, false, false, false},
+			{false, false, false, false, false, false, false},
+			{false, false, false, false, false, false, false},
+			{false, false, false, false, false, false, false},
+			{false, false, false, false, false, false, false},	
+	};
+	
+	public boolean checkVisited() {
+		
+		for(int i = 0; i < visited.length; i++)
+		{
+			for(int j = 0; j < visited[i].length; j++) {
+				if(visited[i][j] == false)
+					return false;
+			}
+		}
+		return true;
+	}
+	
 	@Test(timeout=1000)
 	public void testSomeRandoomBehaviour() {
+		GameMap gameMap = new GameMap(map);
+		Game game = new Game(gameMap);
 		
+		while(!checkVisited()) {
+			game.ogre.get(0).ogreMovement(0, 0, map);
+			visited[game.ogre.get(0).x - 1][game.ogre.get(0).y - 1] = true;
+		}
 	}
 
 }

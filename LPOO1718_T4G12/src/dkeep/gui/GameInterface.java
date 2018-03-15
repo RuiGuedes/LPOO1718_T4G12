@@ -43,6 +43,7 @@ import javax.swing.JScrollBar;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.border.BevelBorder;
 
 
 public class GameInterface {
@@ -53,13 +54,13 @@ public class GameInterface {
 	private JFrame frame;
 	private JTextField ogresNumber;
 	private JComboBox guardPersonality;
-	private JTextArea playground;
 	private JLabel info;
 	private JButton Down;
 	private JButton Up;
 	private JButton Left;
 	private JButton Right;
 	private JButton NewGame;
+	private Playground playground;
 
 	////////////
 	// PUBLIC //
@@ -174,7 +175,7 @@ public class GameInterface {
 		GamePanel.setLayout(gbl_GamePanel);
 
 		JPanel PlaygroundPanel = new JPanel();
-		PlaygroundPanel.setBackground(new Color(255, 255, 255));
+		PlaygroundPanel.setBackground(Color.WHITE);
 		GridBagConstraints gbc_PlaygroundPanel = new GridBagConstraints();
 		gbc_PlaygroundPanel.weighty = 1.0;
 		gbc_PlaygroundPanel.insets = new Insets(0, 0, 5, 0);
@@ -183,20 +184,15 @@ public class GameInterface {
 		gbc_PlaygroundPanel.gridy = 0;
 		GamePanel.add(PlaygroundPanel, gbc_PlaygroundPanel);
 		GridBagLayout gbl_PlaygroundPanel = new GridBagLayout();
-		gbl_PlaygroundPanel.columnWidths = new int[]{161, 68, 0};
+		gbl_PlaygroundPanel.columnWidths = new int[]{161, 0};
 		gbl_PlaygroundPanel.rowHeights = new int[]{22, 0};
-		gbl_PlaygroundPanel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_PlaygroundPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_PlaygroundPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_PlaygroundPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		PlaygroundPanel.setLayout(gbl_PlaygroundPanel);
-
-		playground = new JTextArea();
-		playground.setFont(new Font("Courier New", Font.BOLD, 13));
+		
+		playground = new Playground();
 		GridBagConstraints gbc_playground = new GridBagConstraints();
-		gbc_playground.weightx = 1.0;
-		gbc_playground.gridwidth = 2;
-		gbc_playground.weighty = 1.0;
-		gbc_playground.insets = new Insets(0, 0, 0, 5);
-		gbc_playground.anchor = GridBagConstraints.NORTHWEST;
+		gbc_playground.fill = GridBagConstraints.BOTH;
 		gbc_playground.gridx = 0;
 		gbc_playground.gridy = 0;
 		PlaygroundPanel.add(playground, gbc_playground);
@@ -352,8 +348,9 @@ public class GameInterface {
 		game = new Game(gameMap, (String)guardPersonality.getSelectedItem(), Integer.parseInt(ogresNumber.getText()));
 
 		//Set text
-		playground.setText(game.mapToString(game.updateMap(game.map.getMap())));
-
+		//playground.setText(game.mapToString(game.updateMap(game.map.getMap())));
+		playground.setPlayground(game.updateMap(game.map.getMap()));
+		
 		//Disable variables
 		ogresNumber.setEnabled(false);
 		guardPersonality.setEnabled(false);
@@ -395,8 +392,9 @@ public class GameInterface {
 		}
 
 		//Update playground text
-		playground.setText(game.mapToString(game.updateMap(game.map.getMap())));
-
+		//playground.setText(game.mapToString(game.updateMap(game.map.getMap())));
+		playground.setPlayground(game.updateMap(game.map.getMap()));
+		
 		//Check the status game in order to continue playing or not
 		if(Game.LEVEL == 1)
 			game.checkGameStatus("Guard");

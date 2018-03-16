@@ -18,34 +18,33 @@ public class Hero extends Elements {
 		case 'w':
 			if((tmpMap[x-1][y] == ' ') || (tmpMap[x-1][y] == 'K'))
 				x--;
-			else if(tmpMap[x-1][y] == 'k') {
+			else if((tmpMap[x-1][y] == 'k') && (Lock.lockType)) {
 				x--;
-
-				if(Lock.lockType) 
-					Lock.lockState = ' ';
-				else 
-					Lock.lockState = 'K';
-
+				Lock.lockState = ' ';
+				Lock.lockStatus = true;
+			}
+			else if((tmpMap[x-1][y] == 'k') && (!Lock.lockType)) {
+				Lock.lockState = 'K';
+				Door.openDoors();
 				Lock.lockStatus = true;
 			}
 			break;
 		case 's':
 			if(tmpMap[x+1][y] == ' ') 
 				x++;
-			else if(tmpMap[x+1][y] == 'k') {
+			else if((tmpMap[x+1][y] == 'k') && (Lock.lockType)) {
 				x++;				
-				if(Lock.lockType) 
-					Lock.lockState = ' ';
-				else {
-					Lock.lockState = 'K';
-					Door.openDoors();
-				}
-
+				Lock.lockState = ' ';
+				Lock.lockStatus = true;
+			}
+			else if((tmpMap[x+1][y] == 'k') && (!Lock.lockType)) {
+				Lock.lockState = 'K';
+				Door.openDoors();
 				Lock.lockStatus = true;
 			}
 			break;
 		case 'a':
-			if((tmpMap[x][y-1] == ' ') || (tmpMap[x][y-1] == 'K'))
+			if(tmpMap[x][y-1] == ' ')
 				y--;
 			else if(tmpMap[x][y-1] == 'I') {
 				if(Lock.lockStatus) {
@@ -53,16 +52,14 @@ public class Hero extends Elements {
 					Game.door.set(0,tmp);
 				}
 			}
-			else if(tmpMap[x][y-1] == 'k') {
+			else if((tmpMap[x][y-1] == 'k') && (Lock.lockType)){
 				y--;
-
-				if(Lock.lockType) 
-					Lock.lockState = ' ';
-				else {
-					Lock.lockState = 'K';
-					Door.openDoors();
-				}
-
+				Lock.lockState = ' ';
+				Lock.lockStatus = true;
+			}
+			else if((tmpMap[x][y-1] == 'k') && (!Lock.lockType)){
+				Lock.lockState = 'K';
+				Door.openDoors();
 				Lock.lockStatus = true;
 
 			}
@@ -72,14 +69,14 @@ public class Hero extends Elements {
 		case 'd':
 			if((tmpMap[x][y+1] == ' ') || (tmpMap[x][y+1] == 'K'))
 				y++;
-			else if(tmpMap[x][y+1] == 'k') {
+			else if((tmpMap[x][y+1] == 'k') && (Lock.lockType)){
 				y++;
-
-				if(Lock.lockType) 
-					Lock.lockState = ' ';
-				else 
-					Lock.lockState = 'K';
-
+				Lock.lockState = ' ';
+				Lock.lockStatus = true;
+			}
+			else if((tmpMap[x][y+1] == 'k') && (!Lock.lockType)){
+				Lock.lockState = 'K';
+				Door.openDoors();
 				Lock.lockStatus = true;
 			}
 			break;

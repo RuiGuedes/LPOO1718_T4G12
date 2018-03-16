@@ -19,7 +19,7 @@ public class Door extends Elements {
 			if(Game.door.get(i).type)
 				tmp = new Door(Game.door.get(i).x, Game.door.get(i).y, 'S', Game.door.get(i).type);
 			else 
-				tmp = new Door(Game.door.get(i).x, Game.door.get(i).y, ' ', Game.door.get(i).type);
+				tmp = new Door(Game.door.get(i).x, Game.door.get(i).y, 'Z', Game.door.get(i).type);
 			
 			Game.door.set(i,tmp);
 		}

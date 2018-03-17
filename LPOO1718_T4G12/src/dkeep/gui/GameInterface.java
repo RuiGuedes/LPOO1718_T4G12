@@ -333,7 +333,7 @@ public class GameInterface {
 		InteractionPanel.add(NewGame, gbc_NewGame);
 	}
 
-	public void startGame() {
+	public void startGame() { 
 
 		//Enable variables
 		Up.setEnabled(true);

@@ -28,6 +28,8 @@ public class Hero extends Elements {
 				Door.openDoors();
 				Lock.lockStatus = true;
 			}
+			else if(tmpMap[x-1][y] == 'Z')
+				x -= 2;
 			break;
 		case 's':
 			if(tmpMap[x+1][y] == ' ') 
@@ -42,6 +44,8 @@ public class Hero extends Elements {
 				Door.openDoors();
 				Lock.lockStatus = true;
 			}
+			else if(tmpMap[x+1][y] == 'Z')
+				x += 2;
 			break;
 		case 'a':
 			if(tmpMap[x][y-1] == ' ')
@@ -65,6 +69,8 @@ public class Hero extends Elements {
 			}
 			else if(tmpMap[x][y-1] == 'S')
 				Game.gameState = Game.GameState.VICTORY;
+			else if(tmpMap[x][y-1] == 'Z')
+					y -= 2;
 			break;
 		case 'd':
 			if((tmpMap[x][y+1] == ' ') || (tmpMap[x][y+1] == 'K'))
@@ -79,6 +85,8 @@ public class Hero extends Elements {
 				Door.openDoors();
 				Lock.lockStatus = true;
 			}
+			else if(tmpMap[x][y+1] == 'Z')
+				y += 2;
 			break;
 		default:
 			break;

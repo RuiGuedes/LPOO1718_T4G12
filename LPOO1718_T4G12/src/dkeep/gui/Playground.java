@@ -4,6 +4,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.LayoutManager;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +20,7 @@ import javax.swing.JPanel;
 
 import dkeep.logic.*;
 
-public class Playground extends JPanel {
+public class Playground extends JPanel implements MouseListener, KeyListener {
 
 	private char[][] playground; 
 
@@ -33,7 +40,25 @@ public class Playground extends JPanel {
 	private BufferedImage stuntOgre;
 	private BufferedImage cifrao;
 
-	public Playground() {
+	public Playground() {	
+
+		this.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+			}
+		});
+
+		addMouseListener(this);
+		addKeyListener(this);
+
 		try {
 			hero = ImageIO.read(getClass().getResourceAsStream("/hero.png"));
 			guard = ImageIO.read(getClass().getResourceAsStream("/guard.png"));
@@ -160,5 +185,58 @@ public class Playground extends JPanel {
 		}
 
 	}
+
+
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+		repaint();
+		
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		this.requestFocus();
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
 
 }

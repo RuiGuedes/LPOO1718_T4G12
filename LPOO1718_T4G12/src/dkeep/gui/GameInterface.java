@@ -42,6 +42,12 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollBar;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.BevelBorder;
 
@@ -191,12 +197,46 @@ public class GameInterface {
 		PlaygroundPanel.setLayout(gbl_PlaygroundPanel);
 		
 		playground = new Playground();
+		playground.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				switch(e.getKeyCode()){
+				case KeyEvent.VK_LEFT: 
+					game.hero.heroMovement('a', game.updateMap(game.map.getMap()));	 
+					break;
+				case KeyEvent.VK_RIGHT: 
+					game.hero.heroMovement('d', game.updateMap(game.map.getMap()));		
+					break;
+				case KeyEvent.VK_UP: 
+					game.hero.heroMovement('w', game.updateMap(game.map.getMap()));		 
+					break;
+				case KeyEvent.VK_DOWN: 
+					game.hero.heroMovement('s', game.updateMap(game.map.getMap()));		 
+					break;
+				}
+				automaticSteps();
+			}
+		});
 		GridBagConstraints gbc_playground = new GridBagConstraints();
 		gbc_playground.fill = GridBagConstraints.BOTH;
 		gbc_playground.gridx = 0;
 		gbc_playground.gridy = 0;
 		PlaygroundPanel.add(playground, gbc_playground);
-
+		
 		info = new JLabel("You can start a new game");
 		info.setFont(new Font("Courier New", Font.BOLD, 11));
 		GridBagConstraints gbc_info = new GridBagConstraints();
@@ -416,5 +456,4 @@ public class GameInterface {
 
 	}
 
-	
 }

@@ -12,7 +12,7 @@ public class DrawImage extends JPanel {
 	
 	public DrawImage() {
 		// TODO Auto-generated constructor stub
-	}
+	} 
 	
 	public void setImage(BufferedImage image) {
 		this.image = image;

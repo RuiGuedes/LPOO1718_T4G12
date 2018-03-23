@@ -72,7 +72,7 @@ public class MainMenu {
 		frame.getContentPane().setLayout(gridBagLayout);
 		frame.addComponentListener(new ComponentListener() {
 
-			@Override
+			@Override 
 			public void componentShown(ComponentEvent e) {
 				// TODO Auto-generated method stub
 

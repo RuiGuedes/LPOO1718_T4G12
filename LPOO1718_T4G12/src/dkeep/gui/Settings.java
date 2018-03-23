@@ -11,10 +11,14 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JTextField;
 import com.jgoodies.forms.layout.FormLayout;
@@ -39,7 +43,8 @@ public class Settings {
 	private JLabel numberOfOgres;
 	private JLabel guardType;
 	private JComboBox guardTypeSelected;
-	private JComboBox comboBox;
+	private JComboBox numberOfOgresSelected;
+	private MyButton save;
 
 	/**
 	 * Launch the application.
@@ -94,6 +99,8 @@ public class Settings {
 				guardType.setFont(new Font("HACKED", Font.PLAIN, (width + height) / 50));
 				numberOfOgres.setFont(new Font("HACKED", Font.PLAIN, (width + height) / 50));
 				guardTypeSelected.setFont(new Font("HACKED", Font.PLAIN, (width + height) / 75));
+				numberOfOgresSelected.setFont(new Font("HACKED", Font.PLAIN, (width + height) / 75));
+				save.setFont(new Font("Scream Again", Font.PLAIN, (width + height) / 75));
 				frame.getContentPane().revalidate();
 			}
 			
@@ -128,19 +135,19 @@ public class Settings {
 		GridBagLayout gbl_background = new GridBagLayout();
 		gbl_background.columnWidths = new int[]{9, 7, 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 52, 73, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_background.rowHeights = new int[]{-14, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_background.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_background.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_background.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		background.setLayout(gbl_background);
 		
 		title = new JLabel("Settings");
-		title.setForeground(Color.ORANGE);
+		title.setForeground(Color.RED);
 		title.setFont(new Font("Scream Again", Font.PLAIN, 30));
 		GridBagConstraints gbc_title = new GridBagConstraints();
 		gbc_title.weightx = 1.0;
 		gbc_title.weighty = 1.0;
-		gbc_title.gridwidth = 10;
+		gbc_title.gridwidth = 7;
 		gbc_title.insets = new Insets(0, 0, 5, 5);
-		gbc_title.gridx = 6;
+		gbc_title.gridx = 8;
 		gbc_title.gridy = 3;
 		background.add(title, gbc_title);
 		
@@ -159,7 +166,7 @@ public class Settings {
 		guardTypeSelected = new JComboBox();
 		
 		guardTypeSelected.setBackground(Color.WHITE);
-		guardTypeSelected.setFont(new Font("Tahoma", Font.BOLD, 13));
+		guardTypeSelected.setFont(new Font("HACKED", Font.PLAIN, 17));
 		guardTypeSelected.setModel(new DefaultComboBoxModel(new String[] {"Rookie", "Drunken", "Suspicious"}));
 		GridBagConstraints gbc_guardTypeSelected = new GridBagConstraints();
 		gbc_guardTypeSelected.insets = new Insets(0, 0, 5, 5);
@@ -167,7 +174,7 @@ public class Settings {
 		gbc_guardTypeSelected.gridy = 6;
 		background.add(guardTypeSelected, gbc_guardTypeSelected);
 		
-		numberOfOgres = new JLabel("Number of Ogres:");
+		numberOfOgres = new JLabel("Number of Enemies:");
 		numberOfOgres.setForeground(Color.WHITE);
 		numberOfOgres.setFont(new Font("HACKED", Font.PLAIN, 35));
 		GridBagConstraints gbc_numberOfOgres = new GridBagConstraints();
@@ -179,15 +186,39 @@ public class Settings {
 		gbc_numberOfOgres.gridy = 8;
 		background.add(numberOfOgres, gbc_numberOfOgres);
 		
-		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 13;
-		gbc_comboBox.gridy = 8;
-		background.add(comboBox, gbc_comboBox);
+		numberOfOgresSelected = new JComboBox();
+		numberOfOgresSelected.setFont(new Font("HACKED", Font.PLAIN, 17));
+		numberOfOgresSelected.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+		GridBagConstraints gbc_numberOfOgresSelected = new GridBagConstraints();
+		gbc_numberOfOgresSelected.insets = new Insets(0, 0, 5, 5);
+		gbc_numberOfOgresSelected.fill = GridBagConstraints.HORIZONTAL;
+		gbc_numberOfOgresSelected.gridx = 13;
+		gbc_numberOfOgresSelected.gridy = 8;
+		background.add(numberOfOgresSelected, gbc_numberOfOgresSelected);
 		
+		save = new MyButton("Save");
+		save.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				MainMenu newWindow = new MainMenu();
+				frame.dispose();
+				newWindow.getFrame().setVisible(true);
+			}
+		});
+		GridBagConstraints gbc_save = new GridBagConstraints();
+		gbc_save.weighty = 1.0;
+		gbc_save.gridwidth = 3;
+		gbc_save.insets = new Insets(0, 0, 0, 5);
+		gbc_save.gridx = 18;
+		gbc_save.gridy = 15;
+		background.add(save, gbc_save);
+		
+	}
+	
+	public JFrame getFrame() {
+		return frame;
 	}
 
 }

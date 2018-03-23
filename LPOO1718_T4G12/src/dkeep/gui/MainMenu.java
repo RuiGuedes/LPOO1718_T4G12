@@ -29,10 +29,10 @@ import javax.swing.JLabel;
 public class MainMenu {
 
 	private JFrame frame;
-	private JButton newGame;
-	private JButton settings;
-	private JButton levelEditor;
-	private JButton exit;
+	private MyButton newGame;
+	private MyButton settings;
+	private MyButton levelEditor;
+	private MyButton exit;
 
 	/**
 	 * Launch the application.
@@ -124,45 +124,7 @@ public class MainMenu {
 		gbl_background.rowWeights = new double[]{1.0, 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 		background.setLayout(gbl_background);
 
-		newGame = new JButton(" New Game");
-		newGame.setBorderPainted(false); 
-		newGame.setContentAreaFilled(false); 
-		newGame.setFocusPainted(false); 
-		newGame.setOpaque(false);
-		newGame.setForeground(Color.ORANGE);
-		newGame.setFont(new Font("Scream Again", Font.PLAIN, 30));
-		newGame.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				newGame.setForeground(Color.ORANGE);
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				newGame.setForeground(Color.RED);
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});;
+		newGame = new MyButton(" New Game");
 		GridBagConstraints gbc_newGame = new GridBagConstraints();
 		gbc_newGame.weightx = 1.0;
 		gbc_newGame.weighty = 1.0;
@@ -172,43 +134,15 @@ public class MainMenu {
 		background.add(newGame, gbc_newGame);
 
 		
-		settings = new JButton("Settings");
-		settings.setBorderPainted(false); 
-		settings.setContentAreaFilled(false); 
-		settings.setFocusPainted(false); 
-		settings.setOpaque(false);
-		settings.setForeground(Color.ORANGE);
-		settings.setFont(new Font("Scream Again", Font.PLAIN, 30));
-		settings.addMouseListener(new MouseListener() {
-
+		settings = new MyButton("Settings");
+		settings.addActionListener(new ActionListener() {
+			
 			@Override
-			public void mouseReleased(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				settings.setForeground(Color.ORANGE);
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				settings.setForeground(Color.RED);
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
+				Settings newWindow = new Settings();
+				frame.dispose();
+				newWindow.getFrame().setVisible(true);
 			}
 		});
 		GridBagConstraints gbc_settings = new GridBagConstraints();
@@ -220,45 +154,7 @@ public class MainMenu {
 		gbc_settings.gridy = 2;
 		background.add(settings, gbc_settings);
 
-		levelEditor = new JButton("Level Editor");
-		levelEditor.setBorderPainted(false); 
-		levelEditor.setContentAreaFilled(false); 
-		levelEditor.setFocusPainted(false); 
-		levelEditor.setOpaque(false);
-		levelEditor.setForeground(Color.ORANGE);
-		levelEditor.setFont(new Font("Scream Again", Font.PLAIN, 30));
-		levelEditor.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				levelEditor.setForeground(Color.ORANGE);
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				levelEditor.setForeground(Color.RED);
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		levelEditor = new MyButton("Level Editor");
 		GridBagConstraints gbc_levelEditor = new GridBagConstraints();
 		gbc_levelEditor.weightx = 1.0;
 		gbc_levelEditor.weighty = 1.0;
@@ -268,45 +164,7 @@ public class MainMenu {
 		gbc_levelEditor.gridy = 3;
 		background.add(levelEditor, gbc_levelEditor);
 
-		exit = new JButton("Exit");
-		exit.setBorderPainted(false); 
-		exit.setContentAreaFilled(false); 
-		exit.setFocusPainted(false); 
-		exit.setOpaque(false);
-		exit.setForeground(Color.ORANGE);
-		exit.setFont(new Font("Scream Again", Font.PLAIN, 30));
-		exit.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				exit.setForeground(Color.ORANGE);
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				exit.setForeground(Color.RED);
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		exit = new MyButton("Exit");
 		exit.addActionListener(new ActionListener() {
 			
 			@Override
@@ -326,4 +184,7 @@ public class MainMenu {
 		
 	}
 
+	public JFrame getFrame() {
+		return frame;
+	}
 }

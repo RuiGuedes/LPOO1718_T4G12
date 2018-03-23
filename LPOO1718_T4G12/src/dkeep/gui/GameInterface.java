@@ -241,7 +241,7 @@ public class GameInterface {
 		info.setFont(new Font("Courier New", Font.BOLD, 11));
 		GridBagConstraints gbc_info = new GridBagConstraints();
 		gbc_info.weightx = 1.0;
-		gbc_info.weighty = 0.1;
+		gbc_info.weighty = 0.1; 
 		gbc_info.anchor = GridBagConstraints.WEST;
 		gbc_info.gridx = 1;
 		gbc_info.gridy = 1;

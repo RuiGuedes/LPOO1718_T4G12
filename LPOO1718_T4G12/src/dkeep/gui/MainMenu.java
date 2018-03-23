@@ -1,0 +1,329 @@
+package dkeep.gui;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import java.awt.GridBagLayout;
+import javax.swing.JPanel;
+import java.awt.GridBagConstraints;
+
+import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.Dimension;
+import javax.swing.JLabel;
+
+
+public class MainMenu {
+
+	private JFrame frame;
+	private JButton newGame;
+	private JButton settings;
+	private JButton levelEditor;
+	private JButton exit;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MainMenu window = new MainMenu();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public MainMenu() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 770, 550);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		frame.getContentPane().setLayout(gridBagLayout);
+		frame.addComponentListener(new ComponentListener() {
+
+			@Override
+			public void componentShown(ComponentEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void componentResized(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				int width = frame.getWidth();
+				int height = frame.getHeight();
+				newGame.setFont(new Font("Scream Again", Font.PLAIN, (width + height) / 50));
+				settings.setFont(new Font("Scream Again", Font.PLAIN, (width + height) / 50));
+				levelEditor.setFont(new Font("Scream Again", Font.PLAIN, (width + height) / 50));
+				exit.setFont(new Font("Scream Again", Font.PLAIN, (width + height) / 50));
+				frame.getContentPane().revalidate();
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		DrawImage background = new DrawImage();
+		BufferedImage image = null;
+		try {
+			image = ImageIO.read(getClass().getResourceAsStream("/MainMenuBackground.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		background.setImage(image);
+		GridBagConstraints gbc_background = new GridBagConstraints();
+		gbc_background.fill = GridBagConstraints.BOTH;
+		gbc_background.gridx = 0;
+		gbc_background.gridy = 0;
+		frame.getContentPane().add(background, gbc_background);
+		GridBagLayout gbl_background = new GridBagLayout();
+		gbl_background.columnWidths = new int[]{142, 371, 146, 0};
+		gbl_background.rowHeights = new int[]{88, 64, 55, 50, 53, 67, 0};
+		gbl_background.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_background.rowWeights = new double[]{1.0, 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+		background.setLayout(gbl_background);
+
+		newGame = new JButton(" New Game");
+		newGame.setBorderPainted(false); 
+		newGame.setContentAreaFilled(false); 
+		newGame.setFocusPainted(false); 
+		newGame.setOpaque(false);
+		newGame.setForeground(Color.ORANGE);
+		newGame.setFont(new Font("Scream Again", Font.PLAIN, 30));
+		newGame.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				newGame.setForeground(Color.ORANGE);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				newGame.setForeground(Color.RED);
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});;
+		GridBagConstraints gbc_newGame = new GridBagConstraints();
+		gbc_newGame.weightx = 1.0;
+		gbc_newGame.weighty = 1.0;
+		gbc_newGame.insets = new Insets(15, 0, 15, 5);
+		gbc_newGame.gridx = 1;
+		gbc_newGame.gridy = 1;
+		background.add(newGame, gbc_newGame);
+
+		
+		settings = new JButton("Settings");
+		settings.setBorderPainted(false); 
+		settings.setContentAreaFilled(false); 
+		settings.setFocusPainted(false); 
+		settings.setOpaque(false);
+		settings.setForeground(Color.ORANGE);
+		settings.setFont(new Font("Scream Again", Font.PLAIN, 30));
+		settings.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				settings.setForeground(Color.ORANGE);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				settings.setForeground(Color.RED);
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		GridBagConstraints gbc_settings = new GridBagConstraints();
+		gbc_settings.weightx = 1.0;
+		gbc_settings.weighty = 1.0;
+		gbc_settings.fill = GridBagConstraints.BOTH;
+		gbc_settings.insets = new Insets(0, 0, 5, 5);
+		gbc_settings.gridx = 1;
+		gbc_settings.gridy = 2;
+		background.add(settings, gbc_settings);
+
+		levelEditor = new JButton("Level Editor");
+		levelEditor.setBorderPainted(false); 
+		levelEditor.setContentAreaFilled(false); 
+		levelEditor.setFocusPainted(false); 
+		levelEditor.setOpaque(false);
+		levelEditor.setForeground(Color.ORANGE);
+		levelEditor.setFont(new Font("Scream Again", Font.PLAIN, 30));
+		levelEditor.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				levelEditor.setForeground(Color.ORANGE);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				levelEditor.setForeground(Color.RED);
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		GridBagConstraints gbc_levelEditor = new GridBagConstraints();
+		gbc_levelEditor.weightx = 1.0;
+		gbc_levelEditor.weighty = 1.0;
+		gbc_levelEditor.fill = GridBagConstraints.BOTH;
+		gbc_levelEditor.insets = new Insets(0, 0, 5, 5);
+		gbc_levelEditor.gridx = 1;
+		gbc_levelEditor.gridy = 3;
+		background.add(levelEditor, gbc_levelEditor);
+
+		exit = new JButton("Exit");
+		exit.setBorderPainted(false); 
+		exit.setContentAreaFilled(false); 
+		exit.setFocusPainted(false); 
+		exit.setOpaque(false);
+		exit.setForeground(Color.ORANGE);
+		exit.setFont(new Font("Scream Again", Font.PLAIN, 30));
+		exit.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				exit.setForeground(Color.ORANGE);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				exit.setForeground(Color.RED);
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		exit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.exit(0);
+			}
+		});
+		GridBagConstraints gbc_exit = new GridBagConstraints();
+		gbc_exit.weightx = 1.0;
+		gbc_exit.weighty = 1.0;
+		gbc_exit.insets = new Insets(0, 0, 5, 5);
+		gbc_exit.fill = GridBagConstraints.BOTH;
+		gbc_exit.gridx = 1;
+		gbc_exit.gridy = 4;
+		background.add(exit, gbc_exit);
+		
+	}
+
+}

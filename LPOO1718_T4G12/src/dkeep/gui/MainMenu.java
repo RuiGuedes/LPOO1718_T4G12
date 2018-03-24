@@ -133,20 +133,20 @@ public class MainMenu {
 		gbc_newGame.gridy = 1;
 		background.add(newGame, gbc_newGame);
 
-		
+
 		settings = new MyButton("Settings");
 		settings.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				Settings newWindow = new Settings();
-				if(frame.getExtendedState() == JFrame.MAXIMIZED_BOTH)
+				if(frame.getExtendedState() == JFrame.MAXIMIZED_BOTH) 
 					newWindow.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
-				else
+				else 
 					newWindow.getFrame().setSize(frame.getWidth(), frame.getHeight());
-				frame.dispose();
 				newWindow.getFrame().setVisible(true);
+				frame.dispose(); 
 			}
 		});
 		GridBagConstraints gbc_settings = new GridBagConstraints();
@@ -170,7 +170,7 @@ public class MainMenu {
 
 		exit = new MyButton("Exit");
 		exit.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -185,7 +185,7 @@ public class MainMenu {
 		gbc_exit.gridx = 1;
 		gbc_exit.gridy = 4;
 		background.add(exit, gbc_exit);
-		
+
 	}
 
 	public JFrame getFrame() {

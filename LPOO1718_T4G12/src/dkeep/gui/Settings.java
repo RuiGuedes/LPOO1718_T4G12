@@ -19,6 +19,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JTextField;
 import com.jgoodies.forms.layout.FormLayout;
@@ -116,7 +118,6 @@ public class Settings {
 				
 			}
 		});
-		frame.requestFocus();
 		
 		DrawImage background = new DrawImage();
 		BufferedImage image = null;
@@ -164,7 +165,6 @@ public class Settings {
 		background.add(guardType, gbc_guardType);
 		
 		guardTypeSelected = new JComboBox();
-		
 		guardTypeSelected.setBackground(Color.WHITE);
 		guardTypeSelected.setFont(new Font("HACKED", Font.PLAIN, 17));
 		guardTypeSelected.setModel(new DefaultComboBoxModel(new String[] {"Rookie", "Drunken", "Suspicious"}));
@@ -203,6 +203,10 @@ public class Settings {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				MainMenu newWindow = new MainMenu();
+				if(frame.getExtendedState() == JFrame.MAXIMIZED_BOTH)
+					newWindow.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
+				else
+					newWindow.getFrame().setSize(frame.getWidth(), frame.getHeight());
 				frame.dispose();
 				newWindow.getFrame().setVisible(true);
 			}

@@ -141,6 +141,10 @@ public class MainMenu {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				Settings newWindow = new Settings();
+				if(frame.getExtendedState() == JFrame.MAXIMIZED_BOTH)
+					newWindow.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
+				else
+					newWindow.getFrame().setSize(frame.getWidth(), frame.getHeight());
 				frame.dispose();
 				newWindow.getFrame().setVisible(true);
 			}

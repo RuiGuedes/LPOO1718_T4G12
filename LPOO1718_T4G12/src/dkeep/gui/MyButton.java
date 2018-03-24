@@ -19,7 +19,7 @@ public class MyButton extends JButton implements MouseListener {
 		super(icon);
 		// TODO Auto-generated constructor stub
 	}
-
+ 
 	public MyButton(String text) {
 		super(text);
 		// TODO Auto-generated constructor stub

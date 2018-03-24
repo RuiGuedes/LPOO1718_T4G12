@@ -2,16 +2,19 @@ package dkeep.gui;
 
 import java.awt.Graphics;
 import java.awt.LayoutManager;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-public class DrawImage extends JPanel {
+public class DrawImage extends JPanel implements MouseListener {
 	
 	private BufferedImage image;
 	
-	public DrawImage() {
+	public DrawImage() { 
 		// TODO Auto-generated constructor stub
+		this.addMouseListener(this);
 	} 
 	
 	public void setImage(BufferedImage image) {
@@ -37,5 +40,35 @@ public class DrawImage extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		LevelEditor.imageSelected = image;
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

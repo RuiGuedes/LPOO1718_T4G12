@@ -148,7 +148,7 @@ public class MainMenu {
 				newWindow.getFrame().setVisible(true);
 				frame.dispose(); 
 			}
-		});
+		}); 
 		GridBagConstraints gbc_settings = new GridBagConstraints();
 		gbc_settings.weightx = 1.0;
 		gbc_settings.weighty = 1.0;

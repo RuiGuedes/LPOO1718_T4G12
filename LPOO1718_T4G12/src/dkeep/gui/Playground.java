@@ -96,7 +96,7 @@ public class Playground extends JPanel implements MouseListener, KeyListener {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Playground(LayoutManager arg0, boolean arg1) {
+	public Playground(LayoutManager arg0, boolean arg1) { 
 		super(arg0, arg1);
 		// TODO Auto-generated constructor stub
 	}

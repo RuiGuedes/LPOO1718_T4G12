@@ -124,7 +124,7 @@ public class Settings {
 		});
 		
 		DrawImage background = new DrawImage();
-		BufferedImage image = null;
+		BufferedImage image = null; 
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/MainMenuBackground.png"));
 		} catch (IOException e) {

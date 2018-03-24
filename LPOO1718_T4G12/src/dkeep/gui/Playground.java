@@ -107,7 +107,7 @@ public class Playground extends JPanel implements MouseListener, KeyListener {
 
 		if(playground == null)
 			return;
-
+ 
 		int deltaX = (int) Math.ceil((float)getWidth()/playground.length);
 		int deltaY = (int) Math.ceil((float)getHeight()/playground[0].length);
 		float x = 0;

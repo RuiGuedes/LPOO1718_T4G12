@@ -159,6 +159,20 @@ public class MainMenu {
 		background.add(settings, gbc_settings);
 
 		levelEditor = new MyButton("Level Editor");
+		levelEditor.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				LevelEditor newWindow = new LevelEditor();
+				if(frame.getExtendedState() == JFrame.MAXIMIZED_BOTH) 
+					newWindow.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
+				else 
+					newWindow.getFrame().setSize(frame.getWidth(), frame.getHeight());
+				newWindow.getFrame().setVisible(true);
+				frame.dispose(); 
+			}
+		});
 		GridBagConstraints gbc_levelEditor = new GridBagConstraints();
 		gbc_levelEditor.weightx = 1.0;
 		gbc_levelEditor.weighty = 1.0;

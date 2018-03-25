@@ -7,17 +7,19 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class MapEditor extends JPanel implements MouseListener {
 	
-	public BufferedImage[][] map; 
+	public Map<Character,BufferedImage> gameElements = new HashMap<Character,BufferedImage>();
+	public char[][] map; 
 	public int x;
 	public int y;
 	public int size = 10;
-	public BufferedImage wall;
 	public BufferedImage floor; 
 	
 	
@@ -25,25 +27,30 @@ public class MapEditor extends JPanel implements MouseListener {
 		// TODO Auto-generated constructor stub
 		this.addMouseListener(this);
 		try {
-			wall = ImageIO.read(getClass().getResourceAsStream("/wall.jpg"));
-			floor = ImageIO.read(getClass().getResourceAsStream("/floor.jpg"));
+			gameElements.put('X', ImageIO.read(getClass().getResourceAsStream("/wall.jpg")));
+			gameElements.put('A', ImageIO.read(getClass().getResourceAsStream("/hero.png")));
+			gameElements.put('k', ImageIO.read(getClass().getResourceAsStream("/key.png")));
+			gameElements.put('O', ImageIO.read(getClass().getResourceAsStream("/ogre.png")));
+			gameElements.put('*', ImageIO.read(getClass().getResourceAsStream("/club.png")));
+			gameElements.put('I', ImageIO.read(getClass().getResourceAsStream("/door.png")));
+			gameElements.put(' ', ImageIO.read(getClass().getResourceAsStream("/floor.jpg")));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		map = new BufferedImage[size][size];
+
+		map = new char[size][size];
 		for(int i = 0; i < map.length; i++) {
 			for(int j = 0; j < map[i].length; j++) {
 				if((i == 0) || (j == 0) || (i == (size -1)) || (j == (size -1)))
-					map[i][j] = wall;
+					map[i][j] = 'X';
 				else
-					map[i][j] = floor;
+					map[i][j] = ' ';
 			}
 		}
 	}
 	
-	public void setMap(BufferedImage[][] map) {
+	public void setMap(char[][] map) {
 		this.map = map;
 		repaint();
 	}
@@ -75,8 +82,8 @@ public class MapEditor extends JPanel implements MouseListener {
 
 		for(int i = 0; i < map.length; i++) {
 			for(int j = 0; j < map[0].length; j++) {
-				if(map[i][j] != null)
-					g.drawImage(map[i][j], i*deltaX, j*deltaY, deltaX, deltaY,null);
+					g.drawImage(gameElements.get(' '), i*deltaX, j*deltaY, deltaX, deltaY,null);
+					g.drawImage(gameElements.get(map[i][j]), i*deltaX, j*deltaY, deltaX, deltaY,null);
 			}
 
 		}

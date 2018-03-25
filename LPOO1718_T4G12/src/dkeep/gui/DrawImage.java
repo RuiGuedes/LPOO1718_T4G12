@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 public class DrawImage extends JPanel implements MouseListener {
 	
 	private BufferedImage image;
+	private char element;
 	
 	public DrawImage() { 
 		// TODO Auto-generated constructor stub
@@ -19,6 +20,10 @@ public class DrawImage extends JPanel implements MouseListener {
 	
 	public void setImage(BufferedImage image) {
 		this.image = image;
+	}
+	
+	public void setElement(char element) {
+		this.element = element;
 	}
 
 	public DrawImage(LayoutManager arg0) {
@@ -63,7 +68,7 @@ public class DrawImage extends JPanel implements MouseListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		LevelEditor.imageSelected = image;
+		LevelEditor.imageSelected = element;
 	}
 
 	@Override

@@ -16,6 +16,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -26,7 +27,7 @@ import javax.swing.SwingConstants;
 public class LevelEditor {
 
 	private JFrame frame;
-	public static BufferedImage imageSelected;
+	public static char imageSelected;
 	private BufferedImage backgroundInteraction; 
 	private JLabel title;
 	private JPanel background;
@@ -95,12 +96,10 @@ public class LevelEditor {
 				int width = frame.getWidth();
 				int height = frame.getHeight();
 				title.setFont(new Font("Scream Again", Font.PLAIN, (width + height) / 55));
-//				guardType.setFont(new Font("HACKED", Font.PLAIN, (width + height) / 50));
-//				numberOfOgres.setFont(new Font("HACKED", Font.PLAIN, (width + height) / 50));
-//				keepLevel.setFont(new Font("HACKED", Font.PLAIN, (width + height) / 50));
-//				guardTypeSelected.setFont(new Font("HACKED", Font.PLAIN, (width + height) / 75));
-//				numberOfOgresSelected.setFont(new Font("HACKED", Font.PLAIN, (width + height) / 75));
-//				keepLevelSelected.setFont(new Font("HACKED", Font.PLAIN, (width + height) / 75));
+				
+				//hero.setSize(elementsPanel.getWidth()/10,elementsPanel.getHeight()/10);
+				hero.setSize(10,10);
+				
 				save.setFont(new Font("Scream Again", Font.PLAIN, (width + height) / 60));
 				exit.setFont(new Font("Scream Again", Font.PLAIN, (width + height) / 60));
 				frame.getContentPane().revalidate();
@@ -128,7 +127,7 @@ public class LevelEditor {
 		GridBagLayout gbl_background = new GridBagLayout();
 		gbl_background.columnWidths = new int[]{494, 250, 0};
 		gbl_background.rowHeights = new int[]{395, 0};
-		gbl_background.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_background.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		gbl_background.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		background.setLayout(gbl_background);
 		
@@ -147,10 +146,10 @@ public class LevelEditor {
 				
 				int deltaX = (int) Math.ceil((float)mapEditor.getWidth()/mapEditor.map.length);
 				int deltaY = (int) Math.ceil((float)mapEditor.getHeight()/mapEditor.map[0].length);
-				if(imageSelected != null) {
+				//if(imageSelected == '') {
 					mapEditor.map[e.getX()/deltaX][e.getY()/deltaY] = imageSelected;
 					mapEditor.repaint();
-				}
+				//}
 				mapEditor.x = e.getX();
 				mapEditor.y = e.getY();
 			}
@@ -174,6 +173,8 @@ public class LevelEditor {
 			}
 		});
 		GridBagConstraints gbc_mapEditor = new GridBagConstraints();
+		gbc_mapEditor.weighty = 1.0;
+		gbc_mapEditor.weightx = 1.0;
 		gbc_mapEditor.fill = GridBagConstraints.BOTH;
 		gbc_mapEditor.gridx = 0;
 		gbc_mapEditor.gridy = 0;
@@ -189,6 +190,7 @@ public class LevelEditor {
 			exception.printStackTrace();
 		} 
 		GridBagConstraints gbc_elementsPanel = new GridBagConstraints();
+		gbc_elementsPanel.weightx = 0.3;
 		gbc_elementsPanel.fill = GridBagConstraints.BOTH;
 		gbc_elementsPanel.gridx = 1;
 		gbc_elementsPanel.gridy = 0;
@@ -197,7 +199,7 @@ public class LevelEditor {
 		gbl_elementsPanel.columnWidths = new int[]{110, 110, 0};
 		gbl_elementsPanel.rowHeights = new int[]{72, 22, 110, 110, 106, 101, 0};
 		gbl_elementsPanel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-		gbl_elementsPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_elementsPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		elementsPanel.setLayout(gbl_elementsPanel);
 		
 		title = new JLabel("Elements");
@@ -214,13 +216,14 @@ public class LevelEditor {
 		hero.setOpaque(false);
 		try {
 			hero.setImage(ImageIO.read(getClass().getResourceAsStream("/hero.png")));
+			hero.setElement('A');
 		} catch (IOException exc) {
 			// TODO Auto-generated catch block
 			exc.printStackTrace();
 		} 
 		GridBagConstraints gbc_hero = new GridBagConstraints();
-		gbc_hero.insets = new Insets(5, 10, 5, 5);
 		gbc_hero.fill = GridBagConstraints.BOTH;
+		gbc_hero.insets = new Insets(5, 10, 5, 5);
 		gbc_hero.gridx = 0;
 		gbc_hero.gridy = 2;
 		elementsPanel.add(hero, gbc_hero);
@@ -229,13 +232,12 @@ public class LevelEditor {
 		key.setOpaque(false);
 		try {
 			key.setImage(ImageIO.read(getClass().getResourceAsStream("/key.png")));
+			key.setElement('k');
 		} catch (IOException exc) {
 			// TODO Auto-generated catch block
 			exc.printStackTrace();
 		} 
 		GridBagConstraints gbc_key = new GridBagConstraints();
-		gbc_key.weighty = 1.0;
-		gbc_key.weightx = 1.0;
 		gbc_key.insets = new Insets(5, 5, 5, 10);
 		gbc_key.fill = GridBagConstraints.BOTH;
 		gbc_key.gridx = 1;
@@ -246,13 +248,12 @@ public class LevelEditor {
 		ogre.setOpaque(false);
 		try {
 			ogre.setImage(ImageIO.read(getClass().getResourceAsStream("/ogre.png")));
+			ogre.setElement('O');
 		} catch (IOException exc) {
 			// TODO Auto-generated catch block
 			exc.printStackTrace();
 		} 
 		GridBagConstraints gbc_ogre = new GridBagConstraints();
-		gbc_ogre.weighty = 1.0;
-		gbc_ogre.weightx = 1.0;
 		gbc_ogre.insets = new Insets(5, 10, 5, 5);
 		gbc_ogre.fill = GridBagConstraints.BOTH;
 		gbc_ogre.gridx = 0;
@@ -263,13 +264,12 @@ public class LevelEditor {
 		door.setOpaque(false);
 		try {
 			door.setImage(ImageIO.read(getClass().getResourceAsStream("/door.png")));
+			door.setElement('I');
 		} catch (IOException exc) {
 			// TODO Auto-generated catch block
 			exc.printStackTrace();
 		} 
 		GridBagConstraints gbc_door = new GridBagConstraints();
-		gbc_door.weighty = 1.0;
-		gbc_door.weightx = 1.0;
 		gbc_door.insets = new Insets(5, 5, 5, 10);
 		gbc_door.fill = GridBagConstraints.BOTH;
 		gbc_door.gridx = 1;
@@ -280,6 +280,7 @@ public class LevelEditor {
 		club.setOpaque(false);
 		try {
 			club.setImage(ImageIO.read(getClass().getResourceAsStream("/club.png")));
+			club.setElement('*');
 		} catch (IOException exc) {
 			// TODO Auto-generated catch block
 			exc.printStackTrace();
@@ -295,13 +296,12 @@ public class LevelEditor {
 		wall.setOpaque(false);
 		try {
 			wall.setImage(ImageIO.read(getClass().getResourceAsStream("/wall.jpg")));
+			wall.setElement('X');
 		} catch (IOException exc) {
 			// TODO Auto-generated catch block
 			exc.printStackTrace();
 		} 
 		GridBagConstraints gbc_wall = new GridBagConstraints();
-		gbc_wall.weighty = 1.0;
-		gbc_wall.weightx = 1.0;
 		gbc_wall.insets = new Insets(5, 5, 5, 10);
 		gbc_wall.fill = GridBagConstraints.BOTH;
 		gbc_wall.gridx = 1;
@@ -326,10 +326,28 @@ public class LevelEditor {
 		exit = new MyButton("Exit");
 		exit.setForeground(Color.ORANGE);
 		exit.setFont(new Font("Scream Again", Font.PLAIN, 20));
+		exit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				MainMenu newWindow = new MainMenu();
+				if(frame.getExtendedState() == JFrame.MAXIMIZED_BOTH)
+					newWindow.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
+				else
+					newWindow.getFrame().setSize(frame.getWidth(), frame.getHeight());
+				newWindow.getFrame().setVisible(true);
+				frame.dispose();
+			}
+		});
 		GridBagConstraints gbc_exit = new GridBagConstraints();
 		gbc_exit.gridx = 1;
 		gbc_exit.gridy = 5;
 		elementsPanel.add(exit, gbc_exit);
+	}
+	
+	public JFrame getFrame() {
+		return frame;
 	}
 
 }

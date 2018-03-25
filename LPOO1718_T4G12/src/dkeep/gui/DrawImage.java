@@ -11,12 +11,13 @@ import javax.swing.JPanel;
 public class DrawImage extends JPanel implements MouseListener {
 	
 	private BufferedImage image;
-	private char element;
+	private char element; 
+	private boolean available;
 	
 	public DrawImage() { 
-		// TODO Auto-generated constructor stub
 		this.addMouseListener(this);
-	} 
+		available = true;
+	}  
 	
 	public void setImage(BufferedImage image) {
 		this.image = image;
@@ -28,17 +29,14 @@ public class DrawImage extends JPanel implements MouseListener {
 
 	public DrawImage(LayoutManager arg0) {
 		super(arg0);
-		// TODO Auto-generated constructor stub
 	}
 
 	public DrawImage(boolean arg0) {
 		super(arg0);
-		// TODO Auto-generated constructor stub
 	}
 
 	public DrawImage(LayoutManager arg0, boolean arg1) {
 		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
@@ -49,31 +47,27 @@ public class DrawImage extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		LevelEditor.imageSelected = element;
-	}
+		if(available)
+			LevelEditor.elementSelected = element;
+	} 
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	}
+	
+	public void setAvailable() {
+		available = false;
 	}
 }

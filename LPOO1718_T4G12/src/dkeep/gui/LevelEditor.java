@@ -15,6 +15,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -27,12 +29,10 @@ import javax.swing.SwingConstants;
 public class LevelEditor {
 
 	private JFrame frame;
-	public static char imageSelected;
-	private BufferedImage backgroundInteraction; 
 	private JLabel title;
 	private JPanel background;
-	private DrawImage elementsPanel;
 	private MapEditor mapEditor; 
+	private DrawImage elementsPanel;
 	private DrawImage wall;
 	private DrawImage hero;
 	private DrawImage key;
@@ -41,8 +41,10 @@ public class LevelEditor {
 	private DrawImage club;
 	private MyButton save;
 	private MyButton exit;
-
 	
+	public static char elementSelected;
+	public Map<Character,DrawImage> imageSelected;
+
 	/**
 	 * Launch the application.
 	 */
@@ -63,7 +65,10 @@ public class LevelEditor {
 	 * Create the application.
 	 */
 	public LevelEditor() {
+		elementSelected = ' ';
 		initialize();
+		initalizeDrawImageMembers();
+		initalizeImageSelected();
 	}
 
 	/**
@@ -80,44 +85,31 @@ public class LevelEditor {
 		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
-		
 		frame.addComponentListener(new ComponentListener() {
-			
+
 			@Override
 			public void componentShown(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
-			
+
 			@Override
 			public void componentResized(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				// TODO Auto-generated method stub
 				int width = frame.getWidth();
 				int height = frame.getHeight();
 				title.setFont(new Font("Scream Again", Font.PLAIN, (width + height) / 55));
-				
-				//hero.setSize(elementsPanel.getWidth()/10,elementsPanel.getHeight()/10);
-				hero.setSize(10,10);
-				
 				save.setFont(new Font("Scream Again", Font.PLAIN, (width + height) / 60));
 				exit.setFont(new Font("Scream Again", Font.PLAIN, (width + height) / 60));
 				frame.getContentPane().revalidate();
 			}
-			
+
 			@Override
 			public void componentMoved(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
-			
+
 			@Override
 			public void componentHidden(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
-		
+
 		background = new JPanel();
 		GridBagConstraints gbc_background = new GridBagConstraints();
 		gbc_background.fill = GridBagConstraints.BOTH;
@@ -130,48 +122,8 @@ public class LevelEditor {
 		gbl_background.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		gbl_background.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		background.setLayout(gbl_background);
-		
-		mapEditor = new MapEditor();
-		mapEditor.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-				int deltaX = (int) Math.ceil((float)mapEditor.getWidth()/mapEditor.map.length);
-				int deltaY = (int) Math.ceil((float)mapEditor.getHeight()/mapEditor.map[0].length);
-				//if(imageSelected == '') {
-					mapEditor.map[e.getX()/deltaX][e.getY()/deltaY] = imageSelected;
-					mapEditor.repaint();
-				//}
-				mapEditor.x = e.getX();
-				mapEditor.y = e.getY();
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+
+		mapEditor = new MapEditor(this);
 		GridBagConstraints gbc_mapEditor = new GridBagConstraints();
 		gbc_mapEditor.weighty = 1.0;
 		gbc_mapEditor.weightx = 1.0;
@@ -179,16 +131,9 @@ public class LevelEditor {
 		gbc_mapEditor.gridx = 0;
 		gbc_mapEditor.gridy = 0;
 		background.add(mapEditor, gbc_mapEditor);
-		
+
 		elementsPanel = new DrawImage();
 		elementsPanel.setOpaque(false);
-		try {
-			backgroundInteraction = ImageIO.read(getClass().getResourceAsStream("/backgroundInteraction.jpg"));
-			elementsPanel.setImage(backgroundInteraction);
-		} catch (IOException exception) {
-			// TODO Auto-generated catch block
-			exception.printStackTrace();
-		} 
 		GridBagConstraints gbc_elementsPanel = new GridBagConstraints();
 		gbc_elementsPanel.weightx = 0.3;
 		gbc_elementsPanel.fill = GridBagConstraints.BOTH;
@@ -201,7 +146,7 @@ public class LevelEditor {
 		gbl_elementsPanel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		gbl_elementsPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		elementsPanel.setLayout(gbl_elementsPanel);
-		
+
 		title = new JLabel("Elements");
 		title.setForeground(Color.RED);
 		title.setFont(new Font("Scream Again", Font.PLAIN, 20));
@@ -211,96 +156,54 @@ public class LevelEditor {
 		gbc_title.gridx = 0;
 		gbc_title.gridy = 0;
 		elementsPanel.add(title, gbc_title);
-		
+
 		hero = new DrawImage();
 		hero.setOpaque(false);
-		try {
-			hero.setImage(ImageIO.read(getClass().getResourceAsStream("/hero.png")));
-			hero.setElement('A');
-		} catch (IOException exc) {
-			// TODO Auto-generated catch block
-			exc.printStackTrace();
-		} 
 		GridBagConstraints gbc_hero = new GridBagConstraints();
 		gbc_hero.fill = GridBagConstraints.BOTH;
 		gbc_hero.insets = new Insets(5, 10, 5, 5);
 		gbc_hero.gridx = 0;
 		gbc_hero.gridy = 2;
 		elementsPanel.add(hero, gbc_hero);
-		
+
 		key = new DrawImage();
 		key.setOpaque(false);
-		try {
-			key.setImage(ImageIO.read(getClass().getResourceAsStream("/key.png")));
-			key.setElement('k');
-		} catch (IOException exc) {
-			// TODO Auto-generated catch block
-			exc.printStackTrace();
-		} 
 		GridBagConstraints gbc_key = new GridBagConstraints();
 		gbc_key.insets = new Insets(5, 5, 5, 10);
 		gbc_key.fill = GridBagConstraints.BOTH;
 		gbc_key.gridx = 1;
 		gbc_key.gridy = 2;
 		elementsPanel.add(key, gbc_key);
-		
+
 		ogre = new DrawImage();
 		ogre.setOpaque(false);
-		try {
-			ogre.setImage(ImageIO.read(getClass().getResourceAsStream("/ogre.png")));
-			ogre.setElement('O');
-		} catch (IOException exc) {
-			// TODO Auto-generated catch block
-			exc.printStackTrace();
-		} 
 		GridBagConstraints gbc_ogre = new GridBagConstraints();
 		gbc_ogre.insets = new Insets(5, 10, 5, 5);
 		gbc_ogre.fill = GridBagConstraints.BOTH;
-		gbc_ogre.gridx = 0;
+		gbc_ogre.gridx = 0; 
 		gbc_ogre.gridy = 3;
 		elementsPanel.add(ogre, gbc_ogre);
-		
+
 		door = new DrawImage();
 		door.setOpaque(false);
-		try {
-			door.setImage(ImageIO.read(getClass().getResourceAsStream("/door.png")));
-			door.setElement('I');
-		} catch (IOException exc) {
-			// TODO Auto-generated catch block
-			exc.printStackTrace();
-		} 
 		GridBagConstraints gbc_door = new GridBagConstraints();
 		gbc_door.insets = new Insets(5, 5, 5, 10);
 		gbc_door.fill = GridBagConstraints.BOTH;
 		gbc_door.gridx = 1;
 		gbc_door.gridy = 3;
 		elementsPanel.add(door, gbc_door);
-		
+
 		club = new DrawImage();
 		club.setOpaque(false);
-		try {
-			club.setImage(ImageIO.read(getClass().getResourceAsStream("/club.png")));
-			club.setElement('*');
-		} catch (IOException exc) {
-			// TODO Auto-generated catch block
-			exc.printStackTrace();
-		} 
 		GridBagConstraints gbc_club = new GridBagConstraints();
 		gbc_club.insets = new Insets(5, 10, 5, 5);
 		gbc_club.fill = GridBagConstraints.BOTH;
 		gbc_club.gridx = 0;
 		gbc_club.gridy = 4;
 		elementsPanel.add(club, gbc_club);
-		
+
 		wall = new DrawImage();
 		wall.setOpaque(false);
-		try {
-			wall.setImage(ImageIO.read(getClass().getResourceAsStream("/wall.jpg")));
-			wall.setElement('X');
-		} catch (IOException exc) {
-			// TODO Auto-generated catch block
-			exc.printStackTrace();
-		} 
 		GridBagConstraints gbc_wall = new GridBagConstraints();
 		gbc_wall.insets = new Insets(5, 5, 5, 10);
 		gbc_wall.fill = GridBagConstraints.BOTH;
@@ -313,7 +216,7 @@ public class LevelEditor {
 		gbl_wall.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_wall.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		wall.setLayout(gbl_wall);
-		
+
 		save = new MyButton("Save");
 		save.setForeground(Color.ORANGE);
 		save.setFont(new Font("Scream Again", Font.PLAIN, 20));
@@ -322,15 +225,14 @@ public class LevelEditor {
 		gbc_save.gridx = 0;
 		gbc_save.gridy = 5;
 		elementsPanel.add(save, gbc_save);
-		
+
 		exit = new MyButton("Exit");
 		exit.setForeground(Color.ORANGE);
 		exit.setFont(new Font("Scream Again", Font.PLAIN, 20));
 		exit.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				MainMenu newWindow = new MainMenu();
 				if(frame.getExtendedState() == JFrame.MAXIMIZED_BOTH)
 					newWindow.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -345,9 +247,50 @@ public class LevelEditor {
 		gbc_exit.gridy = 5;
 		elementsPanel.add(exit, gbc_exit);
 	}
+
+	public void initalizeDrawImageMembers() {
+		try {
+			elementsPanel.setImage(ImageIO.read(getClass().getResourceAsStream("/backgroundInteraction.jpg")));
+			
+			hero.setImage(ImageIO.read(getClass().getResourceAsStream("/hero.png")));
+			hero.setElement('A');
+			
+			key.setImage(ImageIO.read(getClass().getResourceAsStream("/key.png")));
+			key.setElement('k');
+			
+			ogre.setImage(ImageIO.read(getClass().getResourceAsStream("/ogre.png")));
+			ogre.setElement('O');
+			
+			wall.setImage(ImageIO.read(getClass().getResourceAsStream("/wall.jpg")));
+			wall.setElement('X');
+			
+			club.setImage(ImageIO.read(getClass().getResourceAsStream("/club.png")));
+			club.setElement('*');
+			
+			door.setImage(ImageIO.read(getClass().getResourceAsStream("/door.png")));
+			door.setElement('I');
+			
+		} catch (IOException exc) {
+			exc.printStackTrace();
+		} 
+	}
+	
+	public void initalizeImageSelected() {
+		imageSelected = new HashMap<Character,DrawImage>();
+		imageSelected.put('X', wall);
+		imageSelected.put('A', hero);
+		imageSelected.put('k', key);
+		imageSelected.put('O', ogre);
+		imageSelected.put('*', club);
+		imageSelected.put('I', door);
+	}
 	
 	public JFrame getFrame() {
 		return frame;
+	}
+	
+	public DrawImage getDrawImage() {
+		return imageSelected.get(elementSelected);
 	}
 
 }

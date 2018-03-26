@@ -4,8 +4,6 @@ import java.awt.EventQueue;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -20,28 +18,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
-import javax.swing.JTextField;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.JScrollBar;
-import javax.swing.JSlider;
 
 public class Settings {
 
@@ -49,11 +31,11 @@ public class Settings {
 	private JLabel title;
 	private JLabel numberOfOgres;
 	private JLabel guardType;
-	private JComboBox guardTypeSelected;
-	private JComboBox numberOfOgresSelected;
+	private JComboBox<String> guardTypeSelected;
+	private JComboBox<String> numberOfOgresSelected;
 	private MyButton save;
 	private JLabel keepLevel;
-	private JComboBox keepLevelSelected;
+	private JComboBox<String> keepLevelSelected;
 	
 	public static int numberOfKeepLevels;
  
@@ -84,7 +66,7 @@ public class Settings {
 		
 		try (BufferedReader reader = Files.newBufferedReader(numbersFile.toPath(), charset)) {
 			numberOfKeepLevels = Integer.parseInt(reader.readLine());
-			keepLevelSelected.setModel(new DefaultComboBoxModel(new String[] {"default"}));
+			keepLevelSelected.setModel(new DefaultComboBoxModel<String>(new String[] {"default"}));
 			for(int i = 1; i < numberOfKeepLevels; i++) {
 				keepLevelSelected.addItem("keep" + i);
 			}
@@ -192,7 +174,7 @@ public class Settings {
 		gbc_keepLevel.gridy = 6;
 		background.add(keepLevel, gbc_keepLevel);
 		
-		keepLevelSelected = new JComboBox();
+		keepLevelSelected = new JComboBox<String>();
 		keepLevelSelected.setFont(new Font("HACKED", Font.PLAIN, 17));
 		GridBagConstraints gbc_keepLevelSelected = new GridBagConstraints();
 		gbc_keepLevelSelected.fill = GridBagConstraints.HORIZONTAL;
@@ -213,10 +195,10 @@ public class Settings {
 		gbc_guardType.gridy = 8;
 		background.add(guardType, gbc_guardType);
 		
-		guardTypeSelected = new JComboBox();
+		guardTypeSelected = new JComboBox<String>();
 		guardTypeSelected.setBackground(Color.WHITE);
 		guardTypeSelected.setFont(new Font("HACKED", Font.PLAIN, 17));
-		guardTypeSelected.setModel(new DefaultComboBoxModel(new String[] {"Rookie", "Drunken", "Suspicious"}));
+		guardTypeSelected.setModel(new DefaultComboBoxModel<String>(new String[] {"Rookie", "Drunken", "Suspicious"}));
 		GridBagConstraints gbc_guardTypeSelected = new GridBagConstraints();
 		gbc_guardTypeSelected.anchor = GridBagConstraints.WEST;
 		gbc_guardTypeSelected.insets = new Insets(0, 0, 5, 5);
@@ -259,12 +241,12 @@ public class Settings {
 		gbc_numberOfOgres.gridwidth = 7;
 		gbc_numberOfOgres.insets = new Insets(0, 0, 5, 5);
 		gbc_numberOfOgres.gridx = 6;
-		gbc_numberOfOgres.gridy = 9;
+		gbc_numberOfOgres.gridy = 9; 
 		background.add(numberOfOgres, gbc_numberOfOgres);
 		
-		numberOfOgresSelected = new JComboBox();
+		numberOfOgresSelected = new JComboBox<String>();
 		numberOfOgresSelected.setFont(new Font("HACKED", Font.PLAIN, 17));
-		numberOfOgresSelected.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+		numberOfOgresSelected.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3", "4", "5"}));
 		GridBagConstraints gbc_numberOfOgresSelected = new GridBagConstraints();
 		gbc_numberOfOgresSelected.insets = new Insets(0, 0, 5, 5);
 		gbc_numberOfOgresSelected.fill = GridBagConstraints.HORIZONTAL;

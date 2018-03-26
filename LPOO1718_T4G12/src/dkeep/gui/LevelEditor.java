@@ -144,6 +144,29 @@ public class LevelEditor {
 
 		elementsPanel = new DrawImage();
 		elementsPanel.setOpaque(false);
+		elementsPanel.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				elementSelected = ' ';
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
 		GridBagConstraints gbc_elementsPanel = new GridBagConstraints();
 		gbc_elementsPanel.weightx = 0.3;
 		gbc_elementsPanel.fill = GridBagConstraints.BOTH;

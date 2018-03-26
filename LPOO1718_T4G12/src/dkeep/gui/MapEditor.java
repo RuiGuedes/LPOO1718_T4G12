@@ -152,11 +152,15 @@ public class MapEditor extends JPanel implements MouseListener {
 	public void removeElement(int coordX, int coordY) {
 		if((map[coordX][coordY] != ' ') && (coordX > 0) && (coordX < (map.length - 1)) && (coordY > 0) && (coordY < (map[0].length - 1))) {
 			LevelEditor.elementSelected = map[coordX][coordY];
-			levelEditor.getDrawImage().setAvailable();
+		
+			if(LevelEditor.elementSelected != 'X')
+				levelEditor.getDrawImage().setAvailable();
+			
 			if(LevelEditor.elementSelected == 'I')
 				map[coordX][coordY] = 'X';
 			else
 				map[coordX][coordY] = ' ';
+			
 			LevelEditor.elementSelected = ' ';
 		}
 	}
@@ -170,7 +174,7 @@ public class MapEditor extends JPanel implements MouseListener {
 	}
 	
 	public void setSize(int size) {
-		this. mapSize = size;
+		this.mapSize = size;
 	}
 
 }

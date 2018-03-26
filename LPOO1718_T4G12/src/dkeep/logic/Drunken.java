@@ -55,6 +55,11 @@ public class Drunken extends Guard {
 					position--;
 			}
 		}
+		else {
+			stop--;
+			if(stop == 0)
+				state = 'G';
+		}
 		return false;
 	}
 }

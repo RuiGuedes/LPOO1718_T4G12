@@ -1,7 +1,5 @@
 package dkeep.logic;
 
-import java.util.Random;
-
 public class Guard extends Elements {
 
 	public int position = 0;

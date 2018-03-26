@@ -5,7 +5,6 @@ import java.awt.EventQueue;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import java.awt.GridBagLayout;
-import javax.swing.JPanel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -21,8 +20,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
+
 import javax.swing.SwingConstants;
 
 import dkeep.logic.Game;
@@ -349,8 +347,7 @@ public class NewGame {
 		}
 		else if((Game.gameState == Game.GameState.VICTORY) && (Game.LEVEL == 2)) {
 			info.setText("Victory");
-			playground.setEnabled(false);
-			upButton.setEnabled(false); downButton.setEnabled(false); leftButton.setEnabled(false); rightButton.setEnabled(false);
+			disableElements();
 			return;
 		}
 
@@ -364,17 +361,18 @@ public class NewGame {
 		playground.setPlayground(game.updateMap(game.map.getMap()));
 		game.checkGameStatus();
 	
-
-		//Check game status after enemy movement
 		if(Game.gameState == GameState.GAMEOVER) {
 			info.setText("Game over");
-			playground.setEnabled(false);
-			upButton.setEnabled(false);
-			downButton.setEnabled(false);
-			leftButton.setEnabled(false);
-			rightButton.setEnabled(false);
+			disableElements();
 		}
-
+	}
+	
+	public void disableElements() {
+		playground.setEnabled(false);
+		upButton.setEnabled(false);
+		downButton.setEnabled(false);
+		leftButton.setEnabled(false);
+		rightButton.setEnabled(false);
 	}
 	
 	public JFrame getFrame() {

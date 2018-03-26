@@ -61,6 +61,7 @@ public class Playground extends JPanel implements MouseListener, KeyListener {
 			elements.put('Z', ImageIO.read(getClass().getResourceAsStream("/doorOpen.png")));
 			elements.put('8', ImageIO.read(getClass().getResourceAsStream("/stuntOgre.png")));
 			elements.put('$', ImageIO.read(getClass().getResourceAsStream("/cifrao.png")));
+			elements.put('g', ImageIO.read(getClass().getResourceAsStream("/snoozeGuard.png")));
 		} catch (IOException e) { 
 			e.printStackTrace();
 			return;
@@ -101,9 +102,9 @@ public class Playground extends JPanel implements MouseListener, KeyListener {
 				else
 					g.drawImage(elements.get(' '), j*deltaX, i*deltaY, deltaX, deltaY,null);
 				
-				if(playground[i][j] == 'k') {
+				if((playground[i][j] == 'k') || (playground[i][j] == 'K')) {
 					if(Game.LEVEL == 1)
-						g.drawImage(elements.get(playground[i][j]), j*deltaX, i*deltaY, deltaX, deltaY,null);
+						g.drawImage(elements.get(playground[i][j]), j*deltaX + 5, i*deltaY + 5, deltaX - 10, deltaY - 10,null);
 					else if(Game.LEVEL == 2)
 						g.drawImage(elements.get('C'), j*deltaX, i*deltaY, deltaX, deltaY,null);
 				}

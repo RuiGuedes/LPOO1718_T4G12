@@ -1,6 +1,5 @@
 package dkeep.test;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 
 import dkeep.logic.Game;
@@ -45,7 +44,7 @@ public class TestOgreRandoomBehaviour {
 	@Test(timeout=1000)
 	public void testSomeRandoomBehaviour() {
 		GameMap gameMap = new GameMap(map);
-		Game game = new Game(gameMap);
+		Game game = new Game(gameMap,"Rookie",1);
 		
 		while(!checkVisited()) {
 			game.ogre.get(0).ogreMovement(0, 0, map);

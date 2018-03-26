@@ -1,3 +1,3 @@
 default
 Rookie
-2
+5

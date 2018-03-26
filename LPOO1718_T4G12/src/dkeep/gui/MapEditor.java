@@ -163,6 +163,12 @@ public class MapEditor extends JPanel implements MouseListener {
 			
 			LevelEditor.elementSelected = ' ';
 		}
+		else if(map[coordX][coordY] == 'I') {
+			LevelEditor.elementSelected = map[coordX][coordY];
+			levelEditor.getDrawImage().setAvailable();
+			map[coordX][coordY] = 'X';
+			LevelEditor.elementSelected = ' ';
+		}
 	}
 
 	public char[][] getMap() {

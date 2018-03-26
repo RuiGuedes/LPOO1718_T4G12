@@ -127,7 +127,7 @@ public class Game {
 			}
 		}
 	}
-
+	
 	public char[][] updateMap(char[][] tmpMap) {
 		tmpMap[hero.x][hero.y] = hero.state;
 

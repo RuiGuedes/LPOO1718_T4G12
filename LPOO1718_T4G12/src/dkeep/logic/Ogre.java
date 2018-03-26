@@ -38,8 +38,10 @@ public class Ogre extends Elements {
 
 				do	{
 					move = rand.nextInt(4) + 1;
-				}while(((move == 1) && (tmpMap[x-1][y] == 'X')) || ((move == 2) && (tmpMap[x+1][y] == 'X')) || 
-					   ((move == 3) && (tmpMap[x][y-1] == 'X')) || ((move == 4) && (tmpMap[x][y+1] == 'X')));
+				}while(((move == 1) && ((tmpMap[x-1][y] == 'X') || (tmpMap[x-1][y] == 'I'))) || 
+					   ((move == 2) && ((tmpMap[x+1][y] == 'X') || (tmpMap[x+1][y] == 'I'))) || 
+					   ((move == 3) && ((tmpMap[x][y-1] == 'X') || (tmpMap[x][y-1] == 'I'))) || 
+					   ((move == 4) && ((tmpMap[x][y+1] == 'X') || (tmpMap[x][y+1] == 'I'))));
 
 				switch(move)
 				{
@@ -93,8 +95,10 @@ public class Ogre extends Elements {
 
 		do	{
 			move = rand.nextInt(4) + 1;
-		}while(((move == 1) && (tmpMap[x-1][y] == 'X')) || ((move == 2) && (tmpMap[x+1][y] == 'X')) || 
-			   ((move == 3) && (tmpMap[x][y-1] == 'X')) || ((move == 4) && (tmpMap[x][y+1] == 'X')));
+		}while(((move == 1) && ((tmpMap[x-1][y] == 'X') || (tmpMap[x-1][y] == 'I'))) || 
+				   ((move == 2) && ((tmpMap[x+1][y] == 'X') || (tmpMap[x+1][y] == 'I'))) || 
+				   ((move == 3) && ((tmpMap[x][y-1] == 'X') || (tmpMap[x][y-1] == 'I'))) || 
+				   ((move == 4) && ((tmpMap[x][y+1] == 'X') || (tmpMap[x][y+1] == 'I'))));
 
 		switch(move)
 		{

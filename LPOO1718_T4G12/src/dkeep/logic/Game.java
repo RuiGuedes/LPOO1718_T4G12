@@ -18,7 +18,7 @@ public class Game {
 	public static int LEVEL = 0;
 
 	//Generic Data members
-	public GameMap map;
+	public GameMap map; 
 	public Hero hero;
 	public static ArrayList<Door> door;
 	public Lock lock;

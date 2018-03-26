@@ -22,7 +22,7 @@ public class DrawImage extends JPanel implements MouseListener {
 	public void setImage(BufferedImage image) {
 		this.image = image;
 	}
-	
+	 
 	public void setElement(char element) {
 		this.element = element;
 	}
@@ -68,6 +68,13 @@ public class DrawImage extends JPanel implements MouseListener {
 	}
 	
 	public void setAvailable() {
-		available = false;
+		if(available)
+			available = false;
+		else
+			available = true;
+	}
+	
+	public boolean getAvailable() {
+		return available; 
 	}
 }

@@ -8,7 +8,12 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -49,7 +54,9 @@ public class Settings {
 	private MyButton save;
 	private JLabel keepLevel;
 	private JComboBox keepLevelSelected;
-
+	
+	public static int numberOfKeepLevels;
+ 
 	/**
 	 * Launch the application.
 	 */
@@ -71,6 +78,30 @@ public class Settings {
 	 */
 	public Settings() {
 		initialize();
+		Charset charset = Charset.forName("US-ASCII");
+		File settingsFile = new File("files/settings.txt");
+		File numbersFile = new File("files/numberOfKeepLevels.txt");
+		
+		try (BufferedReader reader = Files.newBufferedReader(numbersFile.toPath(), charset)) {
+			numberOfKeepLevels = Integer.parseInt(reader.readLine());
+			keepLevelSelected.setModel(new DefaultComboBoxModel(new String[] {"default"}));
+			for(int i = 1; i < numberOfKeepLevels; i++) {
+				keepLevelSelected.addItem("keepLevel" + i);
+			}
+		}
+		catch (IOException x) {
+			System.err.format("IOException: %s%n", x);
+		}
+		
+		try (BufferedReader reader = Files.newBufferedReader(settingsFile.toPath(), charset)) {
+			keepLevelSelected.setSelectedItem(reader.readLine());
+			guardTypeSelected.setSelectedItem(reader.readLine());
+			numberOfOgresSelected.setSelectedItem(reader.readLine());
+		}
+		catch (IOException x) {
+			System.err.format("IOException: %s%n", x);
+		}
+		
 	}
 
 	/**
@@ -90,13 +121,11 @@ public class Settings {
 			
 			@Override
 			public void componentShown(ComponentEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void componentResized(ComponentEvent e) {
-				// TODO Auto-generated method stub
 				int width = frame.getWidth();
 				int height = frame.getHeight();
 				title.setFont(new Font("Scream Again", Font.PLAIN, (width + height) / 50));
@@ -112,14 +141,10 @@ public class Settings {
 			
 			@Override
 			public void componentMoved(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override
 			public void componentHidden(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
 		
@@ -128,7 +153,6 @@ public class Settings {
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/MainMenuBackground.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		background.setImage(image);
@@ -151,7 +175,7 @@ public class Settings {
 		gbc_title.weightx = 1.0;
 		gbc_title.weighty = 1.0;
 		gbc_title.gridwidth = 7;
-		gbc_title.insets = new Insets(0, 0, 5, 5);
+		gbc_title.insets = new Insets(0, 0, 5, 5); 
 		gbc_title.gridx = 8;
 		gbc_title.gridy = 3;
 		background.add(title, gbc_title);
@@ -169,7 +193,6 @@ public class Settings {
 		background.add(keepLevel, gbc_keepLevel);
 		
 		keepLevelSelected = new JComboBox();
-		keepLevelSelected.setModel(new DefaultComboBoxModel(new String[] {"default"}));
 		keepLevelSelected.setFont(new Font("HACKED", Font.PLAIN, 17));
 		GridBagConstraints gbc_keepLevelSelected = new GridBagConstraints();
 		gbc_keepLevelSelected.fill = GridBagConstraints.HORIZONTAL;
@@ -206,7 +229,17 @@ public class Settings {
 			 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				Charset charset = Charset.forName("US-ASCII");
+				File settingsFile = new File("files/settings.txt");
+				
+				try (BufferedWriter writer = Files.newBufferedWriter(settingsFile.toPath(), charset)) {
+					writer.write((String)keepLevelSelected.getSelectedItem() + "\n");
+					writer.write((String)guardTypeSelected.getSelectedItem() + "\n");
+					writer.write((String)numberOfOgresSelected.getSelectedItem() + "\n");
+				} catch (IOException x) {
+				    System.err.format("IOException: %s%n", x);
+				}
+				
 				MainMenu newWindow = new MainMenu();
 				if(frame.getExtendedState() == JFrame.MAXIMIZED_BOTH)
 					newWindow.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);

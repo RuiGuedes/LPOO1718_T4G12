@@ -3,7 +3,7 @@ package dkeep.logic;
 import java.util.Arrays;
 
 
-public class GameMap {
+public class GameMap { 
 
 	private static char[][] dungeon = { 
 			{'X','X','X','X','X','X','X','X','X','X'},

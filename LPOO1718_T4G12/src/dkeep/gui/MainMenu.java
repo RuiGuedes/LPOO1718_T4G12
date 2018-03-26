@@ -33,10 +33,13 @@ public class MainMenu {
 	private MyButton settings;
 	private MyButton levelEditor;
 	private MyButton exit;
+	
+	private Settings settingsWindow;
+	private LevelEditor levelEditorWindow;
 
 	/**
 	 * Launch the application.
-	 */
+	 */ 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -55,6 +58,8 @@ public class MainMenu {
 	 */
 	public MainMenu() {
 		initialize();
+		settingsWindow = new Settings();
+		levelEditorWindow = new LevelEditor();
 	}
 
 	/**
@@ -74,13 +79,10 @@ public class MainMenu {
 
 			@Override 
 			public void componentShown(ComponentEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void componentResized(ComponentEvent e) {
-				// TODO Auto-generated method stub
 				int width = frame.getWidth();
 				int height = frame.getHeight();
 				newGame.setFont(new Font("Scream Again", Font.PLAIN, (width + height) / 50));
@@ -92,14 +94,10 @@ public class MainMenu {
 
 			@Override
 			public void componentMoved(ComponentEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void componentHidden(ComponentEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 
@@ -108,7 +106,6 @@ public class MainMenu {
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/MainMenuBackground.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		background.setImage(image);
@@ -139,13 +136,12 @@ public class MainMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				Settings newWindow = new Settings();
+				settingsWindow = new Settings();
 				if(frame.getExtendedState() == JFrame.MAXIMIZED_BOTH) 
-					newWindow.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
+					settingsWindow.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
 				else 
-					newWindow.getFrame().setSize(frame.getWidth(), frame.getHeight());
-				newWindow.getFrame().setVisible(true);
+					settingsWindow.getFrame().setSize(frame.getWidth(), frame.getHeight());
+				settingsWindow.getFrame().setVisible(true);
 				frame.dispose(); 
 			}
 		}); 
@@ -157,19 +153,17 @@ public class MainMenu {
 		gbc_settings.gridx = 1;
 		gbc_settings.gridy = 2;
 		background.add(settings, gbc_settings);
-
+ 
 		levelEditor = new MyButton("Level Editor");
 		levelEditor.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				LevelEditor newWindow = new LevelEditor();
 				if(frame.getExtendedState() == JFrame.MAXIMIZED_BOTH) 
-					newWindow.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
+					levelEditorWindow.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
 				else 
-					newWindow.getFrame().setSize(frame.getWidth(), frame.getHeight());
-				newWindow.getFrame().setVisible(true);
+					levelEditorWindow.getFrame().setSize(frame.getWidth(), frame.getHeight());
+				levelEditorWindow.getFrame().setVisible(true);
 				frame.dispose(); 
 			}
 		});

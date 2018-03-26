@@ -11,10 +11,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.Color;
@@ -22,6 +31,7 @@ import java.awt.Dimension;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -35,7 +45,7 @@ public class LevelEditor {
 	private DrawImage elementsPanel;
 	private DrawImage wall;
 	private DrawImage hero;
-	private DrawImage key;
+	private DrawImage key; 
 	private DrawImage ogre;
 	private DrawImage door;
 	private DrawImage club;
@@ -202,7 +212,7 @@ public class LevelEditor {
 		gbc_club.gridy = 4;
 		elementsPanel.add(club, gbc_club);
 
-		wall = new DrawImage();
+		wall = new DrawImage(); 
 		wall.setOpaque(false);
 		GridBagConstraints gbc_wall = new GridBagConstraints();
 		gbc_wall.insets = new Insets(5, 5, 5, 10);
@@ -218,6 +228,41 @@ public class LevelEditor {
 		wall.setLayout(gbl_wall);
 
 		save = new MyButton("Save");
+		save.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(!hero.getAvailable() && !ogre.getAvailable() && !key.getAvailable() && !club.getAvailable() && !door.getAvailable()) {
+					Charset charset = Charset.forName("US-ASCII");
+					File f = new File("files/keep" + Settings.numberOfKeepLevels + ".txt");
+					Settings.numberOfKeepLevels++;
+					try {
+						f.createNewFile(); 
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					
+					try (BufferedWriter writer = Files.newBufferedWriter(f.toPath(), charset)) {
+						for(int i = 0; i < mapEditor.getMap().length; i++) {
+							for(int j = 0; j < mapEditor.getMap()[0].length; j++) {
+								 writer.write(mapEditor.getMap()[i][j]);
+							}
+							writer.newLine();
+						}
+					} catch (IOException x) {
+					    System.err.format("IOException: %s%n", x);
+					}
+					
+					File numbersFile = new File("files/numberOfKeepLevels.txt");
+					try (BufferedWriter writer = Files.newBufferedWriter(numbersFile.toPath(), charset)) {
+						writer.write(Settings.numberOfKeepLevels + "\n");
+					} catch (IOException x) {
+					    System.err.format("IOException: %s%n", x);
+					}
+					exit.doClick();	
+				}
+			}
+		});
 		save.setForeground(Color.ORANGE);
 		save.setFont(new Font("Scream Again", Font.PLAIN, 20));
 		GridBagConstraints gbc_save = new GridBagConstraints();

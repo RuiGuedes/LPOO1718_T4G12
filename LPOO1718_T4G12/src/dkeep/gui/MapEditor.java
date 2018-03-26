@@ -14,31 +14,39 @@ import javax.swing.JPanel;
 
 public class MapEditor extends JPanel implements MouseListener {
 
-	public Map<Character,BufferedImage> gameElements = new HashMap<Character,BufferedImage>();
+	public Map<Character,BufferedImage> gameElements; 
 	private LevelEditor levelEditor;
 	private char[][] map; 
 	private int x;
 	private int y;
-	private int size = 10;
+	private int size = 10; 
 
 	public MapEditor(LevelEditor levelEditor) {
 		this.addMouseListener(this);
 		this.levelEditor = levelEditor;
+		initializeGameElements();
+		initializeMap();
+	}
+
+	public void initializeGameElements() {
+		gameElements = new HashMap<Character,BufferedImage>();
 		try {
 			gameElements.put('X', ImageIO.read(getClass().getResourceAsStream("/wall.jpg")));
 			gameElements.put('A', ImageIO.read(getClass().getResourceAsStream("/hero.png")));
 			gameElements.put('k', ImageIO.read(getClass().getResourceAsStream("/key.png")));
 			gameElements.put('O', ImageIO.read(getClass().getResourceAsStream("/ogre.png")));
 			gameElements.put('*', ImageIO.read(getClass().getResourceAsStream("/club.png")));
-			gameElements.put('I', ImageIO.read(getClass().getResourceAsStream("/door.png")));
+			gameElements.put('I', ImageIO.read(getClass().getResourceAsStream("/door.png"))); 
 			gameElements.put(' ', ImageIO.read(getClass().getResourceAsStream("/floor.jpg")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
 
+	public void initializeMap() {
 		map = new char[size][size];
-		for(int i = 0; i < map.length; i++) {
-			for(int j = 0; j < map[i].length; j++) {
+		for(int i = 0; i < size; i++) {
+			for(int j = 0; j < size; j++) {
 				if((i == 0) || (j == 0) || (i == (size -1)) || (j == (size -1)))
 					map[i][j] = 'X';
 				else
@@ -77,11 +85,11 @@ public class MapEditor extends JPanel implements MouseListener {
 		for(int i = 0; i < map.length; i++) {
 			for(int j = 0; j < map[0].length; j++) {
 				if(map[i][j] == 'I')
-					g.drawImage(gameElements.get('X'), i*deltaX, j*deltaY, deltaX, deltaY,null);
+					g.drawImage(gameElements.get('X'), j*deltaX, i*deltaY, deltaX, deltaY,null);
 				else
-					g.drawImage(gameElements.get(' '), i*deltaX, j*deltaY, deltaX, deltaY,null);
+					g.drawImage(gameElements.get(' '), j*deltaX, i*deltaY, deltaX, deltaY,null);
 
-				g.drawImage(gameElements.get(map[i][j]), i*deltaX, j*deltaY, deltaX, deltaY,null);
+				g.drawImage(gameElements.get(map[i][j]), j*deltaX, i*deltaY, deltaX, deltaY,null);
 			}
 		}
 	}
@@ -103,7 +111,11 @@ public class MapEditor extends JPanel implements MouseListener {
 		int deltaX = (int) Math.ceil((float)getWidth()/map.length);
 		int deltaY = (int) Math.ceil((float)getHeight()/map[0].length);
 
-		setElement(e.getX()/deltaX, e.getY()/deltaY);
+		if(LevelEditor.elementSelected != ' ')
+			setElement(e.getY()/deltaX, e.getX()/deltaY);
+		else 
+			removeElement(e.getY()/deltaX, e.getX()/deltaY);
+
 		repaint();
 
 		x = e.getX();
@@ -115,29 +127,42 @@ public class MapEditor extends JPanel implements MouseListener {
 	}
 
 	public void setElement(int coordX, int coordY) {
-		char element;
-		if((element = LevelEditor.elementSelected) == ' ')
-			return;
-
+		char element = LevelEditor.elementSelected;
 		char oldElement = map[coordX][coordY];
 
 		if((map[coordX][coordY] == ' ') && ((element == 'X') || (element == 'A') ||  (element == 'O') || (element == 'k')))
 			map[coordX][coordY] = element;
-		else if((map[coordX][coordY] == 'X') && (element == 'I'))
-			map[coordX][coordY] = element;
+		else if((map[coordX][coordY] == 'X') && (element == 'I')) {
+			if(((coordX == 0) && (coordY == 0)) || ((coordX == 0) && (coordY == size-1)) || ((coordX == size-1) && (coordY == 0)) || ((coordX == size-1) && (coordY == size-1)))
+				return;
+			else
+				map[coordX][coordY] = element;
+		}
 		else if((element == '*') && (coordX > 0) && (coordX < (map.length - 1)) && (coordY > 0) && (coordY < (map[0].length - 1))) {
 			if(((map[coordX-1][coordY] == 'O') || (map[coordX+1][coordY] == 'O') || (map[coordX][coordY-1] == 'O') || (map[coordX][coordY+1] == 'O')) && (element == '*'))
 				map[coordX][coordY] = element; 
 		}
 
-		if(oldElement != element) {
-			if(element != 'X') {
-				levelEditor.getDrawImage().setAvailable();
-				LevelEditor.elementSelected = ' '; 
-			}
-
+		if((oldElement != map[coordX][coordY]) && (element != 'X')) {
+			levelEditor.getDrawImage().setAvailable();
+			LevelEditor.elementSelected = ' '; 
 		}
+	}
 
+	public void removeElement(int coordX, int coordY) {
+		if((map[coordX][coordY] != ' ') && (coordX > 0) && (coordX < (map.length - 1)) && (coordY > 0) && (coordY < (map[0].length - 1))) {
+			LevelEditor.elementSelected = map[coordX][coordY];
+			levelEditor.getDrawImage().setAvailable();
+			if(LevelEditor.elementSelected == 'I')
+				map[coordX][coordY] = 'X';
+			else
+				map[coordX][coordY] = ' ';
+			LevelEditor.elementSelected = ' ';
+		}
+	}
+
+	public char[][] getMap() {
+		return map;
 	}
 
 }

@@ -33,7 +33,6 @@ public class Game {
 	public Game(GameMap gameMap, String guardType, int ogresNumber) {
 		Game.gameState = GameState.PLAYING;
 		map = gameMap;
-
 		initElements(guardType,ogresNumber);
 	}
 
@@ -62,8 +61,12 @@ public class Game {
 
 					guard = new Guard[1];
 					guardRouting = 0;
-					guard[0] = new Guard(i,j,guardType,guardRoute);
-
+					if(guardType.equals("Rookie"))
+						guard[0] = new Rookie(i,j,guardRoute);
+					else if(guardType.equals("Drunken"))
+						guard[0] = new Drunken(i,j,guardRoute);
+					else if(guardType.equals("Suspicious"))
+						guard[0] = new Suspicious(i,j,guardRoute);
 				}
 				else if(tmpMap[i][j] == 'I') {
 					if((i == 0) || (j == 0) || (i == (tmpMap.length-1)) || (j == (tmpMap.length-1))) 

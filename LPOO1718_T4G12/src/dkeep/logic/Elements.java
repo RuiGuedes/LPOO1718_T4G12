@@ -6,7 +6,6 @@ public class Elements {
 	public int y;
 	
 	public Elements() {
-		
 	}
 	
 	public boolean equals(int x, int y) {

@@ -196,7 +196,7 @@ public class GameInterface {
 		gbl_PlaygroundPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		PlaygroundPanel.setLayout(gbl_PlaygroundPanel);
 		
-		playground = new Playground();
+		playground = new Playground(new NewGame());
 		playground.addKeyListener(new KeyListener() {
 			
 			@Override

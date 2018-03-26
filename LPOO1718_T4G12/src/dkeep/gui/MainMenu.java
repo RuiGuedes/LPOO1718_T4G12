@@ -122,6 +122,19 @@ public class MainMenu {
 		background.setLayout(gbl_background);
 
 		newGame = new MyButton(" New Game");
+		newGame.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				NewGame newWindow = new NewGame();
+				if(frame.getExtendedState() == JFrame.MAXIMIZED_BOTH)
+					newWindow.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
+				else
+					newWindow.getFrame().setSize(frame.getWidth(), frame.getHeight());
+				newWindow.getFrame().setVisible(true);
+				frame.dispose();
+			}
+		});
 		GridBagConstraints gbc_newGame = new GridBagConstraints();
 		gbc_newGame.weightx = 1.0;
 		gbc_newGame.weighty = 1.0;

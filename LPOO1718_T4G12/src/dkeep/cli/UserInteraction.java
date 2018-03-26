@@ -8,22 +8,43 @@ import dkeep.logic.*;
 import dkeep.logic.Game.GameState;
 
 public class UserInteraction {
-
+	
+	static char[][] dungeon = { 
+			{'X','X','X','X','X','X','X','X','X','X'},
+			{'X','H',' ',' ','I',' ','X',' ','G','X'},
+			{'X','X','X',' ','X','X','X',' ',' ','X'}, 
+			{'X',' ','I',' ','I',' ','X',' ',' ','X'}, 
+			{'X','X','X',' ','X','X','X',' ',' ','X'}, 
+			{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'}, 
+			{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X','X','X',' ','X','X','X','X',' ','X'}, 
+			{'X',' ','I',' ','I',' ','X','k',' ','X'}, 
+			{'X','X','X','X','X','X','X','X','X','X'} };
+	
+	static char[][] keep = { 
+			{'X','X','X','X','X','X','X','X','X'},
+			{'I',' ',' ',' ','O',' ',' ','k','X'},
+			{'X',' ',' ',' ','*',' ',' ',' ','X'}, 
+			{'X',' ',' ',' ',' ',' ',' ',' ','X'}, 
+			{'X',' ',' ',' ',' ',' ',' ',' ','X'}, 
+			{'I',' ',' ',' ',' ',' ',' ',' ','X'}, 
+			{'I',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X','A',' ',' ',' ',' ',' ',' ','X'},  
+			{'X','X','X','X','X','X','X','X','X'} };
+	
 	public static void main(String[] args) {
 		if(firstDungeon())
 			secondDungeon();
 	}
 
 	public static boolean firstDungeon() {
-
-		//Variables
+		String guardType = "Rookie";
 		Game.LEVEL = 1;
-		GameMap gameMap = new GameMap();
-		Game firstGame = new Game(gameMap);
+		GameMap gameMap = new GameMap(dungeon);
+		Game firstGame = new Game(gameMap,guardType,1);
 		char input = ' ';
 
-		while((input != 'e') && (Game.gameState == GameState.PLAYING)) 
-		{
+		while((input != 'e') && (Game.gameState == GameState.PLAYING)) {
 			//Print the updated map
 			GameMap.print(firstGame.updateMap(firstGame.map.getMap()));
 			
@@ -46,7 +67,7 @@ public class UserInteraction {
 			}
 			
 			//Check the status game in order to continue playing or not
-			firstGame.checkGameStatus("Guard");
+			firstGame.checkGameStatus();
 			if(Game.gameState == GameState.GAMEOVER) {
 				GameMap.print(firstGame.updateMap(firstGame.map.getMap()));
 				System.out.println("\nGame Over !");
@@ -61,12 +82,11 @@ public class UserInteraction {
 	}
 	
 	public static void secondDungeon() {
-		
-		//Variables
+		int numberOfOgres = 2;
 		Game.LEVEL = 2;
 		Game.gameState = GameState.PLAYING;
-		GameMap gameMap = new GameMap();
-		Game secondGame = new Game(gameMap);
+		GameMap gameMap = new GameMap(keep);
+		Game secondGame = new Game(gameMap,"Rookie",numberOfOgres);
 		Lock.lockState = 'k';
 		char input = ' ';
 
@@ -87,7 +107,7 @@ public class UserInteraction {
 				secondGame.ogre.get(i).ogreMovement(secondGame.hero.x, secondGame.hero.y, secondGame.updateMap(secondGame.map.getMap()));
 			
 			//Check the status game in order to continue playing or not
-			secondGame.checkGameStatus("Ogre");
+			secondGame.checkGameStatus();
 			if(Game.gameState == GameState.GAMEOVER) {
 				GameMap.print(secondGame.updateMap(secondGame.map.getMap()));
 				System.out.println("\nGame Over !");

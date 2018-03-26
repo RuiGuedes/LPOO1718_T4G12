@@ -59,14 +59,17 @@ public class Game {
 					char[] guardRoute = {'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 
 							'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'}; 
 
-					guard = new Guard[1];
-					guardRouting = 0;
+					guard = new Guard[3];
+					guard[0] = new Rookie(i,j,guardRoute);
+					guard[1] = new Drunken(i,j,guardRoute);
+					guard[2] = new Suspicious(i,j,guardRoute);
+					
 					if(guardType.equals("Rookie"))
-						guard[0] = new Rookie(i,j,guardRoute);
+						guardRouting = 0;
 					else if(guardType.equals("Drunken"))
-						guard[0] = new Drunken(i,j,guardRoute);
+						guardRouting = 1;
 					else if(guardType.equals("Suspicious"))
-						guard[0] = new Suspicious(i,j,guardRoute);
+						guardRouting = 2;
 				}
 				else if(tmpMap[i][j] == 'I') {
 					if((i == 0) || (j == 0) || (i == (tmpMap.length-1)) || (j == (tmpMap.length-1))) 

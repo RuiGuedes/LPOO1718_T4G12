@@ -351,8 +351,14 @@ public class NewGame {
 			return;
 		}
 
-		if(Game.LEVEL == 1) 
-			game.guard[game.guardRouting].guardMovement();	
+		if(Game.LEVEL == 1) {
+			if(game.guard[game.guardRouting].guardMovement()) {
+				if(game.guardRouting == 2)
+					game.guardRouting = 0;
+				else
+					game.guardRouting++;
+			}
+		}
 		else if(Game.LEVEL == 2) {
 			for(int i = 0; i < game.horde; i++)
 				game.ogre.get(i).ogreMovement(game.hero.x, game.hero.y, game.updateMap(game.map.getMap()));

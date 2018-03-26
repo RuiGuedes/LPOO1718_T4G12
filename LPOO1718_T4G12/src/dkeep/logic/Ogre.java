@@ -6,10 +6,8 @@ public class Ogre extends Elements {
 
 	public char state = 'O';
 	public char club = '*';
-
 	public int clubX = 2;
 	public int clubY = 4;
-
 	public int stop = 0;
 
 	public Ogre(int x, int y, int clubX, int clubY) {
@@ -22,30 +20,27 @@ public class Ogre extends Elements {
 	public void ogreMovement(int heroX, int heroY, char[][] tmpMap) {
 
 		if( ((x == heroX) && (y == (heroY + 1))) || ((x == heroX) && (y == (heroY - 1))) || 
-				((y == heroY) && (x == (heroX + 1))) || ((y == heroY) && (x == (heroX - 1))))
+			((y == heroY) && (x == (heroX + 1))) || ((y == heroY) && (x == (heroX - 1))))
 		{
 			if(state != '8') {
 				state = '8';
 				stop = 2;
 			}
 		}
-		else
-		{	
+		else {	
 			if(stop != 0) {
-				stop--;
-				if(stop == 0)
+				if(stop-- == 0)
 					state = 'O';
 			}
-			else
-			{
-				//Variables
+			else {
 				Random rand = new Random();
 				int move;
 
 				//Generates club new position
 				do	{
 					move = rand.nextInt(4) + 1;
-				}while(((move == 1) && (x == 1)) || ((move == 2) && (x == 7)) || ((move == 3) && (y == 1)) || ((move == 4) && (y == 7)));
+				}while(((move == 1) && (tmpMap[x-1][y] == 'X')) || ((move == 2) && (tmpMap[x+1][y] == 'X')) || 
+					   ((move == 3) && (tmpMap[x][y-1] == 'X')) || ((move == 4) && (tmpMap[x][y+1] == 'X')));
 
 				//Ogre Movement
 				switch(move)
@@ -104,7 +99,8 @@ public class Ogre extends Elements {
 		//Generates club new position
 		do	{
 			move = rand.nextInt(4) + 1;
-		}while(((move == 1) && (x == 1)) || ((move == 2) && (x == 7)) || ((move == 3) && (y == 1)) || ((move == 4) && (y == 7)));
+		}while(((move == 1) && (tmpMap[x-1][y] == 'X')) || ((move == 2) && (tmpMap[x+1][y] == 'X')) || 
+			   ((move == 3) && (tmpMap[x][y-1] == 'X')) || ((move == 4) && (tmpMap[x][y+1] == 'X')));
 
 		//Club new position
 		switch(move)

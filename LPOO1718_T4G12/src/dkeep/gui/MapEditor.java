@@ -19,7 +19,7 @@ public class MapEditor extends JPanel implements MouseListener {
 	private char[][] map; 
 	private int x;
 	private int y;
-	private int size = 10; 
+	private int mapSize = 10; 
 
 	public MapEditor(LevelEditor levelEditor) {
 		this.addMouseListener(this);
@@ -44,10 +44,10 @@ public class MapEditor extends JPanel implements MouseListener {
 	}
 
 	public void initializeMap() {
-		map = new char[size][size];
-		for(int i = 0; i < size; i++) {
-			for(int j = 0; j < size; j++) {
-				if((i == 0) || (j == 0) || (i == (size -1)) || (j == (size -1)))
+		map = new char[ mapSize][ mapSize];
+		for(int i = 0; i <  mapSize; i++) {
+			for(int j = 0; j <  mapSize; j++) {
+				if((i == 0) || (j == 0) || (i == ( mapSize -1)) || (j == ( mapSize -1)))
 					map[i][j] = 'X';
 				else
 					map[i][j] = ' ';
@@ -133,7 +133,7 @@ public class MapEditor extends JPanel implements MouseListener {
 		if((map[coordX][coordY] == ' ') && ((element == 'X') || (element == 'A') ||  (element == 'O') || (element == 'k')))
 			map[coordX][coordY] = element;
 		else if((map[coordX][coordY] == 'X') && (element == 'I')) {
-			if(((coordX == 0) && (coordY == 0)) || ((coordX == 0) && (coordY == size-1)) || ((coordX == size-1) && (coordY == 0)) || ((coordX == size-1) && (coordY == size-1)))
+			if(((coordX == 0) && (coordY == 0)) || ((coordX == 0) && (coordY ==  mapSize-1)) || ((coordX ==  mapSize-1) && (coordY == 0)) || ((coordX ==  mapSize-1) && (coordY ==  mapSize-1)))
 				return;
 			else
 				map[coordX][coordY] = element;
@@ -163,6 +163,14 @@ public class MapEditor extends JPanel implements MouseListener {
 
 	public char[][] getMap() {
 		return map;
+	}
+	
+	public int getMapSize() {
+		return mapSize;
+	}
+	
+	public void setSize(int size) {
+		this. mapSize = size;
 	}
 
 }

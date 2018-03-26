@@ -86,7 +86,7 @@ public class Settings {
 			numberOfKeepLevels = Integer.parseInt(reader.readLine());
 			keepLevelSelected.setModel(new DefaultComboBoxModel(new String[] {"default"}));
 			for(int i = 1; i < numberOfKeepLevels; i++) {
-				keepLevelSelected.addItem("keepLevel" + i);
+				keepLevelSelected.addItem("keep" + i);
 			}
 		}
 		catch (IOException x) {

@@ -44,18 +44,6 @@ public class Playground extends JPanel implements MouseListener, KeyListener {
 		addMouseListener(this);
 		addKeyListener(this);
 		elements = new HashMap<Character,BufferedImage>();
-		
-		playground = new char[][] { 
-				{'X','X','X','X','X','X','X','X','X','X'},
-				{'X','H',' ',' ','I',' ','X',' ','G','X'},
-				{'X','X','X',' ','X','X','X',' ',' ','X'}, 
-				{'X',' ','I',' ','I',' ','X',' ',' ','X'}, 
-				{'X','X','X',' ','X','X','X',' ',' ','X'}, 
-				{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'}, 
-				{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'},
-				{'X','X','X',' ','X','X','X','X',' ','X'}, 
-				{'X',' ','I',' ','I',' ','X','k',' ','X'}, 
-				{'X','X','X','X','X','X','X','X','X','X'} };
 
 		try {
 			elements.put('H', ImageIO.read(getClass().getResourceAsStream("/hero.png")));

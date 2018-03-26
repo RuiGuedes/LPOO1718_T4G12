@@ -2,37 +2,9 @@ package dkeep.logic;
 
 import java.util.Arrays;
 
-
 public class GameMap { 
 
-	private static char[][] dungeon = { 
-			{'X','X','X','X','X','X','X','X','X','X'},
-			{'X','H',' ',' ','I',' ','X',' ','G','X'},
-			{'X','X','X',' ','X','X','X',' ',' ','X'}, 
-			{'X',' ','I',' ','I',' ','X',' ',' ','X'}, 
-			{'X','X','X',' ','X','X','X',' ',' ','X'}, 
-			{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'}, 
-			{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'},
-			{'X','X','X',' ','X','X','X','X',' ','X'}, 
-			{'X',' ','I',' ','I',' ','X','k',' ','X'}, 
-			{'X','X','X','X','X','X','X','X','X','X'} };
-
-	private static char[][] keep = { 
-			{'X','X','X','X','X','X','X','X','X'},
-			{'I',' ',' ',' ','O',' ',' ','k','X'},
-			{'X',' ',' ',' ','*',' ',' ',' ','X'}, 
-			{'X',' ',' ',' ',' ',' ',' ',' ','X'}, 
-			{'X',' ',' ',' ',' ',' ',' ',' ','X'}, 
-			{'X',' ',' ',' ',' ',' ',' ',' ','X'}, 
-			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
-			{'X','A',' ',' ',' ',' ',' ',' ','X'}, 
-			{'X','X','X','X','X','X','X','X','X'} };
-
 	private char[][] map;
-
-	public GameMap() {
-		this.getOriginalMap();
-	}
 	
 	public GameMap(char[][] givenMap) {
 		map = givenMap;
@@ -49,15 +21,6 @@ public class GameMap {
 		}
 		return result;
 	}
-
-	public char[][] getOriginalMap() {
-		if(Game.LEVEL == 1) {
-			return (map = deepCopy(dungeon));
-		}
-		else {
-			return (map = deepCopy(keep));
-		}
-	}
 	
 	public char[][] getMap() {
 		return deepCopy(map);
@@ -68,15 +31,10 @@ public class GameMap {
 	}
 
 	public static void print(char[][] map) {
-
-		for(int i = 0; i < map.length; i++)
-		{
+		for(int i = 0; i < map.length; i++) {
 			for(int k = 0; k < map[i].length; k++)
 				System.out.print(map[i][k] + " ");
-
 			System.out.println();
 		}
 	}
-
-
 }

@@ -24,8 +24,8 @@ public class Guard extends Elements {
 
 		//Variables
 		Random rand = new Random();
-
-		if(guardType == "Rookie") {
+		
+		if(guardType.equals("Rookie")) {
 			
 			if(guardRoute[position] == 'w')
 				x--;
@@ -44,7 +44,7 @@ public class Guard extends Elements {
 				position++;
 
 		}
-		else if(guardType == "Drunken") {
+		else if(guardType.equalsIgnoreCase("Drunken")) {
 
 			int tmp = rand.nextInt(10) + 1;
 
@@ -105,7 +105,7 @@ public class Guard extends Elements {
 			}
 
 		}
-		else if(guardType == "Suspicious") {
+		else if(guardType.equals("Suspicious")) {
 
 			if(stop == 0) {
 

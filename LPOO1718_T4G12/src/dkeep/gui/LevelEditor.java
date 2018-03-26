@@ -243,19 +243,24 @@ public class LevelEditor {
 					}
 					
 					try (BufferedWriter writer = Files.newBufferedWriter(f.toPath(), charset)) {
+						writer.write("" + mapEditor.getMapSize());
+						writer.newLine();
 						for(int i = 0; i < mapEditor.getMap().length; i++) {
 							for(int j = 0; j < mapEditor.getMap()[0].length; j++) {
 								 writer.write(mapEditor.getMap()[i][j]);
 							}
 							writer.newLine();
 						}
+						writer.close();
 					} catch (IOException x) {
 					    System.err.format("IOException: %s%n", x);
 					}
 					
+				
 					File numbersFile = new File("files/numberOfKeepLevels.txt");
 					try (BufferedWriter writer = Files.newBufferedWriter(numbersFile.toPath(), charset)) {
 						writer.write(Settings.numberOfKeepLevels + "\n");
+						writer.close();
 					} catch (IOException x) {
 					    System.err.format("IOException: %s%n", x);
 					}

@@ -45,8 +45,11 @@ public class NewGame {
 	public MyButton leftButton;
 	public MyButton rightButton;
 	public MyButton downButton;
+	public String keepLevel;
 	public String guardPersonality;
 	public int ogresNumber;
+	public char[][] dungeon;
+	public char[][] keep;
 
 	/**
 	 * Launch the application.
@@ -71,6 +74,7 @@ public class NewGame {
 		initialize();
 		initializeDrawImageMembers();
 		initializeGameMembers();
+		initializeLevelsMap();
 		startGame();
 	}
 
@@ -277,7 +281,6 @@ public class NewGame {
 	public void initializeDrawImageMembers() {
 		try {
 			controllers.setImage(ImageIO.read(getClass().getResourceAsStream("/backgroundInteraction.jpg")));
-			
 		} catch (IOException exc) {
 			exc.printStackTrace();
 		} 
@@ -288,7 +291,7 @@ public class NewGame {
 		File settingsFile = new File("files/settings.txt");
 		
 		try (BufferedReader reader = Files.newBufferedReader(settingsFile.toPath(), charset)) {
-			reader.readLine();
+			keepLevel = reader.readLine();
 			guardPersonality = reader.readLine();
 			ogresNumber = Integer.parseInt(reader.readLine());
 		}
@@ -297,42 +300,60 @@ public class NewGame {
 		}
 	}
 	
+	public void initializeLevelsMap() {
+		Charset charset = Charset.forName("US-ASCII");
+		File settingsFile = new File("files/" + keepLevel + ".txt");
+		
+		try (BufferedReader reader = Files.newBufferedReader(settingsFile.toPath(), charset)) {
+			int size = Integer.parseInt(reader.readLine());
+			keep = new char[size][size];
+			for(int i = 0; i < keep.length; i++) {
+				keep[i] = reader.readLine().toCharArray();
+			}
+		}
+		catch (IOException x) {
+			System.err.format("IOException: %s%n", x);
+		}
+		
+		dungeon = new char[][] { 
+			{'X','X','X','X','X','X','X','X','X','X'},
+			{'X','H',' ',' ','I',' ','X',' ','G','X'},
+			{'X','X','X',' ','X','X','X',' ',' ','X'}, 
+			{'X',' ','I',' ','I',' ','X',' ',' ','X'}, 
+			{'X','X','X',' ','X','X','X',' ',' ','X'}, 
+			{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'}, 
+			{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X','X','X',' ','X','X','X','X',' ','X'}, 
+			{'X',' ','I',' ','I',' ','X','k',' ','X'}, 
+			{'X','X','X','X','X','X','X','X','X','X'} };
+	}
+	
 	public void startGame() { 
-
-		//Game Variables
 		Game.LEVEL = 1;
-		GameMap gameMap = new GameMap();
+		GameMap gameMap = new GameMap(dungeon);
 		game = new Game(gameMap,guardPersonality, ogresNumber);
-
-		//Set text
-		//playground.setText(game.mapToString(game.updateMap(game.map.getMap())));
 		playground.setPlayground(game.updateMap(game.map.getMap()));
-
-		//Set message text
 		info.setText("You can play now");
 	}
 	
 	public void automaticSteps() {
-
-		//Check if level is complete
 		if((Game.gameState == Game.GameState.VICTORY) && (Game.LEVEL == 1)) {
 			Game.LEVEL = 2;
 			Game.gameState = GameState.PLAYING;
-			GameMap gameMap = new GameMap();
+			GameMap gameMap = new GameMap(keep);
 			game = new Game(gameMap,guardPersonality, ogresNumber);
+			playground.setPlayground(game.updateMap(game.map.getMap()));
 			Lock.lockState = 'k';
+			playground.repaint();
+			return;
 		}
 		else if((Game.gameState == Game.GameState.VICTORY) && (Game.LEVEL == 2)) {
-			info.setText("Victory !");
+			info.setText("Victory");
 			playground.setEnabled(false);
-			upButton.setEnabled(false);
-			downButton.setEnabled(false);
-			leftButton.setEnabled(false);
-			rightButton.setEnabled(false);
+			upButton.setEnabled(false); downButton.setEnabled(false); leftButton.setEnabled(false); rightButton.setEnabled(false);
 			return;
 		}
 
-		//Executes enemy movement
 		if(Game.LEVEL == 1) 
 			game.guard[game.guardRouting].guardMovement();	
 		else if(Game.LEVEL == 2) {
@@ -340,19 +361,13 @@ public class NewGame {
 				game.ogre.get(i).ogreMovement(game.hero.x, game.hero.y, game.updateMap(game.map.getMap()));
 		}
 
-		//Update playground text
-		//playground.setText(game.mapToString(game.updateMap(game.map.getMap())));
 		playground.setPlayground(game.updateMap(game.map.getMap()));
-		
-		//Check the status game in order to continue playing or not
-		if(Game.LEVEL == 1)
-			game.checkGameStatus("Guard");
-		else
-			game.checkGameStatus("Ogre");
+		game.checkGameStatus();
+	
 
 		//Check game status after enemy movement
 		if(Game.gameState == GameState.GAMEOVER) {
-			info.setText("Game over !");
+			info.setText("Game over");
 			playground.setEnabled(false);
 			upButton.setEnabled(false);
 			downButton.setEnabled(false);

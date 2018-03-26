@@ -6,7 +6,6 @@ import dkeep.logic.Guard;
 import dkeep.logic.Ogre;
 import dkeep.logic.Lock;
 import dkeep.logic.Door;
-import java.util.Random;
 import java.util.ArrayList;
 
 public class Game {
@@ -31,20 +30,13 @@ public class Game {
 	public ArrayList<Ogre> ogre;
 	public int horde = 1;
 
-	public Game(GameMap gameMap) {
-		Game.gameState = GameState.PLAYING;
-		map = gameMap;
-
-		initElements();
-	}
-	
 	public Game(GameMap gameMap, String guardType, int ogresNumber) {
 		Game.gameState = GameState.PLAYING;
 		map = gameMap;
-		
+
 		initElements(guardType,ogresNumber);
 	}
-	
+
 	public void initElements(String guardType, int ogresNumber) {
 
 		char[][] tmpMap = map.getMap();
@@ -52,11 +44,9 @@ public class Game {
 		door = new ArrayList<Door>();
 		ogre = new ArrayList<Ogre>();
 		horde = ogresNumber;
-		
-		for(int i = 0; i < tmpMap.length; i++)
-		{
-			for(int j = 0; j < tmpMap[i].length; j++) 
-			{
+
+		for(int i = 0; i < tmpMap.length; i++) {
+			for(int j = 0; j < tmpMap[i].length; j++) {
 				if((tmpMap[i][j] == 'H') || (tmpMap[i][j] == 'A')) {
 					hero = new Hero(i,j,tmpMap[i][j]);
 				}
@@ -65,25 +55,15 @@ public class Game {
 						lock = new Lock(i,j,false);
 					else if(Game.LEVEL == 2)
 						lock = new Lock(i,j,true);
-					else	//Allows to choose the type of lock by changing it lockType
-						lock = new Lock(i,j,false);
 				}
 				else if(tmpMap[i][j] == 'G') {
-					if(Game.LEVEL == 1) {
+					char[] guardRoute = {'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 
+							'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'}; 
 
-						char[] guardRoute = {'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 
-								'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'}; 
+					guard = new Guard[1];
+					guardRouting = 0;
+					guard[0] = new Guard(i,j,guardType,guardRoute);
 
-						//Create guard
-						guard = new Guard[1];
-						guardRouting = 0;
-						guard[0] = new Guard(i,j,guardType,guardRoute);
-					}
-					else {
-						guard = new Guard[1];
-						guardRouting = 0;
-						guard[guardRouting] = new Guard(i,j,guardType, null);
-					}
 				}
 				else if(tmpMap[i][j] == 'I') {
 					if((i == 0) || (j == 0) || (i == (tmpMap.length-1)) || (j == (tmpMap.length-1))) 
@@ -104,98 +84,22 @@ public class Game {
 						tmpY++;
 					else if((tmpMap[i][j-1]) == '*')
 						tmpY--;
-					System.out.println(ogre.size());
+					
 					while(ogresNumber > 0) {
 						ogre.add(new Ogre(i,j,tmpX,tmpY));
 						ogresNumber--;
 					}
 				}
-
 				if(tmpMap[i][j] != 'X')
 					tmpMap[i][j] = ' ';
 			}
 		}
-
 		map.setMap(tmpMap);
 	}
 
-	public void initElements() {
+	public void checkGameStatus() {
 
-		char[][] tmpMap = map.getMap();
-
-		door = new ArrayList<Door>();
-		ogre = new ArrayList<Ogre>();
-
-		for(int i = 0; i < tmpMap.length; i++)
-		{
-			for(int j = 0; j < tmpMap[i].length; j++) 
-			{
-				if((tmpMap[i][j] == 'H') || (tmpMap[i][j] == 'A')) {
-					hero = new Hero(i,j,tmpMap[i][j]);
-				}
-				else if(tmpMap[i][j] == 'k') {
-					if(Game.LEVEL == 1)
-						lock = new Lock(i,j,false);
-					else if(Game.LEVEL == 2)
-						lock = new Lock(i,j,true);
-					else	//Allows to choose the type of lock by changing it lockType
-						lock = new Lock(i,j,false);
-				}
-				else if(tmpMap[i][j] == 'G') {
-					if(Game.LEVEL == 1) {
-
-						char[] guardRoute = {'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 
-								'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'}; 
-
-						Random rand = new Random();
-						guardRouting = rand.nextInt(3);
-
-						//Create 3 different types of guard
-						guard = new Guard[3];
-						guard[0] = new Guard(i,j,"Rookie",guardRoute);
-						guard[1] = new Guard(i,j,"Drunken",guardRoute);
-						guard[2] = new Guard(i,j,"Suspicious",guardRoute);
-					}
-					else {
-						guard = new Guard[1];
-						guardRouting = 0;
-						guard[guardRouting] = new Guard(i,j,"Rookie", null);
-					}
-				}
-				else if(tmpMap[i][j] == 'I') {
-					if((i == 0) || (j == 0) || (i == (tmpMap.length-1)) || (j == (tmpMap.length-1))) 
-						door.add(new Door(i,j,'I',true));	//Exit Door
-					else
-						door.add(new Door(i,j,'I',false));	//Normal Door
-				}
-				else if(tmpMap[i][j] == 'O') {
-
-					int tmpX = i;
-					int tmpY = j;
-
-					if((tmpMap[i+1][j]) == '*') 
-						tmpX++;
-					else if((tmpMap[i-1][j]) == '*')
-						tmpX--;
-					else if((tmpMap[i][j+1]) == '*')
-						tmpY++;
-					else if((tmpMap[i][j-1]) == '*')
-						tmpY--;
-
-					ogre.add(new Ogre(i,j,tmpX,tmpY));
-				}
-
-				if(tmpMap[i][j] != 'X')
-					tmpMap[i][j] = ' ';
-			}
-		}
-
-		map.setMap(tmpMap);
-	}
-
-	public void checkGameStatus(String gameType) {
-
-		if(gameType == "Guard") {
+		if(Game.LEVEL == 1) {
 			if((guard[guardRouting].x == hero.x) && (guard[guardRouting].state == 'G') && 
 					((guard[guardRouting].y == (hero.y + 1)) || (guard[guardRouting].y == (hero.y - 1)))) {
 				gameState = GameState.GAMEOVER;
@@ -205,10 +109,8 @@ public class Game {
 				gameState = GameState.GAMEOVER;
 			}
 		}
-		else if(gameType == "Ogre")
-		{	
-			for(int i = 0; i < horde; i++) 
-			{
+		else if(Game.LEVEL == 2){	
+			for(int i = 0; i < horde; i++) {
 				if( ((ogre.get(i).x == hero.x) && ((ogre.get(i).y == (hero.y + 1)) || (ogre.get(i).y == (hero.y - 1)))) ||
 						((ogre.get(i).y == hero.y) && ((ogre.get(i).x == (hero.x + 1)) || (ogre.get(i).x == (hero.x - 1)))))
 				{
@@ -221,7 +123,6 @@ public class Game {
 	}
 
 	public char[][] updateMap(char[][] tmpMap) {
-
 		tmpMap[hero.x][hero.y] = hero.state;
 
 		for(int i = 0; i < door.size(); i++)
@@ -244,12 +145,10 @@ public class Game {
 			if(tmpMap[lock.x][lock.y] == ' ')
 				tmpMap[lock.x][lock.y] = Lock.lockState;
 		}
-
 		return tmpMap;
 	}
 
 	public String mapToString(char[][] map) {
-
 		String result = "";
 
 		for(int i = 0; i < map.length; i++) {
@@ -258,7 +157,6 @@ public class Game {
 
 			result += "\n";
 		}
-
 		return result;
 	}
 }

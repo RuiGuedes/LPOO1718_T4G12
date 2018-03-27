@@ -128,35 +128,26 @@ public class TestCodeCoverage {
 	
 	@Test
 	public void testCheckGameStatusForGuard() {
-		Game.LEVEL = 1;
+		Game.LEVEL = 1; 
 		GameMap gameMap = new GameMap(dungeon);
 		Game game = new Game(gameMap,"Rookie",1);
 
-		char[] guardRoute = { 'a', 's', 's', 'd', 'w', 'w' };
-
-		game.guard[0].changeGuardRoute(guardRoute);
-		assertTrue("Sucess !",game.guard[0].equals(1,4));
-
-		game.guard[0].guardMovement();
-		assertTrue("Sucess !",game.guard[0].equals(1,3));
-
-		game.guard[0].guardMovement();
-		assertTrue("Sucess !",game.guard[0].equals(2,3));
-
-		game.guard[0].guardMovement();
-		assertTrue("Sucess !",game.guard[0].equals(3,3));
-
-		game.guard[0].guardMovement();
-		assertTrue("Sucess !",game.guard[0].equals(3,4));
-
-		game.guard[0].guardMovement();
-		assertTrue("Sucess !",game.guard[0].equals(2,4));
-
-		game.guard[0].guardMovement();
-		assertTrue("Sucess !",game.guard[0].equals(1,4));
+		game.hero.heroMovement('d', dungeon);
+		assertTrue("Sucess !",game.hero.equals(1,2));
+		
+		game.hero.heroMovement('d', dungeon);
+		assertTrue("Sucess !",game.hero.equals(1,3));
+		
+		game.hero.heroMovement('s', dungeon);
+		assertTrue("Sucess !",game.hero.equals(2,3));
+		
+		game.hero.heroMovement('d', dungeon);
+		assertTrue("Sucess !",game.hero.equals(2,4));
+		
+		game.checkGameStatus();
+		assertEquals("Sucess !", Game.GameState.GAMEOVER, Game.gameState);
 
 	}
-
 	
 	@Test
 	public void testGuardRookieMovementRoute() {
@@ -229,7 +220,7 @@ public class TestCodeCoverage {
 	} 
 
 	char[][] keep = {
-			{'X', 'X', 'X', 'X', 'X', 'X'},
+			{'X', 'X', 'X', 'X', 'X', 'X'}, 
 			{'X', 'H', ' ', ' ', 'O', 'X'},
 			{'I', ' ', ' ', ' ', '*', 'X'},
 			{'I', 'k', ' ', ' ', ' ', 'X'},

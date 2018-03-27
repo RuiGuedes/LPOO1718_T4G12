@@ -1,5 +1,5 @@
 package dkeep.logic;
-
+ 
 import dkeep.logic.GameMap;
 import dkeep.logic.Hero;
 import dkeep.logic.Guard;
@@ -32,14 +32,15 @@ public class Game {
 
 	public Game(GameMap gameMap, String guardType, int ogresNumber) {
 		Game.gameState = GameState.PLAYING;
-		map = gameMap;
+		map = gameMap; 
 		initElements(guardType,ogresNumber);
 	}
 
 	public void initElements(String guardType, int ogresNumber) {
 
 		char[][] tmpMap = map.getMap();
-
+		
+		Lock.lockState = 'k';
 		door = new ArrayList<Door>();
 		ogre = new ArrayList<Ogre>();
 		horde = ogresNumber;
@@ -104,7 +105,7 @@ public class Game {
 	}
 
 	public void checkGameStatus() {
-
+ 
 		if(Game.LEVEL == 1) {
 			if((guard[guardRouting].x == hero.x) && (guard[guardRouting].state == 'G') && 
 					((guard[guardRouting].y == (hero.y + 1)) || (guard[guardRouting].y == (hero.y - 1)))) {
@@ -112,11 +113,17 @@ public class Game {
 			}
 			else if((guard[guardRouting].y == hero.y) && (guard[guardRouting].state == 'G') &&
 					( (guard[guardRouting].x == (hero.x + 1)) || (guard[guardRouting].x == (hero.x - 1)))) {
-				gameState = GameState.GAMEOVER;
+				gameState = GameState.GAMEOVER; 
 			}
-		}
+		} 
 		else if(Game.LEVEL == 2){	
 			for(int i = 0; i < horde; i++) {
+				 
+				if((ogre.get(i).clubX == hero.x) && (ogre.get(i).clubY == hero.y)) {
+					gameState = GameState.GAMEOVER;
+					break;
+				}
+				
 				if( ((ogre.get(i).x == hero.x) && ((ogre.get(i).y == (hero.y + 1)) || (ogre.get(i).y == (hero.y - 1)))) ||
 						((ogre.get(i).y == hero.y) && ((ogre.get(i).x == (hero.x + 1)) || (ogre.get(i).x == (hero.x - 1)))))
 				{
@@ -152,17 +159,5 @@ public class Game {
 				tmpMap[lock.x][lock.y] = Lock.lockState;
 		}
 		return tmpMap;
-	}
-
-	public String mapToString(char[][] map) {
-		String result = "";
-
-		for(int i = 0; i < map.length; i++) {
-			for(int j = 0; j < map[i].length; j++) 
-				result += map[i][j] + " ";
-
-			result += "\n";
-		}
-		return result;
 	}
 }

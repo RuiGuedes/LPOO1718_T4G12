@@ -12,6 +12,6 @@ public class Elements {
 		if((this.x == x) && (this.y == y))
 			return true;
 		else
-			return false;
+			return false; 
 	}
 }

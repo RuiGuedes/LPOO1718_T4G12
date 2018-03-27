@@ -21,9 +21,7 @@ public class TestDungeonGameLogic {
 		Game game = new Game(gameMap,"Rookie",1);
 		
 		assertTrue("Sucess !",game.hero.equals(1,1));
-		
 		game.hero.heroMovement('s', map);
-		
 		assertTrue("Sucess !",game.hero.equals(2,1));
 		
 	}
@@ -34,9 +32,7 @@ public class TestDungeonGameLogic {
 		Game game = new Game(gameMap,"Rookie",1);
 		
 		assertTrue("Sucess !",game.hero.equals(1,1));
-		
 		game.hero.heroMovement('a', map);
-		
 		assertTrue("Sucess !",game.hero.equals(1,1));
 		
 	}
@@ -46,11 +42,10 @@ public class TestDungeonGameLogic {
 		GameMap gameMap = new GameMap(map);
 		Game game = new Game(gameMap,"Rookie",1);
 		Game.LEVEL = 1;
-		assertNotEquals("Sucess !", Game.GameState.GAMEOVER, Game.gameState);
 		
+		assertNotEquals("Sucess !", Game.GameState.GAMEOVER, Game.gameState);
 		game.hero.heroMovement('d', map);
 		game.checkGameStatus();
-		
 		assertEquals("Sucess !", Game.GameState.GAMEOVER, Game.gameState);
 		
 	}
@@ -62,11 +57,8 @@ public class TestDungeonGameLogic {
 		assertTrue("Sucess !",game.hero.equals(1,1));
 		
 		game.hero.heroMovement('s', map);
-		
 		assertTrue("Sucess !",game.hero.equals(2,1));
-		
 		game.hero.heroMovement('a', map);
-		
 		assertTrue("Sucess !",game.hero.equals(2,1));
 	}
 	
@@ -83,7 +75,6 @@ public class TestDungeonGameLogic {
 		map = game.updateMap(map);
 		
 		assertEquals("Sucess !", Lock.lockState, 'K');
-		
 		assertEquals("Sucess !", Game.door.get(0).state, 'S');
 		assertEquals("Sucess !", Game.door.get(1).state, 'S');
 	}
@@ -92,6 +83,7 @@ public class TestDungeonGameLogic {
 	@Test
 	public void testHeroProgessionToKeep() {
 		GameMap gameMap = new GameMap(map);
+		Game.LEVEL = 1;
 		Game game = new Game(gameMap,"Rookie",1);
 		Lock.lockState = 'k';
 		
@@ -105,13 +97,12 @@ public class TestDungeonGameLogic {
 		assertTrue("Sucess !",game.hero.equals(2,1));
 		
 		map = game.updateMap(map);
-//		
-//		assertEquals("Sucess !", Game.door.get(0).state, 'S');
-//		assertEquals("Sucess !", Game.door.get(1).state, 'S');
-//		
-		//game.hero.heroMovement('a', map);
-//		
-//		assertEquals("Sucess !", Game.GameState.VICTORY, Game.gameState);
+		
+		assertEquals("Sucess !", Game.door.get(0).state, 'S');
+		assertEquals("Sucess !", Game.door.get(1).state, 'S');
+		
+		game.hero.heroMovement('a', map);
+		assertEquals("Sucess !", Game.GameState.VICTORY, Game.gameState);
 	}
 	
 	

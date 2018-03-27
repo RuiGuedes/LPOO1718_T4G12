@@ -29,7 +29,7 @@ public class Hero extends Elements {
 			else if(tmpMap[x-1][y] == 'Z')
 				x -= 2;
 			break;
-		case 's':
+		case 's': 
 			if(tmpMap[x+1][y] == ' ') 
 				x++;
 			else if((tmpMap[x+1][y] == 'k') && (Lock.lockType)) {

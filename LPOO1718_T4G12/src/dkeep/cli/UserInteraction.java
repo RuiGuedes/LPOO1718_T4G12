@@ -19,7 +19,7 @@ public class UserInteraction {
 			{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X','X','X',' ','X','X','X','X',' ','X'}, 
 			{'X',' ','I',' ','I',' ','X','k',' ','X'}, 
-			{'X','X','X','X','X','X','X','X','X','X'} };
+			{'X','X','X','X','X','X','X','X','X','X'} }; 
 	
 	static char[][] keep = { 
 			{'X','X','X','X','X','X','X','X','X'},
@@ -46,14 +46,14 @@ public class UserInteraction {
 
 		while((input != 'e') && (Game.gameState == GameState.PLAYING)) {
 			//Print the updated map
-			GameMap.print(firstGame.updateMap(firstGame.map.getMap()));
+			print(firstGame.updateMap(firstGame.map.getMap()));
 			
 			//Read user input
 			input = readInput();
 			
 			//Moves the hero in the respective direction
 			firstGame.hero.heroMovement(input, firstGame.updateMap(firstGame.map.getMap()));
-			
+			 
 			//Check if level is complete
 			if(Game.gameState == Game.GameState.VICTORY)
 				break;
@@ -69,7 +69,7 @@ public class UserInteraction {
 			//Check the status game in order to continue playing or not
 			firstGame.checkGameStatus();
 			if(Game.gameState == GameState.GAMEOVER) {
-				GameMap.print(firstGame.updateMap(firstGame.map.getMap()));
+				print(firstGame.updateMap(firstGame.map.getMap()));
 				System.out.println("\nGame Over !");
 			}
 		}
@@ -94,14 +94,14 @@ public class UserInteraction {
 		while((input != 'e') && (Game.gameState == GameState.PLAYING)) 
 		{
 			//Print the updated map
-			GameMap.print(secondGame.updateMap(secondGame.map.getMap()));
+			print(secondGame.updateMap(secondGame.map.getMap()));
 			
 			//Read user input
-			input = readInput();
+			input = readInput(); 
 
 			//Moves the hero in the respective direction
 			secondGame.hero.heroMovement(input, secondGame.updateMap(secondGame.map.getMap()));
-			
+			 
 			//Moves the ogre and club in a randoom direction
 			for(int i = 0; i < secondGame.horde; i++)
 				secondGame.ogre.get(i).ogreMovement(secondGame.hero.x, secondGame.hero.y, secondGame.updateMap(secondGame.map.getMap()));
@@ -109,7 +109,7 @@ public class UserInteraction {
 			//Check the status game in order to continue playing or not
 			secondGame.checkGameStatus();
 			if(Game.gameState == GameState.GAMEOVER) {
-				GameMap.print(secondGame.updateMap(secondGame.map.getMap()));
+				print(secondGame.updateMap(secondGame.map.getMap()));
 				System.out.println("\nGame Over !");
 			}
 		}
@@ -118,7 +118,15 @@ public class UserInteraction {
 			System.out.println("Victory !");
 
 	}
-
+	
+	public static void print(char[][] map) {
+		for(int i = 0; i < map.length; i++) {
+			for(int k = 0; k < map[i].length; k++)
+				System.out.print(map[i][k] + " ");
+			System.out.println();
+		}
+	} 
+	
 	public static char readInput() {
 
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

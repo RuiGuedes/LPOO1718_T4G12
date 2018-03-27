@@ -19,13 +19,12 @@ public class TestKeepGameLogic {
 	@Test
 	public void testHeroIsCapturedByOgre() {
 		GameMap gameMap = new GameMap(map);
-		Game game = new Game(gameMap);
+		Game.LEVEL = 2;
+		Game game = new Game(gameMap,"Rookie",1);
 		
 		assertNotEquals("Sucess !", Game.GameState.GAMEOVER, Game.gameState);
-		
 		game.hero.heroMovement('d', map);
-		game.checkGameStatus("Ogre");
-		
+		game.checkGameStatus();
 		assertEquals("Sucess !", Game.GameState.GAMEOVER, Game.gameState);
 		
 	}
@@ -33,14 +32,13 @@ public class TestKeepGameLogic {
 	@Test
 	public void testHeroMovesIntoExitDoorKeyCell() {
 		GameMap gameMap = new GameMap(map);
-		Game game = new Game(gameMap);
+		Game.LEVEL = 2; 
+		Game game = new Game(gameMap,"Rookie",1);
 		
 		assertEquals("Sucess !", Lock.lockState, 'k');
-		
 		game.hero.heroMovement('s', map);
 		game.hero.heroMovement('s', map);
-		
-		assertEquals("Sucess !", Lock.lockState, 'K');
+		assertEquals("Sucess !", Lock.lockState, ' ');
 		
 	}
 	
@@ -48,17 +46,15 @@ public class TestKeepGameLogic {
 	@Test
 	public void testHeroMovesIntoExitDoorWithoutKey() {
 		GameMap gameMap = new GameMap(map);
-		Game game = new Game(gameMap);
+		Game.LEVEL = 2;
+		Game game = new Game(gameMap,"Rookie",1);
 		
 		assertTrue("Sucess !", game.hero.equals(1,1));
-		
 		game.hero.heroMovement('s', map);
 		
 		assertTrue("Sucess !", game.hero.equals(2,1));
-		
 		game.hero.heroMovement('a', map);
 		map = game.updateMap(map);
-		
 		assertEquals("Sucess !", Game.door.get(0).state, 'I');
 		
 	}
@@ -66,7 +62,8 @@ public class TestKeepGameLogic {
 	@Test
 	public void testHeroMovesIntoExitDoorWithKey() {
 		GameMap gameMap = new GameMap(map);
-		Game game = new Game(gameMap);
+		Game.LEVEL = 2;
+		Game game = new Game(gameMap,"Rookie",1);
 		
 		assertTrue("Sucess !", game.hero.equals(1,1));
 		
@@ -74,7 +71,7 @@ public class TestKeepGameLogic {
 		game.hero.heroMovement('s', map);
 		game.hero.heroMovement('w', map);
 		
-		assertEquals("Sucess !", Lock.lockState, 'K');
+		assertEquals("Sucess !", Lock.lockState, ' ');
 		assertTrue("Sucess !", game.hero.equals(2,1));
 		
 		game.hero.heroMovement('a', map);
@@ -87,7 +84,8 @@ public class TestKeepGameLogic {
 	@Test
 	public void testHeroSuccessfullyExitsKeep() {
 		GameMap gameMap = new GameMap(map);
-		Game game = new Game(gameMap);
+		Game.LEVEL = 2;
+		Game game = new Game(gameMap,"Rookie",1);
 		
 		assertTrue("Sucess !", game.hero.equals(1,1));
 		
@@ -95,7 +93,7 @@ public class TestKeepGameLogic {
 		game.hero.heroMovement('s', map);
 		game.hero.heroMovement('w', map);
 		
-		assertEquals("Sucess !", Lock.lockState, 'K');
+		assertEquals("Sucess !", Lock.lockState, ' ');
 		assertTrue("Sucess !", game.hero.equals(2,1));
 		
 		game.hero.heroMovement('a', map);

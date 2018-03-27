@@ -20,7 +20,6 @@ public class Drunken extends Guard {
 				stop = rand.nextInt(3) + 1;
 			}
 			else {
-
 				if((position == 0) && !direction)
 					direction = true;
 
@@ -57,8 +56,15 @@ public class Drunken extends Guard {
 		}
 		else {
 			stop--;
-			if(stop == 0)
+			if(stop == 0) {
 				state = 'G';
+				tmp = rand.nextInt(2);
+				if(tmp == 0)
+					direction = true;
+				else
+					direction = false;
+					
+			}
 		}
 		return false;
 	}

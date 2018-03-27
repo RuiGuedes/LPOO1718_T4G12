@@ -20,73 +20,75 @@ public class Ogre extends Elements {
 	public void ogreMovement(int heroX, int heroY, char[][] tmpMap) {
 
 		if( ((x == heroX) && (y == (heroY + 1))) || ((x == heroX) && (y == (heroY - 1))) || 
-			((y == heroY) && (x == (heroX + 1))) || ((y == heroY) && (x == (heroX - 1))))
+				((y == heroY) && (x == (heroX + 1))) || ((y == heroY) && (x == (heroX - 1))))
 		{
-			if(state != '8') {
+			if(state != '8') { 
 				state = '8';
 				stop = 2;
+				return;
 			}
 		}
-		else {	
-			if(stop != 0) {
-				if(stop-- == 0)
-					state = 'O';
+
+		if(stop != 0) {
+			stop--;
+			if(stop == 0)
+				state = 'O';
+		}
+		else {
+			Random rand = new Random();
+			int move;
+
+			do	{
+				move = rand.nextInt(4) + 1;
+			}while(((move == 1) && ((tmpMap[x-1][y] == 'X') || (tmpMap[x-1][y] == 'I'))) || 
+					((move == 2) && ((tmpMap[x+1][y] == 'X') || (tmpMap[x+1][y] == 'I'))) || 
+					((move == 3) && ((tmpMap[x][y-1] == 'X') || (tmpMap[x][y-1] == 'I'))) || 
+					((move == 4) && ((tmpMap[x][y+1] == 'X') || (tmpMap[x][y+1] == 'I'))));
+
+			switch(move)
+			{
+			case 1:	//Moves up
+				if(tmpMap[x-1][y] != 'X') {	
+					x--;
+					if((x == 1) && (y == 7))
+						state = '$';
+					else
+						state = 'O';
+				}
+				break;
+			case 2:	//Moves down
+				if(tmpMap[x+1][y] != 'X') {	
+					if((x == 1) && (y == 7))
+						state = 'O';
+
+					x++;
+				}
+				break;
+			case 3:	//Moves left
+				if((tmpMap[x][y-1] != 'X') && (tmpMap[x][y-1] != 'I') && (tmpMap[x][y-1] != 'S'))  {	
+					if((x == 1) && (y == 7))
+						state = 'O';
+
+					y--;		
+				}
+				break;
+			case 4:	//Moves right
+				if(tmpMap[x][y+1] != 'X') {
+					y++;
+					if((x == 1) && (y == 7))
+						state = '$';
+					else
+						state = 'O';
+				}
+				break;
 			}
-			else {
-				Random rand = new Random();
-				int move;
 
-				do	{
-					move = rand.nextInt(4) + 1;
-				}while(((move == 1) && ((tmpMap[x-1][y] == 'X') || (tmpMap[x-1][y] == 'I'))) || 
-					   ((move == 2) && ((tmpMap[x+1][y] == 'X') || (tmpMap[x+1][y] == 'I'))) || 
-					   ((move == 3) && ((tmpMap[x][y-1] == 'X') || (tmpMap[x][y-1] == 'I'))) || 
-					   ((move == 4) && ((tmpMap[x][y+1] == 'X') || (tmpMap[x][y+1] == 'I'))));
-
-				switch(move)
-				{
-				case 1:	//Moves up
-					if(tmpMap[x-1][y] != 'X') {	
-						x--;
-						if((x == 1) && (y == 7))
-							state = '$';
-						else
-							state = 'O';
-					}
-					break;
-				case 2:	//Moves down
-					if(tmpMap[x+1][y] != 'X') {	
-						if((x == 1) && (y == 7))
-							state = 'O';
-
-						x++;
-					}
-					break;
-				case 3:	//Moves left
-					if((tmpMap[x][y-1] != 'X') && (tmpMap[x][y-1] != 'I') && (tmpMap[x][y-1] != 'S'))  {	
-						if((x == 1) && (y == 7))
-							state = 'O';
-
-						y--;		
-					}
-					break;
-				case 4:	//Moves right
-					if(tmpMap[x][y+1] != 'X') {
-						y++;
-						if((x == 1) && (y == 7))
-							state = '$';
-						else
-							state = 'O';
-					}
-					break;
-				}
-				
-				if(stop != 2) {
-					club = '*';
-					clubMovement(tmpMap);
-				}
+			if(stop != 2) {
+				club = '*';
+				clubMovement(tmpMap);
 			}
 		}
+
 	}
 
 	public void clubMovement(char[][] tmpMap) {
@@ -96,42 +98,31 @@ public class Ogre extends Elements {
 		do	{
 			move = rand.nextInt(4) + 1;
 		}while(((move == 1) && ((tmpMap[x-1][y] == 'X') || (tmpMap[x-1][y] == 'I'))) || 
-				   ((move == 2) && ((tmpMap[x+1][y] == 'X') || (tmpMap[x+1][y] == 'I'))) || 
-				   ((move == 3) && ((tmpMap[x][y-1] == 'X') || (tmpMap[x][y-1] == 'I'))) || 
-				   ((move == 4) && ((tmpMap[x][y+1] == 'X') || (tmpMap[x][y+1] == 'I'))));
+				((move == 2) && ((tmpMap[x+1][y] == 'X') || (tmpMap[x+1][y] == 'I'))) || 
+				((move == 3) && ((tmpMap[x][y-1] == 'X') || (tmpMap[x][y-1] == 'I'))) || 
+				((move == 4) && ((tmpMap[x][y+1] == 'X') || (tmpMap[x][y+1] == 'I'))));
 
 		switch(move)
 		{
 		case 1:	//Lands on top
 			if((tmpMap[x-1][y] == 'k') || (tmpMap[x-1][y] == 'K'))
 				club = '$';
-			else if(tmpMap[x-1][y] == 'H') {
-				Game.gameState = Game.GameState.GAMEOVER;
-			}
+			
 			clubX = x - 1;
 			clubY = y;
 			break;
 		case 2:	//Lands on bottom
-			if(tmpMap[x+1][y] == 'H') {
-				Game.gameState = Game.GameState.GAMEOVER;
-			}
-
 			clubX = x + 1;
 			clubY = y;
 			break;
 		case 3:	//Lands on left
-			if(tmpMap[x][y-1] == 'H') {
-				Game.gameState = Game.GameState.GAMEOVER;
-			}
 			clubY = y - 1;
 			clubX = x;
 			break;
 		case 4:	//Lands on right
 			if((tmpMap[x][y+1] == 'k') || (tmpMap[x][y+1] == 'K'))
 				club = '$';
-			else if(tmpMap[x][y+1] == 'H') {
-				Game.gameState = Game.GameState.GAMEOVER;	
-			}
+			
 			clubY = y + 1;
 			clubX = x;
 			break;

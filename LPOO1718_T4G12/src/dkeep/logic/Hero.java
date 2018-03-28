@@ -9,7 +9,7 @@ public class Hero extends Elements {
 		this.y = y;
 		this.state = state;
 	} 
-
+ 
 	public void heroMovement(char input, char[][] tmpMap) {
 		switch(input)
 		{

@@ -1,5 +1,5 @@
 package dkeep.logic;
- 
+  
 import dkeep.logic.GameMap;
 import dkeep.logic.Hero;
 import dkeep.logic.Guard;
@@ -20,7 +20,7 @@ public class Game {
 	public GameMap map; 
 	public Hero hero;
 	public static ArrayList<Door> door;
-	public Lock lock;
+	public Lock lock; 
 
 	//Guard data members
 	public int guardRouting;

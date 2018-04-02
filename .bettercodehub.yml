@@ -12,3 +12,5 @@ exclude:
 - .*/NewGame\.java
 - .*/Playground\.java
 - .*/MapEditor\.java
+- /src/dkeep/cli/.*
+- .*/UserInteraction\.java

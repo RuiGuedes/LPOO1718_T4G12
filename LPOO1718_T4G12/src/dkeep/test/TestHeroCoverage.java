@@ -12,7 +12,7 @@ public class TestHeroCoverage {
 			{'X', 'k', ' ', 'H', 'k', 'X'},
 			{'I', ' ', ' ', ' ', ' ', 'I'},
 			{'I', ' ', ' ', ' ', ' ', 'X'},
-			{'X', ' ', 'X', 'I', 'X', 'X'},
+			{'X', ' ', ' ', 'I', 'X', 'X'},
 			{'X', ' ', ' ', ' ', ' ', 'X'},
 			{'X', 'X', 'X', 'I', 'X', 'X'},
 	}; 
@@ -136,6 +136,34 @@ public class TestHeroCoverage {
 		assertEquals("Sucess !", Game.door.get(4).state, 'Z');
 		assertEquals("Sucess !", Game.door.get(5).state, 'S');
 	}
+	
+	@Test
+	public void testLeverActiveOpenExitDoorsUp() {
+		Game.LEVEL = 1;
+		GameMap gameMap = new GameMap(dungeon);
+		Game game = new Game(gameMap,"Rookie",1);
+
+		assertTrue("Sucess !",game.hero.equals(1,3));	
+		assertEquals("Sucess !", Lock.lockState, 'k');
+
+		game.hero.heroMovement('s', dungeon);
+		assertTrue("Sucess !",game.hero.equals(2,3));
+		
+		game.hero.heroMovement('d', dungeon);
+		assertTrue("Sucess !",game.hero.equals(2,4));
+		
+		game.hero.heroMovement('w', dungeon);
+		assertTrue("Sucess !",game.hero.equals(2,4));
+
+		dungeon = game.updateMap(dungeon); 
+		assertEquals("Sucess !", Lock.lockState, 'K');
+		assertEquals("Sucess !", Game.door.get(0).state, 'S');
+		assertEquals("Sucess !", Game.door.get(1).state, 'S');
+		assertEquals("Sucess !", Game.door.get(2).state, 'S');
+		assertEquals("Sucess !", Game.door.get(3).state, 'S');
+		assertEquals("Sucess !", Game.door.get(4).state, 'Z');
+		assertEquals("Sucess !", Game.door.get(5).state, 'S');	
+	}
 
 	@Test
 	public void testHeroProgessionToKeepRight() {
@@ -235,5 +263,151 @@ public class TestHeroCoverage {
 		
 		game.hero.heroMovement('w', dungeon);
 		assertEquals("Sucess !", Game.GameState.VICTORY, Game.gameState);
+	}
+	
+	@Test
+	public void testHeroMoveIntoNotExitDoorLeftAndRight() {
+		Game.LEVEL = 1;
+		dungeon[1][1] = ' ';
+		dungeon[1][2] = 'I';
+		GameMap gameMap = new GameMap(dungeon);
+		Game game = new Game(gameMap,"Rookie",1);
+		
+		assertTrue("Sucess !",game.hero.equals(1,3));
+		assertEquals("Sucess !", Lock.lockState, 'k');
+		
+		game.hero.heroMovement('d', dungeon);
+		assertTrue("Sucess !",game.hero.equals(1,3));
+		
+		dungeon = game.updateMap(dungeon);
+		
+		game.hero.heroMovement('a', dungeon);
+		assertTrue("Sucess !",game.hero.equals(1,1));
+		
+		game.hero.heroMovement('d', dungeon);
+		assertTrue("Sucess !",game.hero.equals(1,3));
+	}
+	
+	@Test
+	public void testHeroMoveIntoNotExitDoorUp() {
+		Game.LEVEL = 1;
+		GameMap gameMap = new GameMap(dungeon);
+		Game game = new Game(gameMap,"Rookie",1);
+		
+		assertTrue("Sucess !",game.hero.equals(1,3));
+		assertEquals("Sucess !", Lock.lockState, 'k');
+		
+		game.hero.heroMovement('d', dungeon);
+		assertTrue("Sucess !",game.hero.equals(1,3));
+		
+		game.hero.heroMovement('s', dungeon);
+		game.hero.heroMovement('s', dungeon);
+		game.hero.heroMovement('a', dungeon);
+		game.hero.heroMovement('s', dungeon);
+		game.hero.heroMovement('s', dungeon);
+		game.hero.heroMovement('d', dungeon);
+		assertTrue("Sucess !",game.hero.equals(5,3));
+		
+		dungeon = game.updateMap(dungeon);
+		
+		game.hero.heroMovement('w', dungeon);
+		assertTrue("Sucess !",game.hero.equals(3,3));
+	}
+	
+
+	
+	char[][] keep = {
+			{'X', 'X', 'X', 'X', 'X'},
+			{'X', ' ', 'k', ' ', 'X'},
+			{'X', 'k', 'H', 'k', 'X'},
+			{'X', ' ', 'k', ' ', 'X'},
+			{'X', 'X', 'X', 'X', 'X'} };
+	
+	@Test
+	public void testHeroExitKeepUp() {
+		Game.LEVEL = 2;
+		keep[0][2]= 'I';
+		GameMap gameMap = new GameMap(keep);
+		Game game = new Game(gameMap,"Rookie",1);
+		
+		assertTrue("Sucess !", game.hero.equals(2,2));
+		
+		game.hero.heroMovement('w', keep);
+		assertTrue("Sucess !",game.hero.equals(1,2));
+		
+		game.hero.heroMovement('w', keep);
+		assertTrue("Sucess !",game.hero.equals(1,2));
+		assertEquals("Sucess !", Game.door.get(0).state, 'S');
+		
+		keep = game.updateMap(keep);		
+		
+		game.hero.heroMovement('w', keep);
+		assertEquals("Sucess !", Game.gameState, Game.GameState.VICTORY);
+	}
+	
+	@Test
+	public void testHeroExitKeepDown() {
+		Game.LEVEL = 2;
+		keep[4][2]= 'I';
+		GameMap gameMap = new GameMap(keep);
+		Game game = new Game(gameMap,"Rookie",1);
+		
+		assertTrue("Sucess !", game.hero.equals(2,2));
+		
+		game.hero.heroMovement('s', keep);
+		assertTrue("Sucess !",game.hero.equals(3,2));
+		
+		game.hero.heroMovement('s', keep);
+		assertTrue("Sucess !",game.hero.equals(3,2));
+		assertEquals("Sucess !", Game.door.get(0).state, 'S');
+		
+		keep = game.updateMap(keep);		
+		
+		game.hero.heroMovement('s', keep);
+		assertEquals("Sucess !", Game.gameState, Game.GameState.VICTORY);
+	}
+	
+	@Test
+	public void testHeroExitKeepLeft() {
+		Game.LEVEL = 2;
+		keep[2][0]= 'I';
+		GameMap gameMap = new GameMap(keep);
+		Game game = new Game(gameMap,"Rookie",1);
+		
+		assertTrue("Sucess !", game.hero.equals(2,2));
+		
+		game.hero.heroMovement('a', keep);
+		assertTrue("Sucess !",game.hero.equals(2,1));
+		
+		game.hero.heroMovement('a', keep);
+		assertTrue("Sucess !",game.hero.equals(2,1));
+		assertEquals("Sucess !", Game.door.get(0).state, 'S');
+		
+		keep = game.updateMap(keep);		
+
+		game.hero.heroMovement('a', keep);
+		assertEquals("Sucess !", Game.gameState, Game.GameState.VICTORY);
+	}
+	
+	@Test
+	public void testHeroExitKeepRight() {
+		Game.LEVEL = 2;
+		keep[2][4]= 'I';
+		GameMap gameMap = new GameMap(keep);
+		Game game = new Game(gameMap,"Rookie",1);
+		
+		assertTrue("Sucess !", game.hero.equals(2,2));
+		
+		game.hero.heroMovement('d', keep);
+		assertTrue("Sucess !",game.hero.equals(2,3));
+		
+		game.hero.heroMovement('d', keep);
+		assertTrue("Sucess !",game.hero.equals(2,3));
+		assertEquals("Sucess !", Game.door.get(0).state, 'S');
+		
+		keep = game.updateMap(keep);		
+
+		game.hero.heroMovement('d', keep);
+		assertEquals("Sucess !", Game.gameState, Game.GameState.VICTORY);
 	}
 }

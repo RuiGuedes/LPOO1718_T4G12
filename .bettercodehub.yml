@@ -8,4 +8,6 @@ exclude:
 
 exclude:
 - /src/dkeep/gui/.*
-- .*/LevelEditor\.java
+- /src/dkeep/cli/.*
+
+

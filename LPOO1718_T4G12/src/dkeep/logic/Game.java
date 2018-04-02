@@ -8,6 +8,20 @@ import dkeep.logic.Lock;
 import dkeep.logic.Door;
 import java.util.ArrayList;
 
+/**
+ * Game.java - master class that list the entire game and contain all the components of the game
+ * @author Rui Guedes and César Pinho
+ * @see Door
+ * @see Drunken
+ * @see Elements
+ * @see GameMap
+ * @see Guard
+ * @see Hero
+ * @see Lock
+ * @see Ogre
+ * @see Rookie
+ * @see Suspicious
+ */
 public class Game {
 
 	public static enum GameState { PLAYING, GAMEOVER, VICTORY };
@@ -30,12 +44,27 @@ public class Game {
 	public ArrayList<Ogre> ogre;
 	public int horde = 1;
 
+	/**
+	 * Class constructor specifying the game map, guard type and the number of ogres.
+	 * Initialize the gameState and map attributes and call the initElements method to initializer the other attributes.  
+	 * 
+	 * @param gameMap map of the game
+	 * @param guardType initial guard type of the first level 
+	 * @param ogresNumber number of ogres of the second level
+	 */
 	public Game(GameMap gameMap, String guardType, int ogresNumber) {
 		Game.gameState = GameState.PLAYING;
 		map = gameMap; 
 		initElements(guardType,ogresNumber);
 	}
 
+	/**
+	 * Initialize only the necessaries pieces of the gameMap in the right position and quantity. 
+	 * For each mark different of blank or wall (X), it is checked which action to perform.
+	 *  
+	 * @param guardType	guard type that needs to be create
+	 * @param ogresNumber number of ogres that needs to be create
+	 */
 	public void initElements(String guardType, int ogresNumber) {
 
 		char[][] tmpMap = map.getMap();
@@ -73,7 +102,7 @@ public class Game {
 						guardRouting = 2;
 				}
 				else if(tmpMap[i][j] == 'I') {
-					if((i == 0) || (j == 0) || (i == (tmpMap.length-1)) || (j == (tmpMap.length-1))) 
+					if((i == 0) || (j == 0) || (i == (tmpMap.length-1)) || (j == (tmpMap.length-2))) 
 						door.add(new Door(i,j,'I',true));	//Exit Door
 					else
 						door.add(new Door(i,j,'I',false));	//Normal Door
@@ -104,6 +133,11 @@ public class Game {
 		map.setMap(tmpMap);
 	}
 
+	/**
+	 * Check the position of the hero and if he is captured or killed by a guard,
+	 * if it is the first level, or a ogre, if it is the second level.
+	 * If the hero has been captured, the gameState change to GameOver.
+	 */
 	public void checkGameStatus() {
  
 		if(Game.LEVEL == 1) {
@@ -135,6 +169,13 @@ public class Game {
 		}
 	}
 	
+	/**
+	 * Receive a game map and changes it according to the changes previously made to the components of the game, 
+	 * for example, when the doors is unlocked is need change the mark that echoes the door in the map.
+	 * 
+	 * @param tmpMap game map to be updated
+	 * @return the updated game map
+	 */
 	public char[][] updateMap(char[][] tmpMap) {
 		tmpMap[hero.x][hero.y] = hero.state;
 

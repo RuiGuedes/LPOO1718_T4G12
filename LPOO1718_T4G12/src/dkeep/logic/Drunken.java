@@ -2,12 +2,28 @@ package dkeep.logic;
 
 import java.util.Random;
 
+/**
+ * Drunken.java - class to the drunken guard representation in the game 
+ * @author Rui Guedes and César Pinho
+ * @see Elements
+ * @see Guard
+ */
 public class Drunken extends Guard {
 
+	/**
+	 * Class constructor specifying coordinates and patrol route
+	 * @param x map x coordinate
+	 * @param y map y coordinate
+	 * @param guardRoute movements to navigate the patrol route
+	 */
 	public Drunken(int x, int y, char[] guardRoute) {
 		super(x, y, guardRoute);
 	}
 	
+	/**
+	 * Generate numbers to determine if the guard continue the patrol route or stay sleeping,
+	 * stop by a random time [1-3], or whether invert the route.
+	 */
 	@Override
 	public boolean guardMovement() {
 
@@ -62,8 +78,7 @@ public class Drunken extends Guard {
 				if(tmp == 0)
 					direction = true;
 				else
-					direction = false;
-					
+					direction = false;	
 			}
 		}
 		return false;

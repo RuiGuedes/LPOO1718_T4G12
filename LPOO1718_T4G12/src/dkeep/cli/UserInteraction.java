@@ -75,10 +75,11 @@ public class UserInteraction {
 		}
 		
 		//Returns true if first dungeon is completed, false if game over
-		if((input != 'e') && (Game.gameState == GameState.VICTORY))
-			return true;
-		else 
-			return false;
+		return ((input != 'e') && (Game.gameState == GameState.VICTORY));
+		
+//			return true;
+//		else 
+//			return false;
 	}
 	
 	public static void secondDungeon() {
@@ -116,7 +117,6 @@ public class UserInteraction {
 		
 		if(Game.gameState == GameState.VICTORY)
 			System.out.println("Victory !");
-
 	}
 	
 	public static void print(char[][] map) {

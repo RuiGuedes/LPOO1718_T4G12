@@ -3,5 +3,5 @@ languages:
 - java
 
 exclude:
-- /src/dkeep/gui
+- /src/dkeep/gui/.*
 

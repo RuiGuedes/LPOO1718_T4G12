@@ -5,3 +5,7 @@ languages:
 exclude:
 - /src/dkeep/cli/.*
 - .*/UserInteraction\.java
+
+exclude:
+- /src/dkeep/gui/.*
+- .*/LevelEditor\.java

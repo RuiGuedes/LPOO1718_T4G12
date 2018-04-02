@@ -3,6 +3,5 @@ languages:
 - java
 
 exclude:
-- /src/dkeep/gui/.*
-- .*/LevelEditor\.java
+- /src/dkeep/gui
 

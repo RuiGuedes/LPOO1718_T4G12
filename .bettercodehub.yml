@@ -3,11 +3,18 @@ languages:
 - java
 
 exclude:
-- /src/dkeep/cli/.*
-- .*/UserInteraction\.java
+- /src/dkeep/gui/.*
+- .*/LevelEditor\.java
+- .*/DrawImage\.java
+- .*/MainMenu\.java
+- .*/MapEditor\.java
+- .*/NewGame\.java
+- .*/Settings\.java
+- .*/MyButton\.java
+- .*/Playground\.java
 
 exclude:
-- /src/dkeep/gui/.*
 - /src/dkeep/cli/.*
+- .*/UserInteraction\.java
 
 

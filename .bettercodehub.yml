@@ -3,5 +3,5 @@ languages:
 - java
 
 exclude:
-- /src/dkeep.cli/.*
-- /src/dkeep.gui/.*
+- /src/dkeep/cli/.*
+- .*/UserInteraction\.java

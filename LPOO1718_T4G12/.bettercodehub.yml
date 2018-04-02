@@ -1,7 +1,0 @@
-component_depth: 1
-languages:
-- java
-
-exclude:
-- /src/dkeep.cli/.*
-- /src/dkeep.gui/.*

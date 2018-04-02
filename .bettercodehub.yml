@@ -5,12 +5,33 @@ languages:
 exclude:
 - /src/dkeep/gui/.*
 - .*/LevelEditor\.java
+
+exclude:
+- /src/dkeep/gui/.*
 - .*/DrawImage\.java
+
+exclude:
+- /src/dkeep/gui/.*
 - .*/MainMenu\.java
+
+exclude:
+- /src/dkeep/gui/.*
 - .*/MapEditor\.java
+
+exclude:
+- /src/dkeep/gui/.*
 - .*/NewGame\.java
+
+exclude:
+- /src/dkeep/gui/.*
 - .*/Settings\.java
+
+exclude:
+- /src/dkeep/gui/.*
 - .*/MyButton\.java
+
+exclude:
+- /src/dkeep/gui/.*
 - .*/Playground\.java
 
 exclude:

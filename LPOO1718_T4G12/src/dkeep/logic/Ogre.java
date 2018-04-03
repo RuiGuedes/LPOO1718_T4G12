@@ -69,6 +69,33 @@ public class Ogre extends Elements {
 		return ((tmpMap[xCopy][yCopy] == 'X') || (tmpMap[xCopy][yCopy] == 'I') || (tmpMap[xCopy][yCopy] == 'S'));
 	}
 	
+	public Elements generateMove(Elements position, char[][] tmpMap) {
+		Random rand = new Random();
+		int move;
+
+		do	{
+			move = rand.nextInt(4) + 1;
+		}while (checkAround(move, tmpMap));
+
+		switch(move)
+		{
+		case 1:	//Moves up
+			position.x--;
+			break;
+		case 2:	//Moves down
+			position.x++;
+			break;
+		case 3:	//Moves left
+			position.y--;		
+			break;
+		case 4:	//Moves right
+			position.y++;
+			break;
+		}
+		
+		return position;
+	}
+	
 	/**
 	 * Check if the hero stunned the ogre (if he is near him) and stop the ogre in affirmative case.
 	 * Otherwise, generate a random valid move for the ogre and call a function to move the club.

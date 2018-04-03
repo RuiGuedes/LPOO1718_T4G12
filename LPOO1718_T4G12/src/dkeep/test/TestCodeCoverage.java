@@ -4,8 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import dkeep.logic.Elements;
 import dkeep.logic.Game;
 import dkeep.logic.GameMap;
+import dkeep.logic.Hero;
 import dkeep.logic.Lock;
 
 public class TestCodeCoverage {
@@ -351,11 +353,13 @@ public class TestCodeCoverage {
 		keep = game.updateMap(keep);
 		assertTrue("Sucess !",game.hero.equals(1,3));
 		
-		game.ogre.get(0).ogreMovement(1, 3,keep); 
+		Hero h = new Hero(new Elements(1,3), 'H');
+		
+		game.ogre.get(0).ogreMovement(h,keep); 
 		assertEquals("Sucess !", game.ogre.get(0).state, '8');
 		
 		while(game.ogre.get(0).state == '8') {
-			game.ogre.get(0).ogreMovement(1, 3,keep);
+			game.ogre.get(0).ogreMovement(h,keep);
 		}
 		
 		assertEquals("Sucess !", game.ogre.get(0).state, 'O');
@@ -367,8 +371,10 @@ public class TestCodeCoverage {
 		GameMap gameMap = new GameMap(keep);
 		Game game = new Game(gameMap,"Rookie",1);
 		
+		Hero h = new Hero(new Elements(0,0), 'H');
+		
 		while(Game.gameState != Game.GameState.GAMEOVER) {
-			game.ogre.get(0).ogreMovement(1, 1,gameMap.getMap());
+			game.ogre.get(0).ogreMovement(h,gameMap.getMap());
 			game.checkGameStatus();
 		}
  
@@ -413,9 +419,10 @@ public class TestCodeCoverage {
 	public void testSomeRandoomBehaviour() {
 		GameMap gameMap = new GameMap(ogreMap);
 		Game game = new Game(gameMap,"Rookie",1);
+		Hero h = new Hero(new Elements(0,0), 'H');
 		
 		while(!checkVisited()) {
-			game.ogre.get(0).ogreMovement(0, 0, ogreMap);
+			game.ogre.get(0).ogreMovement(h, ogreMap);
 			visited[game.ogre.get(0).x - 1][game.ogre.get(0).y - 1] = true;
 		}
 	}

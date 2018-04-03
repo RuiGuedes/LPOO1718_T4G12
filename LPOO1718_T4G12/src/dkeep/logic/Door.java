@@ -28,8 +28,8 @@ public class Door extends Elements {
 	 * @param state representation mark on the game map
 	 * @param type if exit door? type=true : type=false
 	 */
-	public Door(int x, int y, char state, boolean type) {
-		super(x, y);
+	public Door(Elements door, char state, boolean type) {
+		super(door);
 		this.state = state;
 		this.type = type;
 	}
@@ -43,9 +43,9 @@ public class Door extends Elements {
 			Door tmp;
 
 			if(Game.door.get(i).type)
-				tmp = new Door(Game.door.get(i).x, Game.door.get(i).y, 'S', Game.door.get(i).type);
+				tmp = new Door(Game.door.get(i), 'S', Game.door.get(i).type);
 			else 
-				tmp = new Door(Game.door.get(i).x, Game.door.get(i).y, 'Z', Game.door.get(i).type);
+				tmp = new Door(Game.door.get(i), 'Z', Game.door.get(i).type);
 			
 			Game.door.set(i,tmp);
 		}

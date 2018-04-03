@@ -39,8 +39,8 @@ public abstract class Guard extends Elements {
 	 * @param y map y coordinate
 	 * @param guardRoute movements to navigate the patrol route
 	 */
-	public Guard(int x, int y, char[] guardRoute) {
-		super(x, y);
+	public Guard(Elements guard, char[] guardRoute) {
+		super(guard);
 		this.guardRoute = guardRoute;
 	}
 	
@@ -52,6 +52,29 @@ public abstract class Guard extends Elements {
 	 */
 	public abstract boolean guardMovement();
 
+	public void guardMove() {
+		if(direction) {
+			if(guardRoute[position] == 'w')
+				this.x--;
+			else if(guardRoute[position] == 's')
+				this.x++;
+			else if(guardRoute[position] == 'a')
+				this.y--;
+			else if(guardRoute[position] == 'd')
+				this.y++;
+		}
+		else {
+			if(guardRoute[position-1] == 's')
+				this.x--;
+			else if(guardRoute[position-1] == 'w')
+				this.x++;
+			else if(guardRoute[position-1] == 'd')
+				this.y--;
+			else if(guardRoute[position-1] == 'a')
+				this.y++;
+		}
+	}
+	
 	/**
 	 * Set the existent patrol route by other.
 	 * @param guardRoute new patrol route

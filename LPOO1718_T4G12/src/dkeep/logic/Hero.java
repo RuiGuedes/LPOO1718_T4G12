@@ -18,8 +18,8 @@ public class Hero extends Elements {
 	 * @param y map y coordinate
 	 * @param state representation mark on the game map
 	 */
-	public Hero(int x, int y, char state) {
-		super(x, y);
+	public Hero(Elements e, char state) {
+		super(e);
 		this.state = state;
 	} 
  
@@ -34,11 +34,11 @@ public class Hero extends Elements {
 		switch(input)
 		{
 		case 'w':
-			if((tmpMap[x-1][y] == ' ') || (tmpMap[x-1][y] == 'K'))
+			if(tmpMap[x-1][y] == ' ')
 				x--;
 			else if(tmpMap[x-1][y] == 'I') {
 				if(Lock.lockStatus) {
-					Door tmp = new Door(Game.door.get(0).x, Game.door.get(0).y, 'S',Game.door.get(0).type);
+					Door tmp = new Door(Game.door.get(0), 'S',Game.door.get(0).type);
 					Game.door.set(0,tmp);
 				}
 			}
@@ -62,7 +62,7 @@ public class Hero extends Elements {
 				x++;
 			else if(tmpMap[x+1][y] == 'I') {
 				if(Lock.lockStatus) {
-					Door tmp = new Door(Game.door.get(0).x, Game.door.get(0).y, 'S',Game.door.get(0).type);
+					Door tmp = new Door(Game.door.get(0), 'S',Game.door.get(0).type);
 					Game.door.set(0,tmp);
 				}
 			}
@@ -86,7 +86,7 @@ public class Hero extends Elements {
 				y--;
 			else if(tmpMap[x][y-1] == 'I') {
 				if(Lock.lockStatus) {
-					Door tmp = new Door(Game.door.get(0).x, Game.door.get(0).y, 'S',Game.door.get(0).type);
+					Door tmp = new Door(Game.door.get(0), 'S',Game.door.get(0).type);
 					Game.door.set(0,tmp);
 				}
 			}
@@ -107,11 +107,11 @@ public class Hero extends Elements {
 					y -= 2;
 			break;
 		case 'd':
-			if((tmpMap[x][y+1] == ' ') || (tmpMap[x][y+1] == 'K'))
+			if(tmpMap[x][y+1] == ' ')
 				y++;
 			else if(tmpMap[x][y+1] == 'I') {
 				if(Lock.lockStatus) {
-					Door tmp = new Door(Game.door.get(0).x, Game.door.get(0).y, 'S',Game.door.get(0).type);
+					Door tmp = new Door(Game.door.get(0), 'S',Game.door.get(0).type);
 					Game.door.set(0,tmp);
 				}
 			}

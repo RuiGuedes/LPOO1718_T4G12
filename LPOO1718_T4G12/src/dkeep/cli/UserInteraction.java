@@ -105,7 +105,7 @@ public class UserInteraction {
 			 
 			//Moves the ogre and club in a randoom direction
 			for(int i = 0; i < secondGame.horde; i++)
-				secondGame.ogre.get(i).ogreMovement(secondGame.hero.x, secondGame.hero.y, secondGame.updateMap(secondGame.map.getMap()));
+				secondGame.ogre.get(i).ogreMovement(secondGame.hero, secondGame.updateMap(secondGame.map.getMap()));
 			
 			//Check the status game in order to continue playing or not
 			secondGame.checkGameStatus();

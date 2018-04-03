@@ -14,6 +14,7 @@ import java.awt.event.ComponentListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.awt.Color;
@@ -361,7 +362,7 @@ public class NewGame {
 		}
 		else if(Game.LEVEL == 2) {
 			for(int i = 0; i < game.horde; i++)
-				game.ogre.get(i).ogreMovement(game.hero.x, game.hero.y, game.updateMap(game.map.getMap()));
+				game.ogre.get(i).ogreMovement(game.hero, game.updateMap(game.map.getMap()));
 		}
 
 		playground.setPlayground(game.updateMap(game.map.getMap()));

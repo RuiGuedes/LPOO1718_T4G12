@@ -77,22 +77,22 @@ public class Game {
 		for(int i = 0; i < tmpMap.length; i++) {
 			for(int j = 0; j < tmpMap[i].length; j++) {
 				if((tmpMap[i][j] == 'H') || (tmpMap[i][j] == 'A')) {
-					hero = new Hero(i,j,tmpMap[i][j]);
+					hero = new Hero(new Elements(i,j),tmpMap[i][j]);
 				}
 				else if(tmpMap[i][j] == 'k') {
 					if(Game.LEVEL == 1)
-						lock = new Lock(i,j,false);
+						lock = new Lock(new Elements(i,j),false);
 					else
-						lock = new Lock(i,j,true);
+						lock = new Lock(new Elements(i,j),true);
 				}
 				else if(tmpMap[i][j] == 'G') {
 					char[] guardRoute = {'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 
 							'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'}; 
 
 					guard = new Guard[3];
-					guard[0] = new Rookie(i,j,guardRoute);
-					guard[1] = new Drunken(i,j,guardRoute);
-					guard[2] = new Suspicious(i,j,guardRoute);
+					guard[0] = new Rookie(new Elements(i,j),guardRoute);
+					guard[1] = new Drunken(new Elements(i,j),guardRoute);
+					guard[2] = new Suspicious(new Elements(i,j),guardRoute);
 
 					if(guardType.equals("Rookie"))
 						guardRouting = 0;
@@ -103,9 +103,9 @@ public class Game {
 				}
 				else if(tmpMap[i][j] == 'I') {
 					if((i == 0) || (j == 0) || (i == (tmpMap.length-1)) || (j == (tmpMap.length-2))) 
-						door.add(new Door(i,j,'I',true));	//Exit Door
+						door.add(new Door(new Elements(i,j),'I',true));	//Exit Door
 					else
-						door.add(new Door(i,j,'I',false));	//Normal Door
+						door.add(new Door(new Elements(i,j),'I',false));	//Normal Door
 				}
 				else if(tmpMap[i][j] == 'O') {
 
@@ -122,7 +122,7 @@ public class Game {
 						tmpY--;
 
 					while(ogresNumber > 0) {
-						ogre.add(new Ogre(i,j,tmpX,tmpY));
+						ogre.add(new Ogre(new Elements(i,j),new Elements(tmpX,tmpY)));
 						ogresNumber--;
 					}
 				}
@@ -140,29 +140,20 @@ public class Game {
 	 */
 	public void checkGameStatus() {
 
-		if(Game.LEVEL == 1 && (guard[guardRouting].state == 'G')) {
+		if(Game.LEVEL == 1 && (guard[guardRouting].state == 'G') && guard[guardRouting].checkProximity(hero)) 
+			gameState = GameState.GAMEOVER;
 
-			int guardX = guard[guardRouting].x, guardY = guard[guardRouting].y;
+		else if(Game.LEVEL == 2)
 
-			if( 	((guardX == hero.x) && ((guardY == (hero.y + 1)) || (guardY == (hero.y - 1)))) || 
-					(((guardX == (hero.x + 1)) || (guardX == (hero.x - 1))) && (guardY == hero.y)))
-				gameState = GameState.GAMEOVER;
-
-		} 
-		else if(Game.LEVEL == 2){
-			
 			for(int i = 0; i < horde; i++) {
-				
-				if(( (((ogre.get(i).x == hero.x) && ((ogre.get(i).y == (hero.y + 1)) || (ogre.get(i).y == (hero.y - 1)))) ||
-						((ogre.get(i).y == hero.y) && ((ogre.get(i).x == (hero.x + 1)) || (ogre.get(i).x == (hero.x - 1))))) 
-						&& (ogre.get(i).state == 'O')) || 
+
+				if(( (ogre.get(i).checkProximity(hero))	&& (ogre.get(i).state == 'O')) || 
 						((ogre.get(i).clubX == hero.x) && (ogre.get(i).clubY == hero.y)))
 				{
 					gameState = GameState.GAMEOVER;
 					break;
 				}
 			}
-		}
 	}
 
 	/**

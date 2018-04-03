@@ -28,8 +28,8 @@ public class Lock extends Elements {
 	 * @param y map y coordinate
 	 * @param lockType type of lock, true if it's a key, false if it's a lever
 	 */
-	public Lock(int x, int y, boolean lockType) {
-		super(x, y);
+	public Lock(Elements lock, boolean lockType) {
+		super(lock);
 		Lock.lockType = lockType;
 		Lock.lockState = 'k';
 		Lock.lockStatus = false;

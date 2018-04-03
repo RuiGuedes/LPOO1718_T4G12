@@ -41,12 +41,34 @@ public class Ogre extends Elements {
 	 * @param clubX x coordinate of the club
 	 * @param clubY y coordinate of the club
 	 */
-	public Ogre(int x, int y, int clubX, int clubY) {
-		super(x, y);
-		this.clubX = clubX;
-		this.clubY = clubY;
+	public Ogre(Elements ogre, Elements club) {
+		super(ogre);
+		this.clubX = club.x;
+		this.clubY = club.y;
 	}
 
+	public boolean checkAround(int move, char[][] tmpMap) {
+		int xCopy=x , yCopy = y;
+		
+		switch(move)
+		{
+		case 1:	//Moves up
+			xCopy--;
+			break;
+		case 2:	//Moves down
+			xCopy++;
+			break;
+		case 3:	//Moves left
+			yCopy--;		
+			break;
+		case 4:	//Moves right
+			yCopy++;
+			break;
+		}
+		
+		return ((tmpMap[xCopy][yCopy] == 'X') || (tmpMap[xCopy][yCopy] == 'I') || (tmpMap[xCopy][yCopy] == 'S'));
+	}
+	
 	/**
 	 * Check if the hero stunned the ogre (if he is near him) and stop the ogre in affirmative case.
 	 * Otherwise, generate a random valid move for the ogre and call a function to move the club.
@@ -55,10 +77,9 @@ public class Ogre extends Elements {
 	 * @param heroY y coordinate of the hero
 	 * @param tmpMap game map to detect collisions with objects
 	 */
-	public void ogreMovement(int heroX, int heroY, char[][] tmpMap) {
+	public void ogreMovement(Hero hero, char[][] tmpMap) {
 
-		if( (((x == heroX) && ((y == (heroY + 1)) || (y == (heroY - 1)) )) || 
-				((y == heroY) && ((x == (heroX + 1)) || (x == (heroX - 1))))) && (state != '8'))
+		if( (this.checkProximity(hero)) && (state != '8'))
 		{
 			state = '8';
 			stop = 2;
@@ -77,10 +98,7 @@ public class Ogre extends Elements {
 
 			do	{
 				move = rand.nextInt(4) + 1;
-			}while (((move == 1) && ((tmpMap[x-1][y] == 'X') || (tmpMap[x-1][y] == 'I') || (tmpMap[x-1][y] == 'S'))) || 
-					((move == 2) && ((tmpMap[x+1][y] == 'X') || (tmpMap[x+1][y] == 'I') || (tmpMap[x+1][y] == 'S'))) || 
-					((move == 3) && ((tmpMap[x][y-1] == 'X') || (tmpMap[x][y-1] == 'I') || (tmpMap[x][y-1] == 'S'))) || 
-					((move == 4) && ((tmpMap[x][y+1] == 'X') || (tmpMap[x][y+1] == 'I') || (tmpMap[x][y+1] == 'S'))));
+			}while (checkAround(move, tmpMap));
 
 			switch(move)
 			{
@@ -120,10 +138,7 @@ public class Ogre extends Elements {
 
 		do	{
 			move = rand.nextInt(4) + 1;
-		}while( ((move == 1) && ((tmpMap[x-1][y] == 'X') || (tmpMap[x-1][y] == 'I'))) || 
-				((move == 2) && ((tmpMap[x+1][y] == 'X') || (tmpMap[x+1][y] == 'I'))) || 
-				((move == 3) && ((tmpMap[x][y-1] == 'X') || (tmpMap[x][y-1] == 'I'))) || 
-				((move == 4) && ((tmpMap[x][y+1] == 'X') || (tmpMap[x][y+1] == 'I'))));
+		}while(checkAround(move, tmpMap));
 
 		switch(move)
 		{

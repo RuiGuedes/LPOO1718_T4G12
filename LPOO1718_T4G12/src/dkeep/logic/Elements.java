@@ -26,6 +26,15 @@ public class Elements {
 		this.y = y;
 	}
 	
+	/**
+	 * Class constructor
+	 * @param e 
+	 */
+	public Elements(Elements e) {
+		this.x = e.x;
+		this.y = e.y;
+	}
+	
 	 /**
 	  * Compare x and y coordinates of the object with the given coordinates.
 	  * @param x map x coordinate to compare
@@ -34,5 +43,15 @@ public class Elements {
 	  */
 	public boolean equals(int x, int y) {
 		return ((this.x == x) && (this.y == y));
+	}
+	
+	/**
+	 * Check if the e element is close of the object
+	 * @param e element to check
+	 * @return result of the checking. If e has close, return true, else return false.
+	 */
+	public boolean checkProximity(Elements e) {
+		return ((this.x == e.x) && ((this.y == (e.y + 1)) || (this.y == (e.y - 1)) )) || 
+				((this.y == e.y) && ((this.x == (e.x + 1)) || (this.x == (e.x - 1))));
 	}
 }

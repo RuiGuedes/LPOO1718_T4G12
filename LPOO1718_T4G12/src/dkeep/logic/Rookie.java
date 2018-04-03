@@ -14,8 +14,8 @@ public class Rookie extends Guard {
 	 * @param y map y coordinate
 	 * @param guardRoute movements to navigate the patrol route
 	 */
-	public Rookie(int x, int y, char[] guardRoute) {
-		super(x, y, guardRoute);
+	public Rookie(Elements guard, char[] guardRoute) {
+		super(guard, guardRoute);
 	}
 
 	/**

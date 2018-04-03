@@ -16,8 +16,8 @@ public class Drunken extends Guard {
 	 * @param y map y coordinate
 	 * @param guardRoute movements to navigate the patrol route
 	 */
-	public Drunken(int x, int y, char[] guardRoute) {
-		super(x, y, guardRoute);
+	public Drunken(Elements guard, char[] guardRoute) {
+		super(guard, guardRoute);
 	}
 	
 	/**
@@ -31,56 +31,34 @@ public class Drunken extends Guard {
 		int tmp = rand.nextInt(10) + 1;
 
 		if(stop == 0) {
+			state = 'G';
+				
 			if(tmp > 8) { 
 				state = 'g';
 				stop = rand.nextInt(3) + 1;
 			}
 			else {
+				direction = rand.nextBoolean();
+
 				if((position == 0) && !direction)
 					direction = true;
 
-				if(direction) {
-					if(guardRoute[position] == 'w')
-						this.x--;
-					else if(guardRoute[position] == 's')
-						this.x++;
-					else if(guardRoute[position] == 'a')
-						this.y--;
-					else if(guardRoute[position] == 'd')
-						this.y++;
-				}
-				else {
-					if(guardRoute[position-1] == 's')
-						this.x--;
-					else if(guardRoute[position-1] == 'w')
-						this.x++;
-					else if(guardRoute[position-1] == 'd')
-						this.y--;
-					else if(guardRoute[position-1] == 'a')
-						this.y++;
-				}
+				guardMove();
 
 				if((position == (guardRoute.length - 1)) && direction) {
 					position = 0;
 					return true;
 				}
-				else if(direction)
+				
+				if(direction)
 					position++;
 				else
 					position--;
 			}
 		}
-		else {
+		else 
 			stop--;
-			if(stop == 0) {
-				state = 'G';
-				tmp = rand.nextInt(2);
-				if(tmp == 0)
-					direction = true;
-				else
-					direction = false;	
-			}
-		}
+
 		return false;
 	}
 }

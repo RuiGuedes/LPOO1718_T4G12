@@ -2,8 +2,10 @@ package dkeep.test;
 
 import org.junit.Test;
 
+import dkeep.logic.Elements;
 import dkeep.logic.Game;
 import dkeep.logic.GameMap;
+import dkeep.logic.Hero;
 
 public class TestOgreRandoomBehaviour {
 	
@@ -45,9 +47,9 @@ public class TestOgreRandoomBehaviour {
 	public void testSomeRandoomBehaviour() {
 		GameMap gameMap = new GameMap(map);
 		Game game = new Game(gameMap,"Rookie",1);
-		
+		Hero h = new Hero(new Elements(0,0), 'H');
 		while(!checkVisited()) {
-			game.ogre.get(0).ogreMovement(0, 0, map);
+			game.ogre.get(0).ogreMovement(h, map);
 			visited[game.ogre.get(0).x - 1][game.ogre.get(0).y - 1] = true;
 		}
 	}

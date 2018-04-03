@@ -54,7 +54,11 @@ public class Game {
 	 */
 	public Game(GameMap gameMap, String guardType, int ogresNumber) {
 		Game.gameState = GameState.PLAYING;
-		map = gameMap; 
+		map = gameMap;
+		Lock.lockState = 'k';
+		door = new ArrayList<Door>();
+		ogre = new ArrayList<Ogre>();
+		horde = ogresNumber;
 		initElements(guardType,ogresNumber);
 	}
 
@@ -68,11 +72,6 @@ public class Game {
 	public void initElements(String guardType, int ogresNumber) {
 
 		char[][] tmpMap = map.getMap();
-
-		Lock.lockState = 'k';
-		door = new ArrayList<Door>();
-		ogre = new ArrayList<Ogre>();
-		horde = ogresNumber;
 
 		for(int i = 0; i < tmpMap.length; i++) {
 			for(int j = 0; j < tmpMap[i].length; j++) {
@@ -169,23 +168,19 @@ public class Game {
 		for(int i = 0; i < door.size(); i++)
 			tmpMap[door.get(i).x][door.get(i).y] = door.get(i).state;
 
-		if(guard != null) {
+		if(guard != null) 
 			tmpMap[guard[guardRouting].x][guard[guardRouting].y] = guard[guardRouting].state;
 
-			if(!((hero.x == lock.x) && (hero.y == lock.y)))
-				tmpMap[lock.x][lock.y] = Lock.lockState;
-		}
-		else if(ogre.size() != 0) {
+		else if(ogre.size() != 0)
 			for(int i = 0; i < horde; i++) 
 			{
 				tmpMap[ogre.get(i).x][ogre.get(i).y] = ogre.get(i).state;
 				if(tmpMap[ogre.get(i).clubX][ogre.get(i).clubY] != 'O')
 					tmpMap[ogre.get(i).clubX][ogre.get(i).clubY] = ogre.get(i).club;
-			}
-
-			if(tmpMap[lock.x][lock.y] == ' ')
-				tmpMap[lock.x][lock.y] = Lock.lockState;
-		}
+			}	
+		
+		tmpMap[lock.x][lock.y] = Lock.lockState;
+		
 		return tmpMap;
 	}
 }

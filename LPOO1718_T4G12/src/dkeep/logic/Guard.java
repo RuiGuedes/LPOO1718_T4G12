@@ -54,25 +54,29 @@ public abstract class Guard extends Elements {
 
 	public void guardMove() {
 		if(direction) {
-			if(guardRoute[position] == 'w')
-				this.x--;
-			else if(guardRoute[position] == 's')
-				this.x++;
-			else if(guardRoute[position] == 'a')
-				this.y--;
-			else if(guardRoute[position] == 'd')
-				this.y++;
+			changeCoordinates(guardRoute[position]);
 		}
 		else {
 			if(guardRoute[position-1] == 's')
-				this.x--;
+				changeCoordinates('w');
 			else if(guardRoute[position-1] == 'w')
-				this.x++;
+				changeCoordinates('s');
 			else if(guardRoute[position-1] == 'd')
-				this.y--;
+				changeCoordinates('a');
 			else if(guardRoute[position-1] == 'a')
-				this.y++;
+				changeCoordinates('d');
 		}
+	}
+	
+	public void changeCoordinates(char move) {
+		if(move == 'w')
+			this.x--;
+		else if(move == 's')
+			this.x++;
+		else if(move == 'a')
+			this.y--;
+		else if(move == 'd')
+			this.y++;
 	}
 	
 	/**

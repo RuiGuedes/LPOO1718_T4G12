@@ -19,7 +19,27 @@ public class Drunken extends Guard {
 	public Drunken(Elements guard, char[] guardRoute) {
 		super(guard, guardRoute);
 	}
-	
+
+	public boolean checkAndMove() {
+
+		if(position == 0)
+			direction = true;
+
+		guardMove();
+
+		if((position == (guardRoute.length - 1)) && direction) {
+			position = 0;
+			return true;
+		}
+
+		if(direction)
+			position++;
+		else
+			position--;
+
+		return false;
+	}
+
 	/**
 	 * Generate numbers to determine if the guard continue the patrol route or stay sleeping,
 	 * stop by a random time [1-3], or whether invert the route.
@@ -27,33 +47,19 @@ public class Drunken extends Guard {
 	@Override
 	public boolean guardMovement() {
 
-		Random rand = new Random();
-		int tmp = rand.nextInt(10) + 1;
-
 		if(stop == 0) {
 			state = 'G';
-				
+			
+			Random rand = new Random();
+			int tmp = rand.nextInt(10) + 1;
+			
 			if(tmp > 8) { 
 				state = 'g';
 				stop = rand.nextInt(3) + 1;
 			}
 			else {
 				direction = rand.nextBoolean();
-
-				if((position == 0) && !direction)
-					direction = true;
-
-				guardMove();
-
-				if((position == (guardRoute.length - 1)) && direction) {
-					position = 0;
-					return true;
-				}
-				
-				if(direction)
-					position++;
-				else
-					position--;
+				return checkAndMove();
 			}
 		}
 		else 

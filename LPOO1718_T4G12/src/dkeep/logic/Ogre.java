@@ -106,42 +106,16 @@ public class Ogre extends Elements {
 	 */
 	public void ogreMovement(Hero hero, char[][] tmpMap) {
 
-		if( (this.checkProximity(hero)) && (state != '8'))
-		{
+		if((this.checkProximity(hero)) && (state != '8')) {
 			state = '8';
 			stop = 2;
 			return;
 		}
 
-
-		if(stop != 0) {
+		if(stop != 0)
 			stop--;				
-		}
 		else {
-			state = 'O';
-
-			Random rand = new Random();
-			int move;
-
-			do	{
-				move = rand.nextInt(4) + 1;
-			}while (checkAround(move, tmpMap));
-
-			switch(move)
-			{
-			case 1:	//Moves up
-				x--;
-				break;
-			case 2:	//Moves down
-				x++;
-				break;
-			case 3:	//Moves left
-				y--;		
-				break;
-			case 4:	//Moves right
-				y++;
-				break;
-			}
+			generateMove(this, tmpMap);
 
 			if((x == 1) && (y == 7))
 				state = '$';
@@ -160,32 +134,13 @@ public class Ogre extends Elements {
 	 * @param tmpMap game map to detect collisions with objects
 	 */
 	public void clubMovement(char[][] tmpMap) {
-		Random rand = new Random();
-		int move;
 
-		do	{
-			move = rand.nextInt(4) + 1;
-		}while(checkAround(move, tmpMap));
-
-		switch(move)
-		{
-		case 1:	//Lands on top
-			clubX = x - 1;
-			clubY = y;
-			break;
-		case 2:	//Lands on bottom
-			clubX = x + 1;
-			clubY = y;
-			break;
-		case 3:	//Lands on left
-			clubY = y - 1;
-			clubX = x;
-			break;
-		case 4:	//Lands on right
-			clubY = y + 1;
-			clubX = x;
-			break;
-		}
+		Elements clubPosition = new Elements(this);
+		
+		clubPosition = generateMove(clubPosition, tmpMap);
+		
+			clubX = clubPosition.x;
+			clubY = clubPosition.y;
 		
 		if (tmpMap[clubX][clubY] == 'k')
 			club = '$';

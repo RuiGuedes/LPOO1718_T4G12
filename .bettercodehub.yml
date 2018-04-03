@@ -1,7 +1,16 @@
-component_depth: 1
+component_depth: 4
 languages:
 - java
 
 exclude:
-- /src/dkeep.cli/.*
-- /src/dkeep.gui/.*
+- /src/dkeep/gui/.*
+- .*/LevelEditor\.java
+- .*/Settings\.java
+- .*/DrawImage\.java
+- .*/MainMenu\.java
+- .*/MyButton\.java
+- .*/NewGame\.java
+- .*/Playground\.java
+- .*/MapEditor\.java
+- /src/dkeep/cli/.*
+- .*/UserInteraction\.java

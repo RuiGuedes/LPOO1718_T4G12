@@ -1,5 +1,5 @@
 package dkeep.logic;
-  
+
 import dkeep.logic.GameMap;
 import dkeep.logic.Hero;
 import dkeep.logic.Guard;
@@ -28,7 +28,7 @@ public class Game {
 
 	//Global data members
 	public static GameState gameState;
-	public static int LEVEL = 0;
+	public static int LEVEL = 0; // 1 or 2
 
 	//Generic Data members
 	public GameMap map; 
@@ -68,7 +68,7 @@ public class Game {
 	public void initElements(String guardType, int ogresNumber) {
 
 		char[][] tmpMap = map.getMap();
-		
+
 		Lock.lockState = 'k';
 		door = new ArrayList<Door>();
 		ogre = new ArrayList<Ogre>();
@@ -82,7 +82,7 @@ public class Game {
 				else if(tmpMap[i][j] == 'k') {
 					if(Game.LEVEL == 1)
 						lock = new Lock(i,j,false);
-					else if(Game.LEVEL == 2)
+					else
 						lock = new Lock(i,j,true);
 				}
 				else if(tmpMap[i][j] == 'G') {
@@ -93,7 +93,7 @@ public class Game {
 					guard[0] = new Rookie(i,j,guardRoute);
 					guard[1] = new Drunken(i,j,guardRoute);
 					guard[2] = new Suspicious(i,j,guardRoute);
-					
+
 					if(guardType.equals("Rookie"))
 						guardRouting = 0;
 					else if(guardType.equals("Drunken"))
@@ -120,7 +120,7 @@ public class Game {
 						tmpY++;
 					else if((tmpMap[i][j-1]) == '*')
 						tmpY--;
-					
+
 					while(ogresNumber > 0) {
 						ogre.add(new Ogre(i,j,tmpX,tmpY));
 						ogresNumber--;
@@ -139,36 +139,32 @@ public class Game {
 	 * If the hero has been captured, the gameState change to GameOver.
 	 */
 	public void checkGameStatus() {
- 
-		if(Game.LEVEL == 1) {
-			if((guard[guardRouting].x == hero.x) && (guard[guardRouting].state == 'G') && 
-					((guard[guardRouting].y == (hero.y + 1)) || (guard[guardRouting].y == (hero.y - 1)))) {
+
+		if(Game.LEVEL == 1 && (guard[guardRouting].state == 'G')) {
+
+			int guardX = guard[guardRouting].x, guardY = guard[guardRouting].y;
+
+			if( 	((guardX == hero.x) && ((guardY == (hero.y + 1)) || (guardY == (hero.y - 1)))) || 
+					(((guardX == (hero.x + 1)) || (guardX == (hero.x - 1))) && (guardY == hero.y)))
 				gameState = GameState.GAMEOVER;
-			}
-			else if((guard[guardRouting].y == hero.y) && (guard[guardRouting].state == 'G') &&
-					( (guard[guardRouting].x == (hero.x + 1)) || (guard[guardRouting].x == (hero.x - 1)))) {
-				gameState = GameState.GAMEOVER; 
-			}
+
 		} 
-		else if(Game.LEVEL == 2){	
+		else if(Game.LEVEL == 2){
+			
 			for(int i = 0; i < horde; i++) {
-				 
-				if((ogre.get(i).clubX == hero.x) && (ogre.get(i).clubY == hero.y)) {
+				
+				if(( (((ogre.get(i).x == hero.x) && ((ogre.get(i).y == (hero.y + 1)) || (ogre.get(i).y == (hero.y - 1)))) ||
+						((ogre.get(i).y == hero.y) && ((ogre.get(i).x == (hero.x + 1)) || (ogre.get(i).x == (hero.x - 1))))) 
+						&& (ogre.get(i).state == 'O')) || 
+						((ogre.get(i).clubX == hero.x) && (ogre.get(i).clubY == hero.y)))
+				{
 					gameState = GameState.GAMEOVER;
 					break;
 				}
-				
-				if( ((ogre.get(i).x == hero.x) && ((ogre.get(i).y == (hero.y + 1)) || (ogre.get(i).y == (hero.y - 1)))) ||
-						((ogre.get(i).y == hero.y) && ((ogre.get(i).x == (hero.x + 1)) || (ogre.get(i).x == (hero.x - 1)))))
-				{
-					if((ogre.get(i).state == 'O') || ((ogre.get(i).clubX == hero.x) && (ogre.get(i).clubY == hero.y)))
-						gameState = GameState.GAMEOVER;
-				}
-
 			}
 		}
 	}
-	
+
 	/**
 	 * Receive a game map and changes it according to the changes previously made to the components of the game, 
 	 * for example, when the doors is unlocked is need change the mark that echoes the door in the map.

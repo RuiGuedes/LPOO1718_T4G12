@@ -65,7 +65,7 @@ public class Game {
 	/**
 	 * Initialize only the necessaries pieces of the gameMap in the right position and quantity. 
 	 * For each mark different of blank or wall (X), it is checked which action to perform.
-	 *  
+	 * 
 	 * @param guardType	guard type that needs to be create
 	 * @param ogresNumber number of ogres that needs to be create
 	 */
@@ -75,56 +75,10 @@ public class Game {
 
 		for(int i = 0; i < tmpMap.length; i++) {
 			for(int j = 0; j < tmpMap[i].length; j++) {
-				if((tmpMap[i][j] == 'H') || (tmpMap[i][j] == 'A')) {
-					hero = new Hero(new Elements(i,j),tmpMap[i][j]);
-				}
-				else if(tmpMap[i][j] == 'k') {
-					if(Game.LEVEL == 1)
-						lock = new Lock(new Elements(i,j),false);
-					else
-						lock = new Lock(new Elements(i,j),true);
-				}
-				else if(tmpMap[i][j] == 'G') {
-					char[] guardRoute = {'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 
-							'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'}; 
+				initStableElements(new Elements(i,j), tmpMap);
 
-					guard = new Guard[3];
-					guard[0] = new Rookie(new Elements(i,j),guardRoute);
-					guard[1] = new Drunken(new Elements(i,j),guardRoute);
-					guard[2] = new Suspicious(new Elements(i,j),guardRoute);
+				initUnstableElements(new Elements(i,j), guardType, ogresNumber);
 
-					if(guardType.equals("Rookie"))
-						guardRouting = 0;
-					else if(guardType.equals("Drunken"))
-						guardRouting = 1;
-					else if(guardType.equals("Suspicious"))
-						guardRouting = 2;
-				}
-				else if(tmpMap[i][j] == 'I') {
-					if((i == 0) || (j == 0) || (i == (tmpMap.length-1)) || (j == (tmpMap.length-2))) 
-						door.add(new Door(new Elements(i,j),'I',true));	//Exit Door
-					else
-						door.add(new Door(new Elements(i,j),'I',false));	//Normal Door
-				}
-				else if(tmpMap[i][j] == 'O') {
-
-					int tmpX = i;
-					int tmpY = j;
-
-					if((tmpMap[i+1][j]) == '*') 
-						tmpX++;
-					else if((tmpMap[i-1][j]) == '*')
-						tmpX--;
-					else if((tmpMap[i][j+1]) == '*')
-						tmpY++;
-					else if((tmpMap[i][j-1]) == '*')
-						tmpY--;
-
-					while(ogresNumber > 0) {
-						ogre.add(new Ogre(new Elements(i,j),new Elements(tmpX,tmpY)));
-						ogresNumber--;
-					}
-				}
 				if(tmpMap[i][j] != 'X')
 					tmpMap[i][j] = ' ';
 			}
@@ -133,26 +87,141 @@ public class Game {
 	}
 
 	/**
+	 * 
+	 * @param position
+	 * @param tmpMap
+	 */
+	public void initStableElements(Elements position, char[][] tmpMap) {
+		
+		if(tmpMap[position.x][position.y] == 'k') 
+			initLock(position);
+		
+		else if(tmpMap[position.x][position.y] == 'I') 
+			initDoors(position,tmpMap);
+	}
+
+	/**
+	 * 
+	 * @param position
+	 * @param guardType
+	 * @param ogresNumber
+	 */
+	public void initUnstableElements(Elements position, String guardType, int ogresNumber) {
+		char[][] tmpMap = map.getMap();
+
+		if((tmpMap[position.x][position.y] == 'H') || (tmpMap[position.x][position.y] == 'A')) 
+			hero = new Hero(position,tmpMap[position.x][position.y]);
+
+		else if(tmpMap[position.x][position.y] == 'G') 
+			initGuard(position, guardType);
+
+		else if(tmpMap[position.x][position.y] == 'O') 
+			initOgres(position, ogresNumber);
+	}	
+
+	/**
+	 * 
+	 * @param position
+	 */
+	public void initLock(Elements position) {
+		if(Game.LEVEL == 1)
+			lock = new Lock(position,false);
+		else
+			lock = new Lock(position,true);
+	}
+
+	/**
+	 * 
+	 * @param position
+	 * @param guardType
+	 */
+	public void initGuard(Elements position, String guardType) {
+		char[] guardRoute = {'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 
+				'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'}; 
+
+		guard = new Guard[3];
+		guard[0] = new Rookie(position,guardRoute);
+		guard[1] = new Drunken(position,guardRoute);
+		guard[2] = new Suspicious(position,guardRoute);
+
+		if(guardType.equals("Rookie"))
+			guardRouting = 0;
+		else if(guardType.equals("Drunken"))
+			guardRouting = 1;
+		else if(guardType.equals("Suspicious"))
+			guardRouting = 2;
+	}
+
+	/**
+	 * 
+	 * @param position
+	 * @param tmpMap
+	 */
+	public void initDoors(Elements position, char[][] tmpMap) {
+		if((position.x == 0) || (position.y == 0) || 
+				(position.x == (tmpMap.length-1)) || (position.y == (tmpMap.length-2))) 
+			door.add(new Door(position,'I',true));	//Exit Door
+		else
+			door.add(new Door(position,'I',false));	//Normal Door
+	}
+
+	/**
+	 * 
+	 * @param position
+	 * @param ogresNumber
+	 */
+	public void initOgres(Elements position, int ogresNumber) {
+		char[][] tmpMap = map.getMap();
+
+		Elements clubPos = new Elements(position);
+
+		clubPos = findClubPosition(clubPos, tmpMap);
+		
+		while(ogresNumber > 0) {
+			ogre.add(new Ogre(position,clubPos));
+			ogresNumber--;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @param tmpMap
+	 * @return
+	 */
+	public Elements findClubPosition (Elements position, char[][] tmpMap) {
+
+		if((tmpMap[position.x+1][position.y]) == '*') 
+			position.x++;
+		else if((tmpMap[position.x-1][position.y]) == '*')
+			position.x--;
+		else if((tmpMap[position.x][position.y+1]) == '*')
+			position.y++;
+		else if((tmpMap[position.x][position.y-1]) == '*')
+			position.y--;
+
+		return position;
+	}
+	
+	/**
 	 * Check the position of the hero and if he is captured or killed by a guard,
 	 * if it is the first level, or a ogre, if it is the second level.
 	 * If the hero has been captured, the gameState change to GameOver.
 	 */
 	public void checkGameStatus() {
 
-		if(Game.LEVEL == 1 && (guard[guardRouting].state == 'G') && guard[guardRouting].checkProximity(hero)) 
+		if((Game.LEVEL == 1) && (guard[guardRouting].state == 'G') && guard[guardRouting].checkProximity(hero)) 
 			gameState = GameState.GAMEOVER;
 
 		else if(Game.LEVEL == 2)
 
-			for(int i = 0; i < horde; i++) {
-
+			for(int i = 0; i < horde; i++) 
 				if(( (ogre.get(i).checkProximity(hero))	&& (ogre.get(i).state == 'O')) || 
-						((ogre.get(i).clubX == hero.x) && (ogre.get(i).clubY == hero.y)))
-				{
+						(hero.equals(ogre.get(i).clubX, ogre.get(i).clubY)))	{
+					
 					gameState = GameState.GAMEOVER;
 					break;
 				}
-			}
 	}
 
 	/**
@@ -172,7 +241,8 @@ public class Game {
 			tmpMap[guard[guardRouting].x][guard[guardRouting].y] = guard[guardRouting].state;
 
 		else if(ogre.size() != 0)
-			for(int i = 0; i < horde; i++) {
+			for(int i = 0; i < horde; i++) 
+			{
 				tmpMap[ogre.get(i).x][ogre.get(i).y] = ogre.get(i).state;
 				if(tmpMap[ogre.get(i).clubX][ogre.get(i).clubY] != 'O')
 					tmpMap[ogre.get(i).clubX][ogre.get(i).clubY] = ogre.get(i).club;

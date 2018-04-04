@@ -47,38 +47,8 @@ public class Ogre extends Elements {
 		this.clubY = club.y;
 	}
 
-	public boolean checkAround(int move, char[][] tmpMap) {
-		int xCopy=x , yCopy = y;
-		
-		switch(move)
-		{
-		case 1:	//Moves up
-			xCopy--;
-			break;
-		case 2:	//Moves down
-			xCopy++;
-			break;
-		case 3:	//Moves left
-			yCopy--;		
-			break;
-		case 4:	//Moves right
-			yCopy++;
-			break;
-		}
-		
-		return ((tmpMap[xCopy][yCopy] == 'X') || (tmpMap[xCopy][yCopy] == 'I') || (tmpMap[xCopy][yCopy] == 'S'));
-	}
-	
-	public Elements generateMove(Elements position, char[][] tmpMap) {
-		Random rand = new Random();
-		int move;
-
-		do	{
-			move = rand.nextInt(4) + 1;
-		}while (checkAround(move, tmpMap));
-
-		switch(move)
-		{
+	public Elements changeCoords(Elements position, int move) {
+		switch(move) {
 		case 1:	//Moves up
 			position.x--;
 			break;
@@ -90,10 +60,41 @@ public class Ogre extends Elements {
 			break;
 		case 4:	//Moves right
 			position.y++;
-			break;
-		}
+			break; }
 		
-		return position;
+		return position; }
+	
+//	public Elements changeXCoord(Elements position, int move) {
+//		switch(move) {
+//		case 1:	//Moves up
+//			position.x--;
+//			break;
+//		case 2:	//Moves down
+//			position.x++;
+//			break;
+//		}
+//		
+//		return position;
+//	}
+	
+	public boolean checkAround(int move, char[][] tmpMap) {
+		Elements position = new Elements(this);
+		
+		position = changeCoords(position, move);
+		
+		return ((tmpMap[position.x][position.y] == 'X') || 
+				(tmpMap[position.x][position.y] == 'I') || 
+				(tmpMap[position.x][position.x] == 'S'));
+	}
+	
+	public Elements generateMove(Elements position, char[][] tmpMap) {
+		Random rand = new Random();
+		int move;
+
+		do{ move = rand.nextInt(4) + 1;
+		} while (checkAround(move, tmpMap));
+
+		return changeCoords(position, move);
 	}
 	
 	/**
@@ -108,8 +109,7 @@ public class Ogre extends Elements {
 
 		if((this.checkProximity(hero)) && (state != '8')) {
 			state = '8';
-			stop = 2;
-			return;
+			stop = 3;
 		}
 
 		if(stop != 0)
@@ -117,15 +117,12 @@ public class Ogre extends Elements {
 		else {
 			generateMove(this, tmpMap);
 
-			if((x == 1) && (y == 7))
+			state = 'O';
+			
+			if (tmpMap[x][y] == 'k')
 				state = '$';
-			else
-				state = 'O';
 
-			if(stop != 2) {
-				club = '*';
-				clubMovement(tmpMap);
-			}
+			clubMovement(tmpMap);
 		}
 	}
 
@@ -136,12 +133,13 @@ public class Ogre extends Elements {
 	public void clubMovement(char[][] tmpMap) {
 
 		Elements clubPosition = new Elements(this);
-		
+
 		clubPosition = generateMove(clubPosition, tmpMap);
-		
-			clubX = clubPosition.x;
-			clubY = clubPosition.y;
-		
+
+		clubX = clubPosition.x;
+		clubY = clubPosition.y;
+		club = '*';
+
 		if (tmpMap[clubX][clubY] == 'k')
 			club = '$';
 	}

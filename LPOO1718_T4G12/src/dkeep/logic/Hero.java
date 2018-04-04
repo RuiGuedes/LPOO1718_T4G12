@@ -30,15 +30,53 @@ public class Hero extends Elements {
 	 * @return next position free to move or null if the position is occupied
 	 */
 	public Elements checkNextPosition(Elements newP, char[][] tmpMap) {
+		Elements position;
+		
+		if(tmpMap[newP.x][newP.y] == ' ')
+			return newP;
+		
+		position=checkLock(newP, tmpMap);
+		if(position != null)
+			return position;
+		
+		position=checkDoors(newP, tmpMap);
+		if(position != null)
+			return position;
 
-		if((tmpMap[newP.x][newP.y] == 'I') && Lock.lockStatus) {
-			Door tmp = new Door(Game.door.get(0), 'S',Game.door.get(0).type);
-			Game.door.set(0,tmp);
-		}
-		else if((tmpMap[newP.x][newP.y] == 'k') && (!Lock.lockType)) {
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param newP
+	 * @param tmpMap
+	 * @return
+	 */
+	public Elements checkLock(Elements newP, char[][] tmpMap) {
+		
+		if((tmpMap[newP.x][newP.y] == 'k') && (!Lock.lockType)) {
 			Lock.lockState = 'K';
 			Door.openDoors();
 			Lock.lockStatus = true;
+		}
+		else  if((tmpMap[newP.x][newP.y] == 'k') && (Lock.lockType)) {
+			Lock.lockState = ' ';
+			Lock.lockStatus = true;
+			return newP;
+		}
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param newP
+	 * @param tmpMap
+	 * @return
+	 */
+	public Elements checkDoors(Elements newP, char[][] tmpMap) {
+		if((tmpMap[newP.x][newP.y] == 'I') && Lock.lockStatus) {
+			Door tmp = new Door(Game.door.get(0), 'S',Game.door.get(0).type);
+			Game.door.set(0,tmp);
 		}
 		else if(tmpMap[newP.x][newP.y] == 'S') {
 			Game.gameState = Game.GameState.VICTORY;
@@ -50,14 +88,6 @@ public class Hero extends Elements {
 			newP.y += deltaY;
 			return newP;
 		}
-		else if((tmpMap[newP.x][newP.y] == 'k') && (Lock.lockType)) {
-			Lock.lockState = ' ';
-			Lock.lockStatus = true;
-			return newP;
-		}
-		else if(tmpMap[newP.x][newP.y] == ' ')
-			return newP;
-
 		return null;
 	}
 
@@ -80,31 +110,19 @@ public class Hero extends Elements {
 	 * @param tmpMap game map to detect collisions with objects
 	 */
 	public void heroMovement(char input, char[][] tmpMap) {
-		Elements position;
 
-		switch(input)
-		{
-		case 'w':
-			position = new Elements(x-1, y);
-			changeCoordinates(checkNextPosition(position, tmpMap));
+		switch(input) {
+		case 'w': changeCoordinates(checkNextPosition(new Elements(x-1, y), tmpMap));
 			
 			break;
-		case 's': 
-			position = new Elements(x+1, y);
-			changeCoordinates(checkNextPosition(position, tmpMap));
+		case 's': changeCoordinates(checkNextPosition(new Elements(x+1, y), tmpMap));
 			
 			break;
-		case 'a':
-			position = new Elements(x, y-1);
-			changeCoordinates(checkNextPosition(position, tmpMap));
+		case 'a': changeCoordinates(checkNextPosition(new Elements(x, y-1), tmpMap));
 			
 			break;
-		case 'd':
-			position = new Elements(x, y+1);
-			changeCoordinates(checkNextPosition(position, tmpMap));
+		case 'd': changeCoordinates(checkNextPosition(new Elements(x, y+1), tmpMap));
 			
-			break;
-		default:
 			break;
 		}
 	}

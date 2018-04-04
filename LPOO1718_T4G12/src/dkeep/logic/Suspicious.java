@@ -26,25 +26,33 @@ public class Suspicious extends Guard {
 	 */
 	@Override
 	public boolean guardMovement() {
-		Random rand = new Random();
 		
 		guardMove();
 		
-		if(direction) {
-			if(position == (guardRoute.length - 1)) {
-				position = 0;
-				return true;
-			}
-			else 
-				position++;
-			
-			direction = rand.nextBoolean();
-		}
+		if(direction)
+			return checkEndRoute();
 		else {
 			direction = true;
 			position--;
 		}
 		return false;
 	}
-
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean checkEndRoute() {
+		Random rand = new Random();
+		
+		if(position == (guardRoute.length - 1)) {
+			position = 0;
+			return true;
+		}
+		else 
+			position++;
+		
+		direction = rand.nextBoolean();
+		return false;
+	}
 }

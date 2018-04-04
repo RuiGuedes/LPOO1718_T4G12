@@ -172,8 +172,7 @@ public class Game {
 			tmpMap[guard[guardRouting].x][guard[guardRouting].y] = guard[guardRouting].state;
 
 		else if(ogre.size() != 0)
-			for(int i = 0; i < horde; i++) 
-			{
+			for(int i = 0; i < horde; i++) {
 				tmpMap[ogre.get(i).x][ogre.get(i).y] = ogre.get(i).state;
 				if(tmpMap[ogre.get(i).clubX][ogre.get(i).clubY] != 'O')
 					tmpMap[ogre.get(i).clubX][ogre.get(i).clubY] = ogre.get(i).club;

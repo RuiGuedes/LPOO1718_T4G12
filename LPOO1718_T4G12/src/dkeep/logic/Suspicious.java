@@ -28,9 +28,9 @@ public class Suspicious extends Guard {
 	public boolean guardMovement() {
 		Random rand = new Random();
 		
+		guardMove();
+		
 		if(direction) {
-			guardMove();
-
 			if(position == (guardRoute.length - 1)) {
 				position = 0;
 				return true;
@@ -41,8 +41,6 @@ public class Suspicious extends Guard {
 			direction = rand.nextBoolean();
 		}
 		else {
-			guardMove();
-
 			direction = true;
 			position--;
 		}

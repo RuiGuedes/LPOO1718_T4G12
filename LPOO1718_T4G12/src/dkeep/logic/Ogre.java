@@ -22,12 +22,12 @@ public class Ogre extends Elements {
 	/**
 	 * x coordinate of the club on the map
 	 */
-	public int clubX = 2;
+	public int clubX;
 
 	/**
 	 * y coordinate of the club on the map
 	 */
-	public int clubY = 4;
+	public int clubY;
 
 	/**
 	 * Number of stunned turns
@@ -36,17 +36,25 @@ public class Ogre extends Elements {
 
 	/**
 	 * Class constructor specifying the ogre coordinates and the club coordinates on the game map.
-	 * @param x x coordinate of the ogre
-	 * @param y y coordinate of the ogre
-	 * @param clubX x coordinate of the club
-	 * @param clubY y coordinate of the club
+	 * @param ogre coordinates of the ogre
+	 * @param club coordinates of the club
 	 */
 	public Ogre(Elements ogre, Elements club) {
-		super(ogre);
+		super(ogre.x,ogre.y);
 		this.clubX = club.x;
 		this.clubY = club.y;
 	}
 
+	/**
+	 * Increment or decrement one of the coordinates depending of the direction of the movement.<p>
+	 * Up 	 (w) - increment x coordinate;<p>
+	 * Right (d) - increment y coordinate;<p>
+	 * Down	 (s) - decrement x coordinate;<p>
+	 * Left  (a) - decrement y coordinate. 
+	 * @param position coordinates of the element
+	 * @param move movement of the element
+	 * @return The coordinates of the new position.
+	 */
 	public Elements changeCoords(Elements position, int move) {
 		switch(move) {
 		case 1:	//Moves up
@@ -62,23 +70,17 @@ public class Ogre extends Elements {
 			position.y++;
 			break; }
 		
-		return position; }
+		return position; 
+	}
 	
-//	public Elements changeXCoord(Elements position, int move) {
-//		switch(move) {
-//		case 1:	//Moves up
-//			position.x--;
-//			break;
-//		case 2:	//Moves down
-//			position.x++;
-//			break;
-//		}
-//		
-//		return position;
-//	}
-	
+	/**
+	 * Check if the position after the movement is occupied or not.
+	 * @param move movement of the element
+	 * @param tmpMap game map to detect collisions with objects
+	 * @return True if the position is free, false otherwise.
+	 */
 	public boolean checkAround(int move, char[][] tmpMap) {
-		Elements position = new Elements(this);
+		Elements position = new Elements(this.x,this.y);
 		
 		position = changeCoords(position, move);
 		
@@ -87,6 +89,13 @@ public class Ogre extends Elements {
 				(tmpMap[position.x][position.x] == 'S'));
 	}
 	
+	/**
+	 * Generate a random move, checking if is a valid movement by the checkAround function, 
+	 * and call the changeCoords function to effect the move.
+	 * @param position position of the element
+	 * @param tmpMap game map to detect collisions with objects
+	 * @return Return the result of the changeCoords function.
+	 */
 	public Elements generateMove(Elements position, char[][] tmpMap) {
 		Random rand = new Random();
 		int move;
@@ -99,10 +108,9 @@ public class Ogre extends Elements {
 	
 	/**
 	 * Check if the hero stunned the ogre (if he is near him) and stop the ogre in affirmative case.
-	 * Otherwise, generate a random valid move for the ogre and call a function to move the club.
 	 * if the ogre is stunned, it decreases the number of stopped turns.
-	 * @param heroX x coordinate of the hero
-	 * @param heroY y coordinate of the hero
+	 * Otherwise, call the generateMove function to move the ogre and call the clubMovement to move the club.
+	 * @param hero coordinates of the hero
 	 * @param tmpMap game map to detect collisions with objects
 	 */
 	public void ogreMovement(Hero hero, char[][] tmpMap) {
@@ -127,12 +135,12 @@ public class Ogre extends Elements {
 	}
 
 	/**
-	 * Generate a random valid position around the ogre for the club.
+	 * Call the generateMove function and change the club coordinates by the function.
 	 * @param tmpMap game map to detect collisions with objects
 	 */
 	public void clubMovement(char[][] tmpMap) {
 
-		Elements clubPosition = new Elements(this);
+		Elements clubPosition = new Elements(this.x, this.y);
 
 		clubPosition = generateMove(clubPosition, tmpMap);
 
@@ -143,5 +151,4 @@ public class Ogre extends Elements {
 		if (tmpMap[clubX][clubY] == 'k')
 			club = '$';
 	}
-
 }

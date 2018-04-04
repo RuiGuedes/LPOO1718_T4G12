@@ -10,8 +10,7 @@ public class Rookie extends Guard {
 
 	/**
 	 * Class constructor specifying coordinates and patrol route
-	 * @param x map x coordinate
-	 * @param y map y coordinate
+	 * @param guard coordinates of the guard
 	 * @param guardRoute movements to navigate the patrol route
 	 */
 	public Rookie(Elements guard, char[] guardRoute) {
@@ -25,11 +24,11 @@ public class Rookie extends Guard {
 	public boolean guardMovement() {
 
 		if(guardRoute[position] == 'w')
-			x--;
+			this.x--;
 		else if(guardRoute[position] == 's')
 			this.x++;
 		else if(guardRoute[position] == 'a')
-			y--;
+			this.y--;
 		else if(guardRoute[position] == 'd')
 			this.y++;
 

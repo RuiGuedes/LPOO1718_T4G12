@@ -26,15 +26,6 @@ public class Elements {
 		this.y = y;
 	}
 	
-	/**
-	 * Class constructor
-	 * @param e 
-	 */
-	public Elements(Elements e) {
-		this.x = e.x;
-		this.y = e.y;
-	}
-	
 	 /**
 	  * Compare x and y coordinates of the object with the given coordinates.
 	  * @param x map x coordinate to compare

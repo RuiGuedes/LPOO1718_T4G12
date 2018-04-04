@@ -35,23 +35,27 @@ public abstract class Guard extends Elements {
 	
 	/**
 	 * Class constructor specifying coordinates and patrol route
-	 * @param x map x coordinate
-	 * @param y map y coordinate
+	 * @param guard coordinates of the guard
 	 * @param guardRoute movements to navigate the patrol route
 	 */
 	public Guard(Elements guard, char[] guardRoute) {
-		super(guard);
+		super(guard.x,guard.y);
 		this.guardRoute = guardRoute;
 	}
 	
 	/**
 	 * Change the guard position according with the patrol route.
-	 * @return If the patrol route is complete return true, otherwise return false. 
 	 * The patrol is complete when position back to the begin of route.
 	 * When patrol is complete, change of guard (shift).
+	 * @return If the patrol route is complete return true, otherwise return false. 
 	 */
 	public abstract boolean guardMovement();
 
+	/**
+	 * Call the changeCoordinates function with the right parameter take into account the direction of the guard movement.
+	 * If the direction is normal, the parameter will be the next move of the route.
+	 * Otherwise, if the direction is inverse, the parameter will be the inverse of the previous move of the route.
+	 */
 	public void guardMove() {
 		if(direction) {
 			changeCoordinates(guardRoute[position]);
@@ -68,6 +72,14 @@ public abstract class Guard extends Elements {
 		}
 	}
 	
+	/**
+	 * Increment or decrement one of the coordinates depending of the direction of the movement.<p>
+	 * Up 	 (w) - increment x coordinate;<p>
+	 * Right (d) - increment y coordinate;<p>
+	 * Down	 (s) - decrement x coordinate;<p>
+	 * Left  (a) - decrement y coordinate. 
+	 * @param move movement of the guard
+	 */
 	public void changeCoordinates(char move) {
 		if(move == 'w')
 			this.x--;
@@ -80,7 +92,7 @@ public abstract class Guard extends Elements {
 	}
 	
 	/**
-	 * Set the existent patrol route by other.
+	 * Set the existent patrol route for other given.
 	 * @param guardRoute new patrol route
 	 */
 	public void changeGuardRoute(char[] guardRoute) {

@@ -24,12 +24,11 @@ public class Lock extends Elements {
 	
 	/**
 	 * Class constructor specifying coordinates and type of lock
-	 * @param x map x coordinate
-	 * @param y map y coordinate
+	 * @param lock coordinates of the lock
 	 * @param lockType type of lock, true if it's a key, false if it's a lever
 	 */
 	public Lock(Elements lock, boolean lockType) {
-		super(lock);
+		super(lock.x,lock.y);
 		Lock.lockType = lockType;
 		Lock.lockState = 'k';
 		Lock.lockStatus = false;

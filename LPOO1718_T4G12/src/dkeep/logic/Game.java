@@ -63,8 +63,7 @@ public class Game {
 	}
 
 	/**
-	 * Initialize only the necessaries pieces of the gameMap in the right position and quantity. 
-	 * For each mark different of blank or wall (X), it is checked which action to perform.
+	 * Initialize the stable and unstable pieces calling the functions initStableElements and initUnstableElements.
 	 * 
 	 * @param guardType	guard type that needs to be create
 	 * @param ogresNumber number of ogres that needs to be create
@@ -87,9 +86,9 @@ public class Game {
 	}
 
 	/**
-	 * 
-	 * @param position
-	 * @param tmpMap
+	 * Initialize the lock and door type elements calling the functions initLock and initDoor.
+	 * @param position coordinates of the element
+	 * @param tmpMap game map
 	 */
 	public void initStableElements(Elements position, char[][] tmpMap) {
 		
@@ -101,10 +100,10 @@ public class Game {
 	}
 
 	/**
-	 * 
-	 * @param position
-	 * @param guardType
-	 * @param ogresNumber
+	 * Initialize the hero and the guard and ogre type elements calling the functions initGuard and initOgre.
+	 * @param position coordinates of the element
+	 * @param guardType initial guard type of the first level 
+	 * @param ogresNumber number of ogres of the second level
 	 */
 	public void initUnstableElements(Elements position, String guardType, int ogresNumber) {
 		char[][] tmpMap = map.getMap();
@@ -120,8 +119,8 @@ public class Game {
 	}	
 
 	/**
-	 * 
-	 * @param position
+	 * Create a new lock of the lever type if is the level 1 or the key type otherwise
+	 * @param position coordinates of the element
 	 */
 	public void initLock(Elements position) {
 		if(Game.LEVEL == 1)
@@ -131,9 +130,9 @@ public class Game {
 	}
 
 	/**
-	 * 
-	 * @param position
-	 * @param guardType
+	 * Create a new guard take in account the type of guard.
+	 * @param position coordinates of the element
+	 * @param guardType type of guard to be create
 	 */
 	public void initGuard(Elements position, String guardType) {
 		char[] guardRoute = {'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 
@@ -153,9 +152,9 @@ public class Game {
 	}
 
 	/**
-	 * 
-	 * @param position
-	 * @param tmpMap
+	 * Create a new door take in account if it is in the map extremes (exit door) or not (normal door).
+	 * @param position coordinates of the element
+	 * @param tmpMap game map
 	 */
 	public void initDoors(Elements position, char[][] tmpMap) {
 		if((position.x == 0) || (position.y == 0) || 
@@ -166,14 +165,14 @@ public class Game {
 	}
 
 	/**
-	 * 
-	 * @param position
-	 * @param ogresNumber
+	 * Call the findClubPosition to find the club and create a ogresNumber of new ogres.
+	 * @param position coordinates of the element
+	 * @param ogresNumber number of ogres to be create
 	 */
 	public void initOgres(Elements position, int ogresNumber) {
 		char[][] tmpMap = map.getMap();
 
-		Elements clubPos = new Elements(position);
+		Elements clubPos = new Elements(position.x, position.y);
 
 		clubPos = findClubPosition(clubPos, tmpMap);
 		
@@ -184,10 +183,10 @@ public class Game {
 	}
 	
 	/**
-	 * 
-	 * @param position
-	 * @param tmpMap
-	 * @return
+	 * Find the position around the ogre where is the club.
+	 * @param position position of the ogre
+	 * @param tmpMap game map
+	 * @return Return the position of the club.
 	 */
 	public Elements findClubPosition (Elements position, char[][] tmpMap) {
 

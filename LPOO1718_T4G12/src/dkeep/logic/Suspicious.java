@@ -12,8 +12,7 @@ public class Suspicious extends Guard {
 
 	/**
 	 * Class constructor specifying coordinates and patrol route
-	 * @param x map x coordinate
-	 * @param y map y coordinate
+	 * @param guard coordinates of the guard
 	 * @param guardRoute movements to navigate the patrol route
 	 */
 	public Suspicious(Elements guard, char[] guardRoute) {
@@ -21,8 +20,9 @@ public class Suspicious extends Guard {
 	}
 
 	/**
-	 * If the direction is the normal direction, it moves the guard and generates random direction.
-	 * Otherwise, move the guard in the reverse direction and restores the normal direction of the patrol route.
+	 * Call a function, guardMove, to move the guard and check the route.
+	 * If the direction is the normal direction, check if the route is over.
+	 * Otherwise, restores the normal direction of the patrol route.
 	 */
 	@Override
 	public boolean guardMovement() {
@@ -39,8 +39,10 @@ public class Suspicious extends Guard {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Check if the patrol route is over or not and generate a random direction for the next movement.
+	 * If the route is over, restart the position and return true.
+	 * Otherwise, increment the route position, generate the random direction and return false.
+	 * @return True if the route is over, false otherwise.
 	 */
 	public boolean checkEndRoute() {
 		Random rand = new Random();

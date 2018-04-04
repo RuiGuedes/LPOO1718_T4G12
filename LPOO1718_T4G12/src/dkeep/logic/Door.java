@@ -23,13 +23,12 @@ public class Door extends Elements {
 	/**
 	 * Class constructor specifying coordinates, mark on the game map and the door type.
 	 * The door type is true if it is an exit door, otherwise is false.
-	 * @param x map x coordinates
-	 * @param y map y coordinates
+	 * @param door coordinates of the door
 	 * @param state representation mark on the game map
 	 * @param type if exit door? type=true : type=false
 	 */
 	public Door(Elements door, char state, boolean type) {
-		super(door);
+		super(door.x,door.y);
 		this.state = state;
 		this.type = type;
 	}

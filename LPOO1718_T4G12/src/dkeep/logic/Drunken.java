@@ -12,14 +12,19 @@ public class Drunken extends Guard {
 
 	/**
 	 * Class constructor specifying coordinates and patrol route
-	 * @param x map x coordinate
-	 * @param y map y coordinate
+	 * @param guard coordinates of the guard
 	 * @param guardRoute movements to navigate the patrol route
 	 */
 	public Drunken(Elements guard, char[] guardRoute) {
 		super(guard, guardRoute);
 	}
 
+	/**
+	 * Call the guardMove function to move the guard and check if the patrol route is over or not.
+	 * If the route is over, restart the position and return true.
+	 * Otherwise, increment or decrement the route position take in account the direction and return false.
+	 * @return True if the route is over, false otherwise.
+	 */
 	public boolean checkAndMove() {
 
 		if(position == 0)
@@ -41,8 +46,9 @@ public class Drunken extends Guard {
 	}
 
 	/**
-	 * Generate numbers to determine if the guard continue the patrol route or stay sleeping,
-	 * stop by a random time [1-3], or whether invert the route.
+	 * If the guard is not sleeping, generate numbers to determine if the guard continue the patrol route 
+	 * or stay sleeping and a random direction of the next movement.
+	 * Otherwise, decrease the number of turns going to sleep. 
 	 */
 	@Override
 	public boolean guardMovement() {

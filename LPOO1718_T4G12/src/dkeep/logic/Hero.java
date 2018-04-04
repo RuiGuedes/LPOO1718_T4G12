@@ -14,18 +14,17 @@ public class Hero extends Elements {
 
 	/**
 	 * Class constructor specifying coordinates and mark on the game map.
-	 * @param x map x coordinate
-	 * @param y map y coordinate
+	 * @param hero coordinates of the hero
 	 * @param state representation mark on the game map
 	 */
-	public Hero(Elements e, char state) {
-		super(e);
+	public Hero(Elements hero, char state) {
+		super(hero.x,hero.y);
 		this.state = state;
 	} 
 
 	/**
-	 * Check if the next position is free to move 
-	 * @param newP next position
+	 * Check if the next position is free to move. 
+	 * @param newP new position
 	 * @param tmpMap game map
 	 * @return next position free to move or null if the position is occupied
 	 */
@@ -47,10 +46,10 @@ public class Hero extends Elements {
 	}
 	
 	/**
-	 * 
-	 * @param newP
-	 * @param tmpMap
-	 * @return
+	 * Check if exist a lock in one position and change the map take in account the type of lock.
+	 * @param newP position to check
+	 * @param tmpMap game map to access to the position
+	 * @return Null if the lock is a lever and can't move to the position, and the position if the lock is a key.
 	 */
 	public Elements checkLock(Elements newP, char[][] tmpMap) {
 		
@@ -68,10 +67,13 @@ public class Hero extends Elements {
 	}
 	
 	/**
-	 * 
-	 * @param newP
-	 * @param tmpMap
-	 * @return
+	 * Check if exist a door in the newP position. 
+	 * If is a exit door and the lock is enable, the door is open.
+	 * If is a open exit door, the game state change to Victory.
+	 * If is a normal door, the hero can move to the other side of the door.
+	 * @param newP position to check
+	 * @param tmpMap game map to access to the position
+	 * @return Null if the door was locked, and the new position otherwise.
 	 */
 	public Elements checkDoors(Elements newP, char[][] tmpMap) {
 		if((tmpMap[newP.x][newP.y] == 'I') && Lock.lockStatus) {
@@ -103,9 +105,8 @@ public class Hero extends Elements {
 	}
 
 	/**
-	 * Analyze whether the cell to which the user wishes to move the hero is empty, and enables movement.
-	 * If the hero enable the lever the doors are open. If the hero picks up the key and collides with the door, 
-	 * the door unlocks.
+	 * Analyze whether the cell to which the user wishes to move the hero is empty, 
+	 * calling the checkNextPosition function, and enables movement calling the changeCoordinates function.
 	 * @param input movement direction of the hero
 	 * @param tmpMap game map to detect collisions with objects
 	 */

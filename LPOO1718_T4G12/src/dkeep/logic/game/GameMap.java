@@ -1,4 +1,4 @@
-package dkeep.logic;
+package dkeep.logic.game;
 
 import java.util.Arrays;
 

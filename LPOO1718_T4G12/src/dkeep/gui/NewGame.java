@@ -23,10 +23,10 @@ import java.awt.Font;
 
 import javax.swing.SwingConstants;
 
-import dkeep.logic.Game;
-import dkeep.logic.GameMap;
-import dkeep.logic.Game.GameState;
 import dkeep.logic.elements.Lock;
+import dkeep.logic.game.Game;
+import dkeep.logic.game.GameMap;
+import dkeep.logic.game.Game.GameState;
 
 public class NewGame {
 

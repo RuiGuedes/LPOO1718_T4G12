@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import dkeep.logic.*;
-import dkeep.logic.Game.GameState;
 import dkeep.logic.elements.Lock;
+import dkeep.logic.game.Game;
+import dkeep.logic.game.GameMap;
+import dkeep.logic.game.Game.GameState;
 
 public class UserInteraction {
 	

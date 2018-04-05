@@ -108,9 +108,9 @@ public class MapEditor extends JPanel implements MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		int deltaX = (int) Math.ceil((float)getWidth()/map.length);
-		int deltaY = (int) Math.ceil((float)getHeight()/map[0].length);
-
+		int deltaY = (int) Math.ceil((float)getWidth()/map.length);
+		int deltaX = (int) Math.ceil((float)getHeight()/map[0].length);		
+		
 		if(LevelEditor.elementSelected != ' ')
 			setElement(e.getY()/deltaX, e.getX()/deltaY);
 		else 

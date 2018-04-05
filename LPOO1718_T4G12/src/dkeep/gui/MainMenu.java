@@ -4,26 +4,18 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.awt.GridBagLayout;
-import javax.swing.JPanel;
 import java.awt.GridBagConstraints;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import javax.swing.SwingConstants;
 import java.awt.Font;
-import java.awt.Color;
-import java.awt.Dimension;
-import javax.swing.JLabel;
 
 
 public class MainMenu {

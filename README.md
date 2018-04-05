@@ -21,11 +21,11 @@ César Alexandra da Costa Pinho <br>
 
 ### EclEmma
 
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/guided-project-delivery/LPOO1718_T4G12/LPOO1718_T4G12/EclEmma%20Results.png)
+![picture](https://github.com/RuiGuedes/LPOO1718_T4G12/guided-project-delivery/LPOO1718_T4G12/LPOO1718_T4G12/EclEmma%20Results.png)
 
 
 ### PIT
 
-
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/guided-project-delivery/LPOO1718_T4G12/LPOO1718_T4G12/PIT%20Tool%20Results.png)
 
 <br><br>

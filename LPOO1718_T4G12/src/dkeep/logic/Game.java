@@ -1,15 +1,6 @@
-package dkeep.logic.game;
+package dkeep.logic;
 
-import dkeep.logic.elements.Door;
-import dkeep.logic.elements.Elements;
-import dkeep.logic.elements.Hero;
-import dkeep.logic.elements.Lock;
-import dkeep.logic.elements.Ogre;
-import dkeep.logic.game.GameMap;
-import dkeep.logic.guard.Drunken;
-import dkeep.logic.guard.Guard;
-import dkeep.logic.guard.Rookie;
-import dkeep.logic.guard.Suspicious;
+import dkeep.logic.GameMap;
 
 import java.util.ArrayList;
 

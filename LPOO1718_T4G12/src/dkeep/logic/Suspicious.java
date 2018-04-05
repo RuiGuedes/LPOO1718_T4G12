@@ -1,8 +1,6 @@
-package dkeep.logic.guard;
+package dkeep.logic;
 
 import java.util.Random;
-
-import dkeep.logic.elements.Elements;
 
 /**
  * Suspicious.java - class to the suspicious guard representation in the game 

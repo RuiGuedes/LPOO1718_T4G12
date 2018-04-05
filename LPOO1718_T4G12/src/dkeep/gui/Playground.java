@@ -18,7 +18,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import dkeep.logic.*;
-import dkeep.logic.game.Game;
 
 public class Playground extends JPanel implements MouseListener, KeyListener {
 

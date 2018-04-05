@@ -1,7 +1,4 @@
-package dkeep.logic.elements;
-
-import dkeep.logic.game.Game;
-import dkeep.logic.game.Game.GameState;
+package dkeep.logic;
 
 /**
  * Hero.java - class to the hero representation in the game

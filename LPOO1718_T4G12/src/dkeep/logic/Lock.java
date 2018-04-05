@@ -1,4 +1,4 @@
-package dkeep.logic.elements;
+package dkeep.logic;
 
 /**
  * Lock.java - class to the lock representation in the game 

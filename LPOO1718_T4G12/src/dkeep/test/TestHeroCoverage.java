@@ -4,9 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import dkeep.logic.*;
-import dkeep.logic.elements.Lock;
-import dkeep.logic.game.Game;
-import dkeep.logic.game.GameMap;
 
 public class TestHeroCoverage {
 

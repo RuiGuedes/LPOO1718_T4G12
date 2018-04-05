@@ -1,8 +1,6 @@
-package dkeep.logic.guard;
+package dkeep.logic;
 
 import java.util.Random;
-
-import dkeep.logic.elements.Elements;
 
 /**
  * Drunken.java - class to the drunken guard representation in the game 

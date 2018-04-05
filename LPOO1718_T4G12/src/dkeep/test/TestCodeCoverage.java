@@ -21,8 +21,8 @@ public class TestCodeCoverage {
 			{'X', ' ', ' ', 'I', ' ', 'X'},
 			{'X', 'X', 'X', 'X', 'X', 'X'},
 	}; 
-
-	@Test
+ 
+	@Test 
 	public void testMoveHeroIntoFreeCell() {
 		Game.LEVEL = 1;
 		GameMap gameMap = new GameMap(dungeon);

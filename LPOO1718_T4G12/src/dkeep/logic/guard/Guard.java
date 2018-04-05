@@ -1,4 +1,4 @@
-package dkeep.logic.elements.guard;
+package dkeep.logic.guard;
 
 import dkeep.logic.elements.Elements;
 

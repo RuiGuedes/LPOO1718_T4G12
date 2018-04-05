@@ -1,4 +1,4 @@
-package dkeep.logic.elements.guard;
+package dkeep.logic.guard;
 
 import java.util.Random;
 

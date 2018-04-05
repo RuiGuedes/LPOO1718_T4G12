@@ -1,4 +1,4 @@
-package dkeep.logic.elements.characters;
+package dkeep.logic.characters;
 
 import java.util.Random;
 

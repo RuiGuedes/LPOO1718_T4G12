@@ -231,8 +231,8 @@ public class Game {
 	 * @return the updated game map
 	 */
 	public char[][] updateMap(char[][] tmpMap) {
-		tmpMap[hero.x][hero.y] = hero.state;
-
+		tmpMap[lock.x][lock.y] = Lock.lockState;
+		
 		for(int i = 0; i < door.size(); i++)
 			tmpMap[door.get(i).x][door.get(i).y] = door.get(i).state;
 
@@ -247,8 +247,7 @@ public class Game {
 					tmpMap[ogre.get(i).clubX][ogre.get(i).clubY] = ogre.get(i).club;
 			}	
 		
-		tmpMap[lock.x][lock.y] = Lock.lockState;
-		
+		tmpMap[hero.x][hero.y] = hero.state;
 		return tmpMap;
 	}
 }

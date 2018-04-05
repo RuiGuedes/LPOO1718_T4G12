@@ -62,11 +62,10 @@ public class Drunken extends Guard {
 			if(tmp > 8) { 
 				state = 'g';
 				stop = rand.nextInt(3) + 1;
-			}
-			else {
 				direction = rand.nextBoolean();
-				return checkAndMove();
 			}
+			else
+				return checkAndMove();
 		}
 		else 
 			stop--;

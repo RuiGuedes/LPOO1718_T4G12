@@ -24,10 +24,10 @@ public class TestCodeCoverage {
 
 	@Test
 	public void testMoveHeroIntoFreeCell() {
-		Game.LEVEL = 1;
+		Game.LEVEL = 1; 
 		GameMap gameMap = new GameMap(dungeon);
 		Game game = new Game(gameMap,"Rookie",1);
-		
+		 
 		assertTrue("Sucess !",game.hero.equals(1,1));
 		game.hero.heroMovement('s', dungeon);
 		assertFalse("Sucess !", game.hero.equals(1,1));

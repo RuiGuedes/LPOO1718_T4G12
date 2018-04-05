@@ -1,10 +1,7 @@
-package dkeep.logic.characters;
+package dkeep.logic.elements;
 
 import dkeep.logic.Game;
 import dkeep.logic.Game.GameState;
-import dkeep.logic.elements.Door;
-import dkeep.logic.elements.Elements;
-import dkeep.logic.elements.Lock;
 
 /**
  * Hero.java - class to the hero representation in the game

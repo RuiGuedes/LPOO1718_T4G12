@@ -6,8 +6,8 @@ import org.junit.Test;
 
 import dkeep.logic.Game;
 import dkeep.logic.GameMap;
-import dkeep.logic.characters.Hero;
 import dkeep.logic.elements.Elements;
+import dkeep.logic.elements.Hero;
 import dkeep.logic.elements.Lock;
 
 public class TestCodeCoverage {

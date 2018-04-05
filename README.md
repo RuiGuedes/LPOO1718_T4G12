@@ -21,7 +21,7 @@ César Alexandra da Costa Pinho <br>
 
 ### EclEmma
 
-![picture](https://github.com/RuiGuedes/LPOO1718_T4G12/guided-project-delivery/LPOO1718_T4G12/LPOO1718_T4G12/EclEmma.png)
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/guided-project-delivery/LPOO1718_T4G12/LPOO1718_T4G12/EclEmma.png)
 
 
 ### PIT

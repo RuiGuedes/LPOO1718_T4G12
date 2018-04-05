@@ -4,11 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import dkeep.logic.Elements;
 import dkeep.logic.Game;
 import dkeep.logic.GameMap;
-import dkeep.logic.Hero;
-import dkeep.logic.Lock;
+import dkeep.logic.elements.Elements;
+import dkeep.logic.elements.Lock;
+import dkeep.logic.elements.characters.Hero;
 
 public class TestCodeCoverage {
 

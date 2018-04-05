@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 
 import dkeep.logic.*;
 import dkeep.logic.Game.GameState;
+import dkeep.logic.elements.Lock;
 
 public class UserInteraction {
 	

@@ -25,8 +25,8 @@ import javax.swing.SwingConstants;
 
 import dkeep.logic.Game;
 import dkeep.logic.GameMap;
-import dkeep.logic.Lock;
 import dkeep.logic.Game.GameState;
+import dkeep.logic.elements.Lock;
 
 public class NewGame {
 

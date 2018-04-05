@@ -1,4 +1,6 @@
-package dkeep.logic;
+package dkeep.logic.elements.guard;
+
+import dkeep.logic.elements.Elements;
 
 /**
  * Guard.java - class to the guard representation in the game 

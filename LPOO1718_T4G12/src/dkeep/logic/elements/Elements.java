@@ -1,4 +1,4 @@
-package dkeep.logic;
+package dkeep.logic.elements;
 
 /**
  * Elements.java - class to store the coordinates of the elements 

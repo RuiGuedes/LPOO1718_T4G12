@@ -1,4 +1,6 @@
-package dkeep.logic;
+package dkeep.logic.elements.guard;
+
+import dkeep.logic.elements.Elements;
 
 /**
  * Rookie.java - class to the rookie guard representation in the game 

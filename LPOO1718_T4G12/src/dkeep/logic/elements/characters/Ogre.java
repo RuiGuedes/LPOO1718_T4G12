@@ -1,6 +1,8 @@
-package dkeep.logic;
+package dkeep.logic.elements.characters;
 
 import java.util.Random;
+
+import dkeep.logic.elements.Elements;
 
 /**
  * Ogre.java - class to the ogre representation in the game

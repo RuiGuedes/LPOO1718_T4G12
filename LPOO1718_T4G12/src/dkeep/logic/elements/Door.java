@@ -1,4 +1,6 @@
-package dkeep.logic;
+package dkeep.logic.elements;
+
+import dkeep.logic.Game;
 
 /**
  * Door.java - class to the doors representation in the game

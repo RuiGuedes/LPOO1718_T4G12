@@ -4,7 +4,7 @@ Project for the Object Oriented Programming Lab (LPOO) class of the Master in In
 
 <br><br>
 
-###Team Members
+### Team Members
 
 Rui Jorge Leão Guedes <br>
 * Student Number: 201603854
@@ -19,7 +19,7 @@ César Alexandra da Costa Pinho <br>
 
 ### EclEmma
 
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/guided-project-delivery/LPOO1718_T4G12/LPOO1718_T4G12/EclEmma Results.png)
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/guided-project-delivery/LPOO1718_T4G12/LPOO1718_T4G12/EclEmma\ Results.png)
 
 <br><br>
 

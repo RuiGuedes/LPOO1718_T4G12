@@ -2,9 +2,9 @@
 
 Project for the Object Oriented Programming Lab (LPOO) class of the Master in Informatics and Computer Engineering (MIEIC) at the Faculty of Engineering of the University of Porto (FEUP). 
 
-<br><br>
 
-### Team Members
+### Team Members 
+
 
 Rui Jorge Leão Guedes <br>
 * Student Number: 201603854
@@ -15,13 +15,14 @@ César Alexandra da Costa Pinho <br>
 * E-Mail: up201604039@fe.up.pt 
 
 
+### Status Badge
 [![BCH compliance](https://bettercodehub.com/edge/badge/RuiGuedes/LPOO1718_T4G12?branch=master&token=7ea6bfd3c495fe7056dda25afd505674475a9c47)](https://bettercodehub.com/)
+
 
 ### EclEmma
 
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/guided-project-delivery/LPOO1718_T4G12/LPOO1718_T4G12/EclEmma\ Results.png)
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/guided-project-delivery/LPOO1718_T4G12/LPOO1718_T4G12/EclEmma%20Results.png)
 
-<br><br>
 
 ### PIT
 

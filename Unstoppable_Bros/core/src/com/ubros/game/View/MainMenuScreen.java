@@ -149,7 +149,7 @@ public class MainMenuScreen extends ScreenAdapter {
             }
             else if(checkPlayButton(x,y)) {
                 activatePlayButton();
-                //game.setScreen(new PlayGameScreen(game));
+                game.setScreen(new PlayGameScreen(game));
             }
             else
                 defaultMainMenu();

@@ -6,6 +6,7 @@ buildscript {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         jcenter()
+
     }
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
@@ -73,6 +74,7 @@ project(":android") {
     }
 }
 
+
 project(":html") {
     apply plugin: "gwt"
     apply plugin: "war"
@@ -88,6 +90,7 @@ project(":html") {
         
     }
 }
+
 
 project(":core") {
     apply plugin: "java"

@@ -116,7 +116,7 @@ public class PlayGameScreen extends ScreenAdapter {
 
         // Create rectangular shape
         PolygonShape rectangle = new PolygonShape();
-        rectangle.setAsBox(SCREEN_WIDTH, SCREEN_HEIGHT); // Viewport width and 50cm height
+        rectangle.setAsBox(SCREEN_WIDTH, (int)(SCREEN_HEIGHT*0.05)); // Viewport width and 50cm height
 
         // Create ground fixture
         FixtureDef fixtureDef = new FixtureDef();
@@ -179,7 +179,8 @@ public class PlayGameScreen extends ScreenAdapter {
     private void drawGround() {
         Texture groundTexture = game.getAssetManager().get("ground.jpg");
         groundTexture.setWrap(Texture.TextureWrap.Repeat,Texture.TextureWrap.Repeat);
-        game.getBatch().draw(groundTexture, 0, 0, 0, 0, SCREEN_WIDTH, (int)(SCREEN_HEIGHT*0.1));
+
+        game.getBatch().draw(groundTexture, 0, 0, 0, 0, SCREEN_WIDTH, (int)(SCREEN_HEIGHT*0.05));
     }
 
     /**

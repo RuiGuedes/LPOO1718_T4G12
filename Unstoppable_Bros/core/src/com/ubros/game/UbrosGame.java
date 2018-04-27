@@ -4,8 +4,8 @@ package com.ubros.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.ubros.game.View.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.ubros.game.Gui.MainMenuScreen;
 
 public class UbrosGame extends Game {
 

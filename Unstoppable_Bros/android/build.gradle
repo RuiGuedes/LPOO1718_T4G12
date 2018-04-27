@@ -12,7 +12,6 @@ android {
             jniLibs.srcDirs = ['libs']
         }
 
-        //instrumentTest.setRoot('tests')
         androidTest.setRoot('tests')
     }
     packagingOptions {
@@ -20,9 +19,7 @@ android {
     }
     defaultConfig {
         applicationId "com.ubros.game"
-        //minSdkVersion 9
         minSdkVersion 16
-        //targetSdkVersion 27
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"

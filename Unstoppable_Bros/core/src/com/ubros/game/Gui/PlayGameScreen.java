@@ -1,4 +1,4 @@
-package com.ubros.game.View;
+package com.ubros.game.Gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;

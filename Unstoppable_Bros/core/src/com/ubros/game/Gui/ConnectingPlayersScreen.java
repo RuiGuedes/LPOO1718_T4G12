@@ -4,9 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.ubros.game.Networking.Connection;
 import com.ubros.game.UbrosGame;
 
-public class MainMenuScreen extends ScreenAdapter {
+public class ConnectingPlayersScreen extends ScreenAdapter {
+
+    ////////////////////////////
 
     /**
      * Device screen width
@@ -53,25 +56,29 @@ public class MainMenuScreen extends ScreenAdapter {
      */
     private static final int BUTTON_HEIGHT = (int)(SCREEN_HEIGHT*0.13);
 
+
+    ///////////////////////////
+
+
     /**
      * The game this screen belongs to.
      */
     private final UbrosGame game;
 
-    /**
-     *  Array that contains all textures to represent active and inactive buttons
-     */
-    private Texture[] menuButtons = new Texture[6];
+    private Connection connect;
 
     /**
      * Creates this screen.
      *
      * @param game The game this screen belongs to
      */
-    public MainMenuScreen(UbrosGame game) {
+    public ConnectingPlayersScreen(UbrosGame game) {
         this.game = game;
 
+        connect = new Connection();
+
         loadAssets();
+
     }
 
     /**
@@ -79,14 +86,8 @@ public class MainMenuScreen extends ScreenAdapter {
      */
     private void loadAssets() {
         this.game.getAssetManager().load("background.jpg", Texture.class);
-
         this.game.getAssetManager().load("MainMenuExitButtonOff.png",Texture.class);
         this.game.getAssetManager().load("MainMenuSettingsButtonOff.png",Texture.class);
-        this.game.getAssetManager().load("MainMenuPlayButtonOff.png",Texture.class);
-        this.game.getAssetManager().load("MainMenuExitButtonOn.png",Texture.class);
-        this.game.getAssetManager().load("MainMenuSettingsButtonOn.png",Texture.class);
-        this.game.getAssetManager().load("MainMenuPlayButtonOn.png",Texture.class);
-
         this.game.getAssetManager().finishLoading();
         initializeTextures();
     }
@@ -103,6 +104,13 @@ public class MainMenuScreen extends ScreenAdapter {
         menuButtons[5] = game.getAssetManager().get("MainMenuPlayButtonOn.png",Texture.class);
     }
 
+    public boolean MENU_ID = true;
+
+    /**
+     *  Array that contains all textures to represent active and inactive buttons
+     */
+    private Texture[] menuButtons = new Texture[6];
+
     /**
      * Renders this screen.
      *
@@ -110,13 +118,21 @@ public class MainMenuScreen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
+
         super.render(delta);
+
+        MENU_ID = connect.MENU_ID;
 
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
 
         game.getBatch().begin();
         drawBackground();
-        drawButtons();
+
+        if(MENU_ID)
+            defaultMainMenu();
+        else
+            activateSettingsButton();
+
         game.getBatch().end();
 
     }
@@ -129,67 +145,9 @@ public class MainMenuScreen extends ScreenAdapter {
         game.getBatch().draw(background, 0, 0,SCREEN_WIDTH,SCREEN_HEIGHT);
     }
 
-    /**
-     * Draws main menu buttons
-     */
-    private void drawButtons() {
-
-        if(Gdx.input.isTouched()) {
-
-            int x = Gdx.input.getX();
-            int y = Gdx.input.getY();
-
-            if(checkExitButton(x,y)) {
-                activateExitButton();
-                //Connection connect = new Connection();
-                game.setScreen(new ConnectingPlayersScreen(game));
-            }
-            else if(checkSettingsButton(x,y)) {
-               activateSettingsButton();
-               game.setScreen(new SettingsScreen(game));
-            }
-            else if(checkPlayButton(x,y)) {
-                activatePlayButton();
-                game.setScreen(new PlayGameScreen(game));
-            }
-            else
-                defaultMainMenu();
-        }
-        else
-            defaultMainMenu();
-    }
-
-    private boolean checkPlayButton(int x, int y) {
-        return (x <= (SCREEN_WIDTH / 2 + PLAY_BUTTON_WIDTH / 2)) && (x >= (SCREEN_WIDTH / 2 - PLAY_BUTTON_WIDTH / 2))
-                && (y <= (SCREEN_HEIGHT - PLAY_BUTTON_YPOS)) && (y >= (SCREEN_HEIGHT - PLAY_BUTTON_YPOS - BUTTON_HEIGHT));
-    }
-
-    private boolean checkSettingsButton(int x, int y) {
-
-        return (x <= (SCREEN_WIDTH / 2 + SETTINGS_BUTTON_WIDTH / 2)) && (x >= (SCREEN_WIDTH / 2 - SETTINGS_BUTTON_WIDTH / 2))
-                && (y <= (SCREEN_HEIGHT - SETTINGS_BUTTON_YPOS)) && (y >= (SCREEN_HEIGHT - SETTINGS_BUTTON_YPOS - BUTTON_HEIGHT));
-    }
-
-    private boolean checkExitButton(int x, int y) {
-        return (x <= (SCREEN_WIDTH / 2 + EXIT_BUTTON_WIDTH / 2)) && (x >= (SCREEN_WIDTH / 2 - EXIT_BUTTON_WIDTH / 2))
-                && (y <= (SCREEN_HEIGHT - EXIT_BUTTON_YPOS)) && (y >= (SCREEN_HEIGHT - EXIT_BUTTON_YPOS - BUTTON_HEIGHT));
-    }
-
-    private void activatePlayButton() {
-        game.getBatch().draw(menuButtons[0], SCREEN_WIDTH / 2 - EXIT_BUTTON_WIDTH / 2, EXIT_BUTTON_YPOS, EXIT_BUTTON_WIDTH, BUTTON_HEIGHT);
-        game.getBatch().draw(menuButtons[1], SCREEN_WIDTH / 2 - SETTINGS_BUTTON_WIDTH / 2, SETTINGS_BUTTON_YPOS, SETTINGS_BUTTON_WIDTH, BUTTON_HEIGHT);
-        game.getBatch().draw(menuButtons[5], SCREEN_WIDTH / 2 - PLAY_BUTTON_WIDTH / 2, PLAY_BUTTON_YPOS, PLAY_BUTTON_WIDTH, BUTTON_HEIGHT);
-    }
-
     private void activateSettingsButton() {
         game.getBatch().draw(menuButtons[0], SCREEN_WIDTH / 2 - EXIT_BUTTON_WIDTH / 2, EXIT_BUTTON_YPOS, EXIT_BUTTON_WIDTH, BUTTON_HEIGHT);
         game.getBatch().draw(menuButtons[4], SCREEN_WIDTH / 2 - SETTINGS_BUTTON_WIDTH / 2, SETTINGS_BUTTON_YPOS, SETTINGS_BUTTON_WIDTH, BUTTON_HEIGHT);
-        game.getBatch().draw(menuButtons[2], SCREEN_WIDTH / 2 - PLAY_BUTTON_WIDTH / 2, PLAY_BUTTON_YPOS, PLAY_BUTTON_WIDTH, BUTTON_HEIGHT);
-    }
-
-    private void activateExitButton() {
-        game.getBatch().draw(menuButtons[3], SCREEN_WIDTH / 2 - EXIT_BUTTON_WIDTH / 2, EXIT_BUTTON_YPOS, EXIT_BUTTON_WIDTH, BUTTON_HEIGHT);
-        game.getBatch().draw(menuButtons[1], SCREEN_WIDTH / 2 - SETTINGS_BUTTON_WIDTH / 2, SETTINGS_BUTTON_YPOS, SETTINGS_BUTTON_WIDTH, BUTTON_HEIGHT);
         game.getBatch().draw(menuButtons[2], SCREEN_WIDTH / 2 - PLAY_BUTTON_WIDTH / 2, PLAY_BUTTON_YPOS, PLAY_BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 
@@ -198,5 +156,4 @@ public class MainMenuScreen extends ScreenAdapter {
         game.getBatch().draw(menuButtons[1], SCREEN_WIDTH / 2 - SETTINGS_BUTTON_WIDTH / 2, SETTINGS_BUTTON_YPOS, SETTINGS_BUTTON_WIDTH, BUTTON_HEIGHT);
         game.getBatch().draw(menuButtons[2], SCREEN_WIDTH / 2 - PLAY_BUTTON_WIDTH / 2, PLAY_BUTTON_YPOS, PLAY_BUTTON_WIDTH, BUTTON_HEIGHT);
     }
-
 }

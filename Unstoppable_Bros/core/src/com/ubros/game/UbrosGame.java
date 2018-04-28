@@ -6,10 +6,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ubros.game.Gui.MainMenuScreen;
-import com.ubros.game.Networking.Connection;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 public class UbrosGame extends Game {
 
@@ -21,19 +17,6 @@ public class UbrosGame extends Game {
 		batch = new SpriteBatch();
         assetManager = new AssetManager();
 
-		InetAddress ip;
-		try {
-
-			ip = InetAddress.getLocalHost();
-			System.out.println("Current IP address : " + ip.getHostAddress());
-
-		} catch (UnknownHostException e) {
-
-			//e.e.printStackTrace();
-
-		}
-
-		Connection con = new Connection();
         startGame();
 	}
 

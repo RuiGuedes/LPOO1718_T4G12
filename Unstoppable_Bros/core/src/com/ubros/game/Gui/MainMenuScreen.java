@@ -141,11 +141,11 @@ public class MainMenuScreen extends ScreenAdapter {
 
             if(checkExitButton(x,y)) {
                 activateExitButton();
-                Gdx.app.exit();
+                //Gdx.app.exit();
             }
             else if(checkSettingsButton(x,y)) {
                activateSettingsButton();
-               //game.setScreen(new SettingsScreen(game));
+               game.setScreen(new SettingsScreen(game));
             }
             else if(checkPlayButton(x,y)) {
                 activatePlayButton();
@@ -197,4 +197,5 @@ public class MainMenuScreen extends ScreenAdapter {
         game.getBatch().draw(menuButtons[1], SCREEN_WIDTH / 2 - SETTINGS_BUTTON_WIDTH / 2, SETTINGS_BUTTON_YPOS, SETTINGS_BUTTON_WIDTH, BUTTON_HEIGHT);
         game.getBatch().draw(menuButtons[2], SCREEN_WIDTH / 2 - PLAY_BUTTON_WIDTH / 2, PLAY_BUTTON_YPOS, PLAY_BUTTON_WIDTH, BUTTON_HEIGHT);
     }
+
 }

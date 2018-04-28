@@ -4,45 +4,87 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.ubros.game.UbrosGame;
+
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.Socket;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Scanner;
 
 public class PlayGameScreen extends ScreenAdapter {
 
+    ////////////////////////////
+
+    /**
+     * Device screen width
+     */
     private static final int SCREEN_WIDTH = Gdx.graphics.getWidth();
+
+    /**
+     * Device screen height
+     */
     private static final int SCREEN_HEIGHT = Gdx.graphics.getHeight();
+
+    /**
+     * Exit button width
+     */
+    private static final int EXIT_BUTTON_WIDTH = (int) (SCREEN_WIDTH * 0.25);
+
+    /**
+     * Exit button yy position
+     */
+    private static final int EXIT_BUTTON_YPOS = (int) (SCREEN_HEIGHT * 0.1);
+
+    /**
+     * Settings button width
+     */
+    private static final int SETTINGS_BUTTON_WIDTH = (int)(SCREEN_WIDTH*0.4);
+
+    /**
+     * Settings button yy position
+     */
+    private static final int SETTINGS_BUTTON_YPOS = (int)(SCREEN_HEIGHT*0.31);
+
+    /**
+     * Play button width
+     */
+    private static final int PLAY_BUTTON_WIDTH = (int)(SCREEN_WIDTH*0.5);
+
+    /**
+     * Play button yy position
+     */
+    private static final int PLAY_BUTTON_YPOS = (int)(SCREEN_HEIGHT*0.5);
+
+    /**
+     * Every button height
+     */
+    private static final int BUTTON_HEIGHT = (int)(SCREEN_HEIGHT*0.13);
+
+
+    ///////////////////////////
+
 
     /**
      * The game this screen belongs to.
      */
     private final UbrosGame game;
 
-    /////////////////////////////////
+    private boolean CLIENT_CREATED = false;
 
-
-    /**
-     * The physical world.
-     */
-    private final World world;
+    private ArrayList<String> network_ips = new ArrayList<String>();
 
     /**
-     * The ground body
+     *  Array that contains all textures to represent active and inactive buttons
      */
-    private final Body groundBody;
-
-    /**
-     * The ball physical body
-     */
-    private final Body ballBody;
-
-
-    ///////////////////////////////
+    private Texture[] menuButtons = new Texture[6];
 
     /**
      * Creates this screen.
@@ -54,96 +96,32 @@ public class PlayGameScreen extends ScreenAdapter {
 
         loadAssets();
 
-        // Create the physical world
-        world = new World(new Vector2(0, -10), true);
-
-        groundBody = createGroundBody();
-        ballBody = createBallBody();
     }
-
-    /**
-     * Viewport width in meters. Height depends on screen ratio
-     */
-    private static final int VIEWPORT_WIDTH = 6;
-
-    /**
-     * A football is 22cm in diameter and the sprite has a width of 200px
-     */
-    private static final float PIXEL_TO_METER = 0.22f / 800;
-
-    /**
-     * Creates the ball body.
-     */
-    private Body createBallBody() {
-        // Create the ball body definition
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-
-        // Create the ball body
-        float ratio = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
-        Body body = world.createBody(bodyDef);
-        body.setTransform(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0); // Middle of the viewport, no rotation
-
-        // Create circle shape
-        CircleShape circle = new CircleShape();
-        circle.setRadius(0.11f); // 22cm / 2
-
-        // Create ball fixture
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = circle;
-        fixtureDef.density = .5f;      // how heavy is the ball
-        fixtureDef.friction =  .5f;    // how slippery is the ball
-        fixtureDef.restitution =  .5f; // how bouncy is the ball
-
-        // Attach fixture to body
-        body.createFixture(fixtureDef);
-
-        // Dispose of circle shape
-        circle.dispose();
-
-        return body;
-    }
-
-
-    private Body createGroundBody() {
-        // Create the ground body definition
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-
-        // Create the ground body
-        Body body = world.createBody(bodyDef);
-        body.setTransform(0, 0, 0); // Bottom left corner
-
-        // Create rectangular shape
-        PolygonShape rectangle = new PolygonShape();
-        rectangle.setAsBox(SCREEN_WIDTH, (int)(SCREEN_HEIGHT*0.05)); // Viewport width and 50cm height
-
-        // Create ground fixture
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = rectangle;
-        fixtureDef.density = .5f;      // how heavy is the ground
-        fixtureDef.friction =  .5f;    // how slippery is the ground
-        fixtureDef.restitution =  .5f; // how bouncy is the ground
-
-        // Attach fixture to body
-        body.createFixture(fixtureDef);
-
-        // Dispose of circle shape
-        rectangle.dispose();
-
-        return body;
-    }
-
 
     /**
      * Loads the assets needed by this screen.
      */
     private void loadAssets() {
         this.game.getAssetManager().load("background.jpg", Texture.class);
-        this.game.getAssetManager().load("ground.jpg", Texture.class);
-        this.game.getAssetManager().load("ball.png", Texture.class);
+        this.game.getAssetManager().load("MainMenuExitButtonOff.png",Texture.class);
+        this.game.getAssetManager().load("MainMenuSettingsButtonOff.png",Texture.class);
         this.game.getAssetManager().finishLoading();
+        initializeTextures();
     }
+
+    /**
+     *  Initializes textures array previously defined
+     */
+    private void initializeTextures() {
+        menuButtons[0] = game.getAssetManager().get("MainMenuExitButtonOff.png", Texture.class);
+        menuButtons[1] = game.getAssetManager().get("MainMenuSettingsButtonOff.png",Texture.class);
+        menuButtons[2] = game.getAssetManager().get("MainMenuPlayButtonOff.png",Texture.class);
+        menuButtons[3] = game.getAssetManager().get("MainMenuExitButtonOn.png", Texture.class);
+        menuButtons[4] = game.getAssetManager().get("MainMenuSettingsButtonOn.png",Texture.class);
+        menuButtons[5] = game.getAssetManager().get("MainMenuPlayButtonOn.png",Texture.class);
+    }
+
+    public boolean MENU_ID = true;
 
     /**
      * Renders this screen.
@@ -155,32 +133,24 @@ public class PlayGameScreen extends ScreenAdapter {
 
         super.render(delta);
 
-        // Update the world
-        world.step(delta, 6, 2);
 
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
 
         game.getBatch().begin();
         drawBackground();
-        drawGround();
-        drawBall();
+
+        if(MENU_ID)
+            defaultMainMenu();
+        else
+            activateSettingsButton();
+
         game.getBatch().end();
 
-    }
-
-    private void drawBall() {
-        Texture ballTexture = game.getAssetManager().get("ball.png");
-        game.getBatch().draw(ballTexture, (ballBody.getPosition().x -.11f) / PIXEL_TO_METER,  (ballBody.getPosition().y - .11f) / PIXEL_TO_METER);
-
-
-        //game.getBatch().draw(ballTexture, ballBody.getPosition().x, ballBody.getPosition().y,100,100);
-    }
-
-    private void drawGround() {
-        Texture groundTexture = game.getAssetManager().get("ground.jpg");
-        groundTexture.setWrap(Texture.TextureWrap.Repeat,Texture.TextureWrap.Repeat);
-
-        game.getBatch().draw(groundTexture, 0, 0, 0, 0, SCREEN_WIDTH, (int)(SCREEN_HEIGHT*0.05));
+        if(!CLIENT_CREATED) {
+            checkHosts("192.168.0");
+            initializeClient();
+            CLIENT_CREATED = true;
+        }
     }
 
     /**
@@ -189,6 +159,131 @@ public class PlayGameScreen extends ScreenAdapter {
     private void drawBackground() {
         Texture background = game.getAssetManager().get("background.jpg", Texture.class);
         game.getBatch().draw(background, 0, 0,SCREEN_WIDTH,SCREEN_HEIGHT);
+    }
+
+    private void activateSettingsButton() {
+        game.getBatch().draw(menuButtons[0], SCREEN_WIDTH / 2 - EXIT_BUTTON_WIDTH / 2, EXIT_BUTTON_YPOS, EXIT_BUTTON_WIDTH, BUTTON_HEIGHT);
+        game.getBatch().draw(menuButtons[4], SCREEN_WIDTH / 2 - SETTINGS_BUTTON_WIDTH / 2, SETTINGS_BUTTON_YPOS, SETTINGS_BUTTON_WIDTH, BUTTON_HEIGHT);
+        game.getBatch().draw(menuButtons[2], SCREEN_WIDTH / 2 - PLAY_BUTTON_WIDTH / 2, PLAY_BUTTON_YPOS, PLAY_BUTTON_WIDTH, BUTTON_HEIGHT);
+    }
+
+    private void defaultMainMenu() {
+        game.getBatch().draw(menuButtons[0], SCREEN_WIDTH / 2 - EXIT_BUTTON_WIDTH / 2, EXIT_BUTTON_YPOS, EXIT_BUTTON_WIDTH, BUTTON_HEIGHT);
+        game.getBatch().draw(menuButtons[1], SCREEN_WIDTH / 2 - SETTINGS_BUTTON_WIDTH / 2, SETTINGS_BUTTON_YPOS, SETTINGS_BUTTON_WIDTH, BUTTON_HEIGHT);
+        game.getBatch().draw(menuButtons[2], SCREEN_WIDTH / 2 - PLAY_BUTTON_WIDTH / 2, PLAY_BUTTON_YPOS, PLAY_BUTTON_WIDTH, BUTTON_HEIGHT);
+    }
+
+    public void checkHosts(String subnet){
+
+        List<String> addresses = new ArrayList<String>();
+        try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            for(NetworkInterface ni : Collections.list(interfaces)){
+                for(InetAddress address : Collections.list(ni.getInetAddresses()))
+                {
+                    if(address instanceof Inet4Address){
+                        String host_ip_adress = address.getHostAddress();
+                        if(host_ip_adress.contains("192.168.0."))
+                            addresses.add(host_ip_adress);
+                    }
+                }
+            }
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+
+        // Print the contents of our array to a string.  Yeah, should have used StringBuilder
+        String ipAddress = new String("");
+        for(String str:addresses)
+        {
+            ipAddress = ipAddress + str + "\n";
+        }
+
+        System.out.print("MY IP ADRESS IS :: ");
+        System.out.print(ipAddress);
+
+        int timeout=1000;
+        for (int i=97;i<105;i++){
+            String host=subnet + "." + i;
+            try {
+                if (InetAddress.getByName(host).isReachable(timeout)){
+                    System.out.println(host + " is reachable");
+                    network_ips.add(host);
+                }
+                else
+                    System.out.println(InetAddress.getByName(host) + " not reachable");
+            } catch (IOException e) {
+                System.out.println("EXCEPTION TRHOWED");
+                return;
+            }
+        }
+
+        System.out.println("OUT FUNCTION");
+    }
+
+    private Socket client;
+    private Scanner connection_client;
+    private PrintStream connection_server;
+
+    private void initializeClient() {
+
+        try {
+            client = new Socket(network_ips.get(0), 4444);
+
+            System.out.println("CLIENT - SERVER :: CONNECTED :: " + network_ips.get(0));
+
+            connection_client = new Scanner(client.getInputStream());
+
+            connection_server = new PrintStream(client.getOutputStream());
+
+            ClientWait var = new ClientWait(this, client,connection_client,connection_server);
+            var.start();
+
+        } catch (IOException e) {
+            System.out.println("CLIENT - SERVER :: CONNECTION ERROR :: " + network_ips.get(0));
+            network_ips.remove(0);
+            initializeClient();
+        }
+    }
+}
+
+class ClientWait extends Thread {
+
+    private PlayGameScreen connect;
+    private Socket client;
+    private Scanner connection_client;
+    private PrintStream connection_server;
+
+    public ClientWait(PlayGameScreen connect, Socket client, Scanner connection_client, PrintStream connection_server) {
+        this.connect = connect;
+        this.client = client;
+        this.connection_client = connection_client;
+        this.connection_server = connection_server;
+    }
+    public void run() {
+
+        while(true) {
+
+            if(Gdx.input.isTouched()) {
+                System.out.println("SEND TO SERVER VALUE 0");
+                connection_server.println("0");
+            }
+            else {
+                System.out.println("SEND TO SERVER VALUE 1");
+                connection_server.println("1");
+            }
+
+            int number = connection_client.nextInt();
+
+            if (number == 0) {
+                System.out.println("RECEIVED FROM SERVER VALUE " + number);
+                connect.MENU_ID = false;
+            }
+            else {
+                System.out.println("RECEIVED FROM SERVER VALUE " + number);
+                connect.MENU_ID = true;
+            }
+        }
     }
 
 }

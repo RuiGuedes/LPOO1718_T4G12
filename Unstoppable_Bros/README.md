@@ -28,8 +28,9 @@ César Alexandre da Costa Pinho <br>
 
 ## Design Patterns
 -----
+De seguida encontram-se os padrões de desenho que serão utilizados no desenvolvimento do jogo:
 
-* #### Singleton - Do jogo irá apenas existir apenas uma única instância do mesmo.
+* Singleton - Do jogo irá apenas existir apenas uma única instância do mesmo.
 * Observer - Existem diversas relações entre os diferentes objetos no jogo, desde alancavas a balas, que implicam por sua vez, a necessidade gerir a sua interação com outros objetos.
 * Flyweight - Utilizado para representar os vários inimigos existentes no jogo, uma vez que, todos partilham entre si a mesma representação gráfica.
 * Strategy - Cada inimigo age de forma diferente sendo assim necessário gerir os diversos tipos de inimigos existentes no jogo.
@@ -39,6 +40,27 @@ César Alexandre da Costa Pinho <br>
 ## GUI Design 
 -----
 
+### Main Menu Screen
+
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/Delivery/MainMenuDesign.png)
+
+### Play Game Screen
+
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/Delivery/PlayGameDesign.png)
+
+### Settings Screen
+
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/Delivery/SettingsDesign.png)
+
+### Tutorial Screens
+
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/Delivery/TutorialDesign_1.png)
+
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/Delivery/TutorialDesign_2.png)
+
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/Delivery/TutorialDesign_3.png)
+
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/Delivery/TutorialDesign_4.png)
 
 ## Test Design 
 -----

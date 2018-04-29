@@ -40,19 +40,21 @@ De seguida encontram-se os padrões de desenho que serão utilizados no desenvol
 ## GUI Design 
 -----
 
-### Main Menu Screen
+As principais funcionalidades disponibilizadas pela iterface gráfica encontra-se visualmente presentes nas seguintes imagens, que traduzem por sua vez um resultado aproximado do que é esperado ser implementado.
+
+* ### Main Menu Screen
 
 ![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/Delivery/MainMenuDesign.png)
 
-### Play Game Screen
+* ### Play Game Screen
 
 ![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/Delivery/PlayGameDesign.png)
 
-### Settings Screen
+* ### Settings Screen
 
 ![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/Delivery/SettingsDesign.png)
 
-### Tutorial Screens
+* ### Tutorial Screens
 
 ![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/Delivery/TutorialDesign_1.png)
 

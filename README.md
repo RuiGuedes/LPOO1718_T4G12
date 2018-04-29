@@ -13,24 +13,3 @@ Rui Jorge Leão Guedes <br>
 César Alexandre da Costa Pinho <br>
 * Student Number: 201604039
 * E-Mail: up201604039@fe.up.pt 
-
-
-## Online Project Documentation
-
-* https://ruiguedes.github.io/LPOO1718_T4G12/
-
-
-## Status Badge
-[![BCH compliance](https://bettercodehub.com/edge/badge/RuiGuedes/LPOO1718_T4G12?branch=master&token=7ea6bfd3c495fe7056dda25afd505674475a9c47)](https://bettercodehub.com/)
-
-
-## EclEmma
-
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/guided-project-delivery/LPOO1718_T4G12/EclEmma%20Results.png)
-
-
-## PIT
-
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/guided-project-delivery/LPOO1718_T4G12/PIT%20Tool%20Results.png)
-
-<br><br>

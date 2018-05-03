@@ -24,7 +24,7 @@ public class PlayGameScreen extends ScreenAdapter {
     ////////////////////////////
 
     /**
-     * Device screen width
+            * Device screen width
      */
     private static final int SCREEN_WIDTH = Gdx.graphics.getWidth();
 
@@ -95,7 +95,6 @@ public class PlayGameScreen extends ScreenAdapter {
         this.game = game;
 
         loadAssets();
-
     }
 
     /**

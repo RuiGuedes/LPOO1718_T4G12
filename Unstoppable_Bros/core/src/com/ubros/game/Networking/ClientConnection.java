@@ -26,44 +26,86 @@ public class ClientConnection {
      */
     private String myIPAddress;
 
+    /**
+     *
+     */
+    private String[] mySplittedIPAddress;
+    /**
+     *  Object that contains connection information
+     */
     private Connection connect;
-    private ServerConnection server;
+
+    /**
+     *  Object that allows server-client communication
+     */
     private Socket client;
+
+    /**
+     *  Allows to scan information sent by server
+     */
     private Scanner connection_from_server;
+
+    /**
+     *  Allows client to sent information to server
+     */
     private PrintStream connection_to_server;
+
+    /**
+     *  Possible connections that can be made
+     */
     private ArrayList<String> possibleServerConnections = new ArrayList<String>();
 
-    public ClientConnection(Connection connect, ServerConnection server) {
+    /**
+     *  Responsible to main client active after being created
+     */
+    CommunicateWithServer thread;
+
+    /**
+     * Class constructor responsible to initialize connect and server parameters
+     * @param connect object that contains information about the server
+     */
+    ClientConnection(Connection connect) {
         this.connect = connect;
-        this.server = server;
 
         searchingMyIPAddress();
-        checkPossibleHosts("192.168." + myIPAddress.charAt(8));
-        if(!server.CONNECTION_ESTABLISHED)
+
+        if(myIPAddress == null) {
+            connect.closeServer();
+            System.out.println("No connection was made :: Own IP address not detected");
+            return;
+        }
+
+        String subnet = mySplittedIPAddress[0] + "." + mySplittedIPAddress[1] + "." + mySplittedIPAddress[2];
+        checkPossibleHosts(subnet);
+
+        if(!connect.getConnectionEstablishedStatus())
             initializeClient();
     }
 
+    /**
+     * Initializes client information structures and connect it to the server
+     */
     private void initializeClient() {
 
         try {
-            if(possibleServerConnections.isEmpty())
-            {
+            if(possibleServerConnections.isEmpty()) {
                 System.out.println("NO CONNECTION WAS MADE");
-                server.getServer().close();
+                connect.closeServer();
                 return;
             }
-            client = new Socket(possibleServerConnections.get(0), PORT_NUMBER);
 
-            server.getServer().close();
+            client = new Socket(possibleServerConnections.get(0), PORT_NUMBER);
+            connect.closeServer();
 
             System.out.println("CLIENT IP ::  " + myIPAddress + " ::");
             System.out.println("SERVER IP ::  " + possibleServerConnections.get(0) + " ::");
 
             connection_from_server = new Scanner(client.getInputStream());
-
             connection_to_server = new PrintStream(client.getOutputStream());
 
-            CommunicateWithServer thread = new CommunicateWithServer(connect,client,connection_from_server,connection_to_server);
+            connect.setClient(this);
+
+            thread = new CommunicateWithServer(connect);
             thread.start();
 
         } catch (IOException e) {
@@ -73,7 +115,11 @@ public class ClientConnection {
         }
     }
 
-    public void checkPossibleHosts(String subnet){
+    /**
+     * Checks possible hosts on the same subnet that are waiting for client
+     * @param subnet IP type that we are looking for
+     */
+    private void checkPossibleHosts(String subnet){
 
         int timeout=1000;
         int myConnectionNumber = Integer.parseInt(myIPAddress.substring(myIPAddress.lastIndexOf(".") + 1));
@@ -82,7 +128,7 @@ public class ClientConnection {
         System.out.println("MY IP ADDRESS :: " + myIPAddress + " ::");
 
         for (int lowerRange = (myConnectionNumber - 5); lowerRange < limitRange;lowerRange++){
-            if(server.CONNECTION_ESTABLISHED)
+            if(connect.getConnectionEstablishedStatus())
                 return;
 
             String host=subnet + "." + lowerRange;
@@ -97,12 +143,14 @@ public class ClientConnection {
                     System.out.println(InetAddress.getByName(host) + " not reachable");
 
             } catch (IOException e) {
-                //SOME ERROR MESSAGE
+                System.out.println("Error while trying to ping possible host connections");
             }
         }
-
     }
 
+    /**
+     *  Responsible to determine this user IP Address
+     */
     private void searchingMyIPAddress() {
 
         try {
@@ -113,35 +161,61 @@ public class ClientConnection {
                 {
                     if(address instanceof Inet4Address){
                         String hostIPAddress = address.getHostAddress();
-                        if(hostIPAddress.contains("192.168.")) {
+                       
+                        if(!hostIPAddress.equals("127.0.0.1")) {
+                            mySplittedIPAddress = hostIPAddress.split("\\.");
                             myIPAddress = hostIPAddress;
                             return;
                         }
-
                     }
                 }
             }
         } catch (SocketException e) {
-           //SOME ERROR MESSAGE
+           System.out.println("Error occurred while searching for my IP address");
         }
 
+    }
+
+    public Scanner getConnection_from_server() {
+        return connection_from_server;
+    }
+
+    public PrintStream getConnection_to_server() {
+        return connection_to_server;
     }
 
 }
 
 class CommunicateWithServer extends Thread {
 
+    /**
+     *  Object that contains information about the server and client
+     */
     private Connection connect;
-    private Socket client;
+
+    /**
+     *  Object that allows to receive information from server
+     */
     private Scanner connection_from_server;
+
+    /**
+     *  Object that allows to send information to the server
+     */
     private PrintStream connection_to_server;
 
-    public CommunicateWithServer(Connection connect, Socket client, Scanner connection_from_server, PrintStream connection_to_server) {
+    /**
+     * Class constructor responsible to initialize his own structures
+     * @param connect contains information on both server and client objects
+     */
+    CommunicateWithServer(Connection connect) {
         this.connect = connect;
-        this.client = client;
-        this.connection_from_server= connection_from_server;
-        this.connection_to_server = connection_to_server;
+        this.connection_from_server = connect.getClient().getConnection_from_server();
+        this.connection_to_server = connect.getClient().getConnection_to_server();
     }
+
+    /**
+     * Function responsible to allow this thread run simultaneously with the main program process
+     */
     public void run() {
 
         while(true) {

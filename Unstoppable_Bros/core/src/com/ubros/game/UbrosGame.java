@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ubros.game.Gui.MainMenuScreen;
+import com.ubros.game.View.GameView;
 
 public class UbrosGame extends Game {
 
@@ -23,9 +24,10 @@ public class UbrosGame extends Game {
     /**
      * Starts the game.
      */
-    private void startGame() {
-        setScreen(new MainMenuScreen(this));
-    }
+    //private void startGame() {setScreen(new MainMenuScreen(this)); }
+	private void startGame() {
+		setScreen(new GameView(this));
+	}
 
 	/**
 	 * Returns the asset manager used to load all textures and sounds.

@@ -11,29 +11,46 @@ import java.util.Scanner;
 public class ServerConnection {
 
     /**
-     *  Port number to be use on server-client connection
-     */
-    private int PORT_NUMBER = 4444;
-
-    /**
-     *
+     * Determines whether connection is or is not established already
      */
     public boolean CONNECTION_ESTABLISHED = false;
 
+    /**
+     * Object that contains connection information
+     */
     private Connection connect;
+
+    /**
+     * Server where it will made connections
+     */
     private ServerSocket server;
-    private Socket client;
+
+    /**
+     * Scanner that allows to receive information from client
+     */
     private Scanner connection_from_client;
+
+    /**
+     * PrintStream that allows server send information to client
+     */
     private PrintStream connection_to_client;
 
-    public ServerConnection(Connection connect) {
-
+    /**
+     * Initializes server connection object
+     * @param connect object that contains information about both server and client objects
+     */
+    ServerConnection(Connection connect) {
         this.connect = connect;
 
         initializeServer();
     }
 
+    /**
+     *  Creates a new server socket and launch´s thread responsible to wait for clients
+     */
     private void initializeServer() {
+
+        int PORT_NUMBER = 4444;
 
         try {
             server = new ServerSocket(PORT_NUMBER);
@@ -42,80 +59,129 @@ public class ServerConnection {
             thread.start();
 
         } catch (IOException e) {
-            //SOME ERROR MESSAGE
+            System.out.println("Port number :: " + PORT_NUMBER + " :: may be occupied. Try another one");
+            //TODO Change connectingPlayersScream showing that connection could no be made. Try again or go back to main menu
         }
     }
 
+    /**
+     * Gets the server socket created
+     * @return returns server
+     */
     public ServerSocket getServer() {
         return server;
     }
 
-    public void setClient(Socket client) {
-        this.client = client;
-    }
-
+    /**
+     * Changes the server scanner
+     * @param connection_from_client scanner used to communicate between server and client
+     */
     public void setConnectionFromClient(Scanner connection_from_client) {
         this.connection_from_client = connection_from_client;
     }
 
+    /**
+     * Gets server scanner
+     * @return connection_from_client scanner
+     */
+    public Scanner getConnectionFromClient() {
+        return connection_from_client;
+    }
+
+    /**
+     * Changes the server PrintStream
+     * @param connection_to_client PrintStream used to communicate between server and client
+     */
     public void setConnectionToClient(PrintStream connection_to_client) {
         this.connection_to_client = connection_to_client;
     }
 
+    /**
+     * Gets server printStream
+     * @return connection_to_client scanner
+     */
+    public PrintStream getConnectionToClient() {
+        return connection_to_client;
+    }
 }
+
 
 class WaitForClient extends Thread {
 
+    /**
+     * Connection object that contains both server and client
+     */
     private Connection connect;
-    private ServerConnection connection;
-    private Socket client;
-    private Scanner connection_from_client;
-    private PrintStream connection_to_client;
 
-    public WaitForClient(Connection connect, ServerConnection connection) {
+    /**
+     * Server previously created
+     */
+    private ServerConnection connection;
+
+    /**
+     * Initializes both connect and connection objects
+     * @param connect Connection object
+     * @param connection ServerConnection object
+     */
+     WaitForClient(Connection connect, ServerConnection connection) {
         this.connect = connect;
         this.connection = connection;
     }
+
+    /**
+     * Waits until a client connects to server and launch´s another thread to start communicate with the server
+     */
     public void run() {
 
         try {
-            client = connection.getServer().accept();
+            Socket client = connection.getServer().accept();
 
-            connection.setClient(client);
             connection.CONNECTION_ESTABLISHED = true;
 
-            connection_from_client = new Scanner(client.getInputStream());
-            connection.setConnectionFromClient(connection_from_client);
+            connection.setConnectionFromClient(new Scanner(client.getInputStream()));
+            connection.setConnectionToClient(new PrintStream(client.getOutputStream()));
 
-            connection_to_client = new PrintStream(client.getOutputStream());
-            connection.setConnectionToClient(connection_to_client);
-
-            CommunicateWithClient thread = new CommunicateWithClient(connect, client, connection_from_client, connection_to_client);
+            CommunicateWithClient thread = new CommunicateWithClient(connect, connection.getConnectionFromClient(), connection.getConnectionToClient());
             thread.start();
 
         } catch (IOException e) {
-            //SOME ERROR MESSAGE
+            System.out.println("Error while connecting client and server");
         }
-
     }
 }
 
 class CommunicateWithClient extends Thread {
 
+    /**
+     * Connection object that contains both server and client
+     */
     private Connection connect;
-    private ServerSocket server;
-    private Socket client;
+
+    /**
+     * Allows to receive information from client
+     */
     private Scanner connection_server;
+
+    /**
+     * Allows send information to client
+     */
     private PrintStream connection_client;
 
-    public CommunicateWithClient(Connection connect, Socket client, Scanner connection_server, PrintStream connection_client) {
+    /**
+     * Initializes all class parameters
+     * @param connect Connection object
+     * @param connection_server Scanner from server
+     * @param connection_client PrintStream from server
+     */
+    CommunicateWithClient(Connection connect, Scanner connection_server, PrintStream connection_client) {
         this.connect = connect;
-        this.client = client;
         this.connection_client = connection_client;
         this.connection_server = connection_server;
     }
-    public void run() {
 
+
+    public void run() {
+        //TODO Create protocol to send and receive information between client-server
         while(true) {
 
             int number = connection_server.nextInt();
@@ -132,9 +198,7 @@ class CommunicateWithClient extends Thread {
                 connect.MENU_ID = true;
                 connection_client.println("1");
             }
-
         }
     }
-
 }
 

@@ -1,5 +1,7 @@
 package com.ubros.game.Networking;
 
+import com.ubros.game.UbrosGame;
+
 import java.io.IOException;
 
 public class Connection {
@@ -14,18 +16,22 @@ public class Connection {
      */
     private ClientConnection client;
 
+    /**
+     * The game this screen belongs to.
+     */
+    private final UbrosGame game;
+
 
     public boolean MENU_ID = false;
 
     /**
      *  Creates both server and client objects
      */
-    public Connection() {
+    public Connection(UbrosGame game) {
+        this.game = game;
 
         server = new ServerConnection(this);
-
         client = new ClientConnection(this);
-
     }
 
     /**
@@ -67,4 +73,7 @@ public class Connection {
         this.client = client;
     }
 
+    public UbrosGame getGame() {
+        return game;
+    }
 }

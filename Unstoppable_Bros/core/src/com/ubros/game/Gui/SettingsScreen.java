@@ -105,6 +105,7 @@ public class SettingsScreen extends ScreenAdapter {
 
         } catch (IOException e) {
         }
+
     }
 
     /**

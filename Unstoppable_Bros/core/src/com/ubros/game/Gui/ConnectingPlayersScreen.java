@@ -75,7 +75,7 @@ public class ConnectingPlayersScreen extends ScreenAdapter {
     public ConnectingPlayersScreen(UbrosGame game) {
         this.game = game;
 
-        connect = new Connection();
+        connect = new Connection(this.game);
 
         loadAssets();
 

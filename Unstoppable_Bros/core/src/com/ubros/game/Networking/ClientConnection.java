@@ -17,28 +17,18 @@ import java.util.Scanner;
 public class ClientConnection {
 
     /**
-     *  Port number to be use on server-client connection
-     */
-    private int PORT_NUMBER = 4444;
-
-    /**
      * Personal IP Address
      */
     private String myIPAddress;
 
     /**
-     *
+     * IP address splitted components
      */
     private String[] mySplittedIPAddress;
     /**
      *  Object that contains connection information
      */
     private Connection connect;
-
-    /**
-     *  Object that allows server-client communication
-     */
-    private Socket client;
 
     /**
      *  Allows to scan information sent by server
@@ -56,11 +46,6 @@ public class ClientConnection {
     private ArrayList<String> possibleServerConnections = new ArrayList<String>();
 
     /**
-     *  Responsible to main client active after being created
-     */
-    CommunicateWithServer thread;
-
-    /**
      * Class constructor responsible to initialize connect and server parameters
      * @param connect object that contains information about the server
      */
@@ -72,6 +57,7 @@ public class ClientConnection {
         if(myIPAddress == null) {
             connect.closeServer();
             System.out.println("No connection was made :: Own IP address not detected");
+            //TODO Change connectingPlayersScream showing that connection could no be made. Try again or go back to main menu
             return;
         }
 
@@ -87,14 +73,17 @@ public class ClientConnection {
      */
     private void initializeClient() {
 
+        int PORT_NUMBER = 4444;
+
         try {
             if(possibleServerConnections.isEmpty()) {
                 System.out.println("NO CONNECTION WAS MADE");
                 connect.closeServer();
+                //TODO Change connectingPlayersScream showing that connection could no be made. Try again or go back to main menu
                 return;
             }
 
-            client = new Socket(possibleServerConnections.get(0), PORT_NUMBER);
+            Socket client = new Socket(possibleServerConnections.get(0), PORT_NUMBER);
             connect.closeServer();
 
             System.out.println("CLIENT IP ::  " + myIPAddress + " ::");
@@ -105,7 +94,7 @@ public class ClientConnection {
 
             connect.setClient(this);
 
-            thread = new CommunicateWithServer(connect);
+            CommunicateWithServer thread = new CommunicateWithServer(connect);
             thread.start();
 
         } catch (IOException e) {
@@ -120,27 +109,31 @@ public class ClientConnection {
      * @param subnet IP type that we are looking for
      */
     private void checkPossibleHosts(String subnet){
-
-        int timeout=1000;
+        int timeout=50;
         int myConnectionNumber = Integer.parseInt(myIPAddress.substring(myIPAddress.lastIndexOf(".") + 1));
-        int limitRange = myConnectionNumber + 5;
+        int lowerRange = myConnectionNumber - 50, limitRange = myConnectionNumber + 50;
+
+        if(limitRange > 255)
+            limitRange = 255;
+
+        if(lowerRange < 1)
+            limitRange = 1;
 
         System.out.println("MY IP ADDRESS :: " + myIPAddress + " ::");
 
-        for (int lowerRange = (myConnectionNumber - 5); lowerRange < limitRange;lowerRange++){
+        for(; lowerRange < limitRange; lowerRange++){
             if(connect.getConnectionEstablishedStatus())
                 return;
 
             String host=subnet + "." + lowerRange;
             try {
-
                 if (InetAddress.getByName(host).isReachable(timeout)){
                     System.out.println(host + " is reachable");
                     if(!host.equals(myIPAddress))
                         possibleServerConnections.add(host);
                 }
                 else
-                    System.out.println(InetAddress.getByName(host) + " not reachable");
+                   System.out.println(InetAddress.getByName(host) + " not reachable");
 
             } catch (IOException e) {
                 System.out.println("Error while trying to ping possible host connections");
@@ -161,7 +154,7 @@ public class ClientConnection {
                 {
                     if(address instanceof Inet4Address){
                         String hostIPAddress = address.getHostAddress();
-                       
+
                         if(!hostIPAddress.equals("127.0.0.1")) {
                             mySplittedIPAddress = hostIPAddress.split("\\.");
                             myIPAddress = hostIPAddress;
@@ -173,13 +166,20 @@ public class ClientConnection {
         } catch (SocketException e) {
            System.out.println("Error occurred while searching for my IP address");
         }
-
     }
 
+    /**
+     * Function responsible to send server scanner
+     * @return the scanner that allows client receive information from server
+     */
     public Scanner getConnection_from_server() {
         return connection_from_server;
     }
 
+    /**
+     * Function responsible to send server printer stream
+     * @return the printer stream that allows client sent information from server
+     */
     public PrintStream getConnection_to_server() {
         return connection_to_server;
     }
@@ -217,7 +217,7 @@ class CommunicateWithServer extends Thread {
      * Function responsible to allow this thread run simultaneously with the main program process
      */
     public void run() {
-
+        //TODO Create protocol to send and receive information between client-server
         while(true) {
 
             if(Gdx.input.isTouched()) {

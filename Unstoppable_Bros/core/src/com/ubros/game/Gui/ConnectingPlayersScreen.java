@@ -4,12 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.ubros.game.Networking.Connection;
 import com.ubros.game.UbrosGame;
 
-public class ConnectingPlayersScreen extends ScreenAdapter {
+import java.util.HashMap;
 
-    ////////////////////////////
+public class ConnectingPlayersScreen extends ScreenAdapter {
 
     /**
      * Device screen width
@@ -24,48 +25,49 @@ public class ConnectingPlayersScreen extends ScreenAdapter {
     /**
      * Exit button width
      */
-    private static final int EXIT_BUTTON_WIDTH = (int) (SCREEN_WIDTH * 0.25);
+    private static final int TITLE_WIDTH = (int) (SCREEN_WIDTH * 0.7);
 
     /**
      * Exit button yy position
      */
-    private static final int EXIT_BUTTON_YPOS = (int) (SCREEN_HEIGHT * 0.1);
+    private static final int TITLE_YPOS = (int) (SCREEN_HEIGHT * 0.75);
 
     /**
-     * Settings button width
+     * Title height
      */
-    private static final int SETTINGS_BUTTON_WIDTH = (int)(SCREEN_WIDTH*0.4);
+    private static final int TITLE_HEIGHT = (int)(SCREEN_HEIGHT*0.15);
 
     /**
-     * Settings button yy position
+     * Buttons width
      */
-    private static final int SETTINGS_BUTTON_YPOS = (int)(SCREEN_HEIGHT*0.31);
+    private static final int BUTTON_WIDTH = (int)(SCREEN_WIDTH*0.4);
 
     /**
-     * Play button width
+     * Buttons yy position
      */
-    private static final int PLAY_BUTTON_WIDTH = (int)(SCREEN_WIDTH*0.5);
+    private static final int BUTTON_YPOS = (int)(SCREEN_HEIGHT*0.37);
 
     /**
-     * Play button yy position
-     */
-    private static final int PLAY_BUTTON_YPOS = (int)(SCREEN_HEIGHT*0.5);
-
-    /**
-     * Every button height
+     * Buttons height
      */
     private static final int BUTTON_HEIGHT = (int)(SCREEN_HEIGHT*0.13);
 
+    /**
+     * Loading connection sprite
+     */
+    private Sprite loadingSprite;
 
-    ///////////////////////////
+    private HashMap<Character,Texture> ipDisplay = new HashMap<Character, Texture>();
 
+    /**
+     * Contains information about server and client status
+     */
+    private Connection connect;
 
     /**
      * The game this screen belongs to.
      */
     private final UbrosGame game;
-
-    private Connection connect;
 
     /**
      * Creates this screen.
@@ -79,6 +81,11 @@ public class ConnectingPlayersScreen extends ScreenAdapter {
 
         loadAssets();
 
+        /*
+        if(connect.getTypeOfConnection()) {
+            StartConnection thread = new StartConnection(connect);
+            thread.start();
+        }*/
     }
 
     /**
@@ -86,30 +93,57 @@ public class ConnectingPlayersScreen extends ScreenAdapter {
      */
     private void loadAssets() {
         this.game.getAssetManager().load("background.jpg", Texture.class);
-        this.game.getAssetManager().load("MainMenuExitButtonOff.png",Texture.class);
-        this.game.getAssetManager().load("MainMenuSettingsButtonOff.png",Texture.class);
+        this.game.getAssetManager().load("ConnectingTitle.png",Texture.class);
+        this.game.getAssetManager().load("ConnectingLoad.png",Texture.class);
+        this.game.getAssetManager().load("HostGame.png",Texture.class);
+        this.game.getAssetManager().load("JoinGame.png",Texture.class);
+
+        this.game.getAssetManager().load("Number0.png",Texture.class);
+        this.game.getAssetManager().load("Number1.png",Texture.class);
+        this.game.getAssetManager().load("Number2.png",Texture.class);
+        this.game.getAssetManager().load("Number3.png",Texture.class);
+        this.game.getAssetManager().load("Number4.png",Texture.class);
+        this.game.getAssetManager().load("Number5.png",Texture.class);
+        this.game.getAssetManager().load("Number6.png",Texture.class);
+        this.game.getAssetManager().load("Number7.png",Texture.class);
+        this.game.getAssetManager().load("Number8.png",Texture.class);
+        this.game.getAssetManager().load("Number9.png",Texture.class);
+        this.game.getAssetManager().load("IPDot.png",Texture.class);
+
+
         this.game.getAssetManager().finishLoading();
-        initializeTextures();
+        initializeSprite();
+        initializeIPTextures();
     }
 
     /**
-     *  Initializes textures array previously defined
+     * Initializes hasp map with respective number textures
      */
-    private void initializeTextures() {
-        menuButtons[0] = game.getAssetManager().get("MainMenuExitButtonOff.png", Texture.class);
-        menuButtons[1] = game.getAssetManager().get("MainMenuSettingsButtonOff.png",Texture.class);
-        menuButtons[2] = game.getAssetManager().get("MainMenuPlayButtonOff.png",Texture.class);
-        menuButtons[3] = game.getAssetManager().get("MainMenuExitButtonOn.png", Texture.class);
-        menuButtons[4] = game.getAssetManager().get("MainMenuSettingsButtonOn.png",Texture.class);
-        menuButtons[5] = game.getAssetManager().get("MainMenuPlayButtonOn.png",Texture.class);
+    private void initializeIPTextures() {
+        ipDisplay.put('0', game.getAssetManager().get("Number0.png", Texture.class));
+        ipDisplay.put('1', game.getAssetManager().get("Number1.png", Texture.class));
+        ipDisplay.put('2', game.getAssetManager().get("Number2.png", Texture.class));
+        ipDisplay.put('3', game.getAssetManager().get("Number3.png", Texture.class));
+        ipDisplay.put('4', game.getAssetManager().get("Number4.png", Texture.class));
+        ipDisplay.put('5', game.getAssetManager().get("Number5.png", Texture.class));
+        ipDisplay.put('6', game.getAssetManager().get("Number6.png", Texture.class));
+        ipDisplay.put('7', game.getAssetManager().get("Number7.png", Texture.class));
+        ipDisplay.put('8', game.getAssetManager().get("Number8.png", Texture.class));
+        ipDisplay.put('9', game.getAssetManager().get("Number9.png", Texture.class));
+        ipDisplay.put('.', game.getAssetManager().get("IPDot.png", Texture.class));
     }
 
-    public boolean MENU_ID = true;
-
     /**
-     *  Array that contains all textures to represent active and inactive buttons
+     *  Initializes loading connecting sprite
      */
-    private Texture[] menuButtons = new Texture[6];
+    private void initializeSprite() {
+        Texture connectingLoad = game.getAssetManager().get("ConnectingLoad.png", Texture.class);
+        loadingSprite = new Sprite(connectingLoad);
+        loadingSprite.setPosition(SCREEN_WIDTH/2 - SCREEN_HEIGHT/4, (int)(SCREEN_HEIGHT*0.15));
+        loadingSprite.setSize(SCREEN_HEIGHT/2, SCREEN_HEIGHT/2);
+        loadingSprite.setRotation(0);
+        loadingSprite.setOrigin(SCREEN_HEIGHT/4, SCREEN_HEIGHT/4);
+    }
 
     /**
      * Renders this screen.
@@ -121,17 +155,22 @@ public class ConnectingPlayersScreen extends ScreenAdapter {
 
         super.render(delta);
 
-        MENU_ID = connect.MENU_ID;
-
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
 
         game.getBatch().begin();
         drawBackground();
+        drawConnectingTitle();
 
-        if(MENU_ID)
-            defaultMainMenu();
+        /*
+        if(connect.getTypeOfConnection()) {
+            automaticConnection();
+            if(connect.getConnectionEstablishedStatus())
+                game.setScreen(new PlayGameScreen(game));
+        }
         else
-            activateSettingsButton();
+            manualConnection();
+        */
+        manualConnection();
 
         game.getBatch().end();
 
@@ -145,15 +184,60 @@ public class ConnectingPlayersScreen extends ScreenAdapter {
         game.getBatch().draw(background, 0, 0,SCREEN_WIDTH,SCREEN_HEIGHT);
     }
 
-    private void activateSettingsButton() {
-        game.getBatch().draw(menuButtons[0], SCREEN_WIDTH / 2 - EXIT_BUTTON_WIDTH / 2, EXIT_BUTTON_YPOS, EXIT_BUTTON_WIDTH, BUTTON_HEIGHT);
-        game.getBatch().draw(menuButtons[4], SCREEN_WIDTH / 2 - SETTINGS_BUTTON_WIDTH / 2, SETTINGS_BUTTON_YPOS, SETTINGS_BUTTON_WIDTH, BUTTON_HEIGHT);
-        game.getBatch().draw(menuButtons[2], SCREEN_WIDTH / 2 - PLAY_BUTTON_WIDTH / 2, PLAY_BUTTON_YPOS, PLAY_BUTTON_WIDTH, BUTTON_HEIGHT);
+    private void drawConnectingTitle() {
+        Texture connecting = game.getAssetManager().get("ConnectingTitle.png", Texture.class);
+        game.getBatch().draw(connecting, SCREEN_WIDTH / 2 - TITLE_WIDTH / 2, TITLE_YPOS, TITLE_WIDTH, TITLE_HEIGHT);
     }
 
-    private void defaultMainMenu() {
-        game.getBatch().draw(menuButtons[0], SCREEN_WIDTH / 2 - EXIT_BUTTON_WIDTH / 2, EXIT_BUTTON_YPOS, EXIT_BUTTON_WIDTH, BUTTON_HEIGHT);
-        game.getBatch().draw(menuButtons[1], SCREEN_WIDTH / 2 - SETTINGS_BUTTON_WIDTH / 2, SETTINGS_BUTTON_YPOS, SETTINGS_BUTTON_WIDTH, BUTTON_HEIGHT);
-        game.getBatch().draw(menuButtons[2], SCREEN_WIDTH / 2 - PLAY_BUTTON_WIDTH / 2, PLAY_BUTTON_YPOS, PLAY_BUTTON_WIDTH, BUTTON_HEIGHT);
+    private void manualConnection() {
+        game.getBatch().draw(game.getAssetManager().get("HostGame.png", Texture.class), SCREEN_WIDTH / 4 - BUTTON_WIDTH / 2, BUTTON_YPOS, BUTTON_WIDTH, BUTTON_HEIGHT);
+        game.getBatch().draw(game.getAssetManager().get("JoinGame.png", Texture.class), (int)(SCREEN_WIDTH * 0.75) - BUTTON_WIDTH / 2, BUTTON_YPOS, BUTTON_WIDTH, BUTTON_HEIGHT);
+        displayIP();
+    }
+
+    private void displayIP(){
+
+        int xPos = (int)(SCREEN_WIDTH*0.1);
+        int yPos = BUTTON_YPOS - (int)(SCREEN_HEIGHT*0.08);
+
+        for(int i=0; i < connect.getMyIPAddress().length(); i++) {
+            if(connect.getMyIPAddress().charAt(i) != '.') {
+                game.getBatch().draw(ipDisplay.get(connect.getMyIPAddress().charAt(i)), xPos, yPos, (int) (SCREEN_WIDTH * 0.025), (int) (SCREEN_HEIGHT * 0.05));
+                xPos += (int) (SCREEN_WIDTH * 0.025);
+            }
+            else {
+                game.getBatch().draw(ipDisplay.get(connect.getMyIPAddress().charAt(i)), xPos, yPos, (int) (SCREEN_WIDTH * 0.0125), (int) (SCREEN_HEIGHT * 0.0125));
+                xPos += (int) (SCREEN_WIDTH * 0.0125);
+            }
+        }
+    }
+
+    private void automaticConnection() {
+        loadingSprite.setRotation(loadingSprite.getRotation() - 4);
+        loadingSprite.draw(game.getBatch());
+    }
+
+}
+
+class StartConnection extends Thread {
+
+    /**
+     * Connection object that contains both server and client
+     */
+    private Connection connect;
+
+    /**
+     * Initializes both connect and connection objects
+     * @param connect Connection object
+     */
+    StartConnection(Connection connect) {
+        this.connect = connect;
+    }
+
+    /**
+     * Waits until a client connects to server and launch´s another thread to start communicate with the server
+     */
+    public void run() {
+        connect.startConnection();
     }
 }

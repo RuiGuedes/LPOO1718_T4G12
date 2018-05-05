@@ -3,6 +3,12 @@ package com.ubros.game.Networking;
 import com.ubros.game.UbrosGame;
 
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Collections;
+import java.util.Enumeration;
 
 public class Connection {
 
@@ -21,6 +27,15 @@ public class Connection {
      */
     private final UbrosGame game;
 
+    /**
+     * Personal IP Address
+     */
+    private String myIPAddress;
+
+    /**
+     * IP address splitted components
+     */
+    private String[] mySplittedIPAddress;
 
     public boolean MENU_ID = false;
 
@@ -30,8 +45,39 @@ public class Connection {
     public Connection(UbrosGame game) {
         this.game = game;
 
+        searchingMyIPAddress();
+    }
+
+    public void startConnection() {
         server = new ServerConnection(this);
         client = new ClientConnection(this);
+    }
+
+    /**
+     *  Responsible to determine this user IP Address
+     */
+    private void searchingMyIPAddress() {
+
+        try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+
+            for(NetworkInterface ni : Collections.list(interfaces)){
+                for(InetAddress address : Collections.list(ni.getInetAddresses()))
+                {
+                    if(address instanceof Inet4Address){
+                        String hostIPAddress = address.getHostAddress();
+
+                        if(!hostIPAddress.equals("127.0.0.1")) {
+                            mySplittedIPAddress = hostIPAddress.split("\\.");
+                            myIPAddress = hostIPAddress;
+                            return;
+                        }
+                    }
+                }
+            }
+        } catch (SocketException e) {
+            System.out.println("Error occurred while searching for my IP address");
+        }
     }
 
     /**
@@ -75,5 +121,17 @@ public class Connection {
 
     public UbrosGame getGame() {
         return game;
+    }
+
+    public String getMyIPAddress() {
+        return myIPAddress;
+    }
+
+    public String[] getMySplittedIPAddress() {
+        return mySplittedIPAddress;
+    }
+
+    public boolean getTypeOfConnection() {
+        return myIPAddress.contains("192.168");
     }
 }

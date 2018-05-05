@@ -63,6 +63,7 @@ public class MainMenuScreen extends ScreenAdapter {
      */
     private Texture[] menuButtons = new Texture[6];
 
+
     /**
      * Creates this screen.
      *
@@ -141,7 +142,6 @@ public class MainMenuScreen extends ScreenAdapter {
 
             if(checkExitButton(x,y)) {
                 activateExitButton();
-                //Connection connect = new Connection();
                 game.setScreen(new ConnectingPlayersScreen(game));
             }
             else if(checkSettingsButton(x,y)) {
@@ -150,7 +150,8 @@ public class MainMenuScreen extends ScreenAdapter {
             }
             else if(checkPlayButton(x,y)) {
                 activatePlayButton();
-                game.setScreen(new PlayGameScreen(game));
+                game.setScreen(new ConnectingPlayersScreen(game));
+                //game.setScreen(new PlayGameScreen(game));
             }
             else
                 defaultMainMenu();

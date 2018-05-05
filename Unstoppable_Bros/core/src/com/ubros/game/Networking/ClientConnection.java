@@ -25,6 +25,7 @@ public class ClientConnection {
      * IP address splitted components
      */
     private String[] mySplittedIPAddress;
+
     /**
      *  Object that contains connection information
      */
@@ -84,7 +85,9 @@ public class ClientConnection {
             }
 
             Socket client = new Socket(possibleServerConnections.get(0), PORT_NUMBER);
+
             connect.closeServer();
+            connect.getServer().CONNECTION_ESTABLISHED = true;
 
             System.out.println("CLIENT IP ::  " + myIPAddress + " ::");
             System.out.println("SERVER IP ::  " + possibleServerConnections.get(0) + " ::");

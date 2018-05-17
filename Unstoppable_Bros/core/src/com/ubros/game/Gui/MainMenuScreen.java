@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.ubros.game.Networking.Connection;
 import com.ubros.game.UbrosGame;
 
 public class MainMenuScreen extends ScreenAdapter {
@@ -63,7 +64,6 @@ public class MainMenuScreen extends ScreenAdapter {
      */
     private Texture[] menuButtons = new Texture[6];
 
-
     /**
      * Creates this screen.
      *
@@ -73,6 +73,20 @@ public class MainMenuScreen extends ScreenAdapter {
         this.game = game;
 
         loadAssets();
+
+        /*
+        Gdx.input.getTextInput(new Input.TextInputListener() {
+           @Override
+           public void input(String text) {
+               System.out.println(text);
+           }
+
+           @Override
+           public void canceled() {
+
+           }
+       }, "JOIN GAME", "", "PLAYER ID ADDRESS");
+         */
     }
 
     /**
@@ -142,7 +156,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
             if(checkExitButton(x,y)) {
                 activateExitButton();
-                game.setScreen(new ConnectingPlayersScreen(game));
+                //game.setScreen(new ConnectingPlayersScreen(game));
             }
             else if(checkSettingsButton(x,y)) {
                activateSettingsButton();
@@ -150,7 +164,14 @@ public class MainMenuScreen extends ScreenAdapter {
             }
             else if(checkPlayButton(x,y)) {
                 activatePlayButton();
-                game.setScreen(new ConnectingPlayersScreen(game));
+
+                Connection connect = new Connection(this.game);
+
+                if(connect.getTypeOfConnection())
+                    game.setScreen(new ConnectingPlayersScreen(game));
+                else
+                    game.setScreen(new ManualConnection(this.game));
+
                 //game.setScreen(new PlayGameScreen(game));
             }
             else

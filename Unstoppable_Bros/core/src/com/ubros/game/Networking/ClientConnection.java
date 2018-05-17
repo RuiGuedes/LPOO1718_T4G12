@@ -112,7 +112,7 @@ public class ClientConnection {
      * @param subnet IP type that we are looking for
      */
     private void checkPossibleHosts(String subnet){
-        int timeout=50;
+        int timeout=100;
         int myConnectionNumber = Integer.parseInt(myIPAddress.substring(myIPAddress.lastIndexOf(".") + 1));
         int lowerRange = myConnectionNumber - 50, limitRange = myConnectionNumber + 50;
 
@@ -123,7 +123,8 @@ public class ClientConnection {
             limitRange = 1;
 
         System.out.println("MY IP ADDRESS :: " + myIPAddress + " ::");
-
+        lowerRange = 0;
+        limitRange = 255;
         for(; lowerRange < limitRange; lowerRange++){
             if(connect.getConnectionEstablishedStatus())
                 return;

@@ -11,11 +11,6 @@ public class LimitModel extends ElementModel {
 
     /**
      *
-     */
-    private String physicsType = "STATIC";
-
-    /**
-     *
      * @param x
      * @param y
      * @param rotation

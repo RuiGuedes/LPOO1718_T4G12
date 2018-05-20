@@ -3,6 +3,8 @@ package com.ubros.game.Model;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.math.Polygon;
+import com.ubros.game.Gui.PlayGameScreen;
+import com.ubros.game.Model.Elements.HeroModel;
 import com.ubros.game.Model.Elements.LimitModel;
 import com.ubros.game.UbrosGame;
 
@@ -21,6 +23,10 @@ public class GameModel {
      */
     private final UbrosGame game;
 
+    /**
+     *
+     */
+    private HeroModel hero;
 
     /**
      * The asteroids roaming around in this game.
@@ -36,10 +42,11 @@ public class GameModel {
         this.game = game;
         this.limits = new ArrayList<LimitModel>();
 
-        for(MapObject object : UbrosGame.map.getLayers().get(2).getObjects().getByType(PolygonMapObject.class)) {
+        this.hero = new HeroModel(800/ PlayGameScreen.PIXEL_TO_METER,400/ PlayGameScreen.PIXEL_TO_METER,0);
 
+        for(MapObject object : UbrosGame.map.getLayers().get(2).getObjects().getByType(PolygonMapObject.class)) {
             Polygon polygon = ((PolygonMapObject) object).getPolygon();
-            limits.add(new LimitModel(polygon.getX(), polygon.getY(), 0, polygon));
+            limits.add(new LimitModel(polygon.getX() / PlayGameScreen.PIXEL_TO_METER, polygon.getY() / PlayGameScreen.PIXEL_TO_METER, 0, polygon));
         }
 
     }
@@ -53,6 +60,10 @@ public class GameModel {
         if (instance == null)
             instance = new GameModel(game);
         return instance;
+    }
+
+    public HeroModel getHero() {
+        return hero;
     }
 
     public List<LimitModel> getLimits() {

@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ubros.game.Controller.GameController;
 import com.ubros.game.UbrosGame;
 
@@ -17,12 +17,28 @@ public class PlayGameScreen extends ScreenAdapter {
     /**
      * Device screen width
      */
-    private static final int SCREEN_WIDTH = Gdx.graphics.getWidth();
+    private static final float SCREEN_WIDTH = Gdx.graphics.getWidth();
 
     /**
      * Device screen height
      */
-    private static final int SCREEN_HEIGHT = Gdx.graphics.getHeight();
+    private static final float SCREEN_HEIGHT = Gdx.graphics.getHeight();
+
+    /**
+     *
+     */
+    private static final float ASPECT_RATIO = SCREEN_HEIGHT/SCREEN_WIDTH;
+
+    /**
+     *
+     */
+    private static final float WORLD_WIDTH = 50;
+
+
+    /**
+     *
+     */
+    public static final float PIXEL_TO_METER = 100;
 
     /**
      * The game this screen belongs to.
@@ -47,10 +63,8 @@ public class PlayGameScreen extends ScreenAdapter {
 
     ////////////////////////////
 
-    private World world;
 
-    private Box2DDebugRenderer b2dr;
-
+    private Viewport viewport;
 
     ////////////////////////////
 
@@ -62,55 +76,23 @@ public class PlayGameScreen extends ScreenAdapter {
     public PlayGameScreen(UbrosGame game) {
         this.game = game;
 
-        this.gameCam = new OrthographicCamera();
-        this.gameCam.setToOrtho(false,SCREEN_WIDTH,SCREEN_HEIGHT);
-        this.gameCam.update();
+        createCamera();
 
         this.mapLoader = new TmxMapLoader();
         UbrosGame.map = this.mapLoader.load("UbrosMap.tmx");
-        this.mapRenderer = new OrthogonalTiledMapRenderer(UbrosGame.map);
-
-        /*
-        world = new World(new Vector2(0,0), true);
-        b2dr = new Box2DDebugRenderer();
-
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-
-        Body body;
-
-
-        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
-
-            body = world.createBody(bdef);
-
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-
-        for(MapObject object : map.getLayers().get(2).getObjects().getByType(PolygonMapObject.class)) {
-            Polygon rect = ((PolygonMapObject) object).getPolygon();
-
-            System.out.println("ASAAS : " + rect.getBoundingRectangle().getWidth());
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX(), rect.getY());
-
-            body = world.createBody(bdef);
-
-            shape.set(rect.getVertices());
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }*/
+        this.mapRenderer = new OrthogonalTiledMapRenderer(UbrosGame.map, 1/PIXEL_TO_METER);
 
 
         loadAssets();
+    }
+
+
+    public void createCamera() {
+
+        this.gameCam = new OrthographicCamera(SCREEN_WIDTH / PIXEL_TO_METER, SCREEN_HEIGHT/PIXEL_TO_METER);
+
+        this.gameCam.position.set(gameCam.viewportWidth / 2f, gameCam.viewportHeight / 2f, 0);
+        this.gameCam.update();
     }
 
     /**
@@ -122,10 +104,46 @@ public class PlayGameScreen extends ScreenAdapter {
 
     }
 
+    public void handleInput(float delta) {
+
+        if(Gdx.input.justTouched()) {
+
+            int y = Gdx.input.getY();
+
+            if(y < SCREEN_HEIGHT/2)
+                GameController.getInstance(this.game).getHero().body.applyLinearImpulse(new Vector2(0,4f),GameController.getInstance(this.game).getHero().body.getWorldCenter(),true );
+        }
+
+        if(Gdx.input.isTouched()) {
+
+            int x = Gdx.input.getX();
+            int y = Gdx.input.getY();
+
+            if((x > SCREEN_WIDTH/2) && (y > SCREEN_HEIGHT/2) && (GameController.getInstance(this.game).getHero().body.getLinearVelocity().x <= 2))
+                GameController.getInstance(this.game).getHero().body.applyLinearImpulse(new Vector2(0.1f,0),GameController.getInstance(this.game).getHero().body.getWorldCenter(),true );
+
+        }
+
+        if(Gdx.input.isTouched()) {
+
+            int x = Gdx.input.getX();
+            int y = Gdx.input.getY();
+
+            if((x < (SCREEN_WIDTH / 2)) && (y > SCREEN_HEIGHT/2) && (GameController.getInstance(this.game).getHero().body.getLinearVelocity().x >= -2))
+                GameController.getInstance(this.game).getHero().body.applyLinearImpulse(new Vector2(-0.1f,0),GameController.getInstance(this.game).getHero().body.getWorldCenter(),true );
+
+        }
+    }
+
+
     public void update(float delta) {
 
+        handleInput(delta);
+
+        GameController.getInstance(this.game).getWorld().step(1/60f, 6, 2);
         GameController.getInstance(this.game).update(delta);
 
+        game.getBatch().setProjectionMatrix(gameCam.combined);
         gameCam.update();
         this.mapRenderer.setView(gameCam);
 

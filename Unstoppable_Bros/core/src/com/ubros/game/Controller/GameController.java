@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.ubros.game.Controller.Elements.HeroBody;
 import com.ubros.game.Controller.Elements.LimitBody;
 import com.ubros.game.Model.Elements.LimitModel;
 import com.ubros.game.Model.GameModel;
@@ -15,6 +16,11 @@ import com.ubros.game.UbrosGame;
 import java.util.List;
 
 public class GameController implements ContactListener {
+
+    /**
+     *
+     */
+    private float GRAVITY = -10;
 
     /**
      * The singleton instance of this controller
@@ -37,6 +43,11 @@ public class GameController implements ContactListener {
     private Box2DDebugRenderer debugRenderer;
 
     /**
+     *
+     */
+    private HeroBody hero;
+
+    /**
      * Creates a new GameController that controls the physics of a certain GameModel.
      *
      */
@@ -44,9 +55,11 @@ public class GameController implements ContactListener {
 
         this.game = game;
 
-        this.world = new World(new Vector2(0,0), true);
+        this.world = new World(new Vector2(0,GRAVITY), true);
 
         this.debugRenderer = new Box2DDebugRenderer();
+
+        hero = new HeroBody(this.world, GameModel.getInstance(this.game).getHero());
 
         List<LimitModel> limits = GameModel.getInstance(this.game).getLimits();
         for (LimitModel limit : limits)
@@ -78,6 +91,10 @@ public class GameController implements ContactListener {
 
     public Box2DDebugRenderer getDebugRenderer() {
         return debugRenderer;
+    }
+
+    public HeroBody getHero() {
+        return hero;
     }
 
     @Override

@@ -2,9 +2,11 @@ package com.ubros.game.Controller.Elements;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.ubros.game.Gui.PlayGameScreen;
 import com.ubros.game.Model.Elements.ElementModel;
 
 public abstract class ElementBody {
@@ -13,7 +15,7 @@ public abstract class ElementBody {
     /**
      * The Box2D body that supports this body.
      */
-    private final Body body;
+    public final Body body;
 
     /**
      * Constructs a body representing a model in a certain world.
@@ -85,7 +87,20 @@ public abstract class ElementBody {
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
 
+        for(int i = 0; i < vertexSet.length; i++)
+           vertexSet[i] = vertexSet[i]/ PlayGameScreen.PIXEL_TO_METER;
+
         shape.set(vertexSet);
+        fdef.shape = shape;
+        body.createFixture(fdef);
+    }
+
+    public final void createHeroFixture() {
+
+        FixtureDef fdef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(10/ PlayGameScreen.PIXEL_TO_METER);
+
         fdef.shape = shape;
         body.createFixture(fdef);
     }

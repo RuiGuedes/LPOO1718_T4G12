@@ -1,6 +1,7 @@
 package com.ubros.game.Gui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,7 +13,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ubros.game.Controller.GameController;
 import com.ubros.game.UbrosGame;
 
-public class PlayGameScreen extends ScreenAdapter {
+public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     /**
      * Device screen width
@@ -23,17 +24,6 @@ public class PlayGameScreen extends ScreenAdapter {
      * Device screen height
      */
     private static final float SCREEN_HEIGHT = Gdx.graphics.getHeight();
-
-    /**
-     *
-     */
-    private static final float ASPECT_RATIO = SCREEN_HEIGHT/SCREEN_WIDTH;
-
-    /**
-     *
-     */
-    private static final float WORLD_WIDTH = 50;
-
 
     /**
      *
@@ -82,6 +72,7 @@ public class PlayGameScreen extends ScreenAdapter {
         UbrosGame.map = this.mapLoader.load("UbrosMap.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(UbrosGame.map, 1/PIXEL_TO_METER);
 
+        Gdx.input.setInputProcessor(this);
 
         loadAssets();
     }
@@ -106,32 +97,19 @@ public class PlayGameScreen extends ScreenAdapter {
 
     public void handleInput(float delta) {
 
-        if(Gdx.input.justTouched()) {
+        for(int i = 0; i < 3; i++) {
+            if (Gdx.input.isTouched(i)) {
 
-            int y = Gdx.input.getY();
+                int x = Gdx.input.getX(i);
+                int y = Gdx.input.getY(i);
 
-            if(y < SCREEN_HEIGHT/2)
-                GameController.getInstance(this.game).getHero().body.applyLinearImpulse(new Vector2(0,4f),GameController.getInstance(this.game).getHero().body.getWorldCenter(),true );
-        }
+                if ((x > SCREEN_WIDTH / 2) && (y > SCREEN_HEIGHT / 2) && (GameController.getInstance(this.game).getHero().body.getLinearVelocity().x <= 3))
+                    GameController.getInstance(this.game).getHero().body.applyLinearImpulse(new Vector2(0.3f, 0), GameController.getInstance(this.game).getHero().body.getWorldCenter(), true);
 
-        if(Gdx.input.isTouched()) {
+                if ((x < (SCREEN_WIDTH / 2)) && (y > SCREEN_HEIGHT / 2) && (GameController.getInstance(this.game).getHero().body.getLinearVelocity().x >= -3))
+                    GameController.getInstance(this.game).getHero().body.applyLinearImpulse(new Vector2(-0.3f, 0), GameController.getInstance(this.game).getHero().body.getWorldCenter(), true);
 
-            int x = Gdx.input.getX();
-            int y = Gdx.input.getY();
-
-            if((x > SCREEN_WIDTH/2) && (y > SCREEN_HEIGHT/2) && (GameController.getInstance(this.game).getHero().body.getLinearVelocity().x <= 2))
-                GameController.getInstance(this.game).getHero().body.applyLinearImpulse(new Vector2(0.1f,0),GameController.getInstance(this.game).getHero().body.getWorldCenter(),true );
-
-        }
-
-        if(Gdx.input.isTouched()) {
-
-            int x = Gdx.input.getX();
-            int y = Gdx.input.getY();
-
-            if((x < (SCREEN_WIDTH / 2)) && (y > SCREEN_HEIGHT/2) && (GameController.getInstance(this.game).getHero().body.getLinearVelocity().x >= -2))
-                GameController.getInstance(this.game).getHero().body.applyLinearImpulse(new Vector2(-0.1f,0),GameController.getInstance(this.game).getHero().body.getWorldCenter(),true );
-
+            }
         }
     }
 
@@ -171,4 +149,48 @@ public class PlayGameScreen extends ScreenAdapter {
 
     }
 
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
+        if (screenY < SCREEN_HEIGHT / 2)
+            GameController.getInstance(this.game).getHero().body.applyLinearImpulse(new Vector2(0, 4f), GameController.getInstance(this.game).getHero().body.getWorldCenter(), true);
+
+        return true;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        System.out.println("Up");
+        return true;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
+    }
 }

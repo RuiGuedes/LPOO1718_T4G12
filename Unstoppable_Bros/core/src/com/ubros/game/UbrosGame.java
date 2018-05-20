@@ -5,13 +5,21 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.ubros.game.Gui.MainMenuScreen;
 
 public class UbrosGame extends Game {
 
 	private SpriteBatch batch;
+
+
     private AssetManager assetManager;
-	
+
+	/**
+	 * Tiled map
+	 */
+	public static TiledMap map;
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -23,9 +31,7 @@ public class UbrosGame extends Game {
     /**
      * Starts the game.
      */
-    //private void startGame() {setScreen(new MainMenuScreen(this)); }
 	private void startGame() {
-		//setScreen(new GameView(this));
 		setScreen(new MainMenuScreen(this));
 	}
 
@@ -44,6 +50,11 @@ public class UbrosGame extends Game {
 	 * @return the sprite batch
 	 */
 	public Batch getBatch() { return batch;}
+
+	@Override
+	public void render() {
+		super.render();
+	}
 
 	/**
 	 * Disposes of all assets.

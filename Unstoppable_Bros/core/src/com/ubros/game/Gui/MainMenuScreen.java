@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.ubros.game.Networking.Connection;
 import com.ubros.game.UbrosGame;
 
 public class MainMenuScreen extends ScreenAdapter {
@@ -165,14 +164,15 @@ public class MainMenuScreen extends ScreenAdapter {
             else if(checkPlayButton(x,y)) {
                 activatePlayButton();
 
+                /*
                 Connection connect = new Connection(this.game);
 
                 if(connect.getTypeOfConnection())
                     game.setScreen(new ConnectingPlayersScreen(game));
                 else
                     game.setScreen(new ManualConnection(this.game));
-
-                //game.setScreen(new PlayGameScreen(game));
+                */
+                game.setScreen(new PlayGameScreen(game));
             }
             else
                 defaultMainMenu();

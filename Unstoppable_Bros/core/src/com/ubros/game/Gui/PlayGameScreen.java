@@ -3,13 +3,16 @@ package com.ubros.game.Gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.ubros.game.Networking.Connection;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
+import com.ubros.game.Controller.GameController;
 import com.ubros.game.UbrosGame;
 
 public class PlayGameScreen extends ScreenAdapter {
-
-    ////////////////////////////
 
     /**
      * Device screen width
@@ -22,50 +25,34 @@ public class PlayGameScreen extends ScreenAdapter {
     private static final int SCREEN_HEIGHT = Gdx.graphics.getHeight();
 
     /**
-     * Exit button width
-     */
-    private static final int EXIT_BUTTON_WIDTH = (int) (SCREEN_WIDTH * 0.25);
-
-    /**
-     * Exit button yy position
-     */
-    private static final int EXIT_BUTTON_YPOS = (int) (SCREEN_HEIGHT * 0.1);
-
-    /**
-     * Settings button width
-     */
-    private static final int SETTINGS_BUTTON_WIDTH = (int)(SCREEN_WIDTH*0.4);
-
-    /**
-     * Settings button yy position
-     */
-    private static final int SETTINGS_BUTTON_YPOS = (int)(SCREEN_HEIGHT*0.31);
-
-    /**
-     * Play button width
-     */
-    private static final int PLAY_BUTTON_WIDTH = (int)(SCREEN_WIDTH*0.5);
-
-    /**
-     * Play button yy position
-     */
-    private static final int PLAY_BUTTON_YPOS = (int)(SCREEN_HEIGHT*0.5);
-
-    /**
-     * Every button height
-     */
-    private static final int BUTTON_HEIGHT = (int)(SCREEN_HEIGHT*0.13);
-
-
-    ///////////////////////////
-
-
-    /**
      * The game this screen belongs to.
      */
     private final UbrosGame game;
 
-    private Connection connect;
+    /**
+     * Game
+     */
+    private OrthographicCamera gameCam;
+
+    /**
+     * Loads tiled map into the game
+     */
+    private TmxMapLoader mapLoader;
+
+    /**
+     * Renders tiled map through out the screen
+     */
+    private OrthogonalTiledMapRenderer mapRenderer;
+
+
+    ////////////////////////////
+
+    private World world;
+
+    private Box2DDebugRenderer b2dr;
+
+
+    ////////////////////////////
 
     /**
      * Creates this screen.
@@ -75,8 +62,55 @@ public class PlayGameScreen extends ScreenAdapter {
     public PlayGameScreen(UbrosGame game) {
         this.game = game;
 
-        loadAssets();
+        this.gameCam = new OrthographicCamera();
+        this.gameCam.setToOrtho(false,SCREEN_WIDTH,SCREEN_HEIGHT);
+        this.gameCam.update();
 
+        this.mapLoader = new TmxMapLoader();
+        UbrosGame.map = this.mapLoader.load("UbrosMap.tmx");
+        this.mapRenderer = new OrthogonalTiledMapRenderer(UbrosGame.map);
+
+        /*
+        world = new World(new Vector2(0,0), true);
+        b2dr = new Box2DDebugRenderer();
+
+        BodyDef bdef = new BodyDef();
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fdef = new FixtureDef();
+
+        Body body;
+
+
+        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+
+            body = world.createBody(bdef);
+
+            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
+
+        for(MapObject object : map.getLayers().get(2).getObjects().getByType(PolygonMapObject.class)) {
+            Polygon rect = ((PolygonMapObject) object).getPolygon();
+
+            System.out.println("ASAAS : " + rect.getBoundingRectangle().getWidth());
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX(), rect.getY());
+
+            body = world.createBody(bdef);
+
+            shape.set(rect.getVertices());
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }*/
+
+
+        loadAssets();
     }
 
     /**
@@ -84,30 +118,18 @@ public class PlayGameScreen extends ScreenAdapter {
      */
     private void loadAssets() {
         this.game.getAssetManager().load("background.jpg", Texture.class);
-        this.game.getAssetManager().load("MainMenuExitButtonOff.png",Texture.class);
-        this.game.getAssetManager().load("MainMenuSettingsButtonOff.png",Texture.class);
         this.game.getAssetManager().finishLoading();
-        initializeTextures();
+
     }
 
-    /**
-     *  Initializes textures array previously defined
-     */
-    private void initializeTextures() {
-        menuButtons[0] = game.getAssetManager().get("MainMenuExitButtonOff.png", Texture.class);
-        menuButtons[1] = game.getAssetManager().get("MainMenuSettingsButtonOff.png",Texture.class);
-        menuButtons[2] = game.getAssetManager().get("MainMenuPlayButtonOff.png",Texture.class);
-        menuButtons[3] = game.getAssetManager().get("MainMenuExitButtonOn.png", Texture.class);
-        menuButtons[4] = game.getAssetManager().get("MainMenuSettingsButtonOn.png",Texture.class);
-        menuButtons[5] = game.getAssetManager().get("MainMenuPlayButtonOn.png",Texture.class);
+    public void update(float delta) {
+
+        GameController.getInstance(this.game).update(delta);
+
+        gameCam.update();
+        this.mapRenderer.setView(gameCam);
+
     }
-
-    public boolean MENU_ID = true;
-
-    /**
-     *  Array that contains all textures to represent active and inactive buttons
-     */
-    private Texture[] menuButtons = new Texture[6];
 
     /**
      * Renders this screen.
@@ -117,39 +139,18 @@ public class PlayGameScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
 
-        super.render(delta);
+        this.update(delta);
 
+        Gdx.gl.glClearColor(1,0,0,1);
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
 
+        this.mapRenderer.render();
+        GameController.getInstance(this.game).getDebugRenderer().render(GameController.getInstance(this.game).getWorld(), gameCam.combined);
+
         game.getBatch().begin();
-        drawBackground();
-
-        if(Gdx.input.isTouched())
-            activateSettingsButton();
-        else
-            defaultMainMenu();
-
+        //Draw something
         game.getBatch().end();
 
     }
 
-    /**
-     * Draws the background
-     */
-    private void drawBackground() {
-        Texture background = game.getAssetManager().get("background.jpg", Texture.class);
-        game.getBatch().draw(background, 0, 0,SCREEN_WIDTH,SCREEN_HEIGHT);
-    }
-
-    private void activateSettingsButton() {
-        game.getBatch().draw(menuButtons[0], SCREEN_WIDTH / 2 - EXIT_BUTTON_WIDTH / 2, EXIT_BUTTON_YPOS, EXIT_BUTTON_WIDTH, BUTTON_HEIGHT);
-        game.getBatch().draw(menuButtons[4], SCREEN_WIDTH / 2 - SETTINGS_BUTTON_WIDTH / 2, SETTINGS_BUTTON_YPOS, SETTINGS_BUTTON_WIDTH, BUTTON_HEIGHT);
-        game.getBatch().draw(menuButtons[2], SCREEN_WIDTH / 2 - PLAY_BUTTON_WIDTH / 2, PLAY_BUTTON_YPOS, PLAY_BUTTON_WIDTH, BUTTON_HEIGHT);
-    }
-
-    private void defaultMainMenu() {
-        game.getBatch().draw(menuButtons[0], SCREEN_WIDTH / 2 - EXIT_BUTTON_WIDTH / 2, EXIT_BUTTON_YPOS, EXIT_BUTTON_WIDTH, BUTTON_HEIGHT);
-        game.getBatch().draw(menuButtons[1], SCREEN_WIDTH / 2 - SETTINGS_BUTTON_WIDTH / 2, SETTINGS_BUTTON_YPOS, SETTINGS_BUTTON_WIDTH, BUTTON_HEIGHT);
-        game.getBatch().draw(menuButtons[2], SCREEN_WIDTH / 2 - PLAY_BUTTON_WIDTH / 2, PLAY_BUTTON_YPOS, PLAY_BUTTON_WIDTH, BUTTON_HEIGHT);
-    }
 }

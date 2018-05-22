@@ -117,12 +117,12 @@ public abstract class ElementView extends Sprite {
 
         currentState = getState(body);
 
-        System.out.println(currentState);
+       // System.out.println(currentState);
 
         TextureRegion region = null;
         switch (currentState) {
             case RUNNING:
-                System.out.println("RUNNING : " + stateTimer);
+               // System.out.println("RUNNING : " + stateTimer);
                 region = heroRun.getKeyFrame(stateTimer, true);
                 break;
             case STANDING:

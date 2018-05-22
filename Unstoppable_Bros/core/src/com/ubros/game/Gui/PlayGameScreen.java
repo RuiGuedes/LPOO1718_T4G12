@@ -100,6 +100,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
      */
     private void loadAssets() {
         this.game.getAssetManager().load("background.jpg", Texture.class);
+        this.game.getAssetManager().load("bulletButtonOff.png", Texture.class);
         this.game.getAssetManager().load("Robot/Robot.pack", TextureAtlas.class);
 
         this.game.getAssetManager().finishLoading();
@@ -157,16 +158,25 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         GameController.getInstance(this.game).getDebugRenderer().render(GameController.getInstance(this.game).getWorld(), gameCam.combined);
 
         game.getBatch().begin();
+        drawInteractiveButtons();
         drawElements(delta);
         game.getBatch().end();
 
     }
 
     public void drawElements(float delta) {
-
         hero.update(delta, GameController.getInstance(this.game).getHero());
         hero.draw(this.game.getBatch());
 
+    }
+
+
+    public void drawInteractiveButtons() {
+        System.out.print("RUI\n");
+        Texture bullet = game.getAssetManager().get("bulletButtonOff.png", Texture.class);
+        game.getBatch().draw(bullet, (SCREEN_WIDTH - 176)/PIXEL_TO_METER, 47/PIXEL_TO_METER, 112/PIXEL_TO_METER, 75/PIXEL_TO_METER);
+        //Texture background = game.getAssetManager().get("background.jpg", Texture.class);
+       // game.getBatch().draw(background, 0, 0,SCREEN_WIDTH/PIXEL_TO_METER,SCREEN_HEIGHT/PIXEL_TO_METER);
     }
 
     @Override

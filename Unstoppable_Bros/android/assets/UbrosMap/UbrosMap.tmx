@@ -5,7 +5,7 @@
  <tileset firstgid="3" source="GroundInvertedTriangle.tsx"/>
  <tileset firstgid="4" source="GroundTriangle.tsx"/>
  <tileset firstgid="5" source="Acid.tsx"/>
- <tileset firstgid="7" source="Acid.tsx"/>
+ <tileset firstgid="7" source="floor.tsx"/>
  <imagelayer name="Background">
   <image source="background.jpg" width="1920" height="1080"/>
  </imagelayer>
@@ -16,7 +16,7 @@
  </layer>
  <layer name="Graphics - Ground" width="60" height="36">
   <data encoding="base64" compression="zlib">
-   eJztmVkOhSAMRVHc/5re0l5IJCEN0y0tFPUm/TFoeuiEejrnjpfYedtb9PE+Wx+v7HOpXZm13rkfsl7Dr9oepP4h/lz3fek98Vm+sl7DepWLBYc5WJwPOVYtIbwz805Lvbw11p163oqaWKlRX9O456717k3PfkrUzAhvyuXJNeke1OrVpb2QysWZrC3l5lxJNd6eHFvNGtXLzImvNVZEXF7Kukv/tuRLS5xevVs8pPUENhrDWuxn8SJ5JXW2qPmgKbR/I/MU9WHkfIcYOqskmXO5ZVEtZrRGrPMGlZi5ZxzrvEGldwXOeW4HXknNmAvIfBzVSP1K9EhaZxqzBlErnyW+idI6W8m8qn65zKOzZWW/isz0f+WM+rYi7Vy3xhukyWyRN0iLWfq9YAf7A9tvJwg=
+   eJztmFsOhCAMRfkadf8bmqVNTMaENC3QcqlFvEl/CJoe+kK3lNK2mK2il/fZenmx76V2MHv3lL6a/SP8Kp1B7p/Gn+P/XP7M9a69sP/O/szFwsKcG8c6Shpez7wbpVbeEutMPW+1O0uvr3ncubXWs2k5T0TN9PDmXDtZQ/egWq+WzgKVi56sNXFzTlKJtyXH7ma91MpsiW80Vo2svJR1lv4dyZeaLL16tnig9QQ2GsNS7L14NXmFuluUfBgpbf/WzFOtDz33O41pZxWSmcutiKoxa2skOu8pidl6x4nOe0r6VrDc52bgRcpjLmjmY6966hfRI2mdjZg1kj7ETtXyGfFPlNaZF7OFd5SszJrZ0sLL7eHWEJJyx6O+L3nyckLmerT4SkIxR6rfmhDMJd6V7AetmTL8
   </data>
  </layer>
  <objectgroup name="Ground">

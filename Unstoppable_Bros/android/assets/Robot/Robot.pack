@@ -1,0 +1,468 @@
+
+Robot.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Idle (1)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Jump (1)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Jump (10)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot4.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Jump (2)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot5.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Jump (3)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot6.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Jump (4)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot7.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Jump (5)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot8.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Jump (6)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot9.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Jump (7)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot10.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Jump (8)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot11.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Jump (9)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot12.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Run (1)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot13.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Run (2)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot14.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Run (3)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot15.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Run (4)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot16.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Run (5)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot17.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Run (6)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot18.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Run (7)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot19.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Run (8)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot20.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+RunShoot (1)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot21.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+RunShoot (2)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot22.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+RunShoot (3)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot23.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+RunShoot (4)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot24.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+RunShoot (5)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot25.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+RunShoot (6)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot26.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+RunShoot (7)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot27.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+RunShoot (8)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot28.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+RunShoot (9)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot29.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Shoot (1)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot30.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Shoot (2)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot31.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Shoot (3)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot32.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Shoot (4)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Robot33.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (1)
+  rotate: false
+  xy: 1, 1
+  size: 562, 519
+  orig: 562, 519
+  offset: 0, 0
+  index: -1
+
+Robot34.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (2)
+  rotate: false
+  xy: 1, 1
+  size: 562, 519
+  orig: 562, 519
+  offset: 0, 0
+  index: -1
+
+Robot35.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (3)
+  rotate: false
+  xy: 1, 1
+  size: 562, 519
+  orig: 562, 519
+  offset: 0, 0
+  index: -1
+
+Robot36.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (4)
+  rotate: false
+  xy: 1, 1
+  size: 562, 519
+  orig: 562, 519
+  offset: 0, 0
+  index: -1
+
+Robot37.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (5)
+  rotate: false
+  xy: 1, 1
+  size: 562, 519
+  orig: 562, 519
+  offset: 0, 0
+  index: -1
+
+Robot38.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (6)
+  rotate: false
+  xy: 1, 1
+  size: 562, 519
+  orig: 562, 519
+  offset: 0, 0
+  index: -1
+
+Robot39.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (7)
+  rotate: false
+  xy: 1, 1
+  size: 562, 519
+  orig: 562, 519
+  offset: 0, 0
+  index: -1

@@ -6,12 +6,14 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ubros.game.Controller.GameController;
 import com.ubros.game.UbrosGame;
+import com.ubros.game.View.Elements.ElementView;
+import com.ubros.game.View.Elements.HeroView;
 
 public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
@@ -54,7 +56,9 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     ////////////////////////////
 
 
-    private Viewport viewport;
+    private TextureAtlas atlas;
+
+    private ElementView hero;
 
     ////////////////////////////
 
@@ -64,19 +68,24 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
      * @param game The game this screen belongs to
      */
     public PlayGameScreen(UbrosGame game) {
+
         this.game = game;
 
         createCamera();
 
         this.mapLoader = new TmxMapLoader();
-        UbrosGame.map = this.mapLoader.load("UbrosMap.tmx");
+        UbrosGame.map = this.mapLoader.load("UbrosMap/UbrosMap.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(UbrosGame.map, 1/PIXEL_TO_METER);
+
 
         Gdx.input.setInputProcessor(this);
 
         loadAssets();
     }
 
+    public TextureAtlas getAtlas() {
+        return atlas;
+    }
 
     public void createCamera() {
 
@@ -91,7 +100,11 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
      */
     private void loadAssets() {
         this.game.getAssetManager().load("background.jpg", Texture.class);
+        this.game.getAssetManager().load("Robot/Robot.pack", TextureAtlas.class);
+
         this.game.getAssetManager().finishLoading();
+        atlas = this.game.getAssetManager().get("Robot/Robot.pack");
+        hero = new HeroView(this.game, atlas);
 
     }
 
@@ -144,8 +157,15 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         GameController.getInstance(this.game).getDebugRenderer().render(GameController.getInstance(this.game).getWorld(), gameCam.combined);
 
         game.getBatch().begin();
-        //Draw something
+        drawElements(delta);
         game.getBatch().end();
+
+    }
+
+    public void drawElements(float delta) {
+
+        hero.update(delta, GameController.getInstance(this.game).getHero());
+        hero.draw(this.game.getBatch());
 
     }
 
@@ -192,5 +212,29 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+
+    @Override
+    public void show () {
+    }
+
+    @Override
+    public void hide () {
+    }
+
+    @Override
+    public void pause () {
+    }
+
+    @Override
+    public void resume () {
+    }
+
+    @Override
+    public void dispose () {
+        UbrosGame.map.dispose();
+        this.mapRenderer.dispose();
+        GameController.getInstance(this.game).getWorld().dispose();
+        GameController.getInstance(this.game).getDebugRenderer().dispose();
     }
 }

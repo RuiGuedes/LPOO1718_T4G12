@@ -2,7 +2,6 @@ package com.ubros.game.Controller.Elements;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -98,8 +97,10 @@ public abstract class ElementBody {
     public final void createHeroFixture() {
 
         FixtureDef fdef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(10/ PlayGameScreen.PIXEL_TO_METER);
+        //CircleShape shape = new CircleShape();
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(40/PlayGameScreen.PIXEL_TO_METER, 40/PlayGameScreen.PIXEL_TO_METER);
+        //shape.setRadius(10/ PlayGameScreen.PIXEL_TO_METER);
 
         fdef.shape = shape;
         body.createFixture(fdef);

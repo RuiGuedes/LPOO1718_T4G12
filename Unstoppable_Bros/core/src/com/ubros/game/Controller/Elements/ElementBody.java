@@ -99,7 +99,7 @@ public abstract class ElementBody {
         FixtureDef fdef = new FixtureDef();
         //CircleShape shape = new CircleShape();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(40/PlayGameScreen.PIXEL_TO_METER, 40/PlayGameScreen.PIXEL_TO_METER);
+        shape.setAsBox(24/PlayGameScreen.PIXEL_TO_METER, 35/PlayGameScreen.PIXEL_TO_METER);
         //shape.setRadius(10/ PlayGameScreen.PIXEL_TO_METER);
 
         fdef.shape = shape;

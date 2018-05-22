@@ -30,9 +30,9 @@ public abstract class ElementView extends Sprite {
 
     TextureAtlas atlas;
 
-    private int HERO_WIDTH = 80;
+    private int HERO_WIDTH = 48;
 
-    private int HERO_HEIGHT = 80;
+    private int HERO_HEIGHT = 70;
     /**
      * Creates a view belonging to a game.
      *
@@ -99,7 +99,7 @@ public abstract class ElementView extends Sprite {
         //setPosition(body.body.getPosition().x - getWidth()/3, body.body.getPosition().y - getHeight()/5);
         if(currentState == State.RUNNING) {
             if (runningRight)
-                setPosition(body.body.getPosition().x - getWidth() / 2, body.body.getPosition().y);
+                setPosition(body.body.getPosition().x - getWidth() / 2, body.body.getPosition().y - getHeight()/2);
             else
                 setPosition(body.body.getPosition().x - getWidth() / 2, body.body.getPosition().y - getHeight() / 2);
         }

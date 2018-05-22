@@ -2,7 +2,7 @@ package com.ubros.game.Model.Elements;
 
 public abstract class ElementModel {
 
-    public enum ModelType {LIMIT, HERO};
+    public enum ModelType {LIMIT, HERO, ACID};
 
     public enum PhysicsType {STATIC, DYNAMIC, KINEMATIC};
 

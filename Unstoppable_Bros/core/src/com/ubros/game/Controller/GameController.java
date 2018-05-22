@@ -7,8 +7,10 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.ubros.game.Controller.Elements.AcidBody;
 import com.ubros.game.Controller.Elements.HeroBody;
 import com.ubros.game.Controller.Elements.LimitBody;
+import com.ubros.game.Model.Elements.AcidModel;
 import com.ubros.game.Model.Elements.LimitModel;
 import com.ubros.game.Model.GameModel;
 import com.ubros.game.UbrosGame;
@@ -64,6 +66,10 @@ public class GameController implements ContactListener {
         List<LimitModel> limits = GameModel.getInstance(this.game).getLimits();
         for (LimitModel limit : limits)
             new LimitBody(this.world, limit, limit.getShape().getVertices());
+
+        List<AcidModel> acidRegions = GameModel.getInstance(this.game).getAcidRegions();
+        for (AcidModel acid : acidRegions)
+            new AcidBody(this.world, acid, acid.getShape().getVertices());
 
 
         this.world.setContactListener(this);

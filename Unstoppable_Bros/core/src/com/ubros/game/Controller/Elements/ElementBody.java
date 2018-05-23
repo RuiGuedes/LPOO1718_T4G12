@@ -8,10 +8,13 @@ import com.ubros.game.Model.Elements.ElementModel;
 public abstract class ElementBody {
 
     public boolean contact = false;
+
     /**
      * The Box2D body that supports this body.
      */
     private final Body body;
+
+    private final ElementModel model;
 
     /**
      * Constructs a body representing a model in a certain world.
@@ -21,6 +24,7 @@ public abstract class ElementBody {
      */
     public ElementBody(World world, ElementModel model) {
 
+        this.model = model;
         BodyDef bodyDef = new BodyDef();
 
         if(model.getPhysicsType() == ElementModel.PhysicsType.STATIC)
@@ -173,6 +177,10 @@ public abstract class ElementBody {
 
     public Body getBody() {
         return body;
+    }
+
+    public ElementModel getModel() {
+        return model;
     }
 
     /**

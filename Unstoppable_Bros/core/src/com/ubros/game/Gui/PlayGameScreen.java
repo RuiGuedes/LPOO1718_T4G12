@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.ubros.game.Controller.GameController;
 import com.ubros.game.UbrosGame;
 import com.ubros.game.View.Elements.ElementView;
-import com.ubros.game.View.Elements.HeroView;
+import com.ubros.game.View.Elements.RobotView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,12 +68,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     private List<Texture> buttonTextures = new ArrayList<Texture>();
 
-    ////////////////////////////
-
-
-    private TextureAtlas atlas;
-
-    private ElementView hero;
+    private ElementView robot;
 
     ////////////////////////////
 
@@ -92,17 +87,12 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         UbrosGame.map = this.mapLoader.load("UbrosMap/UbrosMap.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(UbrosGame.map, 1 / PIXEL_TO_METER);
 
-
         Gdx.input.setInputProcessor(this);
 
         loadAssets();
     }
 
-    public TextureAtlas getAtlas() {
-        return atlas;
-    }
-
-    public void createCamera() {
+    private void createCamera() {
 
         this.gameCam = new OrthographicCamera(SCREEN_WIDTH / PIXEL_TO_METER, SCREEN_HEIGHT / PIXEL_TO_METER);
 
@@ -114,7 +104,6 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
      * Loads the assets needed by this screen.
      */
     private void loadAssets() {
-        this.game.getAssetManager().load("background.jpg", Texture.class);
         this.game.getAssetManager().load("moveLeftButtonOff.png", Texture.class);
         this.game.getAssetManager().load("moveLeftButtonOn.png", Texture.class);
         this.game.getAssetManager().load("moveRightButtonOff.png", Texture.class);
@@ -129,10 +118,10 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         initializeGraphics();
     }
 
-    public void initializeGraphics() {
+    private void initializeGraphics() {
 
-        this.atlas = this.game.getAssetManager().get("Robot/Robot.pack");
-        this.hero = new HeroView(this.game, atlas);
+        TextureAtlas atlas = this.game.getAssetManager().get("Robot/Robot.pack");
+        this.robot = new RobotView(this.game, atlas);
 
         buttonTextures.add(game.getAssetManager().get("moveLeftButtonOff.png", Texture.class));
         buttonTextures.add(game.getAssetManager().get("moveLeftButtonOn.png", Texture.class));
@@ -170,8 +159,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     }
 
-    public void update(float delta) {
-
+    private void update(float delta) {
         handleInput();
 
         GameController.getInstance(this.game).getWorld().step(1 / 60f, 6, 2);
@@ -183,7 +171,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     }
 
-    public void handleInput() {
+    private void handleInput() {
 
         for (int i = 0; i < 4; i++) {
             if (Gdx.input.isTouched(i)) {
@@ -205,58 +193,45 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         }
     }
 
-    public void drawElements(float delta) {
-        hero.update(delta, GameController.getInstance(this.game).getHero());
-        hero.draw(this.game.getBatch());
-
+    private void drawElements(float delta) {
+        robot.update(delta);
+        robot.draw();
     }
 
-    public void drawInteractiveButtons() {
+    private void drawInteractiveButtons() {
         game.getBatch().draw(leftButton, (int) (SCREEN_WIDTH * 0.035) / PIXEL_TO_METER, (int) (SCREEN_HEIGHT * 0.04) / PIXEL_TO_METER, BUTTON_WIDTH, BUTTON_HEIGHT);
         game.getBatch().draw(rightButton, (int) (SCREEN_WIDTH * 0.035 + BUTTON_WIDTH * PIXEL_TO_METER + SCREEN_WIDTH * 0.01) / PIXEL_TO_METER, (int) (SCREEN_HEIGHT * 0.04) / PIXEL_TO_METER, BUTTON_WIDTH, BUTTON_HEIGHT);
         game.getBatch().draw(jumpButton, (int) (SCREEN_WIDTH * 0.89) / PIXEL_TO_METER, (int) (SCREEN_HEIGHT * 0.04 + BUTTON_HEIGHT * PIXEL_TO_METER + SCREEN_HEIGHT * 0.01) / PIXEL_TO_METER, BUTTON_WIDTH, BUTTON_HEIGHT);
         game.getBatch().draw(bulletButton, (int) (SCREEN_WIDTH * 0.89) / PIXEL_TO_METER, (int) (SCREEN_HEIGHT * 0.04) / PIXEL_TO_METER, BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 
-    public void resetButtons() {
+    private void resetButtons() {
         this.leftButton = buttonTextures.get(0);
         this.rightButton = buttonTextures.get(2);
         this.jumpButton = buttonTextures.get(4);
         this.bulletButton = buttonTextures.get(6);
     }
 
-    public boolean checkLeftButton(int x, int y) {
-        if ((x >= (int) (SCREEN_WIDTH * 0.035)) && (x <= (int) (SCREEN_WIDTH * 0.035 + BUTTON_WIDTH * PIXEL_TO_METER) &&
-                (y <= ((int) (SCREEN_HEIGHT * 0.96))) && (y >= (int) (SCREEN_HEIGHT * 0.96 - BUTTON_HEIGHT * PIXEL_TO_METER))))
-           return true;
-
-        return false;
+    private boolean checkLeftButton(int x, int y) {
+        return (x >= (int) (SCREEN_WIDTH * 0.035)) && (x <= (int) (SCREEN_WIDTH * 0.035 + BUTTON_WIDTH * PIXEL_TO_METER) &&
+                (y <= ((int) (SCREEN_HEIGHT * 0.96))) && (y >= (int) (SCREEN_HEIGHT * 0.96 - BUTTON_HEIGHT * PIXEL_TO_METER)));
     }
 
-    public boolean checkRightButton(int x, int y) {
-        if ((x >= (int) (SCREEN_WIDTH * 0.035 + BUTTON_WIDTH * PIXEL_TO_METER + SCREEN_WIDTH * 0.01)) && (x <= (int) (SCREEN_WIDTH * 0.035 + BUTTON_WIDTH * PIXEL_TO_METER + SCREEN_WIDTH * 0.01 + BUTTON_WIDTH * PIXEL_TO_METER) &&
-                (y <= ((int) (SCREEN_HEIGHT * 0.96))) && (y >= (int) (SCREEN_HEIGHT * 0.96 - BUTTON_HEIGHT * PIXEL_TO_METER))))
-            return true;
-
-        return false;
+    private boolean checkRightButton(int x, int y) {
+        return (x >= (int) (SCREEN_WIDTH * 0.035 + BUTTON_WIDTH * PIXEL_TO_METER + SCREEN_WIDTH * 0.01)) && (x <= (int) (SCREEN_WIDTH * 0.035 + BUTTON_WIDTH * PIXEL_TO_METER + SCREEN_WIDTH * 0.01 + BUTTON_WIDTH * PIXEL_TO_METER) &&
+                (y <= ((int) (SCREEN_HEIGHT * 0.96))) && (y >= (int) (SCREEN_HEIGHT * 0.96 - BUTTON_HEIGHT * PIXEL_TO_METER)));
     }
 
-    public boolean checkJumpButton(int x, int y) {
-        if ((x <= ((int) (SCREEN_WIDTH * 0.89) + BUTTON_WIDTH * PIXEL_TO_METER)) && (x >= (int) (SCREEN_WIDTH * 0.89)) &&
+    private boolean checkJumpButton(int x, int y) {
+        return (x <= ((int) (SCREEN_WIDTH * 0.89) + BUTTON_WIDTH * PIXEL_TO_METER)) && (x >= (int) (SCREEN_WIDTH * 0.89)) &&
                 (y >= ((int) (SCREEN_HEIGHT - (SCREEN_HEIGHT * 0.04 + BUTTON_HEIGHT * PIXEL_TO_METER + SCREEN_HEIGHT * 0.01) - BUTTON_HEIGHT * PIXEL_TO_METER))) &&
-                (y <= ((int) (SCREEN_HEIGHT - (SCREEN_HEIGHT * 0.04 + BUTTON_HEIGHT * PIXEL_TO_METER + SCREEN_HEIGHT * 0.01)))))
-            return true;
-
-        return false;
+                (y <= ((int) (SCREEN_HEIGHT - (SCREEN_HEIGHT * 0.04 + BUTTON_HEIGHT * PIXEL_TO_METER + SCREEN_HEIGHT * 0.01))));
     }
 
-    public boolean checkBulletButton(int x, int y) {
-        if ((x <= ((int) (SCREEN_WIDTH * 0.89) + BUTTON_WIDTH * PIXEL_TO_METER)) && (x >= (int) (SCREEN_WIDTH * 0.89)) &&
+    private boolean checkBulletButton(int x, int y) {
+        return (x <= ((int) (SCREEN_WIDTH * 0.89) + BUTTON_WIDTH * PIXEL_TO_METER)) && (x >= (int) (SCREEN_WIDTH * 0.89)) &&
                 (y >= ((int) (SCREEN_HEIGHT - (SCREEN_HEIGHT * 0.04 + BUTTON_HEIGHT * PIXEL_TO_METER)))) &&
-                (y <= ((int) (SCREEN_HEIGHT - SCREEN_HEIGHT * 0.04))))
-            return true;
-
-        return false;
+                (y <= ((int) (SCREEN_HEIGHT - SCREEN_HEIGHT * 0.04)));
     }
 
     @Override

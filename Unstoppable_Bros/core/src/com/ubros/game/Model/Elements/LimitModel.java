@@ -5,12 +5,12 @@ import com.badlogic.gdx.math.Polygon;
 public class LimitModel extends ElementModel {
 
     /**
-     *  Limit body shape
+     * Limit body shape
      */
     private Polygon shape;
 
+
     /**
-     *
      * @param x
      * @param y
      * @param rotation

@@ -29,6 +29,7 @@ public class LimitBody extends ElementBody {
 
         shape.set(vertexes);
         fdef.shape = shape;
+
         body.createFixture(fdef).setUserData("Ground");
     }
 }

@@ -10,6 +10,10 @@ import com.ubros.game.Model.Elements.ElementModel;
 
 public class HeroBody extends ElementBody {
 
+    private int HERO_WIDTH = 48;
+
+    private int HERO_HEIGHT = 70;
+
     /**
      * Constructs a body representing a model in a certain world.
      *
@@ -32,7 +36,7 @@ public class HeroBody extends ElementBody {
         body.createFixture(fdef).setUserData("HeroBounds");
 
         PolygonShape bounds = new PolygonShape();
-        bounds.setAsBox(24/PlayGameScreen.PIXEL_TO_METER, 35/PlayGameScreen.PIXEL_TO_METER);
+        bounds.setAsBox((HERO_WIDTH/2)/PlayGameScreen.PIXEL_TO_METER, (HERO_HEIGHT/2)/PlayGameScreen.PIXEL_TO_METER);
         fdef.shape = bounds;
         fdef.isSensor = true;
 

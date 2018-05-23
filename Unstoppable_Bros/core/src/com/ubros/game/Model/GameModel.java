@@ -61,6 +61,7 @@ public class GameModel {
             limits.add(new LimitModel(polygon.getX() / PlayGameScreen.PIXEL_TO_METER, polygon.getY() / PlayGameScreen.PIXEL_TO_METER, 0, polygon));
         }
 
+
         //Initialize acid body´s
         for(MapObject object : UbrosGame.map.getLayers().get(ACID_BODY).getObjects().getByType(PolygonMapObject.class)) {
             Polygon polygon = ((PolygonMapObject) object).getPolygon();

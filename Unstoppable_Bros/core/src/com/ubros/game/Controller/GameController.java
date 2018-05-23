@@ -119,34 +119,11 @@ public class GameController implements ContactListener {
         //if(bbd.getUserData() instanceof LimitModel) {
           //  System.out.print("LIMIT BODY\n");
         //}
-       // System.out.print("Begin contact :: A - " + fixA.getUserData() + " :: B - " + fixB.getUserData() + "\n");
-        if((fixA.getUserData() == "HeroBounds" || fixA == null) && (fixB.getUserData() == "Ground"))
-            GameController.getInstance(this.game).getHero().contact = true;
 
-        if((fixA.getUserData() == "Ground") && (fixB.getUserData() == "HeroBounds" || fixB == null))
-            GameController.getInstance(this.game).getHero().contact = true;
-
-        //if(fixA.getUserData() == "HeroBounds")
-            //System.out.println("A : HERO");
-
-        //if(fixB.getUserData() == "HeroBounds")
-           // System.out.println("B : HERO");
-
-        //System.out.println("A : " + fixA.getUserData());
-        //System.out.println("B : " + fixB.getUserData());
     }
 
     @Override
     public void endContact(Contact contact) {
-        Fixture fixA = contact.getFixtureA();
-        Fixture fixB = contact.getFixtureB();
-        System.out.print("End contact :: A - " + fixA.getUserData() + " :: B - " + fixB.getUserData() + "\n");
-        if((fixA.getUserData() == "HeroBounds") && (fixB.getUserData() == "Ground"))
-            GameController.getInstance(this.game).getHero().contact = false;
-
-        if((fixA.getUserData() == "Ground") && (fixB.getUserData() == "HeroBounds"))
-            GameController.getInstance(this.game).getHero().contact = false;
-
     }
 
     @Override

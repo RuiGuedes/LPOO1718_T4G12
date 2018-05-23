@@ -3,16 +3,18 @@ package com.ubros.game.Controller.Elements;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ubros.game.Gui.PlayGameScreen;
 import com.ubros.game.Model.Elements.ElementModel;
+import com.ubros.game.View.Elements.RobotView;
 
 public class HeroBody extends ElementBody {
 
     private int HERO_WIDTH = 48;
 
     private int HERO_HEIGHT = 70;
+
+    private RobotView robotView;
 
     /**
      * Constructs a body representing a model in a certain world.
@@ -33,14 +35,21 @@ public class HeroBody extends ElementBody {
         shape.setRadius(34/ PlayGameScreen.PIXEL_TO_METER);
 
         fdef.shape = shape;
-        body.createFixture(fdef).setUserData("HeroBounds");
+        body.createFixture(fdef).setUserData("RobotMove");
 
-        PolygonShape bounds = new PolygonShape();
+        /*PolygonShape bounds = new PolygonShape();
         bounds.setAsBox((HERO_WIDTH/2)/PlayGameScreen.PIXEL_TO_METER, (HERO_HEIGHT/2)/PlayGameScreen.PIXEL_TO_METER);
         fdef.shape = bounds;
         fdef.isSensor = true;
 
-        body.createFixture(fdef);
+        body.createFixture(fdef).setUserData("RobotBounds");*/
     }
 
+    public RobotView getRobotView() {
+        return robotView;
+    }
+
+    public void setRobotView(RobotView robotView) {
+        this.robotView = robotView;
+    }
 }

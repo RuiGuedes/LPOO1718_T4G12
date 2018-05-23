@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.ubros.game.Controller.GameController;
+import com.ubros.game.Model.GameModel;
 import com.ubros.game.UbrosGame;
 import com.ubros.game.View.Elements.ElementView;
 import com.ubros.game.View.Elements.RobotView;
@@ -112,6 +113,8 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         this.game.getAssetManager().load("jumpButtonOn.png", Texture.class);
         this.game.getAssetManager().load("bulletButtonOff.png", Texture.class);
         this.game.getAssetManager().load("bulletButtonOn.png", Texture.class);
+        this.game.getAssetManager().load("mechanismOff.png", Texture.class);
+        this.game.getAssetManager().load("mechanismOn.png", Texture.class);
         this.game.getAssetManager().load("Robot/Robot.pack", TextureAtlas.class);
 
         this.game.getAssetManager().finishLoading();
@@ -122,6 +125,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
         TextureAtlas atlas = this.game.getAssetManager().get("Robot/Robot.pack");
         this.robot = new RobotView(this.game, atlas);
+        GameController.getInstance(this.game).getHero().setRobotView((RobotView) robot);
 
         buttonTextures.add(game.getAssetManager().get("moveLeftButtonOff.png", Texture.class));
         buttonTextures.add(game.getAssetManager().get("moveLeftButtonOn.png", Texture.class));
@@ -147,6 +151,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         this.update(delta);
 
         Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         this.mapRenderer.render();
@@ -154,6 +159,10 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
         game.getBatch().begin();
         drawInteractiveButtons();
+        for(int i = 0; i < GameModel.getInstance(this.game).getMechanisms().size(); i++) {
+            game.getBatch().draw(game.getAssetManager().get("mechanismOff.png", Texture.class),  GameModel.getInstance(this.game).getMechanisms().get(i).getX(), GameModel.getInstance(this.game).getMechanisms().get(i).getY(), 0.32f, 0.9f);
+        }
+
         drawElements(delta);
         game.getBatch().end();
 

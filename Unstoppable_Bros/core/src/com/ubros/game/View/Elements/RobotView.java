@@ -122,8 +122,7 @@ public class RobotView extends ElementView {
 
         switch (currentState) {
             case RUNNING:
-                //region = robotRunning.getKeyFrame(stateTimer, true);
-                region = robotDying.getKeyFrame(stateTimer);
+                region = robotRunning.getKeyFrame(stateTimer, true);
                 break;
             case STANDING:
                 region = robotDefault;
@@ -133,6 +132,9 @@ public class RobotView extends ElementView {
                 break;
             case FALLING:
                 region = new TextureRegion(getAtlas().findRegion("Jump (10)"), 0,0, CHARACTER_WIDTH, CHARACTER_HEIGHT);;
+                break;
+            case DEAD:
+                region = robotDying.getKeyFrame(stateTimer);
                 break;
         }
 
@@ -158,7 +160,9 @@ public class RobotView extends ElementView {
 
     public ElementView.CharacterState getState(ElementBody element) {
 
-        if(element.getBody().getLinearVelocity().y > 0 || element.getBody().getLinearVelocity().y < 0 && previousState == ElementView.CharacterState.JUMPING)
+        if(currentState == CharacterState.DEAD)
+            return CharacterState.DEAD;
+        else if(element.getBody().getLinearVelocity().y > 0 || element.getBody().getLinearVelocity().y < 0 && previousState == ElementView.CharacterState.JUMPING)
             return ElementView.CharacterState.JUMPING;
         else if(element.getBody().getLinearVelocity().y < 0)
             return ElementView.CharacterState.FALLING;
@@ -166,5 +170,9 @@ public class RobotView extends ElementView {
             return ElementView.CharacterState.RUNNING;
         else
             return ElementView.CharacterState.STANDING;
+    }
+
+    public void setCurrentState(ElementView.CharacterState state) {
+        this.currentState = state;
     }
 }

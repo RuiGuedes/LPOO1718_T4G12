@@ -2,19 +2,16 @@ package com.ubros.game.Controller.Elements;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.ubros.game.Gui.PlayGameScreen;
 import com.ubros.game.Model.Elements.ElementModel;
 
 public abstract class ElementBody {
 
-
+    public boolean contact = false;
     /**
      * The Box2D body that supports this body.
      */
-    public final Body body;
+    private final Body body;
 
     /**
      * Constructs a body representing a model in a certain world.
@@ -53,7 +50,7 @@ public abstract class ElementBody {
      * @param category
      * @param mask
      */
-    public final void createFixture(Body body, float[] vertexes, int width, int height, float density, float friction, float restitution, short category, short mask) {
+    /*public final void createFixture(Body body, float[] vertexes, int width, int height, float density, float friction, float restitution, short category, short mask) {
         // Transform pixels into meters, center and invert the y-coordinate
         for (int i = 0; i < vertexes.length; i++) {
             if (i % 2 == 0) vertexes[i] -= width / 2;   // center the vertex x-coordinate
@@ -79,9 +76,10 @@ public abstract class ElementBody {
         body.createFixture(fixtureDef);
 
         polygon.dispose();
-    }
+    }*/
 
-    public final void createFixture(float[] vertexSet) {
+    //public abstract void createFixture(Body body, float[] vertexes, int width, int height, float density, float friction, float restitution, short category, short mask);
+    /*public final void createFixture(float[] vertexSet) {
 
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
@@ -92,19 +90,19 @@ public abstract class ElementBody {
         shape.set(vertexSet);
         fdef.shape = shape;
         body.createFixture(fdef);
-    }
+    }*/
 
-    public final void createHeroFixture() {
+   /* public final void createHeroFixture() {
 
         FixtureDef fdef = new FixtureDef();
-        //CircleShape shape = new CircleShape();
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(24/PlayGameScreen.PIXEL_TO_METER, 35/PlayGameScreen.PIXEL_TO_METER);
-        //shape.setRadius(10/ PlayGameScreen.PIXEL_TO_METER);
+        CircleShape shape = new CircleShape();
+        //PolygonShape shape = new PolygonShape();
+       // shape.setAsBox(24/PlayGameScreen.PIXEL_TO_METER, 35/PlayGameScreen.PIXEL_TO_METER);
+        shape.setRadius(34/ PlayGameScreen.PIXEL_TO_METER);
 
         fdef.shape = shape;
         body.createFixture(fdef);
-    }
+    }*/
 
     /**
      * Wraps the getX method from the Box2D body class.
@@ -171,6 +169,10 @@ public abstract class ElementBody {
      */
     public void applyForceToCenter(float forceX, float forceY, boolean awake) {
         body.applyForceToCenter(forceX, forceY, awake);
+    }
+
+    public Body getBody() {
+        return body;
     }
 
     /**

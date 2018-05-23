@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ubros.game.Controller.Elements.AcidBody;
@@ -56,21 +57,12 @@ public class GameController implements ContactListener {
     public GameController(UbrosGame game) {
 
         this.game = game;
-
         this.world = new World(new Vector2(0,GRAVITY), true);
-
         this.debugRenderer = new Box2DDebugRenderer();
 
-        hero = new HeroBody(this.world, GameModel.getInstance(this.game).getHero());
-
-        List<LimitModel> limits = GameModel.getInstance(this.game).getLimits();
-        for (LimitModel limit : limits)
-            new LimitBody(this.world, limit, limit.getShape().getVertices());
-
-        List<AcidModel> acidRegions = GameModel.getInstance(this.game).getAcidRegions();
-        for (AcidModel acid : acidRegions)
-            new AcidBody(this.world, acid, acid.getShape().getVertices());
-
+        createHero();
+        createGround();
+        createAcid();
 
         this.world.setContactListener(this);
     }
@@ -84,6 +76,22 @@ public class GameController implements ContactListener {
         if (instance == null)
             instance = new GameController(game);
         return instance;
+    }
+
+    public void createHero() {
+        hero = new HeroBody(this.world, GameModel.getInstance(this.game).getHero());
+    }
+
+    public void createGround() {
+        List<LimitModel> limits = GameModel.getInstance(this.game).getLimits();
+        for (LimitModel limit : limits)
+            new LimitBody(this.world, limit, limit.getShape().getVertices());
+    }
+
+    public void createAcid() {
+        List<AcidModel> acidRegions = GameModel.getInstance(this.game).getAcidRegions();
+        for (AcidModel acid : acidRegions)
+            new AcidBody(this.world, acid, acid.getShape().getVertices());
     }
 
     /**
@@ -105,11 +113,39 @@ public class GameController implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
+        Fixture fixA = contact.getFixtureA();
+        Fixture fixB = contact.getFixtureB();
+        //Body bbd = contact.getFixtureA().getBody();
+        //if(bbd.getUserData() instanceof LimitModel) {
+          //  System.out.print("LIMIT BODY\n");
+        //}
+       // System.out.print("Begin contact :: A - " + fixA.getUserData() + " :: B - " + fixB.getUserData() + "\n");
+        if((fixA.getUserData() == "HeroBounds" || fixA == null) && (fixB.getUserData() == "Ground"))
+            GameController.getInstance(this.game).getHero().contact = true;
 
+        if((fixA.getUserData() == "Ground") && (fixB.getUserData() == "HeroBounds" || fixB == null))
+            GameController.getInstance(this.game).getHero().contact = true;
+
+        //if(fixA.getUserData() == "HeroBounds")
+            //System.out.println("A : HERO");
+
+        //if(fixB.getUserData() == "HeroBounds")
+           // System.out.println("B : HERO");
+
+        //System.out.println("A : " + fixA.getUserData());
+        //System.out.println("B : " + fixB.getUserData());
     }
 
     @Override
     public void endContact(Contact contact) {
+        Fixture fixA = contact.getFixtureA();
+        Fixture fixB = contact.getFixtureB();
+        System.out.print("End contact :: A - " + fixA.getUserData() + " :: B - " + fixB.getUserData() + "\n");
+        if((fixA.getUserData() == "HeroBounds") && (fixB.getUserData() == "Ground"))
+            GameController.getInstance(this.game).getHero().contact = false;
+
+        if((fixA.getUserData() == "Ground") && (fixB.getUserData() == "HeroBounds"))
+            GameController.getInstance(this.game).getHero().contact = false;
 
     }
 
@@ -123,7 +159,7 @@ public class GameController implements ContactListener {
 
     }
 
-    public void update(float delat) {
+    public void update(float delta) {
 
     }
 }

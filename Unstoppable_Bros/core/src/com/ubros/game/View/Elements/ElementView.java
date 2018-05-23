@@ -21,10 +21,6 @@ public abstract class ElementView extends Sprite {
     private float stateTimer;
     private boolean runningRight;
 
-    /**
-     * The sprite representing this entity view.
-     */
-    Sprite sprite;
 
     TextureRegion heroUP;
 
@@ -93,36 +89,33 @@ public abstract class ElementView extends Sprite {
     /**
      * Updates this view based on a certain model.
      *
-     * @param body the model used to update this view
+     * @param element the model used to update this view
      */
-    public void update(float delta, ElementBody body) {
-        //setPosition(body.body.getPosition().x - getWidth()/3, body.body.getPosition().y - getHeight()/5);
+    public void update(float delta, ElementBody element) {
+
         if(currentState == State.RUNNING) {
             if (runningRight)
-                setPosition(body.body.getPosition().x - getWidth() / 2, body.body.getPosition().y - getHeight()/2);
+                setPosition(element.getBody().getPosition().x - getWidth() / 2, element.getBody().getPosition().y - getHeight()/2);
             else
-                setPosition(body.body.getPosition().x - getWidth() / 2, body.body.getPosition().y - getHeight() / 2);
+                setPosition(element.getBody().getPosition().x - getWidth() / 2, element.getBody().getPosition().y - getHeight() / 2);
         }
         else {
             if (runningRight)
-                setPosition(body.body.getPosition().x - getWidth() / 2, body.body.getPosition().y - getHeight() / 2);
+                setPosition(element.getBody().getPosition().x - getWidth() / 2, element.getBody().getPosition().y - getHeight() / 2);
             else
-                setPosition(body.body.getPosition().x - getWidth() / 2, body.body.getPosition().y - getHeight() / 2);
+                setPosition(element.getBody().getPosition().x - getWidth() / 2, element.getBody().getPosition().y - getHeight() / 2);
         }
-        setRotation(body.getAngle());
-        setRegion(getFrame(delta, body));
+        setRotation(element.getAngle());
+        setRegion(getFrame(delta, element));
     }
 
-    public TextureRegion getFrame(float delta, ElementBody body) {
+    public TextureRegion getFrame(float delta, ElementBody element) {
 
-        currentState = getState(body);
-
-       // System.out.println(currentState);
+        currentState = getState(element);
 
         TextureRegion region = null;
         switch (currentState) {
             case RUNNING:
-               // System.out.println("RUNNING : " + stateTimer);
                 region = heroRun.getKeyFrame(stateTimer, true);
                 break;
             case STANDING:
@@ -132,15 +125,15 @@ public abstract class ElementView extends Sprite {
                 region = heroJump.getKeyFrame(stateTimer);
                 break;
             case FALLING:
-                region = heroUP;
+                region = new TextureRegion(atlas.findRegion("Jump (10)"), 0,0, HERO_WIDTH,HERO_HEIGHT);;
                 break;
         }
 
-        if((body.body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
+        if((element.getBody().getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
             region.flip(true,false);
             runningRight = false;
         }
-        else if((body.body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
+        else if((element.getBody().getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
             region.flip(true,false);
             runningRight = true;
         }
@@ -156,12 +149,19 @@ public abstract class ElementView extends Sprite {
         return region;
     }
 
-    public State getState(ElementBody body) {
-        if(body.body.getLinearVelocity().y > 0 || body.body.getLinearVelocity().y < 0 && previousState == State.JUMPING)
+    public State getState(ElementBody element) {
+
+        /*if(element.contact)
+            System.out.print("YES\n");
+        else if(!element.contact)
+            System.out.print("NO\n");*/
+
+        if((element.getBody().getLinearVelocity().y > 0 || element.getBody().getLinearVelocity().y < 0 && previousState == State.JUMPING) && !element.contact) {
             return State.JUMPING;
-        else if(body.body.getLinearVelocity().y < 0)
+        }
+        else if(element.getBody().getLinearVelocity().y < 0)
             return State.FALLING;
-        else if(body.body.getLinearVelocity().x != 0)
+        else if(element.getBody().getLinearVelocity().x != 0)
             return State.RUNNING;
         else
             return State.STANDING;

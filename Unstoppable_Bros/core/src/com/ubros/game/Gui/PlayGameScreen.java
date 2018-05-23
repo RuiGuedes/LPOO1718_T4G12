@@ -192,14 +192,14 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
                 if(checkLeftButton(x, y)) {
                     leftButton = buttonTextures.get(1);
-                    if (GameController.getInstance(this.game).getHero().body.getLinearVelocity().x >= -3)
-                        GameController.getInstance(this.game).getHero().body.applyLinearImpulse(new Vector2(-0.3f, 0), GameController.getInstance(this.game).getHero().body.getWorldCenter(), true);
+                    if (GameController.getInstance(this.game).getHero().getBody().getLinearVelocity().x >= -3)
+                        GameController.getInstance(this.game).getHero().getBody().applyLinearImpulse(new Vector2(-0.3f, 0), GameController.getInstance(this.game).getHero().getBody().getWorldCenter(), true);
                 }
 
                 if(checkRightButton(x, y)) {
                     rightButton = buttonTextures.get(3);
-                    if ((GameController.getInstance(this.game).getHero().body.getLinearVelocity().x <= 3))
-                        GameController.getInstance(this.game).getHero().body.applyLinearImpulse(new Vector2(0.3f, 0), GameController.getInstance(this.game).getHero().body.getWorldCenter(), true);
+                    if ((GameController.getInstance(this.game).getHero().getBody().getLinearVelocity().x <= 3))
+                        GameController.getInstance(this.game).getHero().getBody().applyLinearImpulse(new Vector2(0.3f, 0), GameController.getInstance(this.game).getHero().getBody().getWorldCenter(), true);
                 }
             }
         }
@@ -279,7 +279,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         if (checkJumpButton(screenX, screenY)) {
             jumpButton = buttonTextures.get(5);
             //if (GameController.getInstance(this.game).getHero().body.getLinearVelocity().y == 0)  -> TO AVOID DOUBLE JUMP
-            GameController.getInstance(this.game).getHero().body.applyLinearImpulse(new Vector2(0, 4f), GameController.getInstance(this.game).getHero().body.getWorldCenter(), true);
+            GameController.getInstance(this.game).getHero().getBody().applyLinearImpulse(new Vector2(0, 4f), GameController.getInstance(this.game).getHero().getBody().getWorldCenter(), true);
         }
 
         if (checkBulletButton(screenX, screenY))

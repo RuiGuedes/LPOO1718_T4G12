@@ -10,10 +10,17 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.ubros.game.Controller.Elements.MechanismBody;
+import com.ubros.game.Controller.Elements.PlatformBody;
 import com.ubros.game.Controller.GameController;
+import com.ubros.game.Model.Elements.MechanismModel;
+import com.ubros.game.Model.Elements.PlatformModel;
 import com.ubros.game.Model.GameModel;
 import com.ubros.game.UbrosGame;
 import com.ubros.game.View.Elements.ElementView;
+import com.ubros.game.View.Elements.MechanismView;
+import com.ubros.game.View.Elements.PlatformView;
 import com.ubros.game.View.Elements.RobotView;
 
 import java.util.ArrayList;
@@ -72,6 +79,8 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     private ElementView robot;
 
     ////////////////////////////
+    private Viewport gamePort;
+    ////////////////////////
 
     /**
      * Creates this screen.
@@ -115,6 +124,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         this.game.getAssetManager().load("bulletButtonOn.png", Texture.class);
         this.game.getAssetManager().load("mechanismOff.png", Texture.class);
         this.game.getAssetManager().load("mechanismOn.png", Texture.class);
+        this.game.getAssetManager().load("barrel.png", Texture.class);
         this.game.getAssetManager().load("Robot/Robot.pack", TextureAtlas.class);
 
         this.game.getAssetManager().finishLoading();
@@ -123,9 +133,9 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     private void initializeGraphics() {
 
-        TextureAtlas atlas = this.game.getAssetManager().get("Robot/Robot.pack");
-        this.robot = new RobotView(this.game, atlas);
-        GameController.getInstance(this.game).getHero().setRobotView((RobotView) robot);
+        createCharactersView();
+        createMechanismView();
+        createPlatformsView();
 
         buttonTextures.add(game.getAssetManager().get("moveLeftButtonOff.png", Texture.class));
         buttonTextures.add(game.getAssetManager().get("moveLeftButtonOn.png", Texture.class));
@@ -139,6 +149,25 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         resetButtons();
     }
 
+    private void createCharactersView() {
+        TextureAtlas atlas = this.game.getAssetManager().get("Robot/Robot.pack");
+        this.robot = new RobotView(this.game, atlas);
+        GameModel.getInstance(this.game).getHero().setRobotView((RobotView) robot);
+    }
+
+    private void createMechanismView() {
+        List<MechanismBody> mechanisms = GameController.getInstance(this.game).getMechanismBodies();
+        for (MechanismBody mechanism : mechanisms) {
+            ((MechanismModel) mechanism.getModel()).setView(new MechanismView(this.game, null, mechanism));
+        }
+    }
+
+    private void createPlatformsView() {
+        List<PlatformBody> platforms = GameController.getInstance(this.game).getPlatformBodies();
+        for (PlatformBody platformBody : platforms) {
+            ((PlatformModel) platformBody.getModel()).setView(new PlatformView(this.game, null, platformBody, game.getAssetManager().get("barrel.png",Texture.class)));
+        }
+    }
 
     /**
      * Renders this screen.
@@ -159,10 +188,6 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
         game.getBatch().begin();
         drawInteractiveButtons();
-        for(int i = 0; i < GameModel.getInstance(this.game).getMechanisms().size(); i++) {
-            game.getBatch().draw(game.getAssetManager().get("mechanismOff.png", Texture.class),  GameModel.getInstance(this.game).getMechanisms().get(i).getX(), GameModel.getInstance(this.game).getMechanisms().get(i).getY(), 0.32f, 0.9f);
-        }
-
         drawElements(delta);
         game.getBatch().end();
 
@@ -187,13 +212,13 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
                 int x = Gdx.input.getX(i);
                 int y = Gdx.input.getY(i);
 
-                if(checkLeftButton(x, y)) {
+                if (checkLeftButton(x, y)) {
                     leftButton = buttonTextures.get(1);
                     if (GameController.getInstance(this.game).getHero().getBody().getLinearVelocity().x >= -3)
                         GameController.getInstance(this.game).getHero().getBody().applyLinearImpulse(new Vector2(-0.3f, 0), GameController.getInstance(this.game).getHero().getBody().getWorldCenter(), true);
                 }
 
-                if(checkRightButton(x, y)) {
+                if (checkRightButton(x, y)) {
                     rightButton = buttonTextures.get(3);
                     if ((GameController.getInstance(this.game).getHero().getBody().getLinearVelocity().x <= 3))
                         GameController.getInstance(this.game).getHero().getBody().applyLinearImpulse(new Vector2(0.3f, 0), GameController.getInstance(this.game).getHero().getBody().getWorldCenter(), true);
@@ -203,8 +228,14 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     }
 
     private void drawElements(float delta) {
-        robot.update(delta);
-        robot.draw();
+        robot.draw(delta);
+
+        for (MechanismBody mechanism : GameController.getInstance(this.game).getMechanismBodies())
+            ((MechanismModel) mechanism.getModel()).getView().draw(delta);
+
+        for (PlatformBody platformBody : GameController.getInstance(this.game).getPlatformBodies())
+            ((PlatformModel)platformBody.getModel()).getView().draw(delta);
+
     }
 
     private void drawInteractiveButtons() {
@@ -274,10 +305,10 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if(checkLeftButton(screenX,screenY))
+        if (checkLeftButton(screenX, screenY))
             leftButton = buttonTextures.get(0);
 
-        if(checkRightButton(screenX,screenY))
+        if (checkRightButton(screenX, screenY))
             rightButton = buttonTextures.get(2);
 
         if (checkJumpButton(screenX, screenY))

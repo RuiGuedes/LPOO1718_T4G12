@@ -92,6 +92,12 @@ public class RobotView extends ElementView {
         setRegion(robotDefault);
     }
 
+    @Override
+    public void draw(float delta) {
+        this.update(delta);
+        super.draw(getGame().getBatch());
+    }
+
     /**
      * Updates this view based on a certain model.
      *

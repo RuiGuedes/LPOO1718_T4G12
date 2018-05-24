@@ -44,8 +44,10 @@ public abstract class ElementView extends Sprite {
      * Draws the sprite from this view using a sprite batch.
      *
      */
-    public void draw() {
-        super.draw(game.getBatch());
+    public abstract void draw(float delta);
+
+    public UbrosGame getGame() {
+        return game;
     }
 
     public TextureAtlas getAtlas() {

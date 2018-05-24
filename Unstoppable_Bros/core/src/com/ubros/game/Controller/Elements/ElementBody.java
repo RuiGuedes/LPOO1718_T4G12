@@ -41,6 +41,7 @@ public abstract class ElementBody {
         body.setUserData(model);
     }
 
+    public abstract void createFixture(Body body, float[] vertexes, int width, int height, float density, float friction, float restitution, short category, short mask);
     /**
      * Helper method to create a polygon fixture represented by a set of vertexes.
      * @param body The body the fixture is to be attached to.
@@ -151,9 +152,9 @@ public abstract class ElementBody {
      *
      * @param velocity the new linear velocity angle for this body
      */
-    public void setLinearVelocity(float velocity) {
-        body.setLinearVelocity((float)(velocity * -Math.sin(getAngle())), (float) (velocity * Math.cos(getAngle())));
-    }
+    //public void setLinearVelocity(float velocity) {
+      //  body.setLinearVelocity((float)(velocity * -Math.sin(getAngle())), (float) (velocity * Math.cos(getAngle())));
+    //}
 
     /**
      * Wraps the setAngularVelocity method from the Box2D body class.

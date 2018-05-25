@@ -6,11 +6,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ubros.game.Gui.PlayGameScreen;
 import com.ubros.game.Model.Elements.ElementModel;
-import com.ubros.game.Model.Elements.PlatformModel;
-import com.ubros.game.Model.GameModel;
-import com.ubros.game.View.Elements.RobotView;
+import com.ubros.game.Model.Elements.ObjectiveModel;
 
-public class PlatformBody extends ElementBody {
+public class ObjectiveBody extends ElementBody {
 
     /**
      * Constructs a body representing a model in a certain world.
@@ -18,9 +16,10 @@ public class PlatformBody extends ElementBody {
      * @param world The world this body lives on.
      * @param model The model representing the body.
      */
-    public PlatformBody(World world, ElementModel model, float[] vertexSet) {
+    public ObjectiveBody(World world, ElementModel model, float[] vertexSet) {
         super(world, model);
         createFixture(getBody(),vertexSet,0,0,0f,0f,0f, (short)0, (short)0);
+        System.out.println("X - " + getBody().getPosition().x + "    Y - " + getBody().getPosition().y);
     }
 
     @Override
@@ -34,22 +33,7 @@ public class PlatformBody extends ElementBody {
 
         shape.set(vertexes);
         fdef.shape = shape;
-        fdef.friction = 10;
-        body.createFixture(fdef).setUserData("Platform");
+        fdef.isSensor = true;
+        body.createFixture(fdef).setUserData(((ObjectiveModel)getModel()).getData());
     }
-
-    public void setLinearVelocity(boolean direction) {
-
-        float multiplier = direction ? -1 : 1;
-
-        if(((PlatformModel)getModel()).robotContact)
-            ((RobotView)(GameModel.getInstance(null).getRobot()).getElementView()).onPlatform = true;
-
-        if(((PlatformModel)getModel()).isMovementDir())
-            super.getBody().setLinearVelocity(multiplier*1.5f,0f);
-        else
-            super.getBody().setLinearVelocity(0f,multiplier*-1.5f);
-
-    }
-
 }

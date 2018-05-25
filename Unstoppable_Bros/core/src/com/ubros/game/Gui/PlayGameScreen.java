@@ -10,16 +10,19 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ubros.game.Controller.Elements.MechanismBody;
+import com.ubros.game.Controller.Elements.ObjectiveBody;
 import com.ubros.game.Controller.Elements.PlatformBody;
 import com.ubros.game.Controller.GameController;
 import com.ubros.game.Model.Elements.MechanismModel;
+import com.ubros.game.Model.Elements.ObjectiveModel;
 import com.ubros.game.Model.Elements.PlatformModel;
 import com.ubros.game.Model.GameModel;
 import com.ubros.game.UbrosGame;
 import com.ubros.game.View.Elements.ElementView;
 import com.ubros.game.View.Elements.MechanismView;
+import com.ubros.game.View.Elements.NinjaView;
+import com.ubros.game.View.Elements.ObjectiveView;
 import com.ubros.game.View.Elements.PlatformView;
 import com.ubros.game.View.Elements.RobotView;
 
@@ -39,7 +42,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     private static final float SCREEN_HEIGHT = Gdx.graphics.getHeight();
 
     /**
-     *
+     * Pixel to meter correspondence
      */
     public static final float PIXEL_TO_METER = 100;
 
@@ -54,7 +57,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     private final UbrosGame game;
 
     /**
-     * Game
+     * Game camera used to view game map
      */
     private OrthographicCamera gameCam;
 
@@ -68,19 +71,44 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
      */
     private OrthogonalTiledMapRenderer mapRenderer;
 
-
+    /**
+     * Texture responsible to represent left movement
+     */
     private Texture leftButton;
+
+    /**
+     * Texture responsible to represent right movement
+     */
     private Texture rightButton;
+
+    /**
+     * Texture responsible to represent shoot action
+     */
     private Texture bulletButton;
+
+    /**
+     * Texture responsible to represent jump movement
+     */
     private Texture jumpButton;
 
+    /**
+     * Structure responsible to hold buttons (off and on) textures
+     */
     private List<Texture> buttonTextures = new ArrayList<Texture>();
 
+    /**
+     * Robot character element view
+     */
     private ElementView robot;
 
-    ////////////////////////////
-    private Viewport gamePort;
-    ////////////////////////
+    /**
+     * Ninja character element view
+     */
+    private ElementView ninja;
+
+    private boolean player = true;
+
+    public static boolean horizontalMovement = false;
 
     /**
      * Creates this screen.
@@ -124,8 +152,9 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         this.game.getAssetManager().load("bulletButtonOn.png", Texture.class);
         this.game.getAssetManager().load("mechanismOff.png", Texture.class);
         this.game.getAssetManager().load("mechanismOn.png", Texture.class);
-        this.game.getAssetManager().load("barrel.png", Texture.class);
+
         this.game.getAssetManager().load("Robot/Robot.pack", TextureAtlas.class);
+        this.game.getAssetManager().load("Ninja/Ninja.pack", TextureAtlas.class);
 
         this.game.getAssetManager().finishLoading();
         initializeGraphics();
@@ -136,6 +165,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         createCharactersView();
         createMechanismView();
         createPlatformsView();
+        createObjectivesView();
 
         buttonTextures.add(game.getAssetManager().get("moveLeftButtonOff.png", Texture.class));
         buttonTextures.add(game.getAssetManager().get("moveLeftButtonOn.png", Texture.class));
@@ -150,9 +180,13 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     }
 
     private void createCharactersView() {
-        TextureAtlas atlas = this.game.getAssetManager().get("Robot/Robot.pack");
-        this.robot = new RobotView(this.game, atlas);
-        GameModel.getInstance(this.game).getHero().setRobotView((RobotView) robot);
+
+        this.robot = new RobotView(this.game, (TextureAtlas) this.game.getAssetManager().get("Robot/Robot.pack"));
+        this.ninja = new NinjaView(this.game, (TextureAtlas) this.game.getAssetManager().get("Ninja/Ninja.pack"));
+
+        GameModel.getInstance(this.game).getRobot().setElementView(robot);
+        GameModel.getInstance(this.game).getNinja().setElementView(ninja);
+
     }
 
     private void createMechanismView() {
@@ -165,7 +199,14 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     private void createPlatformsView() {
         List<PlatformBody> platforms = GameController.getInstance(this.game).getPlatformBodies();
         for (PlatformBody platformBody : platforms) {
-            ((PlatformModel) platformBody.getModel()).setView(new PlatformView(this.game, null, platformBody, game.getAssetManager().get("barrel.png",Texture.class)));
+            ((PlatformModel) platformBody.getModel()).setView(new PlatformView(this.game, null, platformBody, ((PlatformModel) platformBody.getModel()).getPlatformView()));
+        }
+    }
+
+    private void createObjectivesView() {
+        List<ObjectiveBody> objectives = GameController.getInstance(this.game).getObjectiveBodies();
+        for (ObjectiveBody objective : objectives) {
+            ((ObjectiveModel) objective.getModel()).setView(new ObjectiveView(this.game, null, objective, ((ObjectiveModel) objective.getModel()).getObjectiveView()));
         }
     }
 
@@ -207,34 +248,46 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     private void handleInput() {
 
+        horizontalMovement = false;
         for (int i = 0; i < 4; i++) {
             if (Gdx.input.isTouched(i)) {
                 int x = Gdx.input.getX(i);
                 int y = Gdx.input.getY(i);
 
                 if (checkLeftButton(x, y)) {
+                    horizontalMovement = true;
                     leftButton = buttonTextures.get(1);
-                    if (GameController.getInstance(this.game).getHero().getBody().getLinearVelocity().x >= -3)
-                        GameController.getInstance(this.game).getHero().getBody().applyLinearImpulse(new Vector2(-0.3f, 0), GameController.getInstance(this.game).getHero().getBody().getWorldCenter(), true);
+                    if ((GameController.getInstance(this.game).getRobot().getBody().getLinearVelocity().x >= -3) && player)
+                        GameController.getInstance(this.game).getRobot().getBody().applyLinearImpulse(new Vector2(-0.3f, 0), GameController.getInstance(this.game).getRobot().getBody().getWorldCenter(), true);
+                    else if((GameController.getInstance(this.game).getNinja().getBody().getLinearVelocity().x >= -3) && !player)
+                        GameController.getInstance(this.game).getNinja().getBody().applyLinearImpulse(new Vector2(-0.3f, 0), GameController.getInstance(this.game).getNinja().getBody().getWorldCenter(), true);
                 }
 
                 if (checkRightButton(x, y)) {
+                    horizontalMovement = true;
                     rightButton = buttonTextures.get(3);
-                    if ((GameController.getInstance(this.game).getHero().getBody().getLinearVelocity().x <= 3))
-                        GameController.getInstance(this.game).getHero().getBody().applyLinearImpulse(new Vector2(0.3f, 0), GameController.getInstance(this.game).getHero().getBody().getWorldCenter(), true);
+                    if ((GameController.getInstance(this.game).getRobot().getBody().getLinearVelocity().x <= 3) && player)
+                        GameController.getInstance(this.game).getRobot().getBody().applyLinearImpulse(new Vector2(0.3f, 0), GameController.getInstance(this.game).getRobot().getBody().getWorldCenter(), true);
+                    else if((GameController.getInstance(this.game).getNinja().getBody().getLinearVelocity().x <= 3) && !player)
+                        GameController.getInstance(this.game).getNinja().getBody().applyLinearImpulse(new Vector2(0.3f, 0), GameController.getInstance(this.game).getNinja().getBody().getWorldCenter(), true);
                 }
             }
         }
     }
 
     private void drawElements(float delta) {
+
         robot.draw(delta);
+        ninja.draw(delta);
 
         for (MechanismBody mechanism : GameController.getInstance(this.game).getMechanismBodies())
             ((MechanismModel) mechanism.getModel()).getView().draw(delta);
 
         for (PlatformBody platformBody : GameController.getInstance(this.game).getPlatformBodies())
             ((PlatformModel)platformBody.getModel()).getView().draw(delta);
+
+        for(ObjectiveBody objectiveBody : GameController.getInstance(this.game).getObjectiveBodies())
+            ((ObjectiveModel)objectiveBody.getModel()).getView().draw(delta);
 
     }
 
@@ -294,11 +347,17 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         if (checkJumpButton(screenX, screenY)) {
             jumpButton = buttonTextures.get(5);
             //if (GameController.getInstance(this.game).getHero().body.getLinearVelocity().y == 0)  -> TO AVOID DOUBLE JUMP
-            GameController.getInstance(this.game).getHero().getBody().applyLinearImpulse(new Vector2(0, 4f), GameController.getInstance(this.game).getHero().getBody().getWorldCenter(), true);
+            if(player)
+                GameController.getInstance(this.game).getRobot().getBody().applyLinearImpulse(new Vector2(0, 4f), GameController.getInstance(this.game).getRobot().getBody().getWorldCenter(), true);
+            else
+                GameController.getInstance(this.game).getNinja().getBody().applyLinearImpulse(new Vector2(0, 4f), GameController.getInstance(this.game).getNinja().getBody().getWorldCenter(), true);
+
         }
 
-        if (checkBulletButton(screenX, screenY))
+        if (checkBulletButton(screenX, screenY)) {
             bulletButton = buttonTextures.get(7);
+            player = player == true ? false : true;
+        }
 
         return true;
     }

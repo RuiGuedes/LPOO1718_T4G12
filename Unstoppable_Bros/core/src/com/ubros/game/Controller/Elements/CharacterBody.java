@@ -7,24 +7,39 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.ubros.game.Gui.PlayGameScreen;
 import com.ubros.game.Model.Elements.ElementModel;
 
-public class HeroBody extends ElementBody {
+public class CharacterBody extends ElementBody {
 
-    private int HERO_WIDTH = 48;
-
-    private int HERO_HEIGHT = 70;
+    /**
+     * Body user data used to check contact with other bodies
+     */
+    private String userData;
 
     /**
      * Constructs a body representing a model in a certain world.
      *
      * @param world The world this body lives on.
      * @param model The model representing the body.
+     * @param userData The body user data
      */
-    public HeroBody(World world, ElementModel model) {
+    public CharacterBody(World world, ElementModel model, String userData) {
         super(world, model);
 
-       createFixture(getBody(),null,0,0,0f,0f,0f, (short)0, (short)0);
+        this.userData = userData;
+        createFixture(getBody(),null,0,0,0f,0f,0f, (short)0, (short)0);
     }
 
+    /**
+     * Function responsible to create fixture to a certain body
+     * @param body
+     * @param vertexes
+     * @param width
+     * @param height
+     * @param density
+     * @param friction
+     * @param restitution
+     * @param category
+     * @param mask
+     */
     public void createFixture(Body body, float[] vertexes, int width, int height, float density, float friction, float restitution, short category, short mask) {
 
         FixtureDef fdef = new FixtureDef();
@@ -32,13 +47,6 @@ public class HeroBody extends ElementBody {
         shape.setRadius(34/ PlayGameScreen.PIXEL_TO_METER);
 
         fdef.shape = shape;
-        body.createFixture(fdef).setUserData("RobotBounds");
-
-        /*PolygonShape bounds = new PolygonShape();
-        bounds.setAsBox((HERO_WIDTH/2)/PlayGameScreen.PIXEL_TO_METER, (HERO_HEIGHT/2)/PlayGameScreen.PIXEL_TO_METER);
-        fdef.shape = bounds;
-        fdef.isSensor = true;
-
-        body.createFixture(fdef).setUserData("RobotBounds");*/
+        body.createFixture(fdef).setUserData(userData);
     }
 }

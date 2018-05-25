@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="60" height="36" tilewidth="32" tileheight="30" infinite="0" nextobjectid="253">
- <tileset firstgid="1" source="GroundQuad.tsx"/>
- <tileset firstgid="2" source="GroundMiddleQuad.tsx"/>
- <tileset firstgid="3" source="GroundInvertedTriangle.tsx"/>
- <tileset firstgid="4" source="GroundTriangle.tsx"/>
- <tileset firstgid="5" source="Acid.tsx"/>
- <tileset firstgid="7" source="floor.tsx"/>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="60" height="36" tilewidth="32" tileheight="30" infinite="0" nextobjectid="286">
+ <tileset firstgid="1" source="Acid.tsx"/>
+ <tileset firstgid="3" source="floor.tsx"/>
+ <tileset firstgid="6" source="ground.tsx"/>
+ <tileset firstgid="12" source="factoryGround.tsx"/>
+ <tileset firstgid="21" source="objectives.tsx"/>
  <imagelayer name="Background">
-  <image source="background.jpg" width="1920" height="1080"/>
+  <image source="Imagem10.png" width="1920" height="1080"/>
  </imagelayer>
  <layer name="Graphics - Acid" width="60" height="36">
   <data encoding="base64" compression="zlib">
-   eJzt2DkKACAQBEFB9P9PNvcCQRC1CjrfZJMJAYBaGvSy3AkAAOBX8fQBcMhoE3l5F7GJsMPsd1a6Se93VgIAWgVQuQE7
+   eJzt2LsJACAQRMHT/os29weCiecMvBI22QgAemVRZnUSAAAA8JfVJ5L5F/GJcMNuOye9ZLadkwCAUQMYUABU
   </data>
  </layer>
  <layer name="Graphics - Ground" width="60" height="36">
   <data encoding="base64" compression="zlib">
-   eJztmFsOhSAMRPlT97+hu7QbEk1MA6WPAYo6CX9gemg7gFtKaXvZeIs+3mfr48VpT+lX8opDOK801yuLh93j08ZznGuvdde3dmbuTH++x0djl4pylFg10sSv4S3lwsqMlDR+TX4ldbeC3nZn8cZK8855Lbc3kjWInvHw1lg5/9mNtS/1am5PPLXoYfX6cU0S7+R4W3sZifVSixndv9Y5o4ToX8lAsCK8a6WzxCJNTp6oJ7DRHFr9uWdMI+4WXAw9pfXnHm8Qut9UiPu0x5+RzKXaiqgWs7ZHovNm1Zitd5jovFm1t4LlDrMCL1IjzgXN+eiVp38RHkn7bPb/rlY9I/6J0j6byTyrf63M3rNlpl/VamdEf0dR71qPxpvVkzkib1YvZvS7YIXxB+UWN+0=
+   eJztmOsOgjAMRvcDb6DR938aH00X+RLSbKxdO1eUkzSGBGRnrKXsEkK4/FlIOVZc44Hd97fZfe04hfCM657GmXle6lwt8E3dK8f4Hl+8Zqq433l2gwdcTyvn9qzPcEVonBEpVwmS8Ut84TrOx5PiOVvCHb/k+VJX4MWZS8+epQfasQ5zLg7zMc1v7txwrrFYQxrfnCtd80tQj6VMzHlcmxPNWtS4autxDk4tWfMtrc2RnNfTFZSctfnryZWDxpdbm0rzwcWiz9zSu6QG2pvn+udDtxG25Reer6Sn/5Yv3l/cfG/Rnw6LeWkJfVeXaNGT0/mmWPbVEldg6Twsapbn/KV7A5S1fZFcePaN5JylOQK8+0bofghC6hrZgq8luX7Dcn+Q5pn1nuMSbg1NUaoXHOi3wsHgPzWU1jOc75WR+i7q6dwrf2vXDndtlq7vAZyvJG4N7+mtPj/ec3D//DbBm2+kpbNH30grZ8vvAutAjaf5rYn4vy/arTsl
   </data>
  </layer>
  <objectgroup name="Ground">
@@ -44,9 +43,6 @@
   <object id="76" x="1632" y="810">
    <polygon points="0,0 256,0 256,30 0,30 0,0"/>
   </object>
-  <object id="77" x="32" y="540">
-   <polygon points="0,0 160,0 160,30 0,30 0,0"/>
-  </object>
   <object id="82" x="32" y="300">
    <polygon points="0,0 256,0 256,30 0,30 0,0"/>
   </object>
@@ -71,9 +67,6 @@
   <object id="118" x="1792" y="690">
    <polygon points="0,0 96,-90 96,30 0,30 0,0"/>
   </object>
-  <object id="121" x="480" y="480">
-   <polygon points="0,0 -32,30 320,30 320,0 0,0"/>
-  </object>
   <object id="122" x="1056" y="330">
    <polygon points="0,0 256,0 256,30 0,30 0,0"/>
   </object>
@@ -94,9 +87,6 @@
   </object>
   <object id="143" x="1856" y="360">
    <polygon points="0,0 32,0 32,30 0,30 0,0"/>
-  </object>
-  <object id="148" x="192" y="420">
-   <polygon points="0,0 224,0 224,30 0,30 0,0"/>
   </object>
   <object id="149" x="416" y="420">
    <polygon points="0,0 96,-90 160,-90 32,30 0,30 0,0"/>
@@ -149,26 +139,44 @@
   <object id="214" x="1312" y="330">
    <polygon points="0,0 32,0 64,30 64,60 32,60 0,30 0,0"/>
   </object>
-  <object id="215" x="576" y="300">
-   <polygon points="0,0 0,-30 -96,-120 -128,-120 -128,-90 -32,0 0,0"/>
-  </object>
-  <object id="216" x="288" y="300">
-   <polygon points="0,0 128,-120 160,-120 160,-90 64,0 0,0"/>
-  </object>
   <object id="217" x="1216" y="150">
    <polygon points="0,0 32,0 64,30 64,60 32,60 0,30 0,0"/>
   </object>
   <object id="228" x="768" y="660">
    <polygon points="0,0 64,-60 96,-60 96,-30 32,30 0,30 0,0"/>
   </object>
-  <object id="235" x="1280" y="1050">
-   <polygon points="0,0 -128,-120 -160,-120 -160,-90 -64,0 0,0"/>
-  </object>
   <object id="250" x="1376" y="360">
    <polygon points="0,0 224,0 224,30 0,30 0,0"/>
   </object>
   <object id="251" x="1536" y="210">
    <polygon points="0,0 0,60 32,60 32,0 0,0"/>
+  </object>
+  <object id="254" x="288" y="300">
+   <polygon points="0,0 128,-120 128,-60 64,0 0,0"/>
+  </object>
+  <object id="255" x="448" y="180">
+   <polygon points="0,0 0,60 64,120 128,120 0,0"/>
+  </object>
+  <object id="256" x="416" y="180">
+   <polygon points="0,0 32,0 32,60 0,60 0,0"/>
+  </object>
+  <object id="257" x="448" y="510">
+   <polygon points="0,0 32,-30 320,-30 320,0 0,0"/>
+  </object>
+  <object id="258" x="768" y="480">
+   <polygon points="0,0 128,-120 160,-120 160,-90 32,30 0,30 0,0"/>
+  </object>
+  <object id="259" x="416" y="30">
+   <polygon points="0,0 32,0 32,60 0,60 0,0"/>
+  </object>
+  <object id="262" x="32" y="540">
+   <polygon points="0,0 128,0 160,30 0,30 0,0"/>
+  </object>
+  <object id="263" x="416" y="420">
+   <polygon points="0,0 -192,0 -224,30 0,30 0,0"/>
+  </object>
+  <object id="266" x="1120" y="930">
+   <polygon points="0,0 32,0 160,120 96,120 0,30 0,0"/>
   </object>
  </objectgroup>
  <objectgroup name="Acid">
@@ -192,16 +200,48 @@
   <object id="244" x="1600" y="570">
    <polygon points="0,0 32,0 32,-90 0,-90 0,0"/>
   </object>
+  <object id="261" x="1632" y="1050">
+   <polygon points="0,0 32,0 32,-90 0,-90 0,0"/>
+  </object>
  </objectgroup>
  <objectgroup name="Platform">
-  <object id="246" x="704" y="810">
+  <object id="246" name="L-15-barrel.png-3" x="704" y="810">
    <polygon points="0,0 96,0 96,-30 0,-30 0,0"/>
   </object>
-  <object id="247" x="928" y="360">
+  <object id="247" name="L-4-platformDoor.png-4" x="928" y="360">
    <polygon points="0,0 128,0 128,-30 0,-30 0,0"/>
   </object>
-  <object id="252" x="1536" y="360">
+  <object id="252" name="U-3-platformDoor.png-3" x="1536" y="360">
    <polygon points="0,0 32,0 32,-90 0,-90 0,0"/>
+  </object>
+  <object id="260" name="U-3-platformDoor.png-3" x="416" y="180">
+   <polygon points="0,0 32,0 32,-90 0,-90 0,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Objectives">
+  <object id="276" name="R-2-2-cog.png" x="352" y="420">
+   <polygon points="0,0 64,0 64,-60 0,-60 0,0"/>
+  </object>
+  <object id="277" name="N-2-2-star.png" x="704" y="450">
+   <polygon points="0,0 64,0 64,-60 0,-60 0,0"/>
+  </object>
+  <object id="278" name="R-2-2-cog.png" x="480" y="660">
+   <polygon points="0,0 64,0 64,-60 0,-60 0,0"/>
+  </object>
+  <object id="279" name="N-2-2-star.png" x="576" y="1020">
+   <polygon points="0,0 64,0 64,-60 0,-60 0,0"/>
+  </object>
+  <object id="280" name="R-2-2-cog.png" x="1664" y="810">
+   <polygon points="0,0 64,0 64,-60 0,-60 0,0"/>
+  </object>
+  <object id="281" name="R-2-2-cog.png" x="1344" y="480">
+   <polygon points="0,0 64,0 64,-60 0,-60 0,0"/>
+  </object>
+  <object id="282" name="N-2-2-star.png" x="1408" y="330">
+   <polygon points="0,0 64,0 64,-60 0,-60 0,0"/>
+  </object>
+  <object id="283" name="N-2-2-star.png" x="1536" y="150">
+   <polygon points="0,0 64,0 64,-60 0,-60 0,0"/>
   </object>
  </objectgroup>
 </map>

@@ -10,16 +10,22 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ubros.game.Controller.Elements.AcidBody;
-import com.ubros.game.Controller.Elements.HeroBody;
+import com.ubros.game.Controller.Elements.CharacterBody;
 import com.ubros.game.Controller.Elements.LimitBody;
 import com.ubros.game.Controller.Elements.MechanismBody;
+import com.ubros.game.Controller.Elements.ObjectiveBody;
 import com.ubros.game.Controller.Elements.PlatformBody;
 import com.ubros.game.Model.Elements.AcidModel;
+import com.ubros.game.Model.Elements.CharacterModel;
 import com.ubros.game.Model.Elements.LimitModel;
 import com.ubros.game.Model.Elements.MechanismModel;
+import com.ubros.game.Model.Elements.ObjectiveModel;
 import com.ubros.game.Model.Elements.PlatformModel;
 import com.ubros.game.Model.GameModel;
 import com.ubros.game.UbrosGame;
+import com.ubros.game.View.Elements.ElementView;
+import com.ubros.game.View.Elements.NinjaView;
+import com.ubros.game.View.Elements.RobotView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +33,7 @@ import java.util.List;
 public class GameController implements ContactListener {
 
     /**
-     *
+     * World considered gravity value
      */
     private float GRAVITY = -10;
 
@@ -54,25 +60,32 @@ public class GameController implements ContactListener {
     /**
      *
      */
-    private HeroBody hero;
+    private int remainingObjectives;
+
+    private CharacterBody robot;
+
+    private CharacterBody ninja;
 
     private List<MechanismBody> mechanismBodies = new ArrayList<MechanismBody>();
 
     private List<PlatformBody> platformBodies = new ArrayList<PlatformBody>();
 
+    private List<ObjectiveBody> objectiveBodies = new ArrayList<ObjectiveBody>();
+
     /**
      * Creates a new GameController that controls the physics of a certain GameModel.
      */
-    public GameController(UbrosGame game) {
+    private GameController(UbrosGame game) {
 
         this.game = game;
         this.world = new World(new Vector2(0, GRAVITY), true);
         this.debugRenderer = new Box2DDebugRenderer();
 
-        createHero();
+        createCharacters();
         createGround();
         createAcid();
         createMechanisms();
+        createObjectives();
 
         this.world.setContactListener(this);
     }
@@ -88,25 +101,26 @@ public class GameController implements ContactListener {
         return instance;
     }
 
-    public void createHero() {
-        hero = new HeroBody(this.world, GameModel.getInstance(this.game).getHero());
+    private void createCharacters() {
+        robot = new CharacterBody(this.world, GameModel.getInstance(this.game).getRobot(), "RobotBounds");
+        ninja = new CharacterBody(this.world, GameModel.getInstance(this.game).getNinja(), "NinjaBounds");
     }
 
-    public void createGround() {
+    private void createGround() {
         List<LimitModel> limits = GameModel.getInstance(this.game).getLimits();
         for (LimitModel limit : limits)
             new LimitBody(this.world, limit, limit.getShape().getVertices());
     }
 
-    public void createAcid() {
+    private void createAcid() {
         List<AcidModel> acidRegions = GameModel.getInstance(this.game).getAcidRegions();
         for (AcidModel acid : acidRegions)
             new AcidBody(this.world, acid, acid.getShape().getVertices());
     }
 
-    public void createMechanisms() {
-        int pointer = 0;
+    private void createMechanisms() {
 
+        int pointer = 0;
         createPlatforms();
 
         List<MechanismModel> mechanisms = GameModel.getInstance(this.game).getMechanisms();
@@ -116,29 +130,18 @@ public class GameController implements ContactListener {
         }
     }
 
-    public void createPlatforms() {
-        int pointer = 0;
-
+    private void createPlatforms() {
         List<PlatformModel> platforms = GameModel.getInstance(this.game).getPlatforms();
-        for (PlatformModel platform : platforms) {
+        for (PlatformModel platform : platforms)
             platformBodies.add(new PlatformBody(this.world, platform, platform.getShape().getVertices()));
-            if(pointer == 0) {
-                System.out.println(" ORIGIN X = " + platform.originX + "    - DEST _ " + ((float)(32 * 15) / 100));
-                initializeModelVariables(platform, platform.originX - ((float)(32 * 15) / 100), platform.originY, true);
-            }
-            else if(pointer == 1)
-                initializeModelVariables(platform, platform.originX - ((float)(32*4)/100), platform.originY, true);
-            else if(pointer == 2)
-                initializeModelVariables(platform, platform.originX, platform.originY + ((float)(30*3)/100), false);
-
-            pointer++;
-        }
     }
 
-    private void initializeModelVariables(PlatformModel platform, float destinyX, float destinyY, boolean direction) {
-        platform.destinyX = destinyX;
-        platform.destinyY = destinyY;
-        platform.movementDir = direction;
+    public void createObjectives() {
+        List<ObjectiveModel> objectives = GameModel.getInstance(this.game).getObjectives();
+        for (ObjectiveModel objective : objectives)
+            objectiveBodies.add(new ObjectiveBody(this.world, objective, objective.getShape().getVertices()));
+
+        this.remainingObjectives = objectives.size();
     }
 
     /**
@@ -154,8 +157,12 @@ public class GameController implements ContactListener {
         return debugRenderer;
     }
 
-    public HeroBody getHero() {
-        return hero;
+    public CharacterBody getRobot() {
+        return robot;
+    }
+
+    public CharacterBody getNinja() {
+        return ninja;
     }
 
     public List<MechanismBody> getMechanismBodies() {
@@ -164,6 +171,14 @@ public class GameController implements ContactListener {
 
     public List<PlatformBody> getPlatformBodies() {
         return platformBodies;
+    }
+
+    public List<ObjectiveBody> getObjectiveBodies() {
+        return objectiveBodies;
+    }
+
+    public UbrosGame getGame() {
+        return game;
     }
 
     @Override
@@ -176,13 +191,40 @@ public class GameController implements ContactListener {
             Body bodyB = bodyA == fixA.getBody() ? fixB.getBody() : fixA.getBody();
 
             if ((bodyB.getUserData()) instanceof AcidModel) {
-                System.out.print("HERO + MECH \n");
+                System.out.print("ROBOT + MECH \n");
              //   GameController.getInstance(this.game).getHero().getRobotView().setCurrentState(ElementView.CharacterState.DEAD);
                // GameController.getInstance(this.game).getHero().getBody().setLinearVelocity(0, 0);
             }
 
             if ((bodyB.getUserData()) instanceof MechanismModel)
                 ((MechanismModel) bodyB.getUserData()).setActive(true);
+
+            if ((bodyB.getUserData()) instanceof PlatformModel)
+                ((PlatformModel)(bodyB.getUserData())).robotContact = true;
+
+            if (((bodyB.getUserData()) instanceof ObjectiveModel)) {
+                if(((ObjectiveModel)bodyB.getUserData()).getData().equals("R")) {
+                    if(!((ObjectiveModel)bodyB.getUserData()).isCatched()) {
+                        ((ObjectiveModel) bodyB.getUserData()).setCatched();
+                        this.remainingObjectives--;
+                    }
+                }
+            }
+        }
+
+        if (fixA.getUserData().equals("NinjaBounds") || fixB.getUserData().equals("NinjaBounds")) {
+            Body bodyA = fixA.getUserData().equals("NinjaBounds") ? fixA.getBody() : fixB.getBody();
+            Body bodyB = bodyA == fixA.getBody() ? fixB.getBody() : fixA.getBody();
+
+            if ((bodyB.getUserData()) instanceof AcidModel) {
+                System.out.print("NINJA + MECH \n");
+                ((NinjaView)(GameModel.getInstance(this.game).getNinja().getElementView())).setCurrentState(ElementView.CharacterState.DEAD);
+                GameController.getInstance(this.game).getNinja().getBody().setLinearVelocity(0, 0);
+            }
+
+            if ((bodyB.getUserData()) instanceof MechanismModel)
+                ((MechanismModel) bodyB.getUserData()).setActive(true);
+
         }
 
 
@@ -200,7 +242,26 @@ public class GameController implements ContactListener {
             if ((bodyB.getUserData()) instanceof AcidModel) {
                 System.out.print("END HERO + MECH \n");
                 // GameController.getInstance(this.game).getHero().getRobotView().setCurrentState(ElementView.CharacterState.DEAD);
-               // GameController.getInstance(this.game).getHero().getBody().setLinearVelocity(0, 0);
+                // GameController.getInstance(this.game).getHero().getBody().setLinearVelocity(0, 0);
+            }
+
+            if ((bodyB.getUserData()) instanceof MechanismModel)
+                ((MechanismModel) bodyB.getUserData()).setActive(false);
+
+            if ((bodyB.getUserData()) instanceof PlatformModel) {
+                ((PlatformModel) (bodyB.getUserData())).robotContact = false;
+                ((RobotView)((CharacterModel)bodyA.getUserData()).getElementView()).onPlatform = false;
+            }
+        }
+
+        if (fixA.getUserData().equals("NinjaBounds") || fixB.getUserData().equals("NinjaBounds")) {
+            Body bodyA = fixA.getUserData().equals("NinjaBounds") ? fixA.getBody() : fixB.getBody();
+            Body bodyB = bodyA == fixA.getBody() ? fixB.getBody() : fixA.getBody();
+
+            if ((bodyB.getUserData()) instanceof AcidModel) {
+                //System.out.print("END HERO + MECH \n");
+                // GameController.getInstance(this.game).getHero().getRobotView().setCurrentState(ElementView.CharacterState.DEAD);
+                // GameController.getInstance(this.game).getHero().getBody().setLinearVelocity(0, 0);
             }
 
             if ((bodyB.getUserData()) instanceof MechanismModel)
@@ -218,11 +279,21 @@ public class GameController implements ContactListener {
 
     }
 
-    public void characterCollision(Body bodyA, Body bodyB) {
-
-    }
-
     public void update(float delta) {
+
+        /*
+        for(PlatformBody platform : this.getPlatformBodies()) {
+            PlatformModel model = ((PlatformModel)platform.getModel());
+
+            if(model.movementDir) {
+                if( (platform.getX() >= model.originX) || (platform.getX() <= model.destinyX))
+                    platform.getBody().setLinearVelocity(0,0);
+            }
+            else {
+                if((platform.getY() >= model.destinyY) || (platform.getY() <= model.originY))
+                   platform.getBody().setLinearVelocity(0,0);
+            }
+        }*/
 
     }
 

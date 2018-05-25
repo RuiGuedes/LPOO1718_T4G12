@@ -1,10 +1,10 @@
 package com.ubros.game.Model.Elements;
 
-import com.ubros.game.View.Elements.RobotView;
+import com.ubros.game.View.Elements.ElementView;
 
-public class HeroModel extends ElementModel {
+public class CharacterModel extends ElementModel {
 
-    private RobotView robotView;
+    private ElementView elementView;
 
     /**
      * Constructs a model with a position and a rotation.
@@ -13,16 +13,16 @@ public class HeroModel extends ElementModel {
      * @param y        The y-coordinate of this entity in meters.
      * @param rotation The current rotation of this entity in radians.
      */
-    public HeroModel(float x, float y, float rotation) {
+    public CharacterModel(float x, float y, float rotation) {
         super(x, y, rotation);
     }
 
-    public RobotView getRobotView() {
-        return robotView;
+    public ElementView getElementView() {
+        return elementView;
     }
 
-    public void setRobotView(RobotView robotView) {
-        this.robotView = robotView;
+    public void setElementView(ElementView elementView) {
+        this.elementView = elementView;
     }
 
     @Override

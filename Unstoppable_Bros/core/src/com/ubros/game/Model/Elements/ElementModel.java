@@ -7,6 +7,13 @@ public abstract class ElementModel {
     public enum PhysicsType {STATIC, DYNAMIC, KINEMATIC};
 
     /**
+     *
+     */
+    public final static float TILE_WIDTH = 32;
+
+    public final static float TILE_HEIGHT = 30;
+
+    /**
      * The x-coordinate of this model in meters.
      */
     private float x;

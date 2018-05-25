@@ -23,18 +23,20 @@ public class PlatformView extends ElementView {
      * @param atlas
      * @param element
      */
-    public PlatformView(UbrosGame game, TextureAtlas atlas, ElementBody element, Texture view) {
+    public PlatformView(UbrosGame game, TextureAtlas atlas, ElementBody element, String platformView) {
         super(game, atlas, element);
-        this.view = view;
 
-        if(((PlatformModel)getElement().getModel()).movementDir) {
-            width = 4*0.32f;
-            height = 0.30f;
-        }
-        else {
-            width = 0.32f;
-            height = 0.30f*3;
-        }
+        PlatformModel model = ((PlatformModel)getElement().getModel());
+        loadPlatformView(platformView);
+
+        this.view = game.getAssetManager().get(platformView, Texture.class);
+        this.width =  model.getPlatformWidth();
+        this.height = model.getPlatformHeight();
+    }
+
+    public void loadPlatformView(String platformView) {
+        super.getGame().getAssetManager().load(platformView,Texture.class);
+        super.getGame().getAssetManager().finishLoading();
     }
 
     @Override
@@ -49,12 +51,12 @@ public class PlatformView extends ElementView {
         PlatformModel model = ((PlatformModel)getElement().getModel());
         PlatformBody body = ((PlatformBody)getElement());
 
-        if(model.movementDir) {
-            if( (body.getX() >= model.originX) || (body.getX() <= model.destinyX))
+        if(model.isMovementDir()) {
+            if( (body.getX() >= model.getOriginX()) || (body.getX() <= model.getDestinyX()))
                 body.getBody().setLinearVelocity(0,0);
         }
         else {
-            if((body.getY() >= model.destinyY) || (body.getY() <= model.originY))
+            if((body.getY() >= model.getDestinyY()) || (body.getY() <= model.getOriginY()))
                 body.getBody().setLinearVelocity(0,0);
         }
     }

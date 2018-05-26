@@ -8,6 +8,9 @@ import com.ubros.game.UbrosGame;
 
 public class ObjectiveView extends ElementView {
 
+    private final float SCALE = 0.85f;
+
+    private final float Y_POS = 0.1f;
 
     private Texture view;
 
@@ -45,10 +48,12 @@ public class ObjectiveView extends ElementView {
     @Override
     public void draw(float delta) {
         this.update(delta);
-        if(drawable) {
-            getGame().getBatch().draw(view, getElement().getX(), getElement().getY(), width, height);
-            //getGame().getBatch().draw(view, 1600/ PlayGameScreen.PIXEL_TO_METER, 900/PlayGameScreen.PIXEL_TO_METER, width, height);
-        }
+        if(drawable)
+            getGame().getBatch().draw(view, getElement().getX(), getElement().getY() + height*Y_POS, width*SCALE, height*SCALE);
+    }
+
+    @Override
+    public void setCurrentState(CharacterState state) {
     }
 
     @Override

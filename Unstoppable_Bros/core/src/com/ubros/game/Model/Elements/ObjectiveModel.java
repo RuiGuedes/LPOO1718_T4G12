@@ -90,11 +90,11 @@ public class ObjectiveModel extends ElementModel {
 
     @Override
     public ModelType getType() {
-        return null;
+        return ModelType.OBJECTIVE;
     }
 
     @Override
     public PhysicsType getPhysicsType() {
-        return null;
+        return PhysicsType.STATIC;
     }
 }

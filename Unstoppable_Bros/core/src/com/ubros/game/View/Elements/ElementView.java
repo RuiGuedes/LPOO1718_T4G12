@@ -58,5 +58,7 @@ public abstract class ElementView extends Sprite {
         return element;
     }
 
+    public abstract void setCurrentState(ElementView.CharacterState state);
+
     public abstract void update(float delta);
 }

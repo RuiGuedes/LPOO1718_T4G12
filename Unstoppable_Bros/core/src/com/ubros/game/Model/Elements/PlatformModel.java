@@ -51,8 +51,6 @@ public class PlatformModel extends ElementModel {
 
     private float platformHeight;
 
-    public boolean robotContact = false;
-
     /**
      * Constructs a model with a position and a rotation.
      *
@@ -70,7 +68,7 @@ public class PlatformModel extends ElementModel {
         initializeRemainingVariables(data);
     }
 
-     public void initializeRemainingVariables(String data) {
+     private void initializeRemainingVariables(String data) {
 
         float movement;
         StringTokenizer tokenizer = new StringTokenizer(data, "-");

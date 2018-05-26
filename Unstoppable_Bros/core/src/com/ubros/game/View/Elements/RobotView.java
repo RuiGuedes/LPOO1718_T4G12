@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.ubros.game.Controller.Elements.ElementBody;
 import com.ubros.game.Controller.GameController;
 import com.ubros.game.Gui.PlayGameScreen;
+import com.ubros.game.Model.Elements.CharacterModel;
 import com.ubros.game.UbrosGame;
 
 public class RobotView extends ElementView {
@@ -50,8 +51,6 @@ public class RobotView extends ElementView {
      * Robot dying animation
      */
     private Animation<TextureRegion> robotDying;
-
-    public boolean onPlatform = false;
 
     /**
      * Creates a view belonging to a game.
@@ -169,16 +168,17 @@ public class RobotView extends ElementView {
 
         if(currentState == CharacterState.DEAD)
             return CharacterState.DEAD;
-        else if(element.getBody().getLinearVelocity().y > 0 || element.getBody().getLinearVelocity().y < 0 && previousState == ElementView.CharacterState.JUMPING)
+        else if((element.getBody().getLinearVelocity().y > 0 || element.getBody().getLinearVelocity().y < 0 && previousState == ElementView.CharacterState.JUMPING) && (element.getBody().getLinearVelocity().y == 0))
             return ElementView.CharacterState.JUMPING;
         else if(element.getBody().getLinearVelocity().y < 0)
             return ElementView.CharacterState.FALLING;
-        else if(element.getBody().getLinearVelocity().x != 0 && (PlayGameScreen.horizontalMovement || !onPlatform))
+        else if(element.getBody().getLinearVelocity().x != 0 && (PlayGameScreen.horizontalMovement || !((CharacterModel)element.getModel()).isOnPlatform()))
             return ElementView.CharacterState.RUNNING;
         else
             return ElementView.CharacterState.STANDING;
     }
 
+    @Override
     public void setCurrentState(ElementView.CharacterState state) {
         this.currentState = state;
     }

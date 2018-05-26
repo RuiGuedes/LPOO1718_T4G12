@@ -11,6 +11,11 @@ import com.ubros.game.Model.Elements.ObjectiveModel;
 public class ObjectiveBody extends ElementBody {
 
     /**
+     * Body representation scale
+     */
+    private final float SCALE = 0.85f;
+
+    /**
      * Constructs a body representing a model in a certain world.
      *
      * @param world The world this body lives on.
@@ -19,7 +24,6 @@ public class ObjectiveBody extends ElementBody {
     public ObjectiveBody(World world, ElementModel model, float[] vertexSet) {
         super(world, model);
         createFixture(getBody(),vertexSet,0,0,0f,0f,0f, (short)0, (short)0);
-        System.out.println("X - " + getBody().getPosition().x + "    Y - " + getBody().getPosition().y);
     }
 
     @Override
@@ -29,11 +33,13 @@ public class ObjectiveBody extends ElementBody {
         PolygonShape shape = new PolygonShape();
 
         for(int i = 0; i < vertexes.length; i++)
-            vertexes[i] = vertexes[i]/ PlayGameScreen.PIXEL_TO_METER;
+            vertexes[i] = (vertexes[i] * SCALE)/ PlayGameScreen.PIXEL_TO_METER;
 
         shape.set(vertexes);
         fdef.shape = shape;
         fdef.isSensor = true;
         body.createFixture(fdef).setUserData(((ObjectiveModel)getModel()).getData());
+
+
     }
 }

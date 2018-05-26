@@ -95,6 +95,7 @@ public class NinjaView extends ElementView {
     @Override
     public void draw(float delta) {
         this.update(delta);
+        //System.out.println("VIEW --- " +  super.getElement().getBody().getPosition().x + " ------ " + super.getElement().getBody().getPosition().y);
         super.draw(getGame().getBatch());
     }
 
@@ -175,6 +176,7 @@ public class NinjaView extends ElementView {
             return ElementView.CharacterState.STANDING;
     }
 
+    @Override
     public void setCurrentState(ElementView.CharacterState state) {
         this.currentState = state;
     }

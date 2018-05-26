@@ -6,6 +6,8 @@ public class CharacterModel extends ElementModel {
 
     private ElementView elementView;
 
+    private boolean onPlatform;
+
     /**
      * Constructs a model with a position and a rotation.
      *
@@ -15,6 +17,15 @@ public class CharacterModel extends ElementModel {
      */
     public CharacterModel(float x, float y, float rotation) {
         super(x, y, rotation);
+        this.onPlatform = false;
+    }
+
+    public boolean isOnPlatform() {
+        return onPlatform;
+    }
+
+    public void setOnPlatform(boolean onPlatform) {
+        this.onPlatform = onPlatform;
     }
 
     public ElementView getElementView() {

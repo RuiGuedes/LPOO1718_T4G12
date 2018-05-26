@@ -1,5 +1,6 @@
 package com.ubros.game.Controller.Elements;
 
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -13,6 +14,10 @@ public class CharacterBody extends ElementBody {
      * Body user data used to check contact with other bodies
      */
     private String userData;
+
+    public Vector3 newPosition;
+
+    public boolean setTransformFlag = false;
 
     /**
      * Constructs a body representing a model in a certain world.
@@ -48,5 +53,6 @@ public class CharacterBody extends ElementBody {
 
         fdef.shape = shape;
         body.createFixture(fdef).setUserData(userData);
+
     }
 }

@@ -163,7 +163,6 @@ public class MainMenuScreen extends ScreenAdapter {
             }
             else if(checkPlayButton(x,y)) {
                 activatePlayButton();
-
                 /*
                 Connection connect = new Connection(this.game);
 

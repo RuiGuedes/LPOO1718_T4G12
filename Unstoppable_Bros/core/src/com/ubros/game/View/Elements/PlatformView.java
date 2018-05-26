@@ -46,6 +46,10 @@ public class PlatformView extends ElementView {
     }
 
     @Override
+    public void setCurrentState(CharacterState state) {
+    }
+
+    @Override
     public void update(float delta) {
 
         PlatformModel model = ((PlatformModel)getElement().getModel());

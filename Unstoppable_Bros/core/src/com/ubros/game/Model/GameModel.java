@@ -10,6 +10,7 @@ import com.ubros.game.Model.Elements.MechanismModel;
 import com.ubros.game.Model.Elements.ObjectiveModel;
 import com.ubros.game.Model.Elements.PlatformModel;
 import com.ubros.game.Model.Elements.CharacterModel;
+import com.ubros.game.Model.Elements.PortalModel;
 import com.ubros.game.UbrosGame;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class GameModel {
     /**
      * Private values used to determine objects from tiled map
      */
-    int GROUND_BODY = 3; int ACID_BODY = 4; int MECHANISM_BODY = 5; int PLATFORM_BODY = 6; int OBJECTIVE_BODY = 7;
+    int GROUND_BODY = 3; int ACID_BODY = 4; int MECHANISM_BODY = 5; int PLATFORM_BODY = 6; int OBJECTIVE_BODY = 7; int PORTAL_BODY = 8;
 
     /**
      * The singleton instance of the game model
@@ -68,6 +69,11 @@ public class GameModel {
     private  List<ObjectiveModel> objectives = new ArrayList<ObjectiveModel>();
 
     /**
+     *
+     */
+    private List<PortalModel> portals = new ArrayList<PortalModel>();
+
+    /**
      * Constructs a game with a.space ship in the middle of the
      * arena and a certain number of asteroids in different sizes.
      */
@@ -94,11 +100,12 @@ public class GameModel {
         createMechanisms();
         createPlatforms();
         createObjectives();
+        createPortals();
     }
 
     private void createCharacters() {
         this.robot = new CharacterModel(800/ PlayGameScreen.PIXEL_TO_METER,400/ PlayGameScreen.PIXEL_TO_METER,0);
-        this.ninja = new CharacterModel(1600/ PlayGameScreen.PIXEL_TO_METER,900/ PlayGameScreen.PIXEL_TO_METER,0);
+        this.ninja = new CharacterModel(1600/ PlayGameScreen.PIXEL_TO_METER,1000/ PlayGameScreen.PIXEL_TO_METER,0);
     }
 
     public CharacterModel getRobot() {
@@ -163,5 +170,16 @@ public class GameModel {
 
     public List<ObjectiveModel> getObjectives() {
         return objectives;
+    }
+
+    private void createPortals() {
+        for(MapObject object : UbrosGame.map.getLayers().get(PORTAL_BODY).getObjects().getByType(PolygonMapObject.class)) {
+            Polygon polygon = ((PolygonMapObject) object).getPolygon();
+            portals.add(new PortalModel(polygon.getX() / PlayGameScreen.PIXEL_TO_METER, polygon.getY() / PlayGameScreen.PIXEL_TO_METER, 0, polygon, object.getName()));
+        }
+    }
+
+    public List<PortalModel> getPortals() {
+        return portals;
     }
 }

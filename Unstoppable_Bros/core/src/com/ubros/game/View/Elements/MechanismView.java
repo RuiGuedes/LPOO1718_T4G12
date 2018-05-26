@@ -31,6 +31,10 @@ public class MechanismView extends ElementView {
     }
 
     @Override
+    public void setCurrentState(CharacterState state) {
+    }
+
+    @Override
     public void update(float delta) {
         if(((MechanismModel)super.getElement().getModel()).isActive())
             this.mechanism = getGame().getAssetManager().get("mechanismOn.png", Texture.class);

@@ -235,6 +235,13 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     }
 
     private void update(float delta) {
+
+        if(GameController.getInstance(this.game).getState() == GameController.GameStatus.GAMEOVER) {
+           // dispose();
+            //this.dispose();
+           // this.game.setScreen(new MainMenuScreen(this.game));
+        }
+
         handleInput();
 
         GameController.getInstance(this.game).getWorld().step(1 / 60f, 6, 2);
@@ -277,9 +284,6 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     private void drawElements(float delta) {
 
-        robot.draw(delta);
-        ninja.draw(delta);
-
         for (MechanismBody mechanism : GameController.getInstance(this.game).getMechanismBodies())
             ((MechanismModel) mechanism.getModel()).getView().draw(delta);
 
@@ -289,6 +293,8 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         for(ObjectiveBody objectiveBody : GameController.getInstance(this.game).getObjectiveBodies())
             ((ObjectiveModel)objectiveBody.getModel()).getView().draw(delta);
 
+        robot.draw(delta);
+        ninja.draw(delta);
     }
 
     private void drawInteractiveButtons() {

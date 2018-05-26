@@ -53,11 +53,11 @@ public class ExitDoorModel extends ElementModel {
 
     @Override
     public ModelType getType() {
-        return null;
+        return ModelType.EXITDOOR;
     }
 
     @Override
     public PhysicsType getPhysicsType() {
-        return null;
+        return PhysicsType.STATIC;
     }
 }

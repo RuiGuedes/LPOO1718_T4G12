@@ -6,9 +6,11 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.ubros.game.Model.Elements.BulletModel;
 import com.ubros.game.Model.Elements.CharacterModel;
 import com.ubros.game.Model.Elements.DangerZoneModel;
 import com.ubros.game.Model.Elements.ExitDoorModel;
+import com.ubros.game.Model.Elements.LimitModel;
 import com.ubros.game.Model.Elements.MechanismModel;
 import com.ubros.game.Model.Elements.ObjectiveModel;
 import com.ubros.game.Model.Elements.PlatformModel;
@@ -37,6 +39,13 @@ public class MyContactListener implements ContactListener {
             ninjaBeginContact(bodyA, bodyB);
         }
 
+        if (fixA.getUserData().equals("Bullet") || fixB.getUserData().equals("Bullet")) {
+            Body bodyA = fixA.getUserData().equals("Bullet") ? fixA.getBody() : fixB.getBody();
+            Body bodyB = bodyA == fixA.getBody() ? fixB.getBody() : fixA.getBody();
+
+            bulletCollision(bodyA, bodyB);
+        }
+
     }
 
     private void robotBeginContact(Body robot, Body object) {
@@ -47,8 +56,10 @@ public class MyContactListener implements ContactListener {
         if ((object.getUserData()) instanceof MechanismModel)
             mechanismCollision(object);
 
-        if ((object.getUserData()) instanceof PlatformModel)
+        if ((object.getUserData()) instanceof PlatformModel) {
             platformCollision(robot);
+            GameController.getInstance(null).getRobot().getBody().setLinearVelocity(0,0);
+        }
 
         if (((object.getUserData()) instanceof ObjectiveModel) && (((ObjectiveModel)object.getUserData()).getData().equals("R")))
             objectiveCollision(object);
@@ -159,6 +170,18 @@ public class MyContactListener implements ContactListener {
 
     private void exitDoorCollision(Body exitDoorBody, boolean status) {
         ((ExitDoorModel)exitDoorBody.getUserData()).setCharacterContact(status);
+    }
+
+    private void bulletCollision(Body bullet, Body object) {
+
+        if(object.getUserData() instanceof LimitModel)
+            ((BulletModel)bullet.getUserData()).setFlaggedForRemoval(true);
+        else if(object.getUserData() instanceof PlatformModel)
+            ((BulletModel)bullet.getUserData()).setFlaggedForRemoval(true);
+        else if(object.getUserData() instanceof PortalModel)
+            ((BulletModel)bullet.getUserData()).setFlaggedForRemoval(true);
+
+
     }
 
 }

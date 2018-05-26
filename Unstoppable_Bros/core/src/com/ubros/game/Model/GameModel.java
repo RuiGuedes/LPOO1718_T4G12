@@ -3,16 +3,22 @@ package com.ubros.game.Model;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.math.Polygon;
+import com.ubros.game.Controller.Elements.BulletBody;
+import com.ubros.game.Controller.GameController;
 import com.ubros.game.Gui.PlayGameScreen;
+import com.ubros.game.Model.Elements.BulletModel;
+import com.ubros.game.Model.Elements.CharacterModel;
 import com.ubros.game.Model.Elements.DangerZoneModel;
+import com.ubros.game.Model.Elements.ElementModel;
 import com.ubros.game.Model.Elements.ExitDoorModel;
 import com.ubros.game.Model.Elements.LimitModel;
 import com.ubros.game.Model.Elements.MechanismModel;
+import com.ubros.game.Model.Elements.ObjectModel;
 import com.ubros.game.Model.Elements.ObjectiveModel;
 import com.ubros.game.Model.Elements.PlatformModel;
-import com.ubros.game.Model.Elements.CharacterModel;
 import com.ubros.game.Model.Elements.PortalModel;
 import com.ubros.game.UbrosGame;
+import com.ubros.game.View.Elements.BulletView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +35,7 @@ public class GameModel {
     private int OBJECTIVE_BODY = 7;
     private int PORTAL_BODY = 8;
     private int EXIT_DOOR_BODY = 9;
+    private int OBJECT_BODY = 10;
 
     /**
      * The singleton instance of the game model
@@ -86,6 +93,13 @@ public class GameModel {
     private List<ExitDoorModel> exitDoors = new ArrayList<ExitDoorModel>();
 
     /**
+     *
+     */
+    private List<ObjectModel> objects = new ArrayList<ObjectModel>();
+
+    public List<BulletModel> bullets = new ArrayList<BulletModel>();
+
+    /**
      * Constructs a game with a.space ship in the middle of the
      * arena and a certain number of asteroids in different sizes.
      */
@@ -106,6 +120,7 @@ public class GameModel {
         createObjectives();
         createPortals();
         createExitDoors();
+        createObjects();
     }
 
 
@@ -195,6 +210,27 @@ public class GameModel {
         }
     }
 
+    /**
+     * Creates all object models
+     */
+    private void createObjects() {
+        for (MapObject object : UbrosGame.map.getLayers().get(OBJECT_BODY).getObjects().getByType(PolygonMapObject.class)) {
+            Polygon polygon = ((PolygonMapObject) object).getPolygon();
+            objects.add(new ObjectModel(polygon.getX() / PlayGameScreen.PIXEL_TO_METER, polygon.getY() / PlayGameScreen.PIXEL_TO_METER, 0, polygon, object.getName()));
+        }
+    }
+
+    public void createBullet(float x, float y, boolean direction) {
+
+        float advance = direction ? 0.6f : -0.6f;
+
+        BulletModel bulletModel = new BulletModel(x + advance,y, 0);
+
+        BulletBody bulletBody = new BulletBody(GameController.getInstance(null).getWorld(), bulletModel, direction);
+
+        bulletModel.setView(new BulletView(this.game,null, bulletBody));
+        bullets.add(bulletModel);
+    }
 
     /////////////////
     // GET METHODS //
@@ -290,4 +326,29 @@ public class GameModel {
     public List<ExitDoorModel> getExitDoors() {
         return exitDoors;
     }
+
+    /**
+     * Function responsible to retrieve list of objects models
+     * @return list of objects models
+     */
+    public List<ObjectModel> getObjects() {
+        return objects;
+    }
+
+
+    ////////////
+    // OTHERS //
+    ////////////
+
+    /**
+     * Removes a model from this game.
+     *
+     * @param model the model to be removed
+     */
+    public void remove(ElementModel model) {
+        if (model instanceof BulletModel) {
+            bullets.remove(model);
+        }
+    }
+
 }

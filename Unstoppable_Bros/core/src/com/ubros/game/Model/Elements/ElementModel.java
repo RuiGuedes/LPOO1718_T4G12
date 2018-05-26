@@ -2,7 +2,7 @@ package com.ubros.game.Model.Elements;
 
 public abstract class ElementModel {
 
-    public enum ModelType {LIMIT, HERO, ACID, MECHANISM, PLATFORM, OBJECTIVE, PORTAL};
+    public enum ModelType {LIMIT, HERO, ACID, MECHANISM, PLATFORM, OBJECTIVE, PORTAL, OBJECT, EXITDOOR, BULLET};
 
     public enum PhysicsType {STATIC, DYNAMIC, KINEMATIC};
 
@@ -27,6 +27,11 @@ public abstract class ElementModel {
      * The current rotation of this model in radians.
      */
     private float rotation;
+
+    /**
+     * Has this model been flagged for removal?
+     */
+    private boolean flaggedForRemoval = false;
 
     /**
      * Constructs a model with a position and a rotation.
@@ -86,6 +91,22 @@ public abstract class ElementModel {
      */
     public void setRotation(float rotation) {
         this.rotation = rotation;
+    }
+
+    /**
+     * Returns if this entity has been flagged for removal
+     *
+     * @return
+     */
+    public boolean isFlaggedToBeRemoved() {
+        return flaggedForRemoval;
+    }
+
+    /**
+     * Makes this model flagged for removal on next step
+     */
+    public void setFlaggedForRemoval(boolean flaggedForRemoval) {
+        this.flaggedForRemoval = flaggedForRemoval;
     }
 
     public abstract ModelType getType();

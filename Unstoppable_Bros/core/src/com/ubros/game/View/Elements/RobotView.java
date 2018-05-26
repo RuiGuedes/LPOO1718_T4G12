@@ -3,6 +3,7 @@ package com.ubros.game.View.Elements;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.ubros.game.Controller.Elements.ElementBody;
 import com.ubros.game.Controller.GameController;
@@ -52,6 +53,8 @@ public class RobotView extends ElementView {
      */
     private Animation<TextureRegion> robotDying;
 
+    private Vector2 lastPosition;
+
     /**
      * Creates a view belonging to a game.
      *
@@ -59,35 +62,36 @@ public class RobotView extends ElementView {
      *             asset manager to get textures.
      */
     public RobotView(UbrosGame game, TextureAtlas atlas) {
-        super(game,atlas, GameController.getInstance(game).getRobot());
+        super(game, atlas, GameController.getInstance(game).getRobot());
 
         this.currentState = this.previousState = ElementView.CharacterState.STANDING;
         this.stateTimer = 0;
         this.runningRight = true;
+        this.lastPosition = new Vector2(getElement().getX(), getElement().getY());
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
-        for(int i = 1; i <= 8; i++)
+        for (int i = 1; i <= 8; i++)
             frames.add(new TextureRegion(atlas.findRegion("Run (" + i + ")").getTexture(), 0, 0, CHARACTER_WIDTH, CHARACTER_HEIGHT));
 
-        robotRunning = new Animation<TextureRegion>(0.1f,frames);
+        robotRunning = new Animation<TextureRegion>(0.1f, frames);
         frames.clear();
 
-        for(int i = 1; i <= 9; i++)
-            frames.add(new TextureRegion(atlas.findRegion("Jump (" + i + ")").getTexture(), 0,0, CHARACTER_WIDTH, CHARACTER_HEIGHT));
+        for (int i = 1; i <= 9; i++)
+            frames.add(new TextureRegion(atlas.findRegion("Jump (" + i + ")").getTexture(), 0, 0, CHARACTER_WIDTH, CHARACTER_HEIGHT));
 
-        robotJumping = new Animation<TextureRegion>(0.05f,frames);
+        robotJumping = new Animation<TextureRegion>(0.05f, frames);
         frames.clear();
 
-        for(int i = 1; i <= 7; i++)
-            frames.add(new TextureRegion(atlas.findRegion("Dead (" + i + ")").getTexture(), 0,0, CHARACTER_WIDTH, CHARACTER_HEIGHT));
+        for (int i = 1; i <= 7; i++)
+            frames.add(new TextureRegion(atlas.findRegion("Dead (" + i + ")").getTexture(), 0, 0, CHARACTER_WIDTH, CHARACTER_HEIGHT));
 
-        robotDying = new Animation<TextureRegion>(0.05f,frames);
+        robotDying = new Animation<TextureRegion>(0.05f, frames);
         frames.clear();
 
-        robotDefault = new TextureRegion(atlas.findRegion("Idle (1)"), 0,0, CHARACTER_WIDTH, CHARACTER_HEIGHT);
+        robotDefault = new TextureRegion(atlas.findRegion("Idle (1)"), 0, 0, CHARACTER_WIDTH, CHARACTER_HEIGHT);
 
-        setBounds(0,0,CHARACTER_WIDTH/ PlayGameScreen.PIXEL_TO_METER,CHARACTER_HEIGHT/PlayGameScreen.PIXEL_TO_METER);
+        setBounds(0, 0, CHARACTER_WIDTH / PlayGameScreen.PIXEL_TO_METER, CHARACTER_HEIGHT / PlayGameScreen.PIXEL_TO_METER);
 
         setRegion(robotDefault);
     }
@@ -100,19 +104,17 @@ public class RobotView extends ElementView {
 
     /**
      * Updates this view based on a certain model.
-     *
      */
     @Override
     public void update(float delta) {
         ElementBody element = super.getElement();
 
-        if(currentState == ElementView.CharacterState.RUNNING) {
+        if (currentState == ElementView.CharacterState.RUNNING) {
             if (runningRight)
-                setPosition(element.getBody().getPosition().x - getWidth() / 2, element.getBody().getPosition().y - getHeight()/2);
+                setPosition(element.getBody().getPosition().x - getWidth() / 2, element.getBody().getPosition().y - getHeight() / 2);
             else
                 setPosition(element.getBody().getPosition().x - getWidth() / 2, element.getBody().getPosition().y - getHeight() / 2);
-        }
-        else {
+        } else {
             if (runningRight)
                 setPosition(element.getBody().getPosition().x - getWidth() / 2, element.getBody().getPosition().y - getHeight() / 2);
             else
@@ -124,6 +126,7 @@ public class RobotView extends ElementView {
 
     public TextureRegion getFrame(float delta) {
         this.currentState = getState(super.getElement());
+
         TextureRegion region = null;
 
         switch (currentState) {
@@ -137,45 +140,52 @@ public class RobotView extends ElementView {
                 region = robotJumping.getKeyFrame(stateTimer);
                 break;
             case FALLING:
-                region = new TextureRegion(getAtlas().findRegion("Jump (10)"), 0,0, CHARACTER_WIDTH, CHARACTER_HEIGHT);;
+                region = new TextureRegion(getAtlas().findRegion("Jump (10)"), 0, 0, CHARACTER_WIDTH, CHARACTER_HEIGHT);
                 break;
             case DEAD:
                 region = robotDying.getKeyFrame(stateTimer);
                 break;
         }
 
-        if((super.getElement().getBody().getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
-            region.flip(true,false);
-            runningRight = false;
-        }
-        else if((super.getElement().getBody().getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
-            region.flip(true,false);
-            runningRight = true;
-        }
 
-        if(currentState == previousState)
-            stateTimer += delta;
-        else {
-            stateTimer = 0;
-        }
+            if ((super.getElement().getBody().getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
+                region.flip(true, false);
+                runningRight = false;
+            } else if ((super.getElement().getBody().getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
+                region.flip(true, false);
+                runningRight = true;
+            }
 
+            if (currentState == previousState)
+                stateTimer += delta;
+            else {
+                stateTimer = 0;
+            }
+
+
+        this.lastPosition.x = getElement().getX();
+        this.lastPosition.y = getElement().getY();
         previousState = currentState;
 
         return region;
     }
 
-    public ElementView.CharacterState getState(ElementBody element) {
+    private ElementView.CharacterState getState(ElementBody element) {
 
-        if(currentState == CharacterState.DEAD)
+        if (currentState == CharacterState.DEAD)
             return CharacterState.DEAD;
-        else if((element.getBody().getLinearVelocity().y > 0 || element.getBody().getLinearVelocity().y < 0 && previousState == ElementView.CharacterState.JUMPING) && (element.getBody().getLinearVelocity().y == 0))
+        else if ((element.getBody().getLinearVelocity().y > 0 || element.getBody().getLinearVelocity().y < 0 && previousState == ElementView.CharacterState.JUMPING) && (element.getBody().getLinearVelocity().y == 0))
             return ElementView.CharacterState.JUMPING;
-        else if(element.getBody().getLinearVelocity().y < 0)
+        else if (element.getBody().getLinearVelocity().y < 0)
             return ElementView.CharacterState.FALLING;
-        else if(element.getBody().getLinearVelocity().x != 0 && (PlayGameScreen.horizontalMovement || !((CharacterModel)element.getModel()).isOnPlatform()))
+        else if (element.getBody().getLinearVelocity().x != 0 && (PlayGameScreen.horizontalMovement || !((CharacterModel) element.getModel()).isOnPlatform()) && lastPosition.x != getElement().getX())
             return ElementView.CharacterState.RUNNING;
         else
             return ElementView.CharacterState.STANDING;
+    }
+
+    public boolean isRunningRight() {
+        return runningRight;
     }
 
     @Override

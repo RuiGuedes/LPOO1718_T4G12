@@ -15,6 +15,7 @@ import com.ubros.game.Controller.Elements.MechanismBody;
 import com.ubros.game.Controller.Elements.ObjectiveBody;
 import com.ubros.game.Controller.Elements.PlatformBody;
 import com.ubros.game.Controller.GameController;
+import com.ubros.game.Model.Elements.BulletModel;
 import com.ubros.game.Model.Elements.ExitDoorModel;
 import com.ubros.game.Model.Elements.MechanismModel;
 import com.ubros.game.Model.Elements.ObjectiveModel;
@@ -113,6 +114,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     public static boolean horizontalMovement = false;
 
+
     /**
      * Creates this screen.
      *
@@ -158,6 +160,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         this.game.getAssetManager().load("DoorLocked.png", Texture.class);
         this.game.getAssetManager().load("DoorUnlocked.png", Texture.class);
         this.game.getAssetManager().load("DoorOpen.png", Texture.class);
+        this.game.getAssetManager().load("bullet.png", Texture.class);
 
         this.game.getAssetManager().load("Robot/Robot.pack", TextureAtlas.class);
         this.game.getAssetManager().load("Ninja/Ninja.pack", TextureAtlas.class);
@@ -312,6 +315,9 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
         robot.draw(delta);
         ninja.draw(delta);
+
+        for(BulletModel bulletModel : GameModel.getInstance(this.game).bullets)
+            bulletModel.getView().draw(delta);
     }
 
     private void drawInteractiveButtons() {
@@ -379,7 +385,8 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
         if (checkBulletButton(screenX, screenY)) {
             bulletButton = buttonTextures.get(7);
-            player = player == true ? false : true;
+            //player = player ? false : true;
+            GameModel.getInstance(this.game).createBullet(robot.getElement().getX(), robot.getElement().getY(), ((RobotView)robot).isRunningRight());
         }
 
         return true;

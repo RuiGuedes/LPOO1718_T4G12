@@ -1,20 +1,26 @@
 package com.ubros.game.Controller;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.ubros.game.Controller.Elements.DangerZoneBody;
+import com.badlogic.gdx.utils.Array;
+import com.ubros.game.Controller.Elements.BulletBody;
 import com.ubros.game.Controller.Elements.CharacterBody;
+import com.ubros.game.Controller.Elements.DangerZoneBody;
 import com.ubros.game.Controller.Elements.ExitDoorBody;
 import com.ubros.game.Controller.Elements.LimitBody;
 import com.ubros.game.Controller.Elements.MechanismBody;
+import com.ubros.game.Controller.Elements.ObjectBody;
 import com.ubros.game.Controller.Elements.ObjectiveBody;
 import com.ubros.game.Controller.Elements.PlatformBody;
 import com.ubros.game.Controller.Elements.PortalBody;
 import com.ubros.game.Model.Elements.DangerZoneModel;
+import com.ubros.game.Model.Elements.ElementModel;
 import com.ubros.game.Model.Elements.ExitDoorModel;
 import com.ubros.game.Model.Elements.LimitModel;
 import com.ubros.game.Model.Elements.MechanismModel;
+import com.ubros.game.Model.Elements.ObjectModel;
 import com.ubros.game.Model.Elements.ObjectiveModel;
 import com.ubros.game.Model.Elements.PlatformModel;
 import com.ubros.game.Model.Elements.PortalModel;
@@ -74,6 +80,8 @@ public class GameController {
 
     private List<ExitDoorBody> exitDoorBodies = new ArrayList<ExitDoorBody>();
 
+    public List<BulletBody> bulletBodies = new ArrayList<BulletBody>();
+
     /**
      * Creates a new GameController that controls the physics of a certain GameModel.
      */
@@ -91,6 +99,7 @@ public class GameController {
         createObjectives();
         createPortals();
         createExitDoors();
+        createObjects();
 
         this.world.setContactListener(new MyContactListener());
     }
@@ -162,10 +171,10 @@ public class GameController {
         for (PortalModel portal : portalModels)
             portalBodies.add(new PortalBody(this.world, portal, portal.getShape().getVertices()));
 
-        for(PortalBody portalBody : portalBodies) {
-            for(PortalModel portalModel : portalModels) {
-                if((portalModel.getName().charAt(0) == ((PortalModel)portalBody.getModel()).getName().charAt(0)) &&
-                   (portalModel.getName().charAt(1) != ((PortalModel)portalBody.getModel()).getName().charAt(1)))
+        for (PortalBody portalBody : portalBodies) {
+            for (PortalModel portalModel : portalModels) {
+                if ((portalModel.getName().charAt(0) == ((PortalModel) portalBody.getModel()).getName().charAt(0)) &&
+                        (portalModel.getName().charAt(1) != ((PortalModel) portalBody.getModel()).getName().charAt(1)))
                     portalModel.setPortalDestiny(portalBody);
             }
         }
@@ -177,6 +186,11 @@ public class GameController {
             exitDoorBodies.add(new ExitDoorBody(this.world, exitDoor, exitDoor.getShape().getVertices()));
     }
 
+    private void createObjects() {
+        List<ObjectModel> objectModels = GameModel.getInstance(this.game).getObjects();
+        for (ObjectModel object : objectModels)
+            new ObjectBody(this.world, object, object.getShape().getVertices());
+    }
 
     /**
      * Returns the world controlled by this controller. Needed for debugging purposes only.
@@ -229,16 +243,27 @@ public class GameController {
 
     public void update(float delta) {
 
-        if(GameController.getInstance(this.game).getNinja().setTransformFlag) {
+        if (GameController.getInstance(this.game).getNinja().setTransformFlag) {
             GameController.getInstance(this.game).getNinja().setTransform(GameController.getInstance(this.game).getNinja().newPosition.x, GameController.getInstance(this.game).getNinja().newPosition.y, 0);
             GameController.getInstance(this.game).getNinja().setTransformFlag = false;
 
-            if(GameController.getInstance(this.game).getNinja().newPosition.z == 0)
-                GameController.getInstance(this.game).getNinja().getBody().applyLinearImpulse(new Vector2(-0.5f,0),GameController.getInstance(this.game).getNinja().getBody().getWorldCenter(), true);
-            else if(GameController.getInstance(this.game).getNinja().newPosition.z == 1)
-                GameController.getInstance(this.game).getNinja().getBody().applyLinearImpulse(new Vector2(0.5f,0),GameController.getInstance(this.game).getNinja().getBody().getWorldCenter(), true);
+            if (GameController.getInstance(this.game).getNinja().newPosition.z == 0)
+                GameController.getInstance(this.game).getNinja().getBody().applyLinearImpulse(new Vector2(-0.5f, 0), GameController.getInstance(this.game).getNinja().getBody().getWorldCenter(), true);
+            else if (GameController.getInstance(this.game).getNinja().newPosition.z == 1)
+                GameController.getInstance(this.game).getNinja().getBody().applyLinearImpulse(new Vector2(0.5f, 0), GameController.getInstance(this.game).getNinja().getBody().getWorldCenter(), true);
 
         }
+
+
+        Array<Body> bodies = new Array<Body>();
+        world.getBodies(bodies);
+        for (Body body : bodies) {
+            if (((ElementModel) body.getUserData()).isFlaggedToBeRemoved()) {
+                GameModel.getInstance(null).remove((ElementModel) body.getUserData());
+                world.destroyBody(body);
+            }
+        }
+
 
     }
 

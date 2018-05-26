@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="60" height="36" tilewidth="32" tileheight="30" infinite="0" nextobjectid="333">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="60" height="36" tilewidth="32" tileheight="30" infinite="0" nextobjectid="344">
  <tileset firstgid="1" source="Acid.tsx"/>
  <tileset firstgid="3" source="factoryGround.tsx"/>
  <tileset firstgid="12" source="ground.tsx"/>
@@ -18,7 +18,7 @@
  </layer>
  <layer name="Graphics - Ground" width="60" height="36">
   <data encoding="base64" compression="zlib">
-   eJzlmAtOwzAMhn0AWFep2pPBuP8lOBoLLFplJX4kdmvYL1nT1DTpVz+SegCAoWAvAF81465HNMz2dvu93Oz9/h8IDdTFoJruzFPDvdz7iKgj/Pqphfcv6gTPxXsGX94N/MR90V4FY+bjLDTNalZpLY6j9Vm2qFaOzDjqfWhN698RPetWca+XNHtF8rGUN7Nmf+T3vzazdK/Q7EeYNSsKs0Q7eDBL4r42Ll/L4mpQqTZw4y3q1h508VwS9vvYcYapySqGDtDHW2NN/3edz4YlrdVUHPScJynWpH3DnL2SxAHlXyoPKdakQ2G+PM5THLN1/s7mFY1bWhb5WzNcv3tZLep1r3+jC+dkbV+1PKdH0n/wL/YhtyctwSs5c3nHl8dZiFpHWq88zuTz2lritf7m1NZmS2a8j0TNX45ZmiPzHmxk3iTcC8GmiZsPiO1fa13huXg/4cHruS9o9kfrtTT9Oi53NBal59XzDdyqNZnz+eq48LqtzJJeGKXMe1LeZ6Faj8YzvzPv2XENjbxjfY385eTJHPV70ItZ2m9fw6gef8+c34XGdbQ=
+   eJzlmAtugzAMhn2AbRQJ9bnucf9L7GhrtkYgK47txAZv/SWrqggJH36FDAAwFOwJ4Isy7npEw2yvt9/rzd7u/6GioXYxqKY789RwL/c+IuoEv35q4f2LOsNj8V7Al/cFfuK+aM+CMctxFpoWNau0FsfR+iw7VCtHZlztfWhN698RPetOca+XNL0i+VjKm1mzP/L735pZ2is0/QizZkVhlmgPMzMWriO1PM/XqHsltYEbb1G3DjDHc4mBqiNLYb+PHXsYSlYxdARd/mJRrOn/vvPZsKS1uhYHPfvJGmvSoWHOXknigPMvlYs11qRjYa6RqBWW4ph74jmJqtt4Tmrc2rLIX8pw/e5ltajXvf6NLk1ftdyrR9F/8C/2IdeT1uCV7Lm8Y8tjL1RbR1qvPPbky9pa4tX6g/vm1NZmS2bcR6LmL8cs9cnyDDYybxI+C8GmiZt3iO1fa33AY/F+wszr2Rc0/dF6Lc15HZc7Goty5tXzDdyqLZnz/uq08rqtzJKzsJoy71l5n4WoMxrP/M68F8c1NPKO9S3yl5Mnc9TvQS/micihCFY7i+iZ8xth03XY
   </data>
  </layer>
  <objectgroup name="Ground">
@@ -31,17 +31,11 @@
   <object id="42" x="1888" y="1050">
    <polygon points="0,0 32,0 32,-1020 0,-1020 0,0"/>
   </object>
-  <object id="64" x="160" y="660">
-   <polygon points="0,0 0,30 608,30 608,0 0,0"/>
-  </object>
   <object id="65" x="32" y="810">
    <polygon points="0,0 0,30 160,30 160,0 0,0"/>
   </object>
   <object id="72" x="1376" y="900">
    <polygon points="0,0 0,30 160,30 160,0 0,0"/>
-  </object>
-  <object id="82" x="32" y="300">
-   <polygon points="0,0 256,0 256,30 0,30 0,0"/>
   </object>
   <object id="83" x="32" y="180">
    <polygon points="0,0 160,0 160,30 0,30 0,0"/>
@@ -115,12 +109,6 @@
   <object id="259" x="416" y="30">
    <polygon points="0,0 32,0 32,60 0,60 0,0"/>
   </object>
-  <object id="262" x="32" y="540">
-   <polygon points="0,0 128,0 160,30 0,30 0,0"/>
-  </object>
-  <object id="263" x="416" y="420">
-   <polygon points="0,0 -192,0 -224,30 0,30 0,0"/>
-  </object>
   <object id="266" x="1120" y="930">
    <polygon points="0,0 32,0 160,120 96,120 0,30 0,0"/>
   </object>
@@ -187,16 +175,31 @@
   <object id="328" x="1632" y="840">
    <polygon points="0,0 32,-30 256,-30 256,0 0,0"/>
   </object>
-  <object id="329" x="928" y="150">
-   <polygon points="0,0 32,30 64,30 96,0 0,0"/>
+  <object id="333" x="160" y="330">
+   <polygon points="0,0 32,-30 128,-30 128,0 0,0"/>
   </object>
-  <object id="330" x="1280" y="690">
-   <polygon points="0,0 32,30 192,30 224,0 0,0"/>
+  <object id="334" x="224" y="330">
+   <polygon points="0,0 -192,0 -192,30 -32,30 0,0"/>
+  </object>
+  <object id="337" x="32" y="570">
+   <polygon points="0,0 192,0 160,-30 0,-30 0,0"/>
+  </object>
+  <object id="338" x="224" y="450">
+   <polygon points="0,0 32,-30 192,-30 192,0 0,0"/>
+  </object>
+  <object id="339" x="160" y="690">
+   <polygon points="0,0 32,-30 608,-30 608,0 0,0"/>
   </object>
  </objectgroup>
  <objectgroup name="DangerZone">
   <object id="236" x="224" y="810">
    <polygon points="0,0 64,60 512,60 576,0 0,0"/>
+  </object>
+  <object id="335" x="928" y="150">
+   <polygon points="0,0 32,30 64,30 96,0 0,0"/>
+  </object>
+  <object id="336" x="1280" y="690">
+   <polygon points="0,0 32,30 192,30 224,0 0,0"/>
   </object>
  </objectgroup>
  <objectgroup name="Mechanism">
@@ -277,8 +280,16 @@
   <object id="331" name="N" x="64" y="180">
    <polygon points="0,0 0,-90 64,-90 64,0 0,0"/>
   </object>
-  <object id="332" name="R" x="64" y="300">
+  <object id="332" name="R" x="64" y="330">
    <polygon points="0,0 64,0 64,-90 0,-90 0,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Objects">
+  <object id="342" name="Ball-1" x="800" y="150">
+   <polygon points="0,0 0,-30 32,-30 32,0 0,0"/>
+  </object>
+  <object id="343" name="Box-0" x="192" y="660">
+   <polygon points="0,0 64,0 64,-60 0,-60 0,0"/>
   </object>
  </objectgroup>
 </map>

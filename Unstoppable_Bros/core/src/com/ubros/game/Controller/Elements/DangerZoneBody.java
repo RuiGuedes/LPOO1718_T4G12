@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.ubros.game.Gui.PlayGameScreen;
 import com.ubros.game.Model.Elements.ElementModel;
 
-public class AcidBody extends ElementBody {
+public class DangerZoneBody extends ElementBody {
 
 
     /**
@@ -16,7 +16,7 @@ public class AcidBody extends ElementBody {
      * @param world The world this body lives on.
      * @param model The model representing the body.
      */
-    public AcidBody(World world, ElementModel model, float[] vertexSet) {
+    public DangerZoneBody(World world, ElementModel model, float[] vertexSet) {
         super(world, model);
         createFixture(getBody(),vertexSet,0,0,0f,0f,0f, (short)0, (short)0);
     }

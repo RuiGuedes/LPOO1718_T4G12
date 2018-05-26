@@ -10,16 +10,19 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.ubros.game.Controller.Elements.ExitDoorBody;
 import com.ubros.game.Controller.Elements.MechanismBody;
 import com.ubros.game.Controller.Elements.ObjectiveBody;
 import com.ubros.game.Controller.Elements.PlatformBody;
 import com.ubros.game.Controller.GameController;
+import com.ubros.game.Model.Elements.ExitDoorModel;
 import com.ubros.game.Model.Elements.MechanismModel;
 import com.ubros.game.Model.Elements.ObjectiveModel;
 import com.ubros.game.Model.Elements.PlatformModel;
 import com.ubros.game.Model.GameModel;
 import com.ubros.game.UbrosGame;
 import com.ubros.game.View.Elements.ElementView;
+import com.ubros.game.View.Elements.ExitDoorView;
 import com.ubros.game.View.Elements.MechanismView;
 import com.ubros.game.View.Elements.NinjaView;
 import com.ubros.game.View.Elements.ObjectiveView;
@@ -152,6 +155,9 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         this.game.getAssetManager().load("bulletButtonOn.png", Texture.class);
         this.game.getAssetManager().load("mechanismOff.png", Texture.class);
         this.game.getAssetManager().load("mechanismOn.png", Texture.class);
+        this.game.getAssetManager().load("DoorLocked.png", Texture.class);
+        this.game.getAssetManager().load("DoorUnlocked.png", Texture.class);
+        this.game.getAssetManager().load("DoorOpen.png", Texture.class);
 
         this.game.getAssetManager().load("Robot/Robot.pack", TextureAtlas.class);
         this.game.getAssetManager().load("Ninja/Ninja.pack", TextureAtlas.class);
@@ -166,6 +172,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         createMechanismView();
         createPlatformsView();
         createObjectivesView();
+        createExitDoorsView();
 
         buttonTextures.add(game.getAssetManager().get("moveLeftButtonOff.png", Texture.class));
         buttonTextures.add(game.getAssetManager().get("moveLeftButtonOn.png", Texture.class));
@@ -207,6 +214,13 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         List<ObjectiveBody> objectives = GameController.getInstance(this.game).getObjectiveBodies();
         for (ObjectiveBody objective : objectives) {
             ((ObjectiveModel) objective.getModel()).setView(new ObjectiveView(this.game, null, objective, ((ObjectiveModel) objective.getModel()).getObjectiveView()));
+        }
+    }
+
+    private void createExitDoorsView() {
+        List<ExitDoorBody> exitDoorBodies = GameController.getInstance(this.game).getExitDoorBodies();
+        for (ExitDoorBody exitDoor : exitDoorBodies) {
+            ((ExitDoorModel) exitDoor.getModel()).setView(new ExitDoorView(this.game, null, exitDoor));
         }
     }
 
@@ -292,6 +306,9 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
         for(ObjectiveBody objectiveBody : GameController.getInstance(this.game).getObjectiveBodies())
             ((ObjectiveModel)objectiveBody.getModel()).getView().draw(delta);
+
+        for(ExitDoorBody exitDoorBody : GameController.getInstance(this.game).getExitDoorBodies())
+            ((ExitDoorModel)exitDoorBody.getModel()).getView().draw(delta);
 
         robot.draw(delta);
         ninja.draw(delta);

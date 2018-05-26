@@ -6,8 +6,9 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.ubros.game.Model.Elements.AcidModel;
 import com.ubros.game.Model.Elements.CharacterModel;
+import com.ubros.game.Model.Elements.DangerZoneModel;
+import com.ubros.game.Model.Elements.ExitDoorModel;
 import com.ubros.game.Model.Elements.MechanismModel;
 import com.ubros.game.Model.Elements.ObjectiveModel;
 import com.ubros.game.Model.Elements.PlatformModel;
@@ -40,7 +41,7 @@ public class MyContactListener implements ContactListener {
 
     private void robotBeginContact(Body robot, Body object) {
 
-        if ((object.getUserData()) instanceof AcidModel)
+        if ((object.getUserData()) instanceof DangerZoneModel)
             dangerZoneCollision(GameController.getInstance(null).getRobot().getBody(), GameModel.getInstance(null).getRobot().getElementView());
 
         if ((object.getUserData()) instanceof MechanismModel)
@@ -52,11 +53,14 @@ public class MyContactListener implements ContactListener {
         if (((object.getUserData()) instanceof ObjectiveModel) && (((ObjectiveModel)object.getUserData()).getData().equals("R")))
             objectiveCollision(object);
 
+        if (((object.getUserData()) instanceof ExitDoorModel) && (((ExitDoorModel)object.getUserData()).getData().equals("RobotExitDoor")))
+            exitDoorCollision(object,true);
+
     }
 
     private void ninjaBeginContact(Body ninja, Body object) {
 
-        if ((object.getUserData()) instanceof AcidModel)
+        if ((object.getUserData()) instanceof DangerZoneModel)
             dangerZoneCollision(GameController.getInstance(null).getNinja().getBody(), GameModel.getInstance(null).getNinja().getElementView());
 
         if ((object.getUserData()) instanceof MechanismModel)
@@ -70,6 +74,9 @@ public class MyContactListener implements ContactListener {
 
         if ((object.getUserData()) instanceof PortalModel)
             portalCollision(object);
+
+        if (((object.getUserData()) instanceof ExitDoorModel) && (((ExitDoorModel)object.getUserData()).getData().equals("NinjaExitDoor")))
+            exitDoorCollision(object,true);
 
     }
 
@@ -100,6 +107,9 @@ public class MyContactListener implements ContactListener {
 
         if ((object.getUserData()) instanceof PlatformModel)
             ((CharacterModel)characterBody.getUserData()).setOnPlatform(false);
+
+        if (((object.getUserData()) instanceof ExitDoorModel))
+            exitDoorCollision(object, false);
 
     }
 
@@ -145,6 +155,10 @@ public class MyContactListener implements ContactListener {
             objectiveModel.setCatched();
             GameController.getInstance(null).setRemainingObjectives();
         }
+    }
+
+    private void exitDoorCollision(Body exitDoorBody, boolean status) {
+        ((ExitDoorModel)exitDoorBody.getUserData()).setCharacterContact(status);
     }
 
 }

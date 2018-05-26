@@ -3,14 +3,16 @@ package com.ubros.game.Controller;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.ubros.game.Controller.Elements.AcidBody;
+import com.ubros.game.Controller.Elements.DangerZoneBody;
 import com.ubros.game.Controller.Elements.CharacterBody;
+import com.ubros.game.Controller.Elements.ExitDoorBody;
 import com.ubros.game.Controller.Elements.LimitBody;
 import com.ubros.game.Controller.Elements.MechanismBody;
 import com.ubros.game.Controller.Elements.ObjectiveBody;
 import com.ubros.game.Controller.Elements.PlatformBody;
 import com.ubros.game.Controller.Elements.PortalBody;
-import com.ubros.game.Model.Elements.AcidModel;
+import com.ubros.game.Model.Elements.DangerZoneModel;
+import com.ubros.game.Model.Elements.ExitDoorModel;
 import com.ubros.game.Model.Elements.LimitModel;
 import com.ubros.game.Model.Elements.MechanismModel;
 import com.ubros.game.Model.Elements.ObjectiveModel;
@@ -70,6 +72,8 @@ public class GameController {
 
     private List<PortalBody> portalBodies = new ArrayList<PortalBody>();
 
+    private List<ExitDoorBody> exitDoorBodies = new ArrayList<ExitDoorBody>();
+
     /**
      * Creates a new GameController that controls the physics of a certain GameModel.
      */
@@ -86,6 +90,7 @@ public class GameController {
         createMechanisms();
         createObjectives();
         createPortals();
+        createExitDoors();
 
         this.world.setContactListener(new MyContactListener());
     }
@@ -121,9 +126,9 @@ public class GameController {
     }
 
     private void createAcid() {
-        List<AcidModel> acidRegions = GameModel.getInstance(this.game).getAcidRegions();
-        for (AcidModel acid : acidRegions)
-            new AcidBody(this.world, acid, acid.getShape().getVertices());
+        List<DangerZoneModel> acidRegions = GameModel.getInstance(this.game).getDangerZones();
+        for (DangerZoneModel acid : acidRegions)
+            new DangerZoneBody(this.world, acid, acid.getShape().getVertices());
     }
 
     private void createMechanisms() {
@@ -152,7 +157,7 @@ public class GameController {
         this.remainingObjectives = objectives.size();
     }
 
-    public void createPortals() {
+    private void createPortals() {
         List<PortalModel> portalModels = GameModel.getInstance(this.game).getPortals();
         for (PortalModel portal : portalModels)
             portalBodies.add(new PortalBody(this.world, portal, portal.getShape().getVertices()));
@@ -164,6 +169,12 @@ public class GameController {
                     portalModel.setPortalDestiny(portalBody);
             }
         }
+    }
+
+    private void createExitDoors() {
+        List<ExitDoorModel> exitDoorModels = GameModel.getInstance(this.game).getExitDoors();
+        for (ExitDoorModel exitDoor : exitDoorModels)
+            exitDoorBodies.add(new ExitDoorBody(this.world, exitDoor, exitDoor.getShape().getVertices()));
     }
 
 
@@ -210,6 +221,10 @@ public class GameController {
 
     public UbrosGame getGame() {
         return game;
+    }
+
+    public List<ExitDoorBody> getExitDoorBodies() {
+        return exitDoorBodies;
     }
 
     public void update(float delta) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="60" height="36" tilewidth="32" tileheight="30" infinite="0" nextobjectid="331">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="60" height="36" tilewidth="32" tileheight="30" infinite="0" nextobjectid="333">
  <tileset firstgid="1" source="Acid.tsx"/>
  <tileset firstgid="3" source="factoryGround.tsx"/>
  <tileset firstgid="12" source="ground.tsx"/>
@@ -271,6 +271,14 @@
   </object>
   <object id="324" name="B2-D" x="128" y="60">
    <polygon points="0,0 32,0 32,-30 -64,-30 -64,0 0,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="ExitDoors">
+  <object id="331" name="N" x="64" y="180">
+   <polygon points="0,0 0,-90 64,-90 64,0 0,0"/>
+  </object>
+  <object id="332" name="R" x="64" y="300">
+   <polygon points="0,0 64,0 64,-90 0,-90 0,0"/>
   </object>
  </objectgroup>
 </map>

@@ -2,7 +2,7 @@ package com.ubros.game.Model.Elements;
 
 import com.badlogic.gdx.math.Polygon;
 
-public class AcidModel extends ElementModel {
+public class DangerZoneModel extends ElementModel {
 
 
     /**
@@ -17,7 +17,7 @@ public class AcidModel extends ElementModel {
      * @param y        The y-coordinate of this entity in meters.
      * @param rotation The current rotation of this entity in radians.
      */
-    public AcidModel(float x, float y, float rotation, Polygon shape) {
+    public DangerZoneModel(float x, float y, float rotation, Polygon shape) {
         super(x, y, rotation);
         this.shape = shape;
     }

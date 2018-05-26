@@ -27,7 +27,6 @@ public class MechanismView extends ElementView {
     public void draw(float delta) {
         this.update(delta);
         getGame().getBatch().draw(mechanism,  getElement().getX(), getElement().getY(), 0.32f, 0.9f);
-        //super.draw(game.getBatch());
     }
 
     @Override

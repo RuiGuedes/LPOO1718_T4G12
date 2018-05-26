@@ -36,6 +36,7 @@ public class CharacterModel extends ElementModel {
         this.elementView = elementView;
     }
 
+
     @Override
     public ModelType getType() {
         return ModelType.HERO;

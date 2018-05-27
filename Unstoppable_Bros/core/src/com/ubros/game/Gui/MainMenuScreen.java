@@ -2,11 +2,8 @@ package com.ubros.game.Gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.ubros.game.UbrosGame;
 
 public class MainMenuScreen extends ScreenAdapter {
@@ -74,7 +71,7 @@ public class MainMenuScreen extends ScreenAdapter {
      */
     public MainMenuScreen(UbrosGame game) {
         this.game = game;
-        createCamera();
+
         loadAssets();
 
         /*
@@ -93,20 +90,6 @@ public class MainMenuScreen extends ScreenAdapter {
     }
 
     /**
-     * Game camera used to view game map
-     */
-    private OrthographicCamera gameCam;
-
-    /**
-     * Creates game camera used to visualize game map
-     */
-    private void createCamera() {
-        this.gameCam = new OrthographicCamera(SCREEN_WIDTH,SCREEN_HEIGHT);
-        this.gameCam.position.set(gameCam.viewportWidth / 2f, gameCam.viewportHeight / 2f, 0);
-        this.gameCam.update();
-    }
-
-    /**
      * Loads the assets needed by this screen.
      */
     private void loadAssets() {
@@ -118,25 +101,6 @@ public class MainMenuScreen extends ScreenAdapter {
         this.game.getAssetManager().load("MainMenuExitButtonOn.png",Texture.class);
         this.game.getAssetManager().load("MainMenuSettingsButtonOn.png",Texture.class);
         this.game.getAssetManager().load("MainMenuPlayButtonOn.png",Texture.class);
-
-        this.game.getAssetManager().load("audio/music/BullyWalkingTheme.mp3", Music.class);
-        this.game.getAssetManager().load("moveLeftButtonOff.png", Texture.class);
-        this.game.getAssetManager().load("moveLeftButtonOn.png", Texture.class);
-        this.game.getAssetManager().load("moveRightButtonOff.png", Texture.class);
-        this.game.getAssetManager().load("moveRightButtonOn.png", Texture.class);
-        this.game.getAssetManager().load("jumpButtonOff.png", Texture.class);
-        this.game.getAssetManager().load("jumpButtonOn.png", Texture.class);
-        this.game.getAssetManager().load("bulletButtonOff.png", Texture.class);
-        this.game.getAssetManager().load("bulletButtonOn.png", Texture.class);
-        this.game.getAssetManager().load("mechanismOff.png", Texture.class);
-        this.game.getAssetManager().load("mechanismOn.png", Texture.class);
-        this.game.getAssetManager().load("DoorLocked.png", Texture.class);
-        this.game.getAssetManager().load("DoorUnlocked.png", Texture.class);
-        this.game.getAssetManager().load("DoorOpen.png", Texture.class);
-        this.game.getAssetManager().load("bullet.png", Texture.class);
-
-        this.game.getAssetManager().load("Robot/Robot.pack", TextureAtlas.class);
-        this.game.getAssetManager().load("Ninja/Ninja.pack", TextureAtlas.class);
 
 
         this.game.getAssetManager().finishLoading();
@@ -162,9 +126,8 @@ public class MainMenuScreen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
+
         super.render(delta);
-        game.getBatch().setProjectionMatrix(gameCam.combined);
-        gameCam.update();
 
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
 
@@ -211,10 +174,8 @@ public class MainMenuScreen extends ScreenAdapter {
                 else
                     game.setScreen(new ManualConnection(this.game));
                 */
-                game.setScreen(new PlayGameScreen(game));
-                super.hide();
-                this.dispose();
-
+                UbrosGame.playGame = new PlayGameScreen(this.game);
+                game.setScreen(UbrosGame.playGame);
             }
             else
                 defaultMainMenu();

@@ -169,6 +169,7 @@ public class RobotView extends ElementView {
     @Override
     public void draw(float delta) {
         this.update(delta);
+        System.out.println(getElement().getX() + " " + getElement().getY());
         super.draw(getGame().getBatch());
     }
 

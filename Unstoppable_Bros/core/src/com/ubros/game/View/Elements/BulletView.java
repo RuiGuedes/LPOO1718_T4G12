@@ -30,7 +30,6 @@ public class BulletView extends ElementView {
     @Override
     public void draw(float delta) {
         this.update(delta);
-        System.out.println("UADSSA");
         super.getGame().getBatch().draw(bullet, getElement().getX() - (32 *0.6f)/ PlayGameScreen.PIXEL_TO_METER, getElement().getY() - (30 * 0.2f)/ PlayGameScreen.PIXEL_TO_METER, 32f/ PlayGameScreen.PIXEL_TO_METER, (30*0.4f)/ PlayGameScreen.PIXEL_TO_METER);
     }
 

@@ -39,7 +39,6 @@ public class GameController {
     private GameStatus state;
 
 
-
     /**
      * World considered gravity value
      */
@@ -53,7 +52,11 @@ public class GameController {
     /**
      * Game object
      */
-    private final UbrosGame game;
+    private UbrosGame game;
+
+    public void setGame(UbrosGame game) {
+        this.game = game;
+    }
 
     /**
      * The physics world controlled by this controller.
@@ -269,6 +272,19 @@ public class GameController {
         }
 
 
+    }
+
+    public void dispose() {
+
+        Array<Body> bodies = new Array<Body>();
+        world.getBodies(bodies);
+        for (Body body : bodies) {
+            GameModel.getInstance(null).remove((ElementModel) body.getUserData());
+            world.destroyBody(body);
+        }
+
+        GameModel.getInstance(this.game).setInstance(null);
+        instance = null;
     }
 
 }

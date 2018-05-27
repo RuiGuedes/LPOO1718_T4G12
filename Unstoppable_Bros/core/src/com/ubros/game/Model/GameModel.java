@@ -45,7 +45,11 @@ public class GameModel {
     /**
      * Game object
      */
-    private final UbrosGame game;
+    private UbrosGame game;
+
+    public void setGame(UbrosGame game) {
+        this.game = game;
+    }
 
     /**
      * Robot model
@@ -135,7 +139,7 @@ public class GameModel {
      * Creates both robot and ninja models
      */
     private void createCharacters() {
-        this.robot = new CharacterModel(800 / PlayGameScreen.PIXEL_TO_METER, 400 / PlayGameScreen.PIXEL_TO_METER, 0);
+        this.robot = new CharacterModel(900 / PlayGameScreen.PIXEL_TO_METER, 400 / PlayGameScreen.PIXEL_TO_METER, 0);
         this.ninja = new CharacterModel(1600 / PlayGameScreen.PIXEL_TO_METER, 1000 / PlayGameScreen.PIXEL_TO_METER, 0);
     }
 
@@ -358,6 +362,10 @@ public class GameModel {
         if (model instanceof BulletModel) {
             bullets.remove(model);
         }
+    }
+
+    public void setInstance(GameModel instance) {
+        GameModel.instance = instance;
     }
 
 }

@@ -161,9 +161,12 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
         Gdx.input.setInputProcessor(this);
 
-        initializeGraphics();
+        GameController.getInstance(null).dispose();
+        GameController.getInstance(this.game).setState(GameController.GameStatus.PLAYING);
 
-        music = game.getAssetManager().get("audio/music/BullyWalkingTheme.mp3",Music.class);
+        loadAssets();
+
+        music = game.getAssetManager().get("audio/music/BullyWalkingTheme.mp3", Music.class);
         //music.play();
     }
 
@@ -175,6 +178,38 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         this.gameCam = new OrthographicCamera(VIRTUAL_SCREEN_WIDTH / PIXEL_TO_METER, VIRTUAL_SCREEN_HEIGHT / PIXEL_TO_METER);
         this.gameCam.position.set(gameCam.viewportWidth / 2f, gameCam.viewportHeight / 2f, 0);
         this.gameCam.update();
+    }
+
+    private void resetCamera() {
+        this.gameCam = new OrthographicCamera(SCREEN_WIDTH, SCREEN_HEIGHT);
+        this.gameCam.position.set(gameCam.viewportWidth / 2f, gameCam.viewportHeight / 2f, 0);
+        this.gameCam.update();
+        this.game.getBatch().setProjectionMatrix(gameCam.combined);
+    }
+
+    private void loadAssets() {
+        this.game.getAssetManager().load("audio/music/BullyWalkingTheme.mp3", Music.class);
+        this.game.getAssetManager().load("moveLeftButtonOff.png", Texture.class);
+        this.game.getAssetManager().load("moveLeftButtonOn.png", Texture.class);
+        this.game.getAssetManager().load("moveRightButtonOff.png", Texture.class);
+        this.game.getAssetManager().load("moveRightButtonOn.png", Texture.class);
+        this.game.getAssetManager().load("jumpButtonOff.png", Texture.class);
+        this.game.getAssetManager().load("jumpButtonOn.png", Texture.class);
+        this.game.getAssetManager().load("bulletButtonOff.png", Texture.class);
+        this.game.getAssetManager().load("bulletButtonOn.png", Texture.class);
+        this.game.getAssetManager().load("mechanismOff.png", Texture.class);
+        this.game.getAssetManager().load("mechanismOn.png", Texture.class);
+        this.game.getAssetManager().load("DoorLocked.png", Texture.class);
+        this.game.getAssetManager().load("DoorUnlocked.png", Texture.class);
+        this.game.getAssetManager().load("DoorOpen.png", Texture.class);
+        this.game.getAssetManager().load("bullet.png", Texture.class);
+
+        this.game.getAssetManager().load("Robot/Robot.pack", TextureAtlas.class);
+        this.game.getAssetManager().load("Ninja/Ninja.pack", TextureAtlas.class);
+
+        this.game.getAssetManager().finishLoading();
+        initializeGraphics();
+
     }
 
     /**
@@ -261,6 +296,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     public void render(float delta) {
 
         super.render(delta);
+
         this.update(delta);
 
         Gdx.gl.glClearColor(1, 0, 0, 1);
@@ -269,21 +305,20 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         this.mapRenderer.render();
         GameController.getInstance(this.game).getDebugRenderer().render(GameController.getInstance(this.game).getWorld(), gameCam.combined);
 
-        if(GameController.getInstance(this.game).getState() == GameController.GameStatus.GAMEOVER) {
-            this.game.setScreen(new MainMenuScreen(this.game));
-            super.hide();
-            this.dispose();
-        }
-
         game.getBatch().begin();
         drawInteractiveButtons();
         drawElements(delta);
         game.getBatch().end();
 
+        if (GameController.getInstance(this.game).getState() == GameController.GameStatus.GAMEOVER) {
+            this.dispose();
+            this.game.setScreen(UbrosGame.mainMenu);
+        }
     }
 
     /**
      * Updates both world and all elements created
+     *
      * @param delta time since last renders in seconds.
      */
     private void update(float delta) {
@@ -304,10 +339,10 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
      */
     private void handleInput() {
 
-        if(selectedPlayer)
-            ((RobotView)robot).setHorizontalMovement(false);
+        if (selectedPlayer)
+            ((RobotView) robot).setHorizontalMovement(false);
         else
-            ((NinjaView)ninja).setHorizontalMovement(false);
+            ((NinjaView) ninja).setHorizontalMovement(false);
 
         for (int i = 0; i < 4; i++) {
             if (Gdx.input.isTouched(i)) {
@@ -316,14 +351,14 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
                 if (checkLeftButton(x, y)) {
 
-                    if(selectedPlayer)
-                        ((RobotView)robot).setHorizontalMovement(true);
+                    if (selectedPlayer)
+                        ((RobotView) robot).setHorizontalMovement(true);
                     else
-                        ((NinjaView)ninja).setHorizontalMovement(true);
+                        ((NinjaView) ninja).setHorizontalMovement(true);
 
-                    if ((GameController.getInstance(this.game).getRobot().getBody().getLinearVelocity().x >= -GameController.PLAYER_SPEED*10) && selectedPlayer)
+                    if ((GameController.getInstance(this.game).getRobot().getBody().getLinearVelocity().x >= -GameController.PLAYER_SPEED * 10) && selectedPlayer)
                         GameController.getInstance(this.game).getRobot().getBody().applyLinearImpulse(new Vector2(-GameController.PLAYER_SPEED, 0), GameController.getInstance(this.game).getRobot().getBody().getWorldCenter(), true);
-                    else if((GameController.getInstance(this.game).getNinja().getBody().getLinearVelocity().x >= -GameController.PLAYER_SPEED*10) && !selectedPlayer)
+                    else if ((GameController.getInstance(this.game).getNinja().getBody().getLinearVelocity().x >= -GameController.PLAYER_SPEED * 10) && !selectedPlayer)
                         GameController.getInstance(this.game).getNinja().getBody().applyLinearImpulse(new Vector2(-GameController.PLAYER_SPEED, 0), GameController.getInstance(this.game).getNinja().getBody().getWorldCenter(), true);
 
                     leftButton = buttonTextures.get(1);
@@ -331,14 +366,14 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
                 if (checkRightButton(x, y)) {
 
-                    if(selectedPlayer)
-                        ((RobotView)robot).setHorizontalMovement(true);
+                    if (selectedPlayer)
+                        ((RobotView) robot).setHorizontalMovement(true);
                     else
-                        ((NinjaView)ninja).setHorizontalMovement(true);
+                        ((NinjaView) ninja).setHorizontalMovement(true);
 
-                    if ((GameController.getInstance(this.game).getRobot().getBody().getLinearVelocity().x <= GameController.PLAYER_SPEED*10) && selectedPlayer)
+                    if ((GameController.getInstance(this.game).getRobot().getBody().getLinearVelocity().x <= GameController.PLAYER_SPEED * 10) && selectedPlayer)
                         GameController.getInstance(this.game).getRobot().getBody().applyLinearImpulse(new Vector2(GameController.PLAYER_SPEED, 0), GameController.getInstance(this.game).getRobot().getBody().getWorldCenter(), true);
-                    else if((GameController.getInstance(this.game).getNinja().getBody().getLinearVelocity().x <= GameController.PLAYER_SPEED*10) && !selectedPlayer)
+                    else if ((GameController.getInstance(this.game).getNinja().getBody().getLinearVelocity().x <= GameController.PLAYER_SPEED * 10) && !selectedPlayer)
                         GameController.getInstance(this.game).getNinja().getBody().applyLinearImpulse(new Vector2(GameController.PLAYER_SPEED, 0), GameController.getInstance(this.game).getNinja().getBody().getWorldCenter(), true);
 
                     rightButton = buttonTextures.get(3);
@@ -349,6 +384,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     /**
      * Draws all elements previously defined
+     *
      * @param delta time since last renders in seconds.
      */
     private void drawElements(float delta) {
@@ -357,15 +393,15 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
             ((MechanismModel) mechanism.getModel()).getView().draw(delta);
 
         for (PlatformBody platformBody : GameController.getInstance(this.game).getPlatformBodies())
-            ((PlatformModel)platformBody.getModel()).getView().draw(delta);
+            ((PlatformModel) platformBody.getModel()).getView().draw(delta);
 
-        for(ObjectiveBody objectiveBody : GameController.getInstance(this.game).getObjectiveBodies())
-            ((ObjectiveModel)objectiveBody.getModel()).getView().draw(delta);
+        for (ObjectiveBody objectiveBody : GameController.getInstance(this.game).getObjectiveBodies())
+            ((ObjectiveModel) objectiveBody.getModel()).getView().draw(delta);
 
-        for(ExitDoorBody exitDoorBody : GameController.getInstance(this.game).getExitDoorBodies())
-            ((ExitDoorModel)exitDoorBody.getModel()).getView().draw(delta);
+        for (ExitDoorBody exitDoorBody : GameController.getInstance(this.game).getExitDoorBodies())
+            ((ExitDoorModel) exitDoorBody.getModel()).getView().draw(delta);
 
-        for(BulletModel bulletModel : GameModel.getInstance(this.game).bullets)
+        for (BulletModel bulletModel : GameModel.getInstance(this.game).bullets)
             bulletModel.getView().draw(delta);
 
         robot.draw(delta);
@@ -394,17 +430,19 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     /**
      * Checks if button responsible to move character to left direction
+     *
      * @param x x position of input
      * @param y y position of input
      * @return true if it's pressed, false otherwise
      */
     private boolean checkLeftButton(int x, int y) {
-         return (x >= (int) (SCREEN_WIDTH * 0.05)) && (x <= (int) (SCREEN_WIDTH * 0.05 + BUTTON_WIDTH * PIXEL_TO_METER) &&
-               (y <= ((int) (SCREEN_HEIGHT * 0.96))) && (y >= (int) (SCREEN_HEIGHT * 0.96 - BUTTON_HEIGHT * PIXEL_TO_METER)));
+        return (x >= (int) (SCREEN_WIDTH * 0.05)) && (x <= (int) (SCREEN_WIDTH * 0.05 + BUTTON_WIDTH * PIXEL_TO_METER) &&
+                (y <= ((int) (SCREEN_HEIGHT * 0.96))) && (y >= (int) (SCREEN_HEIGHT * 0.96 - BUTTON_HEIGHT * PIXEL_TO_METER)));
     }
 
     /**
      * Checks if button responsible to move character to right direction
+     *
      * @param x x position of input
      * @param y y position of input
      * @return true if it's pressed, false otherwise
@@ -416,6 +454,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     /**
      * Checks if button responsible to make character jump
+     *
      * @param x x position of input
      * @param y y position of input
      * @return true if it's pressed, false otherwise
@@ -428,6 +467,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     /**
      * Checks if button responsible to make character shoot
+     *
      * @param x x position of input
      * @param y y position of input
      * @return true if it's pressed, false otherwise
@@ -458,9 +498,9 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         if (checkJumpButton(screenX, screenY)) {
             jumpButton = buttonTextures.get(5);
 
-            if(selectedPlayer && GameController.getInstance(this.game).getRobot().getBody().getLinearVelocity().y == 0)
+            if (selectedPlayer) //&& GameController.getInstance(this.game).getRobot().getBody().getLinearVelocity().y == 0
                 GameController.getInstance(this.game).getRobot().getBody().applyLinearImpulse(new Vector2(0, 4f), GameController.getInstance(this.game).getRobot().getBody().getWorldCenter(), true);
-            else if(!selectedPlayer && GameController.getInstance(this.game).getNinja().getBody().getLinearVelocity().y == 0)
+            else if (!selectedPlayer) //&& GameController.getInstance(this.game).getNinja().getBody().getLinearVelocity().y == 0
                 GameController.getInstance(this.game).getNinja().getBody().applyLinearImpulse(new Vector2(0, 4f), GameController.getInstance(this.game).getNinja().getBody().getWorldCenter(), true);
 
         }
@@ -468,7 +508,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         if (checkBulletButton(screenX, screenY)) {
             shootButton = buttonTextures.get(7);
             //player = player ? false : true;
-            GameModel.getInstance(this.game).createBullet(robot.getElement().getX(), robot.getElement().getY(), ((RobotView)robot).isRunningRight());
+            GameModel.getInstance(this.game).createBullet(robot.getElement().getX(), robot.getElement().getY(), ((RobotView) robot).isRunningRight());
         }
 
         return true;
@@ -524,9 +564,8 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     @Override
     public void dispose() {
+        this.resetCamera();
         this.mapRenderer.dispose();
-        GameController.getInstance(this.game).getWorld().dispose();
-        GameController.getInstance(this.game).getDebugRenderer().dispose();
         super.dispose();
     }
 }

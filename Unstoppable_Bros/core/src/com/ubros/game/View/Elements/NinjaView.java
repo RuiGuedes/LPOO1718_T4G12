@@ -51,7 +51,7 @@ public class NinjaView extends ElementView {
      */
     private Animation<TextureRegion> ninjaDying;
 
-
+    private boolean horizontalMovement;
     /**
      * Creates a view belonging to a game.
      *
@@ -64,6 +64,7 @@ public class NinjaView extends ElementView {
         this.currentState = this.previousState = ElementView.CharacterState.STANDING;
         this.stateTimer = 0;
         this.runningRight = true;
+        this.horizontalMovement = false;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
@@ -92,36 +93,11 @@ public class NinjaView extends ElementView {
         setRegion(ninjaDefault);
     }
 
-    @Override
-    public void draw(float delta) {
-        this.update(delta);
-        //System.out.println("VIEW --- " +  super.getElement().getBody().getPosition().x + " ------ " + super.getElement().getBody().getPosition().y);
-        super.draw(getGame().getBatch());
+    public void setHorizontalMovement(boolean horizontalMovement) {
+        this.horizontalMovement = horizontalMovement;
     }
 
-    /**
-     * Updates this view based on a certain model.
-     */
-    @Override
-    public void update(float delta) {
-        ElementBody element = super.getElement();
-
-        if (currentState == ElementView.CharacterState.RUNNING) {
-            if (runningRight)
-                setPosition(element.getBody().getPosition().x - getWidth() / 2, element.getBody().getPosition().y - getHeight() / 2);
-            else
-                setPosition(element.getBody().getPosition().x - getWidth() / 2, element.getBody().getPosition().y - getHeight() / 2);
-        } else {
-            if (runningRight)
-                setPosition(element.getBody().getPosition().x - getWidth() / 2, element.getBody().getPosition().y - getHeight() / 2);
-            else
-                setPosition(element.getBody().getPosition().x - getWidth() / 2, element.getBody().getPosition().y - getHeight() / 2);
-        }
-        setRotation(element.getAngle());
-        setRegion(getFrame(delta));
-    }
-
-    public TextureRegion getFrame(float delta) {
+    private TextureRegion getFrame(float delta) {
         this.currentState = getState(super.getElement());
         TextureRegion region = null;
 
@@ -162,7 +138,7 @@ public class NinjaView extends ElementView {
         return region;
     }
 
-    public ElementView.CharacterState getState(ElementBody element) {
+    private ElementView.CharacterState getState(ElementBody element) {
 
         if (currentState == CharacterState.DEAD)
             return CharacterState.DEAD;
@@ -175,6 +151,37 @@ public class NinjaView extends ElementView {
         else
             return ElementView.CharacterState.STANDING;
     }
+
+
+    @Override
+    public void draw(float delta) {
+        this.update(delta);
+        //System.out.println("VIEW --- " +  super.getElement().getBody().getPosition().x + " ------ " + super.getElement().getBody().getPosition().y);
+        super.draw(getGame().getBatch());
+    }
+
+    /**
+     * Updates this view based on a certain model.
+     */
+    @Override
+    public void update(float delta) {
+        ElementBody element = super.getElement();
+
+        if (currentState == ElementView.CharacterState.RUNNING) {
+            if (runningRight)
+                setPosition(element.getBody().getPosition().x - getWidth() / 2, element.getBody().getPosition().y - getHeight() / 2);
+            else
+                setPosition(element.getBody().getPosition().x - getWidth() / 2, element.getBody().getPosition().y - getHeight() / 2);
+        } else {
+            if (runningRight)
+                setPosition(element.getBody().getPosition().x - getWidth() / 2, element.getBody().getPosition().y - getHeight() / 2);
+            else
+                setPosition(element.getBody().getPosition().x - getWidth() / 2, element.getBody().getPosition().y - getHeight() / 2);
+        }
+        setRotation(element.getAngle());
+        setRegion(getFrame(delta));
+    }
+
 
     @Override
     public void setCurrentState(ElementView.CharacterState state) {

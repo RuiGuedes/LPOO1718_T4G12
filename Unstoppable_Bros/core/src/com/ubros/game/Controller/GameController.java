@@ -34,7 +34,11 @@ public class GameController {
 
     public static enum GameStatus {PLAYING, PAUSE, GAMEOVER, VICTORY}
 
+    public final static float PLAYER_SPEED = 0.3f;
+
     private GameStatus state;
+
+
 
     /**
      * World considered gravity value

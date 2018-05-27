@@ -48,55 +48,58 @@ public class GameModel {
     private final UbrosGame game;
 
     /**
-     *
+     * Robot model
      */
     private CharacterModel robot;
 
     /**
-     *
+     * Ninja model
      */
     private CharacterModel ninja;
 
     /**
-     * The asteroids roaming around in this game.
+     * List of limits models created
      */
     private List<LimitModel> limits = new ArrayList<LimitModel>();
 
     /**
-     * The asteroids roaming around in this game.
+     * List of danger zone models created
      */
     private List<DangerZoneModel> dangerZones = new ArrayList<DangerZoneModel>();
 
     /**
-     * The asteroids roaming around in this game.
+     * List of mechanism models created
      */
     private List<MechanismModel> mechanisms = new ArrayList<MechanismModel>();
 
     /**
-     * The asteroids roaming around in this game.
+     * List of platforms models created
      */
     private List<PlatformModel> platforms = new ArrayList<PlatformModel>();
 
     /**
-     *
+     * List of objectives models created
      */
     private List<ObjectiveModel> objectives = new ArrayList<ObjectiveModel>();
 
     /**
-     *
+     * List of portal models created
      */
     private List<PortalModel> portals = new ArrayList<PortalModel>();
 
     /**
-     *
+     * List of exit door models created
      */
     private List<ExitDoorModel> exitDoors = new ArrayList<ExitDoorModel>();
 
     /**
-     *
+     * List of objects models created
      */
     private List<ObjectModel> objects = new ArrayList<ObjectModel>();
 
+    /**
+     * List of bullet models created
+     */
     public List<BulletModel> bullets = new ArrayList<BulletModel>();
 
     /**
@@ -220,6 +223,12 @@ public class GameModel {
         }
     }
 
+    /**
+     * Creates bullet model
+     * @param x x position
+     * @param y y position
+     * @param direction true to set right direction. False to set left direction
+     */
     public void createBullet(float x, float y, boolean direction) {
 
         float advance = direction ? 0.6f : -0.6f;

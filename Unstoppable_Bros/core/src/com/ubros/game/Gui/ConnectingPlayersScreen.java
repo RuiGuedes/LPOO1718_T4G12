@@ -157,12 +157,12 @@ public class ConnectingPlayersScreen extends ScreenAdapter {
         drawBackground();
         drawConnectingTitle();
 
-
         automaticConnection();
 
         if (connect.getConnectionEstablishedStatus())
             game.setScreen(new PlayGameScreen(game));
-
+        else
+            game.setScreen(new MainMenuScreen(game));
 
         game.getBatch().end();
     }

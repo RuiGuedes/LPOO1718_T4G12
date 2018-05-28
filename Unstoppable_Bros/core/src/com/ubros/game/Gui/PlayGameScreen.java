@@ -146,6 +146,10 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
      */
     private boolean selectedPlayer;
 
+    /**
+     * If true game is paused and players can't move
+     */
+    private boolean paused;
 
     /**
      * Creates this screen.
@@ -156,6 +160,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
         this.game = game;
         this.selectedPlayer = selectedPlayer;
+        this.paused = false;
 
         createCamera();
 
@@ -303,16 +308,12 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         drawHand();
         drawInteractiveButtons();
         drawElements(delta);
+        drawBackground();
         game.getBatch().end();
 
         if ((GameController.getInstance(this.game).getState() == GameController.GameStatus.GAMEOVER) || (GameController.getInstance(this.game).getState() == GameController.GameStatus.VICTORY)){
             GameController.GameStatus status = GameController.getInstance(this.game).getState();
             this.dispose();
-
-            if (SettingsScreen.soundActive) {
-                SettingsScreen.menuMusic.play();
-                SettingsScreen.playGameMusic.stop();
-            }
 
             this.game.setScreen(new TransitiveScreen(this.game, status));
         }
@@ -323,7 +324,8 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
      */
     private void update() {
 
-        handleInput();
+        if(!paused)
+            handleInput();
 
         GameController.getInstance(this.game).getWorld().step(1 / 60f, 6, 2);
         GameController.getInstance(this.game).update();
@@ -436,6 +438,22 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     }
 
     /**
+     * Draws the all background elements (pause and focus)
+     */
+    private void drawBackground() {
+
+        if(paused) {
+            Texture background = game.getAssetManager().get("backLoseFocus.png", Texture.class);
+            game.getBatch().draw(background, 0, 0, VIRTUAL_SCREEN_WIDTH / PIXEL_TO_METER, VIRTUAL_SCREEN_HEIGHT / PIXEL_TO_METER);
+
+
+            game.getBatch().draw(game.getAssetManager().get("pauseOn.png", Texture.class), VIRTUAL_SCREEN_WIDTH * 0.51f / PIXEL_TO_METER, VIRTUAL_SCREEN_HEIGHT * 0.205f / PIXEL_TO_METER, VIRTUAL_SCREEN_WIDTH * 0.1f / PIXEL_TO_METER, VIRTUAL_SCREEN_HEIGHT * 0.18f / PIXEL_TO_METER);
+        }
+        else
+            game.getBatch().draw(game.getAssetManager().get("pauseOff.png", Texture.class), VIRTUAL_SCREEN_WIDTH * 0.51f / PIXEL_TO_METER, VIRTUAL_SCREEN_HEIGHT * 0.205f / PIXEL_TO_METER, VIRTUAL_SCREEN_WIDTH * 0.1f / PIXEL_TO_METER, VIRTUAL_SCREEN_HEIGHT * 0.18f / PIXEL_TO_METER);
+    }
+
+    /**
      * Reset all buttons textures to their default textures (yellow state)
      */
     private void resetButtons() {
@@ -507,6 +525,18 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
                 (y >= ((int) (SCREEN_HEIGHT * 0.4))) && (y <= (int) (SCREEN_HEIGHT * 0.47)));
     }
 
+    /**
+     * Checks if pause button is pressed
+     *
+     * @param x x position of input
+     * @param y y position of input
+     * @return true if it's pressed, false otherwise
+     */
+    private boolean checkPause(int x, int y) {
+        return ((x >= (int) (SCREEN_WIDTH * 0.51f)) && (x <= (int) (SCREEN_WIDTH * 0.61)) &&
+                (y >= ((int) (SCREEN_HEIGHT * 0.615))) && (y <= (int) (SCREEN_HEIGHT * 0.795)));
+    }
+
     @Override
     public boolean keyDown(int keycode) {
         return false;
@@ -529,10 +559,23 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
      * @param screenY y position of input
      * @param pointer pointer representing the input
      * @param button  button pressed
-     * @return true no matter the input because it's not needed
+     * @return false if game is pause, true otherwise
      */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
+        if(checkPause(screenX,screenY)) {
+            paused = !paused;
+
+            if(paused && SettingsScreen.soundActive)
+                SettingsScreen.playGameMusic.setVolume(SettingsScreen.playGameMusic.getVolume()/10);
+            else if(!paused && SettingsScreen.soundActive)
+                SettingsScreen.playGameMusic.setVolume(SettingsScreen.playGameMusic.getVolume()*10);
+        }
+
+        if(paused)
+            return false;
+
         if (checkJumpButton(screenX, screenY)) {
             jumpButton = buttonTextures.get(5);
 
@@ -551,6 +594,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
         if (swapPlayers(screenX, screenY))
              selectedPlayer = !selectedPlayer;
+
 
         return true;
     }

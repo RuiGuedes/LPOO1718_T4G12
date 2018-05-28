@@ -30,12 +30,12 @@ public class TransitiveScreen extends ScreenAdapter {
     private static final int EXIT_BUTTON_YPOS = (int) (SCREEN_HEIGHT * 0.31);
 
     /**
-     * Settings button width
+     * Retry button width
      */
     private static final int RETRY_BUTTON_WIDTH = (int) (SCREEN_WIDTH * 0.3);
 
     /**
-     * Settings button yy position
+     * Retry button yy position
      */
     private static final int RETRY_BUTTON_YPOS = (int) (SCREEN_HEIGHT * 0.27);
 
@@ -59,10 +59,13 @@ public class TransitiveScreen extends ScreenAdapter {
      */
     private Texture[] menuButtons = new Texture[4];
 
-    public TransitiveScreen(UbrosGame game, GameController.GameStatus status) {
+    TransitiveScreen(UbrosGame game, GameController.GameStatus status) {
 
         this.game = game;
         this.status = status;
+
+        if (SettingsScreen.soundActive)
+            SettingsScreen.playGameMusic.stop();
 
         initializeTextures();
     }
@@ -105,7 +108,7 @@ public class TransitiveScreen extends ScreenAdapter {
     }
 
     /**
-     * Draws main menu buttons and handle's input
+     * Draws this menu buttons and handle's input
      */
     private void drawButtons() {
 
@@ -116,9 +119,17 @@ public class TransitiveScreen extends ScreenAdapter {
 
             if (checkExitButton(x, y)) {
                 activateExitButton();
+                if(SettingsScreen.soundActive)
+                    SettingsScreen.menuMusic.play();
                 this.game.setScreen(UbrosGame.mainMenu);
             } else if (checkRetryButton(x, y)) {
                 activateRetryButton();
+
+                if (SettingsScreen.soundActive) {
+                    SettingsScreen.menuMusic.stop();
+                    SettingsScreen.playGameMusic.play();
+                }
+
                 UbrosGame.playGame = new PlayGameScreen(this.game, true);
                 game.setScreen(UbrosGame.playGame);
             } else
@@ -129,7 +140,7 @@ public class TransitiveScreen extends ScreenAdapter {
     }
 
     /**
-     * Checks if settings button is pressed or not
+     * Checks if retry button is pressed or not
      *
      * @param x X position on screen
      * @param y Y position on screen
@@ -152,7 +163,6 @@ public class TransitiveScreen extends ScreenAdapter {
         return (x <= (SCREEN_WIDTH * 0.77f - EXIT_BUTTON_WIDTH / 2 + EXIT_BUTTON_WIDTH)) && (x >= (SCREEN_WIDTH * 0.77f - EXIT_BUTTON_WIDTH / 2))
                 && (y <= (SCREEN_HEIGHT - EXIT_BUTTON_YPOS)) && (y >= (SCREEN_HEIGHT - EXIT_BUTTON_YPOS - BUTTON_HEIGHT));
     }
-
 
     /**
      * Draws all buttons with settings button active

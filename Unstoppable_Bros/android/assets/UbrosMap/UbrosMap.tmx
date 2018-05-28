@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="60" height="36" tilewidth="32" tileheight="30" infinite="0" nextobjectid="355">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="60" height="36" tilewidth="32" tileheight="30" infinite="0" nextobjectid="359">
  <tileset firstgid="1" source="Acid.tsx"/>
  <tileset firstgid="3" source="factoryGround.tsx"/>
  <tileset firstgid="12" source="ground.tsx"/>
@@ -9,16 +9,16 @@
  <tileset firstgid="28" source="bluePortalH.tsx"/>
  <tileset firstgid="31" source="bluePortalV.tsx"/>
  <imagelayer name="Background">
-  <image source="background.png" width="1920" height="1080"/>
+  <image source="background.jpg" width="1920" height="1080"/>
  </imagelayer>
  <layer name="Graphics - Acid" width="60" height="36">
   <data encoding="base64" compression="zlib">
-   eJztzkEKABAAAEH8wf+/KjcHlCLFTO19QwBgJDZV+eILAAAAwGl50qtSJ1gVNwUA/K0AabIAyA==
+   eJztzkEKABAUQEHc4d//qrKzYKFEMVNv/1ICYCZ3NXHxBQAAAOCEmPSqMghW5U0BAH+rdtMAsw==
   </data>
  </layer>
  <layer name="Graphics - Ground" width="60" height="36">
   <data encoding="base64" compression="zlib">
-   eJzlmAtugzAMhn2AbRQJ9bnucf9L7GhrtkYgK47txAZv/SWrqggJH36FDAAwFOwJ4Isy7npEw2yvt9/rzd7u/6GioXYxqKY789RwL/c+IuoEv35q4f2LOsNj8V7Al/cFfuK+aM+CMctxFpoWNau0FsfR+iw7VCtHZlztfWhN698RPetOca+XNL0i+VjKm1mzP/L735pZ2is0/QizZkVhlmgPMzMWriO1PM/XqHsltYEbb1G3DjDHc4mBqiNLYb+PHXsYSlYxdARd/mJRrOn/vvPZsKS1uhYHPfvJGmvSoWHOXknigPMvlYs11qRjYa6RqBWW4ph74jmJqtt4Tmrc2rLIX8pw/e5ltajXvf6NLk1ftdyrR9F/8C/2IdeT1uCV7Lm8Y8tjL1RbR1qvPPbky9pa4tX6g/vm1NZmS2bcR6LmL8cs9cnyDDYybxI+C8GmiZt3iO1fa33AY/F+wszr2Rc0/dF6Lc15HZc7Goty5tXzDdyqLZnz/uq08rqtzJKzsJoy71l5n4WoMxrP/M68F8c1NPKO9S3yl5Mnc9TvQS/micihCFY7i+iZ8xth03XY
+   eJzlmAtuwzAIhjnAtjRS1Oe6x/0vsaOt3molQsaADQlbfwlVVRw7X3iYeACAoWBPAF+UcdcjGmZ7vf1eb/Z2/w8VDbWLQTXdmaeGe7n3EVEn+PVTC+9f1Bkei/cCvrwv8BP3RXsWjFmOs9C0qFmltTiO1mfZoVo5MuNq70NrWv+O6Fl3inu9pNkrko+lvJk1+yO//62ZpXuFZj/CrFlRmCXaw8yMhetILc/zNepeSW3gxlvUrQPM8VxioOrIUtjvY0cPQ8kqho6gy18sijX933c+G5a0VtfioKefrLEmHRrm7JUkDjj/UrlYY006FuYaiVphKY65J56TqLqN56TGrS2L/KUM1+9eVot63evf6NLsq5a9ehT9B/9iH3J70hq8kp7LO7Y8eqHaOtJ65dGTL2triVfrD+6bU1ubLZnxPhI1f5c9ZCm+pT5ZnsFG5k3CZyHYNHHzDrH9a60PeCzeT5h5PfcFzf5ovZbmvI7LHY1FOfPq+QZu1ZbMub86rbxuK7PkLKymzHtW3mch6ozGM78z78VxDY28Y32L/OXkyRz1e9CLeSJyKILVziJ65vwGya914Q==
   </data>
  </layer>
  <objectgroup name="Ground">
@@ -121,12 +121,6 @@
   <object id="294" x="992" y="180">
    <polygon points="0,0 32,-30 224,-30 224,0 0,0"/>
   </object>
-  <object id="295" x="1152" y="630">
-   <polygon points="0,0 128,120 160,120 160,90 32,-30 0,-30 0,0"/>
-  </object>
-  <object id="296" x="1312" y="720">
-   <polygon points="0,0 224,0 192,30 0,30 0,0"/>
-  </object>
   <object id="297" x="1472" y="720">
    <polygon points="0,0 32,-30 320,-30 320,0 0,0"/>
   </object>
@@ -190,6 +184,15 @@
   <object id="339" x="160" y="690">
    <polygon points="0,0 32,-30 608,-30 608,0 0,0"/>
   </object>
+  <object id="355" x="1536" y="720">
+   <polygon points="0,0 -288,0 -256,30 -32,30 0,0"/>
+  </object>
+  <object id="356" x="1344" y="720">
+   <polygon points="0,0 -32,-30 -128,-30 -96,0 0,0"/>
+  </object>
+  <object id="357" x="1152" y="600">
+   <polygon points="0,0 32,0 128,90 64,90 0,30 0,0"/>
+  </object>
  </objectgroup>
  <objectgroup name="DangerZone">
   <object id="236" x="224" y="810">
@@ -198,8 +201,8 @@
   <object id="335" x="928" y="150">
    <polygon points="0,0 32,30 64,30 96,0 0,0"/>
   </object>
-  <object id="336" x="1280" y="690">
-   <polygon points="0,0 32,30 192,30 224,0 0,0"/>
+  <object id="358" x="1312" y="690">
+   <polygon points="0,0 32,30 160,30 192,0 0,0"/>
   </object>
  </objectgroup>
  <objectgroup name="Mechanism">

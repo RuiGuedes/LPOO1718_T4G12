@@ -93,7 +93,7 @@ public class SettingsScreen extends ScreenAdapter {
     public SettingsScreen(UbrosGame game) {
 
         this.game = game;
-        soundActive = false;
+        soundActive = true;
 
         initializeTextures();
         initializeAudio();
@@ -123,7 +123,7 @@ public class SettingsScreen extends ScreenAdapter {
 
         playGameMusic = game.getAssetManager().get("audio/music/BullyMainTheme.mp3", Music.class);
         playGameMusic.setLooping(true);
-        playGameMusic.setVolume(menuMusic.getVolume() / 2);
+        playGameMusic.setVolume(menuMusic.getVolume() / 5);
 
         pickObjectiveSound = game.getAssetManager().get("audio/sounds/pickSound.wav", Sound.class);
 

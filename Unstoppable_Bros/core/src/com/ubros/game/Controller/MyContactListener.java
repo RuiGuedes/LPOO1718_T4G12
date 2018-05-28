@@ -179,7 +179,8 @@ public class MyContactListener implements ContactListener {
         ObjectiveModel objectiveModel = (ObjectiveModel) objectiveBody.getUserData();
 
         if (!objectiveModel.isCatched()) {
-            SettingsScreen.pickObjectiveSound.play();
+            if(SettingsScreen.soundActive)
+                SettingsScreen.pickObjectiveSound.play();
             objectiveModel.setCatched();
             GameController.getInstance(null).setRemainingObjectives();
         }

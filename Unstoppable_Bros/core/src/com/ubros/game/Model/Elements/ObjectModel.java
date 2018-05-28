@@ -33,6 +33,8 @@ public class ObjectModel extends ElementModel {
      * @param x        The x-coordinate of this entity in meters.
      * @param y        The y-coordinate of this entity in meters.
      * @param rotation The current rotation of this entity in radians.
+     * @param shape    The object shape
+     * @param data     Information about the object
      */
     public ObjectModel(float x, float y, float rotation, Polygon shape, String data) {
         super(x, y, rotation);

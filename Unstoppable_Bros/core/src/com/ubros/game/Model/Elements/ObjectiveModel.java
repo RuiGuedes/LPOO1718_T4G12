@@ -9,23 +9,38 @@ import java.util.StringTokenizer;
 public class ObjectiveModel extends ElementModel {
 
     /**
-     * Mechanism body shape
+     * Objective body shape
      */
     private Polygon shape;
 
     /**
-     *
+     * Objective associated view
      */
     private ObjectiveView view;
 
+    /**
+     * Information about objective object
+     */
     private String userData;
 
+    /**
+     * Objective texture filename
+     */
     private String objectiveView;
 
+    /**
+     * Objective texture width
+     */
     private float objectiveWidth;
 
+    /**
+     * Objective texture height
+     */
     private float objectiveHeight;
 
+    /**
+     * Hold information about objective state: True for catched. False otherwise
+     */
     private boolean catched;
 
     /**
@@ -34,6 +49,8 @@ public class ObjectiveModel extends ElementModel {
      * @param x        The x-coordinate of this entity in meters.
      * @param y        The y-coordinate of this entity in meters.
      * @param rotation The current rotation of this entity in radians.
+     * @param shape    The objective shape
+     * @param userData Information about the objective
      */
     public ObjectiveModel(float x, float y, float rotation, Polygon shape, String userData) {
         super(x, y, rotation);
@@ -42,6 +59,10 @@ public class ObjectiveModel extends ElementModel {
         initializeObjectiveData(userData);
     }
 
+    /**
+     * Initializes objective information
+     * @param data information about the objective
+     */
     private void initializeObjectiveData(String data) {
 
         StringTokenizer tokenizer = new StringTokenizer(data, "-");
@@ -52,40 +73,75 @@ public class ObjectiveModel extends ElementModel {
         this.objectiveView = tokenizer.nextToken();
     }
 
-    public String getData() {
-        return userData;
+    /**
+     * Get's objective shape
+     * @return objective shape
+     */
+    public Polygon getShape() {
+        return shape;
     }
 
-    public String getObjectiveView() {
-        return objectiveView;
-    }
-
+    /**
+     * Get's objective view
+     * @return objective view
+     */
     public ObjectiveView getView() {
         return view;
     }
 
+    /**
+     * Set's objective new view
+     * @param view objective new view
+     */
     public void setView(ObjectiveView view) {
         this.view = view;
     }
 
+    /**
+     * Get's objective userData to check collisions
+     * @return objective userData
+     */
+    public String getData() {
+        return userData;
+    }
+
+    /**
+     * Get's objective texture name
+     * @return objective texture name
+     */
+    public String getObjectiveView() {
+        return objectiveView;
+    }
+
+    /**
+     * Get's objective texture width
+     * @return objective texture width
+     */
     public float getObjectiveWidth() {
         return objectiveWidth;
     }
 
+    /**
+     * Get's objective texture height
+     * @return objective texture height
+     */
     public float getObjectiveHeight() {
         return objectiveHeight;
     }
 
+    /**
+     * Check's if objective is or isn't catched already
+     * @return True if it's catched. False otherwise
+     */
     public boolean isCatched() {
         return catched;
     }
 
+    /**
+     * Catches objective
+     */
     public void setCatched() {
         this.catched = true;
-    }
-
-    public Polygon getShape() {
-        return shape;
     }
 
     @Override

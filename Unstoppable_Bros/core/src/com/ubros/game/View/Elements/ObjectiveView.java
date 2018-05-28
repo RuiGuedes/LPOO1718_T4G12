@@ -8,31 +8,48 @@ import com.ubros.game.UbrosGame;
 
 public class ObjectiveView extends ElementView {
 
+    /**
+     * Texture scale factor
+     */
     private final float SCALE = 0.85f;
 
+    /**
+     * Texture increment y position
+     */
     private final float Y_POS = 0.1f;
 
+    /**
+     * Objective texture view
+     */
     private Texture view;
 
+    /**
+     * Object texture width
+     */
     private float width;
 
+    /**
+     * Object texture height
+     */
     private float height;
 
+    /**
+     * Draws only if not catched
+     */
     private boolean drawable;
 
     /**
      * Creates a view belonging to a game.
-     *
-     * @param game    the game this view belongs to. Needed to access the
-     *                asset manager to get textures.
-     * @param atlas
-     * @param element
+     * @param game    the game this view belongs to. Needed to access the asset manager to get textures.
+     * @param atlas   textures atlas that contains all enemy animations
+     * @param element body associated to this view
+     * @param objectiveView name of objective texture to be loaded
      */
     public ObjectiveView(UbrosGame game, TextureAtlas atlas, ElementBody element, String objectiveView) {
         super(game, atlas, element);
 
         ObjectiveModel model = ((ObjectiveModel)getElement().getModel());
-        loadPlatformView(objectiveView);
+        loadObjectiveView(objectiveView);
 
         this.view = game.getAssetManager().get(objectiveView, Texture.class);
         this.width =  model.getObjectiveWidth();
@@ -40,7 +57,11 @@ public class ObjectiveView extends ElementView {
         this.drawable = true;
     }
 
-    private void loadPlatformView(String objectiveView) {
+    /**
+     * Load's objective view texture
+     * @param objectiveView objective texture name
+     */
+    private void loadObjectiveView(String objectiveView) {
         super.getGame().getAssetManager().load(objectiveView,Texture.class);
         super.getGame().getAssetManager().finishLoading();
     }
@@ -58,7 +79,6 @@ public class ObjectiveView extends ElementView {
 
     @Override
     public void update(float delta) {
-
         ObjectiveModel model = ((ObjectiveModel)getElement().getModel());
         drawable = !model.isCatched();
     }

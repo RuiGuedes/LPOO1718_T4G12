@@ -20,6 +20,7 @@ public class ObjectiveBody extends ElementBody {
      *
      * @param world The world this body lives on.
      * @param model The model representing the body.
+     * @param vertexSet The model shape vertex's
      */
     public ObjectiveBody(World world, ElementModel model, float[] vertexSet) {
         super(world, model);
@@ -39,7 +40,5 @@ public class ObjectiveBody extends ElementBody {
         fdef.shape = shape;
         fdef.isSensor = true;
         body.createFixture(fdef).setUserData(((ObjectiveModel)getModel()).getData());
-
-
     }
 }

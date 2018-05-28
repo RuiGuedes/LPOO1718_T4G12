@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.ubros.game.Gui.SettingsScreen;
 import com.ubros.game.Model.Elements.BulletModel;
 import com.ubros.game.Model.Elements.CharacterModel;
 import com.ubros.game.Model.Elements.DangerZoneModel;
@@ -178,6 +179,7 @@ public class MyContactListener implements ContactListener {
         ObjectiveModel objectiveModel = (ObjectiveModel) objectiveBody.getUserData();
 
         if (!objectiveModel.isCatched()) {
+            SettingsScreen.pickObjectiveSoung.play();
             objectiveModel.setCatched();
             GameController.getInstance(null).setRemainingObjectives();
         }

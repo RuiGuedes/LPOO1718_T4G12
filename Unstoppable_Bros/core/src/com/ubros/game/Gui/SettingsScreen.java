@@ -3,6 +3,7 @@ package com.ubros.game.Gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.ubros.game.UbrosGame;
@@ -27,32 +28,32 @@ public class SettingsScreen extends ScreenAdapter {
     /**
      * Exit button yy position
      */
-    private static final int EXIT_BUTTON_YPOS = (int) (SCREEN_HEIGHT*0.45f);
+    private static final int EXIT_BUTTON_YPOS = (int) (SCREEN_HEIGHT * 0.45f);
 
     /**
      * Settings button width
      */
-    private static final int SETTINGS_BUTTON_WIDTH = (int)(SCREEN_WIDTH*0.3);
+    private static final int SETTINGS_BUTTON_WIDTH = (int) (SCREEN_WIDTH * 0.3);
 
     /**
      * Settings button yy position
      */
-    private static final int SETTINGS_BUTTON_YPOS = (int)(SCREEN_HEIGHT*0.25);
+    private static final int SETTINGS_BUTTON_YPOS = (int) (SCREEN_HEIGHT * 0.25);
 
     /**
      * Play button width
      */
-    private static final int PLAY_BUTTON_WIDTH = (int)(SCREEN_WIDTH*0.5);
+    private static final int PLAY_BUTTON_WIDTH = (int) (SCREEN_WIDTH * 0.5);
 
     /**
      * Play button yy position
      */
-    private static final int PLAY_BUTTON_YPOS = (int)(SCREEN_HEIGHT*0.5);
+    private static final int PLAY_BUTTON_YPOS = (int) (SCREEN_HEIGHT * 0.5);
 
     /**
      * Every button height
      */
-    private static final int BUTTON_HEIGHT = (int)(SCREEN_HEIGHT*0.13);
+    private static final int BUTTON_HEIGHT = (int) (SCREEN_HEIGHT * 0.13);
 
     /**
      * The game this screen belongs to.
@@ -60,26 +61,30 @@ public class SettingsScreen extends ScreenAdapter {
     private final UbrosGame game;
 
     /**
-     *  Array that contains all textures to represent active and inactive buttons
+     * Array that contains all textures to represent active and inactive buttons
      */
     private Texture[] menuButtons = new Texture[6];
 
-    private Music music;
+    public  static boolean soundActive;
 
+    public static Music menuMusic = null;
 
+    public static Music playGameMusic = null;
+
+    public static Sound pickObjectiveSoung = null;
     /**
      * Creates this screen.
      *
      * @param game The game this screen belongs to
      */
-    public SettingsScreen (UbrosGame game) {
+    public SettingsScreen(UbrosGame game) {
+
         this.game = game;
+        soundActive = false;
 
         loadAssets();
 
-        music = game.getAssetManager().get("audio/music/BullyWalkingTheme.mp3", Music.class);
-        music.setLooping(true);
-        music.play();
+        initializeAudio();
     }
 
     /**
@@ -87,23 +92,39 @@ public class SettingsScreen extends ScreenAdapter {
      */
     private void loadAssets() {
         this.game.getAssetManager().load("audio/music/BullyWalkingTheme.mp3", Music.class);
-        this.game.getAssetManager().load("sound.png",Texture.class);
-        this.game.getAssetManager().load("soundOff.png",Texture.class);
-        this.game.getAssetManager().load("soundOn.png",Texture.class);
-        this.game.getAssetManager().load("tutorial.png",Texture.class);
-        //this.game.getAssetManager().load("gameTitle.png",Texture.class);
+        this.game.getAssetManager().load("audio/music/BullyMainTheme.mp3", Music.class);
+        this.game.getAssetManager().load("audio/sounds/pickSound.wav", Sound.class);
+
+        this.game.getAssetManager().load("sound.png", Texture.class);
+        this.game.getAssetManager().load("soundOff.png", Texture.class);
+        this.game.getAssetManager().load("soundOn.png", Texture.class);
+        this.game.getAssetManager().load("tutorial.png", Texture.class);
 
         this.game.getAssetManager().finishLoading();
         initializeTextures();
     }
 
     /**
-     *  Initializes textures array previously defined
+     * Initializes textures array previously defined
      */
     private void initializeTextures() {
         menuButtons[0] = game.getAssetManager().get("soundOn.png", Texture.class);
-        menuButtons[1] = game.getAssetManager().get("soundOff.png",Texture.class);
-        menuButtons[2] = game.getAssetManager().get("tutorial.png",Texture.class);
+        menuButtons[1] = game.getAssetManager().get("soundOff.png", Texture.class);
+        menuButtons[2] = game.getAssetManager().get("tutorial.png", Texture.class);
+    }
+
+    private void initializeAudio() {
+
+        menuMusic = game.getAssetManager().get("audio/music/BullyWalkingTheme.mp3", Music.class);
+        menuMusic.setLooping(true);
+        menuMusic.play();
+
+        playGameMusic = game.getAssetManager().get("audio/music/BullyMainTheme.mp3", Music.class);
+        playGameMusic.setLooping(true);
+        playGameMusic.setVolume(menuMusic.getVolume()/2);
+
+        pickObjectiveSoung = game.getAssetManager().get("audio/sounds/pickSound.wav", Sound.class);
+
     }
 
     /**
@@ -116,7 +137,7 @@ public class SettingsScreen extends ScreenAdapter {
 
         super.render(delta);
 
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         game.getBatch().begin();
         drawBackground();
@@ -132,9 +153,9 @@ public class SettingsScreen extends ScreenAdapter {
         Texture background = game.getAssetManager().get("background.jpg", Texture.class);
         Texture title = game.getAssetManager().get("MainMenuSettingsButtonOn.png", Texture.class);
         Texture sound = game.getAssetManager().get("sound.png", Texture.class);
-        game.getBatch().draw(background, 0, 0,SCREEN_WIDTH,SCREEN_HEIGHT);
-        game.getBatch().draw(title, SCREEN_WIDTH*0.3f, SCREEN_HEIGHT*0.7f,SCREEN_WIDTH*0.4f,SCREEN_HEIGHT*0.2f);
-        game.getBatch().draw(sound, SCREEN_WIDTH*0.3f, SCREEN_HEIGHT*0.45f,SCREEN_WIDTH*0.2f,BUTTON_HEIGHT);
+        game.getBatch().draw(background, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        game.getBatch().draw(title, SCREEN_WIDTH * 0.3f, SCREEN_HEIGHT * 0.7f, SCREEN_WIDTH * 0.4f, SCREEN_HEIGHT * 0.2f);
+        game.getBatch().draw(sound, SCREEN_WIDTH * 0.3f, SCREEN_HEIGHT * 0.45f, SCREEN_WIDTH * 0.2f, BUTTON_HEIGHT);
     }
 
     /**
@@ -142,40 +163,38 @@ public class SettingsScreen extends ScreenAdapter {
      */
     private void drawButtons() {
 
-        if(Gdx.input.justTouched()) {
+        if (Gdx.input.justTouched()) {
 
             int x = Gdx.input.getX();
             int y = Gdx.input.getY();
 
-            if(checkSound(x,y)) {
-                if(music.isPlaying())
-                    music.stop();
+            if (checkSound(x, y)) {
+                soundActive = !soundActive;
+                if (menuMusic.isPlaying())
+                    menuMusic.stop();
                 else
-                    music.play();
+                    menuMusic.play();
 
                 defaultMainMenu();
-            }
-            else
+            } else
                 defaultMainMenu();
-        }
-        else if(Gdx.input.isTouched()) {
+        } else if (Gdx.input.isTouched()) {
 
             int x = Gdx.input.getX();
             int y = Gdx.input.getY();
 
-            if(checkTutorialButton(x,y))
+            if (checkTutorialButton(x, y))
                 this.game.setScreen(UbrosGame.mainMenu);
             else
                 defaultMainMenu();
-            
-        }
-        else {
+
+        } else {
             defaultMainMenu();
         }
     }
 
     private boolean checkSound(int x, int y) {
-        return (x <= (SCREEN_WIDTH*0.55f + EXIT_BUTTON_WIDTH)) && (x >= SCREEN_WIDTH*0.55f)
+        return (x <= (SCREEN_WIDTH * 0.55f + EXIT_BUTTON_WIDTH)) && (x >= SCREEN_WIDTH * 0.55f)
                 && (y <= (SCREEN_HEIGHT - EXIT_BUTTON_YPOS)) && (y >= (SCREEN_HEIGHT - EXIT_BUTTON_YPOS - BUTTON_HEIGHT));
     }
 
@@ -196,11 +215,11 @@ public class SettingsScreen extends ScreenAdapter {
     }
 
     private void activateTutorialButton() {
-        if(music.isPlaying())
-            game.getBatch().draw(game.getAssetManager().get("soundOn.png", Texture.class), SCREEN_WIDTH*0.55f , EXIT_BUTTON_YPOS, EXIT_BUTTON_WIDTH, BUTTON_HEIGHT);
+        if (soundActive)
+            game.getBatch().draw(game.getAssetManager().get("soundOn.png", Texture.class), SCREEN_WIDTH * 0.55f, EXIT_BUTTON_YPOS, EXIT_BUTTON_WIDTH, BUTTON_HEIGHT);
         else
-            game.getBatch().draw(game.getAssetManager().get("soundOff.png", Texture.class), SCREEN_WIDTH*0.55f , EXIT_BUTTON_YPOS, EXIT_BUTTON_WIDTH, BUTTON_HEIGHT);
-        game.getBatch().draw(menuButtons[2], SCREEN_WIDTH*0.45f - SETTINGS_BUTTON_WIDTH / 2, SETTINGS_BUTTON_YPOS, SETTINGS_BUTTON_WIDTH, BUTTON_HEIGHT);
+            game.getBatch().draw(game.getAssetManager().get("soundOff.png", Texture.class), SCREEN_WIDTH * 0.55f, EXIT_BUTTON_YPOS, EXIT_BUTTON_WIDTH, BUTTON_HEIGHT);
+        game.getBatch().draw(menuButtons[2], SCREEN_WIDTH * 0.45f - SETTINGS_BUTTON_WIDTH / 2, SETTINGS_BUTTON_YPOS, SETTINGS_BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 
     private void activateExitButton() {
@@ -210,11 +229,11 @@ public class SettingsScreen extends ScreenAdapter {
     }
 
     private void defaultMainMenu() {
-        if(music.isPlaying())
-            game.getBatch().draw(game.getAssetManager().get("soundOn.png", Texture.class), SCREEN_WIDTH*0.55f , EXIT_BUTTON_YPOS, EXIT_BUTTON_WIDTH, BUTTON_HEIGHT);
+        if (soundActive)
+            game.getBatch().draw(game.getAssetManager().get("soundOn.png", Texture.class), SCREEN_WIDTH * 0.55f, EXIT_BUTTON_YPOS, EXIT_BUTTON_WIDTH, BUTTON_HEIGHT);
         else
-            game.getBatch().draw(game.getAssetManager().get("soundOff.png", Texture.class), SCREEN_WIDTH*0.55f , EXIT_BUTTON_YPOS, EXIT_BUTTON_WIDTH, BUTTON_HEIGHT);
-        game.getBatch().draw(menuButtons[2], SCREEN_WIDTH*0.45f - SETTINGS_BUTTON_WIDTH / 2, SETTINGS_BUTTON_YPOS, SETTINGS_BUTTON_WIDTH, BUTTON_HEIGHT);
+            game.getBatch().draw(game.getAssetManager().get("soundOff.png", Texture.class), SCREEN_WIDTH * 0.55f, EXIT_BUTTON_YPOS, EXIT_BUTTON_WIDTH, BUTTON_HEIGHT);
+        game.getBatch().draw(menuButtons[2], SCREEN_WIDTH * 0.45f - SETTINGS_BUTTON_WIDTH / 2, SETTINGS_BUTTON_YPOS, SETTINGS_BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 
 }

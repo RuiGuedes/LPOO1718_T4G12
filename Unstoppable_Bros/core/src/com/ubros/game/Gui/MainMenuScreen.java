@@ -177,6 +177,10 @@ public class MainMenuScreen extends ScreenAdapter {
                     game.setScreen(new ManualConnection(this.game));
                 */
                 UbrosGame.playGame = new PlayGameScreen(this.game);
+                if(SettingsScreen.soundActive) {
+                    SettingsScreen.menuMusic.stop();
+                    SettingsScreen.playGameMusic.play();
+                }
                 game.setScreen(UbrosGame.playGame);
             }
             else

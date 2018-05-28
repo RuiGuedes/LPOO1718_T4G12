@@ -326,6 +326,12 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
         if (GameController.getInstance(this.game).getState() == GameController.GameStatus.GAMEOVER) {
             this.dispose();
+
+            if(SettingsScreen.soundActive) {
+                SettingsScreen.menuMusic.play();
+                SettingsScreen.playGameMusic.stop();
+            }
+
             this.game.setScreen(UbrosGame.mainMenu);
         }
     }

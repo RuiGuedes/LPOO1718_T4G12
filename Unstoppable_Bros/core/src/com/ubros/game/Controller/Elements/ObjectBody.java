@@ -11,8 +11,6 @@ import com.ubros.game.Model.Elements.ObjectModel;
 
 public class ObjectBody extends ElementBody {
 
-    private final float TILE_WIDTH = 32/PlayGameScreen.PIXEL_TO_METER;
-
     /**
      * Constructs a body representing a model in a certain world.
      *
@@ -29,7 +27,7 @@ public class ObjectBody extends ElementBody {
 
         FixtureDef fdef = new FixtureDef();
 
-        if(((ObjectModel)getModel()).getData().equals("Box")) {
+        if(((ObjectModel)getModel()).getData().contains("box")) {
 
             PolygonShape shape = new PolygonShape();
 

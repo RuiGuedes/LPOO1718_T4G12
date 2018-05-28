@@ -3,6 +3,7 @@ package com.ubros.game.Controller.Elements;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.ubros.game.Gui.PlayGameScreen;
 import com.ubros.game.Model.Elements.ElementModel;
 
 public abstract class ElementBody {
@@ -10,14 +11,22 @@ public abstract class ElementBody {
     /**
      * Character character width
      */
-    int CHARACTER_WIDTH = 48;
+    private int CHARACTER_WIDTH = 48;
 
     /**
      * Character character height
      */
-    int CHARACTER_HEIGHT = 70;
+    private int CHARACTER_HEIGHT = 70;
 
-    int CHARACTER_RADIUS = 34;
+    /**
+     * Character object radius
+     */
+    int CHARACTER_RADIUS = (Math.max(CHARACTER_WIDTH/2, CHARACTER_HEIGHT/2) - 1);
+
+    /**
+     * Tiled map associated width
+     */
+    final float TILE_WIDTH = 32 / PlayGameScreen.PIXEL_TO_METER;
 
     /**
      * The Box2D body that supports this body.

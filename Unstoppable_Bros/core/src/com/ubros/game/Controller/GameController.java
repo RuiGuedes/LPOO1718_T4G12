@@ -92,6 +92,8 @@ public class GameController {
 
     private List<EnemyBody> enemyBodies = new ArrayList<EnemyBody>();
 
+    private  List<ObjectBody> objectBodies = new ArrayList<ObjectBody>();
+
     public List<BulletBody> bulletBodies = new ArrayList<BulletBody>();
 
     /**
@@ -202,7 +204,7 @@ public class GameController {
     private void createObjects() {
         List<ObjectModel> objectModels = GameModel.getInstance(this.game).getObjects();
         for (ObjectModel object : objectModels)
-            new ObjectBody(this.world, object, object.getShape().getVertices());
+            objectBodies.add(new ObjectBody(this.world, object, object.getShape().getVertices()));
     }
 
     private void createEnemys() {
@@ -210,6 +212,10 @@ public class GameController {
         for (EnemyModel enemy : enemyModels)
             enemyBodies.add(new EnemyBody(this.world, enemy));
     }
+
+    /////////////////
+    // GET METHODS //
+    /////////////////
 
     /**
      * Returns the world controlled by this controller. Needed for debugging purposes only.
@@ -264,7 +270,19 @@ public class GameController {
         return exitDoorBodies;
     }
 
-    public void update(float delta) {
+    public List<ObjectBody> getObjectBodies() {
+        return objectBodies;
+    }
+
+
+    ////////////
+    // OTHERS //
+    ////////////
+
+    /**
+     * Updates this instance world bodies
+     */
+    public void update() {
 
         if (GameController.getInstance(this.game).getNinja().setTransformFlag) {
             GameController.getInstance(this.game).getNinja().setTransform(GameController.getInstance(this.game).getNinja().newPosition.x, GameController.getInstance(this.game).getNinja().newPosition.y, 0);
@@ -277,22 +295,6 @@ public class GameController {
 
         }
 
-        /*
-        List<EnemyBody> enemys = new ArrayList<EnemyBody>();
-
-        for(EnemyBody enemyBody : enemyBodies) {
-
-            if(((EnemyModel)enemyBody.getModel()).getHealth() <= 0 && ((EnemyModel)enemyBody.getModel()).getView().enemyDying.isAnimationFinished(((EnemyModel)enemyBody.getModel()).getView().stateTimer)) {
-                destroyBody(enemyBody.getBody());
-            }
-            else
-                enemys.add(enemyBody);
-        }
-
-        enemyBodies.clear();
-        enemyBodies = enemys;
-        */
-
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
         for (Body body : bodies) {
@@ -301,15 +303,20 @@ public class GameController {
                 world.destroyBody(body);
             }
         }
-
-
     }
 
+    /**
+     * Disables a particular body
+     * @param body body to disabled
+     */
     public void disablesBody(Body body) {
         body.setType(BodyDef.BodyType.StaticBody);
         body.getFixtureList().get(0).setSensor(true);
     }
 
+    /**
+     * Dispose all world created bodies
+     */
     public void dispose() {
 
         Array<Body> bodies = new Array<Body>();

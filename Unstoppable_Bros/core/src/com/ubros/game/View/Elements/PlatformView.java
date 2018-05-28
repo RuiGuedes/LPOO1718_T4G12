@@ -9,10 +9,19 @@ import com.ubros.game.UbrosGame;
 
 public class PlatformView extends ElementView {
 
+    /**
+     * Platform view texture
+     */
     private Texture view;
 
+    /**
+     * Platform width
+     */
     private float width;
 
+    /**
+     * Platform height
+     */
     private float height;
 
     /**

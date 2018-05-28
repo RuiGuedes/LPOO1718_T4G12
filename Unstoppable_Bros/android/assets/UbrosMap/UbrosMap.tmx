@@ -285,10 +285,10 @@
   </object>
  </objectgroup>
  <objectgroup name="Objects">
-  <object id="342" name="Ball-1" x="800" y="150">
+  <object id="342" name="ball.png-1" x="800" y="150">
    <polygon points="0,0 0,-30 32,-30 32,0 0,0"/>
   </object>
-  <object id="343" name="Box-0" x="192" y="660">
+  <object id="343" name="box.png-0" x="192" y="660">
    <polygon points="0,0 64,0 64,-60 0,-60 0,0"/>
   </object>
  </objectgroup>

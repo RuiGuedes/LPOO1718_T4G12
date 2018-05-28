@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.ubros.game.Controller.Elements.EnemyBody;
 import com.ubros.game.Controller.Elements.ExitDoorBody;
 import com.ubros.game.Controller.Elements.MechanismBody;
+import com.ubros.game.Controller.Elements.ObjectBody;
 import com.ubros.game.Controller.Elements.ObjectiveBody;
 import com.ubros.game.Controller.Elements.PlatformBody;
 import com.ubros.game.Controller.GameController;
@@ -21,6 +22,7 @@ import com.ubros.game.Model.Elements.BulletModel;
 import com.ubros.game.Model.Elements.EnemyModel;
 import com.ubros.game.Model.Elements.ExitDoorModel;
 import com.ubros.game.Model.Elements.MechanismModel;
+import com.ubros.game.Model.Elements.ObjectModel;
 import com.ubros.game.Model.Elements.ObjectiveModel;
 import com.ubros.game.Model.Elements.PlatformModel;
 import com.ubros.game.Model.GameModel;
@@ -30,6 +32,7 @@ import com.ubros.game.View.Elements.EnemyView;
 import com.ubros.game.View.Elements.ExitDoorView;
 import com.ubros.game.View.Elements.MechanismView;
 import com.ubros.game.View.Elements.NinjaView;
+import com.ubros.game.View.Elements.ObjectView;
 import com.ubros.game.View.Elements.ObjectiveView;
 import com.ubros.game.View.Elements.PlatformView;
 import com.ubros.game.View.Elements.RobotView;
@@ -169,8 +172,6 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
         loadAssets();
 
-//        music = game.getAssetManager().get("audio/music/BullyWalkingTheme.mp3", Music.class);
-        //music.play();
     }
 
 
@@ -226,6 +227,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         createObjectivesView();
         createExitDoorsView();
         createEnemysView();
+        createObjectsView();
 
         buttonTextures.add(game.getAssetManager().get("moveLeftButtonOff.png", Texture.class));
         buttonTextures.add(game.getAssetManager().get("moveLeftButtonOn.png", Texture.class));
@@ -269,6 +271,12 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         for (PlatformBody platformBody : platforms) {
             ((PlatformModel) platformBody.getModel()).setView(new PlatformView(this.game, null, platformBody, ((PlatformModel) platformBody.getModel()).getPlatformView()));
         }
+    }
+
+    private void createObjectsView() {
+        List<ObjectBody> objects = GameController.getInstance(this.game).getObjectBodies();
+        for(ObjectBody objectBody : objects)
+            ((ObjectModel) objectBody.getModel()).setView(new ObjectView(this.game, null, objectBody,  ((ObjectModel) objectBody.getModel()).getData()));
     }
 
     /**
@@ -346,7 +354,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         handleInput();
 
         GameController.getInstance(this.game).getWorld().step(1 / 60f, 6, 2);
-        GameController.getInstance(this.game).update(delta);
+        GameController.getInstance(this.game).update();
 
         game.getBatch().setProjectionMatrix(gameCam.combined);
         gameCam.update();
@@ -415,6 +423,9 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         for (PlatformBody platformBody : GameController.getInstance(this.game).getPlatformBodies())
             ((PlatformModel) platformBody.getModel()).getView().draw(delta);
 
+        for(ObjectBody objectBody : GameController.getInstance(this.game).getObjectBodies())
+            ((ObjectModel)objectBody.getModel()).getView().draw(delta);
+
         for (ObjectiveBody objectiveBody : GameController.getInstance(this.game).getObjectiveBodies())
             ((ObjectiveModel) objectiveBody.getModel()).getView().draw(delta);
 
@@ -426,6 +437,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
         for (BulletModel bulletModel : GameModel.getInstance(this.game).bullets)
             bulletModel.getView().draw(delta);
+
 
         robot.draw(delta);
         ninja.draw(delta);

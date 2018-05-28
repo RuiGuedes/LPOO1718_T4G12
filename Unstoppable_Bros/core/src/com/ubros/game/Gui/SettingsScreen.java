@@ -71,7 +71,7 @@ public class SettingsScreen extends ScreenAdapter {
 
     public static Music playGameMusic = null;
 
-    public static Sound pickObjectiveSoung = null;
+    public static Sound pickObjectiveSound = null;
     /**
      * Creates this screen.
      *
@@ -117,13 +117,14 @@ public class SettingsScreen extends ScreenAdapter {
 
         menuMusic = game.getAssetManager().get("audio/music/BullyWalkingTheme.mp3", Music.class);
         menuMusic.setLooping(true);
-        menuMusic.play();
+        if(soundActive)
+            menuMusic.play();
 
         playGameMusic = game.getAssetManager().get("audio/music/BullyMainTheme.mp3", Music.class);
         playGameMusic.setLooping(true);
         playGameMusic.setVolume(menuMusic.getVolume()/2);
 
-        pickObjectiveSoung = game.getAssetManager().get("audio/sounds/pickSound.wav", Sound.class);
+        pickObjectiveSound = game.getAssetManager().get("audio/sounds/pickSound.wav", Sound.class);
 
     }
 

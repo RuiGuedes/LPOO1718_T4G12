@@ -174,7 +174,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     /**
      * Creates game camera used to visualize game tiled map
      */
-    private void createCamera() {
+    public void createCamera() {
         this.gameCam = new OrthographicCamera(VIRTUAL_SCREEN_WIDTH / PIXEL_TO_METER, VIRTUAL_SCREEN_HEIGHT / PIXEL_TO_METER);
         this.gameCam.position.set(gameCam.viewportWidth / 2f, gameCam.viewportHeight / 2f, 0);
         this.gameCam.update();
@@ -305,7 +305,8 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         drawElements(delta);
         game.getBatch().end();
 
-        if (GameController.getInstance(this.game).getState() == GameController.GameStatus.GAMEOVER) {
+        if ((GameController.getInstance(this.game).getState() == GameController.GameStatus.GAMEOVER) || (GameController.getInstance(this.game).getState() == GameController.GameStatus.VICTORY)){
+            GameController.GameStatus status = GameController.getInstance(this.game).getState();
             this.dispose();
 
             if (SettingsScreen.soundActive) {
@@ -313,7 +314,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
                 SettingsScreen.playGameMusic.stop();
             }
 
-            this.game.setScreen(UbrosGame.mainMenu);
+            this.game.setScreen(new TransitiveScreen(this.game, status));
         }
     }
 
@@ -549,7 +550,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         }
 
         if (swapPlayers(screenX, screenY))
-            selectedPlayer = !selectedPlayer;
+             selectedPlayer = !selectedPlayer;
 
         return true;
     }

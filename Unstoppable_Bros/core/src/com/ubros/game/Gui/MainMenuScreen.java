@@ -91,6 +91,10 @@ public class MainMenuScreen extends ScreenAdapter {
         this.game.getAssetManager().load("MainMenuSettingsButtonOn.png",Texture.class);
         this.game.getAssetManager().load("MainMenuPlayButtonOn.png",Texture.class);
         this.game.getAssetManager().load("gameTitle.png",Texture.class);
+        this.game.getAssetManager().load("victory.png",Texture.class);
+        this.game.getAssetManager().load("gameOver.png",Texture.class);
+        this.game.getAssetManager().load("retryOff.png",Texture.class);
+        this.game.getAssetManager().load("retryOn.png",Texture.class);
 
         this.game.getAssetManager().load("audio/music/BullyWalkingTheme.mp3", Music.class);
         this.game.getAssetManager().load("audio/music/BullyMainTheme.mp3", Music.class);

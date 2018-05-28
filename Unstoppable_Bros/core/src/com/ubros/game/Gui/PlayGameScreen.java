@@ -26,6 +26,7 @@ import com.ubros.game.Model.Elements.ObjectModel;
 import com.ubros.game.Model.Elements.ObjectiveModel;
 import com.ubros.game.Model.Elements.PlatformModel;
 import com.ubros.game.Model.GameModel;
+import com.ubros.game.Networking.Connection;
 import com.ubros.game.UbrosGame;
 import com.ubros.game.View.Elements.ElementView;
 import com.ubros.game.View.Elements.EnemyView;
@@ -154,10 +155,10 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
      *
      * @param game The game this screen belongs to
      */
-    public PlayGameScreen(UbrosGame game) {
+    public PlayGameScreen(UbrosGame game, boolean selectedPlayer) {
 
         this.game = game;
-        this.selectedPlayer = true;
+        this.selectedPlayer = selectedPlayer;
 
         createCamera();
 
@@ -173,7 +174,6 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         loadAssets();
 
     }
-
 
     /**
      * Creates game camera used to visualize game map
@@ -308,6 +308,8 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
             ((EnemyModel)enemyBody.getModel()).setView(new EnemyView(this.game, (TextureAtlas)this.game.getAssetManager().get("Enemy/Enemy.pack"), enemyBody));
 
     }
+
+    public Connection connect;
 
     /**
      * Renders this screen.

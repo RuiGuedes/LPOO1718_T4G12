@@ -160,7 +160,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
             if(checkExitButton(x,y)) {
                 activateExitButton();
-                //game.setScreen(new ConnectingPlayersScreen(game));
+                Gdx.app.exit();
             }
             else if(checkSettingsButton(x,y)) {
                activateSettingsButton();
@@ -168,15 +168,8 @@ public class MainMenuScreen extends ScreenAdapter {
             }
             else if(checkPlayButton(x,y)) {
                 activatePlayButton();
-                /*
-                Connection connect = new Connection(this.game);
 
-                if(connect.getTypeOfConnection())
-                    game.setScreen(new ConnectingPlayersScreen(game));
-                else
-                    game.setScreen(new ManualConnection(this.game));
-                */
-                UbrosGame.playGame = new PlayGameScreen(this.game);
+                UbrosGame.playGame = new PlayGameScreen(this.game, true);
                 if(SettingsScreen.soundActive) {
                     SettingsScreen.menuMusic.stop();
                     SettingsScreen.playGameMusic.play();

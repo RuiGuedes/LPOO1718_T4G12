@@ -184,6 +184,7 @@ class CommunicateWithClient extends Thread {
         //TODO Create protocol to send and receive information between client-server
         while(true) {
 
+
             int number = connection_server.nextInt();
             System.out.println("RECEIVED FROM CLIENT " + number);
 

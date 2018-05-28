@@ -87,6 +87,7 @@ public class ClientConnection {
             Socket client = new Socket(possibleServerConnections.get(0), PORT_NUMBER);
 
             connect.closeServer();
+            connect.type = false;
             connect.getServer().CONNECTION_ESTABLISHED = true;
 
             System.out.println("CLIENT IP ::  " + myIPAddress + " ::");
@@ -114,7 +115,7 @@ public class ClientConnection {
     private void checkPossibleHosts(String subnet){
         int timeout=100;
         int myConnectionNumber = Integer.parseInt(myIPAddress.substring(myIPAddress.lastIndexOf(".") + 1));
-        int lowerRange = myConnectionNumber - 50, limitRange = myConnectionNumber + 50;
+        int lowerRange = myConnectionNumber - 15, limitRange = myConnectionNumber + 15;
 
         if(limitRange > 255)
             limitRange = 255;
@@ -123,8 +124,8 @@ public class ClientConnection {
             limitRange = 1;
 
         System.out.println("MY IP ADDRESS :: " + myIPAddress + " ::");
-        lowerRange = 0;
-        limitRange = 255;
+        //lowerRange = 0;
+        //limitRange = 255;
         for(; lowerRange < limitRange; lowerRange++){
             if(connect.getConnectionEstablishedStatus())
                 return;
@@ -223,6 +224,7 @@ class CommunicateWithServer extends Thread {
     public void run() {
         //TODO Create protocol to send and receive information between client-server
         while(true) {
+
 
             if(Gdx.input.isTouched()) {
                 System.out.println("SEND TO SERVER VALUE 0");

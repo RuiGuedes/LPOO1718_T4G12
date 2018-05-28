@@ -37,6 +37,11 @@ public class Connection {
      */
     private String[] mySplittedIPAddress;
 
+    /**
+     *
+     */
+    public boolean type = true;
+
     public boolean MENU_ID = false;
 
     /**
@@ -53,7 +58,6 @@ public class Connection {
         client = new ClientConnection(this);
     }
 
-    //TODO Mudar connectingplayerscreen para automaticscreen
     //TODO Criar função para inicializar apenas servidor
     //TODO Criar função para inicializar apenas cliente
 

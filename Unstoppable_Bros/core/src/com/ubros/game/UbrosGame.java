@@ -33,7 +33,7 @@ public class UbrosGame extends Game {
         assetManager = new AssetManager();
 
         mainMenu = new MainMenuScreen(this);
-        playGame = new PlayGameScreen(this);
+        playGame = new PlayGameScreen(this, true);
 		settings = new SettingsScreen(this);
 
         startGame();

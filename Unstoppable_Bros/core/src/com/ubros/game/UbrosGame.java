@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.ubros.game.Gui.MainMenuScreen;
 import com.ubros.game.Gui.PlayGameScreen;
+import com.ubros.game.Gui.SettingsScreen;
 
 public class UbrosGame extends Game {
 
@@ -24,6 +25,7 @@ public class UbrosGame extends Game {
 
 	public static ScreenAdapter mainMenu;
 	public static ScreenAdapter playGame;
+	public static ScreenAdapter settings;
 
 	@Override
 	public void create () {
@@ -32,6 +34,7 @@ public class UbrosGame extends Game {
 
         mainMenu = new MainMenuScreen(this);
         playGame = new PlayGameScreen(this);
+		settings = new SettingsScreen(this);
 
         startGame();
 	}

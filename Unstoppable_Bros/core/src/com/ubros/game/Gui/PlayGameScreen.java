@@ -169,7 +169,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
         loadAssets();
 
-        music = game.getAssetManager().get("audio/music/BullyWalkingTheme.mp3", Music.class);
+//        music = game.getAssetManager().get("audio/music/BullyWalkingTheme.mp3", Music.class);
         //music.play();
     }
 
@@ -191,7 +191,6 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     }
 
     private void loadAssets() {
-        this.game.getAssetManager().load("audio/music/BullyWalkingTheme.mp3", Music.class);
         this.game.getAssetManager().load("moveLeftButtonOff.png", Texture.class);
         this.game.getAssetManager().load("moveLeftButtonOn.png", Texture.class);
         this.game.getAssetManager().load("moveRightButtonOff.png", Texture.class);

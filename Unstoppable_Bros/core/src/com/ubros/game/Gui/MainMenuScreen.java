@@ -101,7 +101,7 @@ public class MainMenuScreen extends ScreenAdapter {
         this.game.getAssetManager().load("MainMenuExitButtonOn.png",Texture.class);
         this.game.getAssetManager().load("MainMenuSettingsButtonOn.png",Texture.class);
         this.game.getAssetManager().load("MainMenuPlayButtonOn.png",Texture.class);
-
+        this.game.getAssetManager().load("gameTitle.png",Texture.class);
 
         this.game.getAssetManager().finishLoading();
         initializeTextures();
@@ -143,7 +143,9 @@ public class MainMenuScreen extends ScreenAdapter {
      */
     private void drawBackground() {
         Texture background = game.getAssetManager().get("background.jpg", Texture.class);
+        Texture title = game.getAssetManager().get("gameTitle.png", Texture.class);
         game.getBatch().draw(background, 0, 0,SCREEN_WIDTH,SCREEN_HEIGHT);
+        game.getBatch().draw(title, SCREEN_WIDTH*0.1f, SCREEN_HEIGHT*0.7f,SCREEN_WIDTH*0.8f,SCREEN_HEIGHT*0.2f);
     }
 
     /**
@@ -162,7 +164,7 @@ public class MainMenuScreen extends ScreenAdapter {
             }
             else if(checkSettingsButton(x,y)) {
                activateSettingsButton();
-               game.setScreen(new SettingsScreen(game));
+               game.setScreen(UbrosGame.settings);
             }
             else if(checkPlayButton(x,y)) {
                 activatePlayButton();

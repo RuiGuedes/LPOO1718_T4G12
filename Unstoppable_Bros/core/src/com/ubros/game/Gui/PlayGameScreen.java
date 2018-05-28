@@ -171,8 +171,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         GameController.getInstance(null).dispose();
         GameController.getInstance(this.game).setState(GameController.GameStatus.PLAYING);
 
-        loadAssets();
-
+        initializeGraphics();
     }
 
     /**
@@ -189,31 +188,6 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         this.gameCam.position.set(gameCam.viewportWidth / 2f, gameCam.viewportHeight / 2f, 0);
         this.gameCam.update();
         this.game.getBatch().setProjectionMatrix(gameCam.combined);
-    }
-
-    private void loadAssets() {
-        this.game.getAssetManager().load("moveLeftButtonOff.png", Texture.class);
-        this.game.getAssetManager().load("moveLeftButtonOn.png", Texture.class);
-        this.game.getAssetManager().load("moveRightButtonOff.png", Texture.class);
-        this.game.getAssetManager().load("moveRightButtonOn.png", Texture.class);
-        this.game.getAssetManager().load("jumpButtonOff.png", Texture.class);
-        this.game.getAssetManager().load("jumpButtonOn.png", Texture.class);
-        this.game.getAssetManager().load("bulletButtonOff.png", Texture.class);
-        this.game.getAssetManager().load("bulletButtonOn.png", Texture.class);
-        this.game.getAssetManager().load("mechanismOff.png", Texture.class);
-        this.game.getAssetManager().load("mechanismOn.png", Texture.class);
-        this.game.getAssetManager().load("DoorLocked.png", Texture.class);
-        this.game.getAssetManager().load("DoorUnlocked.png", Texture.class);
-        this.game.getAssetManager().load("DoorOpen.png", Texture.class);
-        this.game.getAssetManager().load("bullet.png", Texture.class);
-
-        this.game.getAssetManager().load("Robot/Robot.pack", TextureAtlas.class);
-        this.game.getAssetManager().load("Ninja/Ninja.pack", TextureAtlas.class);
-        this.game.getAssetManager().load("Enemy/Enemy.pack", TextureAtlas.class);
-
-        this.game.getAssetManager().finishLoading();
-        initializeGraphics();
-
     }
 
     /**

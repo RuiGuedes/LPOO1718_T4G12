@@ -7,7 +7,17 @@ import com.ubros.game.Model.Elements.ElementModel;
 
 public abstract class ElementBody {
 
-    public boolean contact = false;
+    /**
+     * Character character width
+     */
+    int CHARACTER_WIDTH = 48;
+
+    /**
+     * Character character height
+     */
+    int CHARACTER_HEIGHT = 70;
+
+    int CHARACTER_RADIUS = 34;
 
     /**
      * The Box2D body that supports this body.

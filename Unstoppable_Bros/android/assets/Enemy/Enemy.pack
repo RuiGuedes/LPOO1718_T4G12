@@ -1,0 +1,374 @@
+
+Enemy.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Idle (1)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Walk (1)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Walk (2)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy4.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Walk (3)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy5.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Walk (4)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy6.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Walk (5)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy7.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Walk (6)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy8.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Walk (7)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy9.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Walk (8)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy10.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Walk (9)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy11.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Walk (10)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy12.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Attack (1)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy13.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Attack (2)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy14.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Attack (3)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy15.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Attack (4)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy16.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Attack (5)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy17.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Attack (6)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy18.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Attack (7)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy19.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Attack (8)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy20.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (1)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+Enemy21.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (2)
+  rotate: false
+  xy: 1, 1
+  size: 567, 556
+  orig: 567, 556
+  offset: 0, 0
+  index: -1
+
+
+Enemy22.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (3)
+  rotate: false
+  xy: 1, 1
+  size: 562, 519
+  orig: 562, 519
+  offset: 0, 0
+  index: -1
+
+Enemy23.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (4)
+  rotate: false
+  xy: 1, 1
+  size: 562, 519
+  orig: 562, 519
+  offset: 0, 0
+  index: -1
+
+Enemy24.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (5)
+  rotate: false
+  xy: 1, 1
+  size: 562, 519
+  orig: 562, 519
+  offset: 0, 0
+  index: -1
+
+Enemy25.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (6)
+  rotate: false
+  xy: 1, 1
+  size: 562, 519
+  orig: 562, 519
+  offset: 0, 0
+  index: -1
+
+Enemy26.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (7)
+  rotate: false
+  xy: 1, 1
+  size: 562, 519
+  orig: 562, 519
+  offset: 0, 0
+  index: -1
+
+Enemy27.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (8)
+  rotate: false
+  xy: 1, 1
+  size: 562, 519
+  orig: 562, 519
+  offset: 0, 0
+  index: -1
+
+Enemy28.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (9)
+  rotate: false
+  xy: 1, 1
+  size: 562, 519
+  orig: 562, 519
+  offset: 0, 0
+  index: -1
+
+Enemy29.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (10)
+  rotate: false
+  xy: 1, 1
+  size: 562, 519
+  orig: 562, 519
+  offset: 0, 0
+  index: -1
+
+Enemy30.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (11)
+  rotate: false
+  xy: 1, 1
+  size: 562, 519
+  orig: 562, 519
+  offset: 0, 0
+  index: -1
+
+Enemy31.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dead (12)
+  rotate: false
+  xy: 1, 1
+  size: 562, 519
+  orig: 562, 519
+  offset: 0, 0
+  index: -1
+

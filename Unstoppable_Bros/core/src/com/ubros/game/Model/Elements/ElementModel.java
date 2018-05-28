@@ -2,7 +2,7 @@ package com.ubros.game.Model.Elements;
 
 public abstract class ElementModel {
 
-    public enum ModelType {LIMIT, HERO, ACID, MECHANISM, PLATFORM, OBJECTIVE, PORTAL, OBJECT, EXITDOOR, BULLET};
+    public enum ModelType {LIMIT, HERO, ACID, MECHANISM, PLATFORM, OBJECTIVE, PORTAL, OBJECT, EXITDOOR, BULLET, ENEMY};
 
     public enum PhysicsType {STATIC, DYNAMIC, KINEMATIC};
 
@@ -12,6 +12,18 @@ public abstract class ElementModel {
     public final static float TILE_WIDTH = 32;
 
     public final static float TILE_HEIGHT = 30;
+
+    /**
+     * Character character width
+     */
+    int CHARACTER_WIDTH = 48;
+
+    /**
+     * Character character height
+     */
+    int CHARACTER_HEIGHT = 70;
+
+    int CHARACTER_RADIUS = 34;
 
     /**
      * The x-coordinate of this model in meters.

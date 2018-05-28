@@ -11,12 +11,14 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.ubros.game.Controller.Elements.EnemyBody;
 import com.ubros.game.Controller.Elements.ExitDoorBody;
 import com.ubros.game.Controller.Elements.MechanismBody;
 import com.ubros.game.Controller.Elements.ObjectiveBody;
 import com.ubros.game.Controller.Elements.PlatformBody;
 import com.ubros.game.Controller.GameController;
 import com.ubros.game.Model.Elements.BulletModel;
+import com.ubros.game.Model.Elements.EnemyModel;
 import com.ubros.game.Model.Elements.ExitDoorModel;
 import com.ubros.game.Model.Elements.MechanismModel;
 import com.ubros.game.Model.Elements.ObjectiveModel;
@@ -24,6 +26,7 @@ import com.ubros.game.Model.Elements.PlatformModel;
 import com.ubros.game.Model.GameModel;
 import com.ubros.game.UbrosGame;
 import com.ubros.game.View.Elements.ElementView;
+import com.ubros.game.View.Elements.EnemyView;
 import com.ubros.game.View.Elements.ExitDoorView;
 import com.ubros.game.View.Elements.MechanismView;
 import com.ubros.game.View.Elements.NinjaView;
@@ -206,6 +209,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
         this.game.getAssetManager().load("Robot/Robot.pack", TextureAtlas.class);
         this.game.getAssetManager().load("Ninja/Ninja.pack", TextureAtlas.class);
+        this.game.getAssetManager().load("Enemy/Enemy.pack", TextureAtlas.class);
 
         this.game.getAssetManager().finishLoading();
         initializeGraphics();
@@ -222,6 +226,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         createPlatformsView();
         createObjectivesView();
         createExitDoorsView();
+        createEnemysView();
 
         buttonTextures.add(game.getAssetManager().get("moveLeftButtonOff.png", Texture.class));
         buttonTextures.add(game.getAssetManager().get("moveLeftButtonOn.png", Texture.class));
@@ -285,6 +290,16 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         for (ExitDoorBody exitDoor : exitDoorBodies) {
             ((ExitDoorModel) exitDoor.getModel()).setView(new ExitDoorView(this.game, null, exitDoor));
         }
+    }
+
+    /**
+     *
+     */
+    private void createEnemysView() {
+
+        for(EnemyBody enemyBody : GameController.getInstance(this.game).getEnemyBodies())
+            ((EnemyModel)enemyBody.getModel()).setView(new EnemyView(this.game, (TextureAtlas)this.game.getAssetManager().get("Enemy/Enemy.pack"), enemyBody));
+
     }
 
     /**
@@ -401,6 +416,9 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         for (ExitDoorBody exitDoorBody : GameController.getInstance(this.game).getExitDoorBodies())
             ((ExitDoorModel) exitDoorBody.getModel()).getView().draw(delta);
 
+        for(EnemyBody enemyBody : GameController.getInstance(this.game).getEnemyBodies())
+            ((EnemyModel)enemyBody.getModel()).getView().draw(delta);
+
         for (BulletModel bulletModel : GameModel.getInstance(this.game).bullets)
             bulletModel.getView().draw(delta);
 
@@ -478,6 +496,11 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
                 (y <= ((int) (SCREEN_HEIGHT - SCREEN_HEIGHT * 0.04)));
     }
 
+    private boolean swapPlayers(int x, int y) {
+        return ((x >= (int) (SCREEN_WIDTH * 0.025)) && (x <= (int) (SCREEN_WIDTH * 0.065)) &&
+                (y >= ((int) (SCREEN_HEIGHT * 0.4))) && (y <= (int) (SCREEN_HEIGHT * 0.47)));
+    }
+
     @Override
     public boolean keyDown(int keycode) {
         return false;
@@ -507,9 +530,11 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
         if (checkBulletButton(screenX, screenY)) {
             shootButton = buttonTextures.get(7);
-            //player = player ? false : true;
             GameModel.getInstance(this.game).createBullet(robot.getElement().getX(), robot.getElement().getY(), ((RobotView) robot).isRunningRight());
         }
+
+        if(swapPlayers(screenX, screenY))
+            selectedPlayer = !selectedPlayer;
 
         return true;
     }

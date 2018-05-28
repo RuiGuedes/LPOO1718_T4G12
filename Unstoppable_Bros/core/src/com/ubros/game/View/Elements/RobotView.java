@@ -126,6 +126,8 @@ public class RobotView extends ElementView {
                 break;
             case DEAD:
                 region = robotDying.getKeyFrame(stateTimer);
+                if(robotDying.isAnimationFinished(stateTimer))
+                    GameController.getInstance(null).setState(GameController.GameStatus.GAMEOVER);
                 break;
         }
 
@@ -169,7 +171,6 @@ public class RobotView extends ElementView {
     @Override
     public void draw(float delta) {
         this.update(delta);
-        System.out.println(getElement().getX() + " " + getElement().getY());
         super.draw(getGame().getBatch());
     }
 

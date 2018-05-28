@@ -2,12 +2,14 @@ package com.ubros.game.Controller;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.ubros.game.Controller.Elements.BulletBody;
 import com.ubros.game.Controller.Elements.CharacterBody;
 import com.ubros.game.Controller.Elements.DangerZoneBody;
+import com.ubros.game.Controller.Elements.EnemyBody;
 import com.ubros.game.Controller.Elements.ExitDoorBody;
 import com.ubros.game.Controller.Elements.LimitBody;
 import com.ubros.game.Controller.Elements.MechanismBody;
@@ -17,6 +19,7 @@ import com.ubros.game.Controller.Elements.PlatformBody;
 import com.ubros.game.Controller.Elements.PortalBody;
 import com.ubros.game.Model.Elements.DangerZoneModel;
 import com.ubros.game.Model.Elements.ElementModel;
+import com.ubros.game.Model.Elements.EnemyModel;
 import com.ubros.game.Model.Elements.ExitDoorModel;
 import com.ubros.game.Model.Elements.LimitModel;
 import com.ubros.game.Model.Elements.MechanismModel;
@@ -87,6 +90,8 @@ public class GameController {
 
     private List<ExitDoorBody> exitDoorBodies = new ArrayList<ExitDoorBody>();
 
+    private List<EnemyBody> enemyBodies = new ArrayList<EnemyBody>();
+
     public List<BulletBody> bulletBodies = new ArrayList<BulletBody>();
 
     /**
@@ -107,6 +112,7 @@ public class GameController {
         createPortals();
         createExitDoors();
         createObjects();
+        createEnemys();
 
         this.world.setContactListener(new MyContactListener());
     }
@@ -199,6 +205,12 @@ public class GameController {
             new ObjectBody(this.world, object, object.getShape().getVertices());
     }
 
+    private void createEnemys() {
+        List<EnemyModel> enemyModels = GameModel.getInstance(this.game).getEnemys();
+        for (EnemyModel enemy : enemyModels)
+            enemyBodies.add(new EnemyBody(this.world, enemy));
+    }
+
     /**
      * Returns the world controlled by this controller. Needed for debugging purposes only.
      *
@@ -240,6 +252,10 @@ public class GameController {
         return objectiveBodies;
     }
 
+    public List<EnemyBody> getEnemyBodies() {
+        return enemyBodies;
+    }
+
     public UbrosGame getGame() {
         return game;
     }
@@ -261,6 +277,21 @@ public class GameController {
 
         }
 
+        /*
+        List<EnemyBody> enemys = new ArrayList<EnemyBody>();
+
+        for(EnemyBody enemyBody : enemyBodies) {
+
+            if(((EnemyModel)enemyBody.getModel()).getHealth() <= 0 && ((EnemyModel)enemyBody.getModel()).getView().enemyDying.isAnimationFinished(((EnemyModel)enemyBody.getModel()).getView().stateTimer)) {
+                destroyBody(enemyBody.getBody());
+            }
+            else
+                enemys.add(enemyBody);
+        }
+
+        enemyBodies.clear();
+        enemyBodies = enemys;
+        */
 
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
@@ -272,6 +303,11 @@ public class GameController {
         }
 
 
+    }
+
+    public void disablesBody(Body body) {
+        body.setType(BodyDef.BodyType.StaticBody);
+        body.getFixtureList().get(0).setSensor(true);
     }
 
     public void dispose() {

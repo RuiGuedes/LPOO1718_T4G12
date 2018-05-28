@@ -10,7 +10,7 @@ public abstract class ElementView extends Sprite {
     /**
      * Possible character states
      */
-    public enum CharacterState {FALLING, JUMPING, STANDING, RUNNING, RUNNING_SHOOT, SHOOT, DEAD}
+    public enum CharacterState {FALLING, JUMPING, STANDING, WALKING, RUNNING, RUNNING_SHOOT, SHOOT, ATTACKING, DEAD}
 
     /**
      * Character character width

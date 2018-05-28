@@ -10,6 +10,7 @@ import com.ubros.game.Model.Elements.BulletModel;
 import com.ubros.game.Model.Elements.CharacterModel;
 import com.ubros.game.Model.Elements.DangerZoneModel;
 import com.ubros.game.Model.Elements.ElementModel;
+import com.ubros.game.Model.Elements.EnemyModel;
 import com.ubros.game.Model.Elements.ExitDoorModel;
 import com.ubros.game.Model.Elements.LimitModel;
 import com.ubros.game.Model.Elements.MechanismModel;
@@ -36,6 +37,8 @@ public class GameModel {
     private int PORTAL_BODY = 8;
     private int EXIT_DOOR_BODY = 9;
     private int OBJECT_BODY = 10;
+    private int CHARACTERS_BODY = 11;
+    private int ENEMY_BODY = 12;
 
     /**
      * The singleton instance of the game model
@@ -102,6 +105,11 @@ public class GameModel {
     private List<ObjectModel> objects = new ArrayList<ObjectModel>();
 
     /**
+     * List of enemy models created
+     */
+    private List<EnemyModel> enemys = new ArrayList<EnemyModel>();
+
+    /**
      * List of bullet models created
      */
     public List<BulletModel> bullets = new ArrayList<BulletModel>();
@@ -128,6 +136,7 @@ public class GameModel {
         createPortals();
         createExitDoors();
         createObjects();
+        createEnemys();
     }
 
 
@@ -139,8 +148,23 @@ public class GameModel {
      * Creates both robot and ninja models
      */
     private void createCharacters() {
-        this.robot = new CharacterModel(900 / PlayGameScreen.PIXEL_TO_METER, 400 / PlayGameScreen.PIXEL_TO_METER, 0);
-        this.ninja = new CharacterModel(1600 / PlayGameScreen.PIXEL_TO_METER, 1000 / PlayGameScreen.PIXEL_TO_METER, 0);
+
+        float robotX = 0, robotY = 0, ninjaX = 0, ninjaY = 0;
+
+        for (MapObject object : UbrosGame.map.getLayers().get(CHARACTERS_BODY).getObjects().getByType(PolygonMapObject.class)) {
+            Polygon polygon = ((PolygonMapObject) object).getPolygon();
+            if(object.getName().equals("R")) {
+                robotX = polygon.getX();
+                robotY = polygon.getY() + 35/PlayGameScreen.PIXEL_TO_METER;
+            }
+            else {
+                ninjaX = polygon.getX();
+                ninjaY = polygon.getY() + 35/PlayGameScreen.PIXEL_TO_METER;
+            }
+        }
+
+        this.robot = new CharacterModel(robotX / PlayGameScreen.PIXEL_TO_METER, robotY / PlayGameScreen.PIXEL_TO_METER, 0);
+        this.ninja = new CharacterModel(ninjaX / PlayGameScreen.PIXEL_TO_METER, ninjaY / PlayGameScreen.PIXEL_TO_METER, 0);
     }
 
     /**
@@ -224,6 +248,13 @@ public class GameModel {
         for (MapObject object : UbrosGame.map.getLayers().get(OBJECT_BODY).getObjects().getByType(PolygonMapObject.class)) {
             Polygon polygon = ((PolygonMapObject) object).getPolygon();
             objects.add(new ObjectModel(polygon.getX() / PlayGameScreen.PIXEL_TO_METER, polygon.getY() / PlayGameScreen.PIXEL_TO_METER, 0, polygon, object.getName()));
+        }
+    }
+
+    private void createEnemys() {
+        for (MapObject object : UbrosGame.map.getLayers().get(ENEMY_BODY).getObjects().getByType(PolygonMapObject.class)) {
+            Polygon polygon = ((PolygonMapObject) object).getPolygon();
+            enemys.add(new EnemyModel(polygon.getX() / PlayGameScreen.PIXEL_TO_METER, polygon.getY() / PlayGameScreen.PIXEL_TO_METER, 0, polygon, object.getName()));
         }
     }
 
@@ -348,6 +379,13 @@ public class GameModel {
         return objects;
     }
 
+    /**
+     * Function responsible to retrieve list of enemy models
+     * @return list of objects models
+     */
+    public List<EnemyModel> getEnemys() {
+        return enemys;
+    }
 
     ////////////
     // OTHERS //
@@ -359,9 +397,9 @@ public class GameModel {
      * @param model the model to be removed
      */
     public void remove(ElementModel model) {
-        if (model instanceof BulletModel) {
+        if (model instanceof BulletModel)
             bullets.remove(model);
-        }
+
     }
 
     public void setInstance(GameModel instance) {

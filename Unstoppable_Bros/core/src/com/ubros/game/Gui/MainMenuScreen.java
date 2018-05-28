@@ -105,6 +105,8 @@ public class MainMenuScreen extends ScreenAdapter {
         this.game.getAssetManager().load("returnButtonOn.png", Texture.class);
 
 
+        this.game.getAssetManager().load("robotHand.png", Texture.class);
+        this.game.getAssetManager().load("ninjaHand.png", Texture.class);
         this.game.getAssetManager().load("moveLeftButtonOff.png", Texture.class);
         this.game.getAssetManager().load("moveLeftButtonOn.png", Texture.class);
         this.game.getAssetManager().load("moveRightButtonOff.png", Texture.class);

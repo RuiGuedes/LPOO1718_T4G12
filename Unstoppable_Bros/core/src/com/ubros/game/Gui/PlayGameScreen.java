@@ -3,7 +3,6 @@ package com.ubros.game.Gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -26,7 +25,6 @@ import com.ubros.game.Model.Elements.ObjectModel;
 import com.ubros.game.Model.Elements.ObjectiveModel;
 import com.ubros.game.Model.Elements.PlatformModel;
 import com.ubros.game.Model.GameModel;
-import com.ubros.game.Networking.Connection;
 import com.ubros.game.UbrosGame;
 import com.ubros.game.View.Elements.ElementView;
 import com.ubros.game.View.Elements.EnemyView;
@@ -148,7 +146,6 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
      */
     private boolean selectedPlayer;
 
-    private Music music;
 
     /**
      * Creates this screen.
@@ -175,7 +172,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     }
 
     /**
-     * Creates game camera used to visualize game map
+     * Creates game camera used to visualize game tiled map
      */
     private void createCamera() {
         this.gameCam = new OrthographicCamera(VIRTUAL_SCREEN_WIDTH / PIXEL_TO_METER, VIRTUAL_SCREEN_HEIGHT / PIXEL_TO_METER);
@@ -183,6 +180,9 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         this.gameCam.update();
     }
 
+    /**
+     * Resets camera to it's default state
+     */
     private void resetCamera() {
         this.gameCam = new OrthographicCamera(SCREEN_WIDTH, SCREEN_HEIGHT);
         this.gameCam.position.set(gameCam.viewportWidth / 2f, gameCam.viewportHeight / 2f, 0);
@@ -191,7 +191,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     }
 
     /**
-     * Initializes all game elements view and load's buttons (off and on) textures to be represented
+     * Initializes all game elements view
      */
     private void initializeGraphics() {
 
@@ -247,10 +247,13 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         }
     }
 
+    /**
+     * Creates all objects view
+     */
     private void createObjectsView() {
         List<ObjectBody> objects = GameController.getInstance(this.game).getObjectBodies();
-        for(ObjectBody objectBody : objects)
-            ((ObjectModel) objectBody.getModel()).setView(new ObjectView(this.game, null, objectBody,  ((ObjectModel) objectBody.getModel()).getData()));
+        for (ObjectBody objectBody : objects)
+            ((ObjectModel) objectBody.getModel()).setView(new ObjectView(this.game, null, objectBody, ((ObjectModel) objectBody.getModel()).getData()));
     }
 
     /**
@@ -274,28 +277,21 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     }
 
     /**
-     *
+     * Create all enemies view
      */
     private void createEnemysView() {
 
-        for(EnemyBody enemyBody : GameController.getInstance(this.game).getEnemyBodies())
-            ((EnemyModel)enemyBody.getModel()).setView(new EnemyView(this.game, (TextureAtlas)this.game.getAssetManager().get("Enemy/Enemy.pack"), enemyBody));
+        for (EnemyBody enemyBody : GameController.getInstance(this.game).getEnemyBodies())
+            ((EnemyModel) enemyBody.getModel()).setView(new EnemyView(this.game, (TextureAtlas) this.game.getAssetManager().get("Enemy/Enemy.pack"), enemyBody));
 
     }
 
-    public Connection connect;
-
-    /**
-     * Renders this screen.
-     *
-     * @param delta time since last renders in seconds.
-     */
     @Override
     public void render(float delta) {
 
         super.render(delta);
 
-        this.update(delta);
+        this.update();
 
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
@@ -304,6 +300,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         GameController.getInstance(this.game).getDebugRenderer().render(GameController.getInstance(this.game).getWorld(), gameCam.combined);
 
         game.getBatch().begin();
+        drawHand();
         drawInteractiveButtons();
         drawElements(delta);
         game.getBatch().end();
@@ -311,7 +308,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         if (GameController.getInstance(this.game).getState() == GameController.GameStatus.GAMEOVER) {
             this.dispose();
 
-            if(SettingsScreen.soundActive) {
+            if (SettingsScreen.soundActive) {
                 SettingsScreen.menuMusic.play();
                 SettingsScreen.playGameMusic.stop();
             }
@@ -322,10 +319,8 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     /**
      * Updates both world and all elements created
-     *
-     * @param delta time since last renders in seconds.
      */
-    private void update(float delta) {
+    private void update() {
 
         handleInput();
 
@@ -387,6 +382,16 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     }
 
     /**
+     * Draws hand to make possible distinguish which player is selected
+     */
+    private void drawHand() {
+        if (selectedPlayer)
+            game.getBatch().draw(game.getAssetManager().get("robotHand.png", Texture.class), (int) (VIRTUAL_SCREEN_WIDTH * 0.02) / PIXEL_TO_METER, (int) (VIRTUAL_SCREEN_HEIGHT * 0.5) / PIXEL_TO_METER, VIRTUAL_SCREEN_WIDTH * 0.07f / PIXEL_TO_METER, VIRTUAL_SCREEN_HEIGHT * 0.14f / PIXEL_TO_METER);
+        else
+            game.getBatch().draw(game.getAssetManager().get("ninjaHand.png", Texture.class), (int) (VIRTUAL_SCREEN_WIDTH * 0.02) / PIXEL_TO_METER, (int) (VIRTUAL_SCREEN_HEIGHT * 0.5) / PIXEL_TO_METER, VIRTUAL_SCREEN_WIDTH * 0.07f / PIXEL_TO_METER, VIRTUAL_SCREEN_HEIGHT * 0.14f / PIXEL_TO_METER);
+    }
+
+    /**
      * Draws all elements previously defined
      *
      * @param delta time since last renders in seconds.
@@ -399,8 +404,8 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         for (PlatformBody platformBody : GameController.getInstance(this.game).getPlatformBodies())
             ((PlatformModel) platformBody.getModel()).getView().draw(delta);
 
-        for(ObjectBody objectBody : GameController.getInstance(this.game).getObjectBodies())
-            ((ObjectModel)objectBody.getModel()).getView().draw(delta);
+        for (ObjectBody objectBody : GameController.getInstance(this.game).getObjectBodies())
+            ((ObjectModel) objectBody.getModel()).getView().draw(delta);
 
         for (ObjectiveBody objectiveBody : GameController.getInstance(this.game).getObjectiveBodies())
             ((ObjectiveModel) objectiveBody.getModel()).getView().draw(delta);
@@ -408,8 +413,8 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         for (ExitDoorBody exitDoorBody : GameController.getInstance(this.game).getExitDoorBodies())
             ((ExitDoorModel) exitDoorBody.getModel()).getView().draw(delta);
 
-        for(EnemyBody enemyBody : GameController.getInstance(this.game).getEnemyBodies())
-            ((EnemyModel)enemyBody.getModel()).getView().draw(delta);
+        for (EnemyBody enemyBody : GameController.getInstance(this.game).getEnemyBodies())
+            ((EnemyModel) enemyBody.getModel()).getView().draw(delta);
 
         for (BulletModel bulletModel : GameModel.getInstance(this.game).bullets)
             bulletModel.getView().draw(delta);
@@ -489,6 +494,13 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
                 (y <= ((int) (SCREEN_HEIGHT - SCREEN_HEIGHT * 0.04)));
     }
 
+    /**
+     * Swaps between players
+     *
+     * @param x x position of input
+     * @param y y position of input
+     * @return true if it's pressed, false otherwise
+     */
     private boolean swapPlayers(int x, int y) {
         return ((x >= (int) (SCREEN_WIDTH * 0.025)) && (x <= (int) (SCREEN_WIDTH * 0.065)) &&
                 (y >= ((int) (SCREEN_HEIGHT * 0.4))) && (y <= (int) (SCREEN_HEIGHT * 0.47)));
@@ -509,24 +521,34 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         return false;
     }
 
+    /**
+     * Checks if jump or shoot button was pressed or not
+     *
+     * @param screenX x position of input
+     * @param screenY y position of input
+     * @param pointer pointer representing the input
+     * @param button  button pressed
+     * @return true no matter the input because it's not needed
+     */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (checkJumpButton(screenX, screenY)) {
             jumpButton = buttonTextures.get(5);
 
-            if (selectedPlayer) //&& GameController.getInstance(this.game).getRobot().getBody().getLinearVelocity().y == 0
+            if ((selectedPlayer) && (GameController.getInstance(this.game).getRobot().getBody().getLinearVelocity().y == 0))
                 GameController.getInstance(this.game).getRobot().getBody().applyLinearImpulse(new Vector2(0, 4f), GameController.getInstance(this.game).getRobot().getBody().getWorldCenter(), true);
-            else if (!selectedPlayer) //&& GameController.getInstance(this.game).getNinja().getBody().getLinearVelocity().y == 0
+            else if ((!selectedPlayer) && (GameController.getInstance(this.game).getNinja().getBody().getLinearVelocity().y == 0))
                 GameController.getInstance(this.game).getNinja().getBody().applyLinearImpulse(new Vector2(0, 4f), GameController.getInstance(this.game).getNinja().getBody().getWorldCenter(), true);
 
         }
 
-        if (checkBulletButton(screenX, screenY)) {
+        if (checkBulletButton(screenX, screenY) && selectedPlayer) {
+
             shootButton = buttonTextures.get(7);
             GameModel.getInstance(this.game).createBullet(robot.getElement().getX(), robot.getElement().getY(), ((RobotView) robot).isRunningRight());
         }
 
-        if(swapPlayers(screenX, screenY))
+        if (swapPlayers(screenX, screenY))
             selectedPlayer = !selectedPlayer;
 
         return true;
@@ -580,6 +602,9 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     public void resume() {
     }
 
+    /**
+     * Resets camera and disposes unneeded elements
+     */
     @Override
     public void dispose() {
         this.resetCamera();

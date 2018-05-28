@@ -9,7 +9,7 @@
  <tileset firstgid="28" source="bluePortalH.tsx"/>
  <tileset firstgid="31" source="bluePortalV.tsx"/>
  <imagelayer name="Background">
-  <image source="Imagem10.png" width="1920" height="1080"/>
+  <image source="background.png" width="1920" height="1080"/>
  </imagelayer>
  <layer name="Graphics - Acid" width="60" height="36">
   <data encoding="base64" compression="zlib">

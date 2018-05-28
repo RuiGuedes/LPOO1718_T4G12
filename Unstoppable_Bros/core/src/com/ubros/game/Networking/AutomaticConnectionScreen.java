@@ -149,7 +149,6 @@ public class AutomaticConnectionScreen extends ScreenAdapter {
 
         if (connect.getConnectionEstablishedStatus()) {
             UbrosGame.playGame = new PlayGameScreen(this.game, connect.type);
-            ((PlayGameScreen)UbrosGame.playGame).connect = connect;
             game.setScreen(UbrosGame.playGame);
         }
 

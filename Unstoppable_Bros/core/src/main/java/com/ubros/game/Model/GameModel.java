@@ -50,10 +50,6 @@ public class GameModel {
      */
     private UbrosGame game;
 
-    public void setGame(UbrosGame game) {
-        this.game = game;
-    }
-
     /**
      * Robot model
      */
@@ -149,17 +145,18 @@ public class GameModel {
      */
     private void createCharacters() {
 
+        float robotHalfHeight = 35;
         float robotX = 0, robotY = 0, ninjaX = 0, ninjaY = 0;
 
         for (MapObject object : UbrosGame.map.getLayers().get(CHARACTERS_BODY).getObjects().getByType(PolygonMapObject.class)) {
             Polygon polygon = ((PolygonMapObject) object).getPolygon();
             if(object.getName().equals("R")) {
                 robotX = polygon.getX();
-                robotY = polygon.getY() + 35/PlayGameScreen.PIXEL_TO_METER;
+                robotY = polygon.getY() + robotHalfHeight/PlayGameScreen.PIXEL_TO_METER;
             }
             else {
                 ninjaX = polygon.getX();
-                ninjaY = polygon.getY() + 35/PlayGameScreen.PIXEL_TO_METER;
+                ninjaY = polygon.getY() + robotHalfHeight/PlayGameScreen.PIXEL_TO_METER;
             }
         }
 
@@ -251,6 +248,9 @@ public class GameModel {
         }
     }
 
+    /**
+     * Creates all enemy models
+     */
     private void createEnemys() {
         for (MapObject object : UbrosGame.map.getLayers().get(ENEMY_BODY).getObjects().getByType(PolygonMapObject.class)) {
             Polygon polygon = ((PolygonMapObject) object).getPolygon();
@@ -402,6 +402,10 @@ public class GameModel {
 
     }
 
+    /**
+     * Set's instance of this class to another
+     * @param instance new instance
+     */
     public void setInstance(GameModel instance) {
         GameModel.instance = instance;
     }

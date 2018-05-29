@@ -27,10 +27,10 @@ public class PlatformView extends ElementView {
     /**
      * Creates a view belonging to a game.
      *
-     * @param game    the game this view belongs to. Needed to access the
-     *                asset manager to get textures.
-     * @param atlas
-     * @param element
+     * @param game    The game this view belongs to. Needed to access the asset manager to get textures.
+     * @param atlas   The texture atlas associated to this view
+     * @param element The element body associated to this view
+     * @param platformView The name of texture to be drawn in this view
      */
     public PlatformView(UbrosGame game, TextureAtlas atlas, ElementBody element, String platformView) {
         super(game, atlas, element);
@@ -43,7 +43,11 @@ public class PlatformView extends ElementView {
         this.height = model.getPlatformHeight();
     }
 
-    public void loadPlatformView(String platformView) {
+    /**
+     * Loads platform texture view
+     * @param platformView name of the texture to be loaded
+     */
+    private void loadPlatformView(String platformView) {
         super.getGame().getAssetManager().load(platformView,Texture.class);
         super.getGame().getAssetManager().finishLoading();
     }

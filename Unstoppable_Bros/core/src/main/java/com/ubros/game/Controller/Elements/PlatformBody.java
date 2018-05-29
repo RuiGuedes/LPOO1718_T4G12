@@ -15,6 +15,7 @@ public class PlatformBody extends ElementBody {
      *
      * @param world The world this body lives on.
      * @param model The model representing the body.
+     * @param vertexSet The model shape vertex's
      */
     public PlatformBody(World world, ElementModel model, float[] vertexSet) {
         super(world, model);
@@ -36,6 +37,10 @@ public class PlatformBody extends ElementBody {
         body.createFixture(fdef).setUserData("Platform");
     }
 
+    /**
+     * Applies a linear velocity to the platform accordingly to the respective direction
+     * @param direction true for horizontal movement, false for vertical movement
+     */
     public void setLinearVelocity(boolean direction) {
 
         float multiplier = direction ? -1 : 1;

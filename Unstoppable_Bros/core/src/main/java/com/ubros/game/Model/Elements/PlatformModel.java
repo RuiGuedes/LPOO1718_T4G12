@@ -8,14 +8,13 @@ import java.util.StringTokenizer;
 
 public class PlatformModel extends ElementModel {
 
-
     /**
-     * Mechanism body shape
+     * Platform body shape
      */
     private Polygon shape;
 
     /**
-     * Associated mechanism view
+     * Associated platform view
      */
     private PlatformView view;
 
@@ -45,10 +44,19 @@ public class PlatformModel extends ElementModel {
      */
     private boolean movementDir;
 
+    /**
+     * Name of platform view texture
+     */
     private String platformView;
 
+    /**
+     * Platform model width
+     */
     private float platformWidth;
 
+    /**
+     * Platform model height
+     */
     private float platformHeight;
 
     /**
@@ -57,6 +65,8 @@ public class PlatformModel extends ElementModel {
      * @param x        The x-coordinate of this entity in meters.
      * @param y        The y-coordinate of this entity in meters.
      * @param rotation The current rotation of this entity in radians.
+     * @param shape    The model associated shape
+     * @param data     Information about the platform model
      */
     public PlatformModel(float x, float y, float rotation, Polygon shape, String data) {
         super(x, y, rotation);
@@ -68,7 +78,12 @@ public class PlatformModel extends ElementModel {
         initializeRemainingVariables(data);
     }
 
-     private void initializeRemainingVariables(String data) {
+    /**
+     * Initializes all remaining variables related to the model
+     *
+     * @param data Information about the platform model
+     */
+    private void initializeRemainingVariables(String data) {
 
         float movement;
         StringTokenizer tokenizer = new StringTokenizer(data, "-");
@@ -78,17 +93,25 @@ public class PlatformModel extends ElementModel {
         movement = Integer.parseInt(tokenizer.nextToken());
         this.platformView = tokenizer.nextToken();
 
-        if(movementDir) {
-           this.destinyX -= (movement*TILE_WIDTH)/ PlayGameScreen.PIXEL_TO_METER;
-           this.platformWidth = (Integer.parseInt(tokenizer.nextToken())*TILE_WIDTH)/PlayGameScreen.PIXEL_TO_METER;
-           this.platformHeight = TILE_HEIGHT/PlayGameScreen.PIXEL_TO_METER;
+        if (movementDir) {
+            this.destinyX -= (movement * TILE_WIDTH) / PlayGameScreen.PIXEL_TO_METER;
+            this.platformWidth = (Integer.parseInt(tokenizer.nextToken()) * TILE_WIDTH) / PlayGameScreen.PIXEL_TO_METER;
+            this.platformHeight = TILE_HEIGHT / PlayGameScreen.PIXEL_TO_METER;
+        } else {
+            this.destinyY += (movement * TILE_HEIGHT) / PlayGameScreen.PIXEL_TO_METER;
+            this.platformWidth = TILE_WIDTH / PlayGameScreen.PIXEL_TO_METER;
+            this.platformHeight = (Integer.parseInt(tokenizer.nextToken()) * TILE_HEIGHT) / PlayGameScreen.PIXEL_TO_METER;
         }
-        else {
-            this.destinyY += (movement*TILE_HEIGHT)/PlayGameScreen.PIXEL_TO_METER;
-            this.platformWidth = TILE_WIDTH/PlayGameScreen.PIXEL_TO_METER;
-            this.platformHeight = (Integer.parseInt(tokenizer.nextToken())*TILE_HEIGHT)/PlayGameScreen.PIXEL_TO_METER;
-        }
-     }
+    }
+
+    /**
+     * Function responsible to retrieve model shape
+     *
+     * @return this object's shape
+     */
+    public Polygon getShape() {
+        return shape;
+    }
 
     /**
      * Function responsible to retrieve platform associated view
@@ -107,41 +130,65 @@ public class PlatformModel extends ElementModel {
     }
 
     /**
-     * Function responsible to retrieve model shape
-     * @return this object's shape
+     * Platform origin X position
+     * @return x origin position
      */
-    public Polygon getShape() {
-        return shape;
-    }
-
     public float getOriginX() {
         return originX;
     }
 
+    /**
+     * Platform origin Y position
+     * @return y origin position
+     */
     public float getOriginY() {
         return originY;
     }
 
+    /**
+     * Platform destiny X position
+     * @return x origin position
+     */
     public float getDestinyX() {
         return destinyX;
     }
 
+    /**
+     * Platform destiny Y position
+     * @return y destiny position
+     */
     public float getDestinyY() {
         return destinyY;
     }
 
+    /**
+     * Checks type of platform movement
+     * @return true for horizontal movement, false for vertical movement
+     */
     public boolean isMovementDir() {
         return movementDir;
     }
 
+    /**
+     * Get's platform model texture name
+     * @return texture name of the present object
+     */
     public String getPlatformView() {
         return platformView;
     }
 
+    /**
+     * Get's platform model width
+     * @return model width
+     */
     public float getPlatformWidth() {
         return platformWidth;
     }
 
+    /**
+     * Get's platform model height
+     * @return model height
+     */
     public float getPlatformHeight() {
         return platformHeight;
     }

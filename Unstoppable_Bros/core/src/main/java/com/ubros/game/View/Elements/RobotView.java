@@ -62,9 +62,25 @@ public class RobotView extends ElementView {
      */
     private Animation<TextureRegion> robotDying;
 
-    public boolean shoot;
+    /**
+     * Robot last x position
+     */
+    private float lastX;
 
-    public boolean jumping;
+    /**
+     * Robot last y velocity
+     */
+    private float lastVelocityY;
+
+    /**
+     * Is robot shooting (true) or not (false)
+     */
+    private boolean shoot;
+
+    /**
+     * Is robot jumping (true) or not (false)
+     */
+    private boolean jumping;
 
     /**
      * Boolean that indicates if character is moving horizontally
@@ -74,8 +90,8 @@ public class RobotView extends ElementView {
     /**
      * Creates a view belonging to a game.
      *
-     * @param game the game this view belongs to. Needed to access the
-     *             asset manager to get textures.
+     * @param game  the game this view belongs to. Needed to access the asset manager to get textures.
+     * @param atlas the texture atlas that contains robot animations
      */
     public RobotView(UbrosGame game, TextureAtlas atlas) {
         super(game, atlas, GameController.getInstance(game).getRobot());
@@ -188,6 +204,30 @@ public class RobotView extends ElementView {
     }
 
     /**
+     * Set's shoot new value
+     * @param shoot shoot new value
+     */
+    public void setShoot(boolean shoot) {
+        this.shoot = shoot;
+    }
+
+    /**
+     * Check's if robot is jumping or not
+     * @return true if it is, false otherwise
+     */
+    public boolean isJumping() {
+        return jumping;
+    }
+
+    /**
+     * Set's jumping new value
+     * @param jumping new boolean value
+     */
+    public void setJumping(boolean jumping) {
+        this.jumping = jumping;
+    }
+
+    /**
      * Function responsible to check robot texture
      *
      * @param delta time since last renders in seconds
@@ -196,14 +236,11 @@ public class RobotView extends ElementView {
     private TextureRegion getFrame(float delta) {
         this.currentState = getState(super.getElement());
 
-        TextureRegion region = null;
+        TextureRegion region = robotDefault;
 
         switch (currentState) {
             case RUNNING:
                 region = robotRunning.getKeyFrame(stateTimer, true);
-                break;
-            case STANDING:
-                region = robotDefault;
                 break;
             case JUMPING:
                 region = robotJumping.getKeyFrame(stateTimer);
@@ -214,16 +251,13 @@ public class RobotView extends ElementView {
             case DEAD:
                 region = robotDying.getKeyFrame(stateTimer);
                 if (robotDying.isAnimationFinished(stateTimer))
-                    GameController.getInstance(null).setState(GameController.GameStatus.GAMEOVER);
+                    GameController.getInstance(getGame()).setState(GameController.GameStatus.GAMEOVER);
                 break;
             case SHOOT:
                 region = robotShooting.getKeyFrame(stateTimer);
                 break;
             case RUNNING_SHOOT:
                 region = robotRunShooting.getKeyFrame(stateTimer, true);
-                break;
-            default:
-                region = robotDefault;
                 break;
         }
 
@@ -247,7 +281,6 @@ public class RobotView extends ElementView {
             region.flip(true, false);
             runningRight = true;
         }
-
 
         if (currentState == previousState)
             stateTimer += delta;
@@ -273,6 +306,7 @@ public class RobotView extends ElementView {
             return CharacterState.DEAD;
         else if (shoot && (diffX <= 0.001f))
             return CharacterState.SHOOT;
+
         if (diffX >= 0.001f) {
             if (checkJumpState())
                 return CharacterState.JUMPING;
@@ -287,33 +321,22 @@ public class RobotView extends ElementView {
         return ElementView.CharacterState.STANDING;
     }
 
+    /**
+     * Check's if robot is jumping or not
+     * @return true if it is, false otherwise
+     */
     private boolean checkJumpState() {
         if ((getElement().getBody().getLinearVelocity().y < 0) && (previousState == ElementView.CharacterState.JUMPING))
             return true;
         else if ((lastVelocityY == 0) && (getElement().getBody().getLinearVelocity().y > 0) && jumping)
             return true;
-        else if ((getElement().getBody().getLinearVelocity().y > 0) && (previousState == ElementView.CharacterState.JUMPING))
-            return true;
-
-        return false;
+        else
+            return (getElement().getBody().getLinearVelocity().y > 0) && (previousState == CharacterState.JUMPING);
     }
-
-    private float lastX;
-    private float lastY;
-    private float lastVelocityY;
 
     @Override
     public void draw(float delta) {
-
         this.update(delta);
-
-        lastX = getElement().getX();
-        lastY = getElement().getY();
-        lastVelocityY = getElement().getBody().getLinearVelocity().y;
-
-        if (getElement().getBody().getLinearVelocity().y == 0)
-            jumping = false;
-
         super.draw(getGame().getBatch());
     }
 
@@ -335,13 +358,15 @@ public class RobotView extends ElementView {
             else
                 setPosition(element.getBody().getPosition().x - getWidth() / 2, element.getBody().getPosition().y - getHeight() / 2);
         }
+
         setRotation(element.getAngle());
-
-        float diffX = Math.abs(lastX - getElement().getX());
-        float diffY = Math.abs(lastY - getElement().getY());
-
         setRegion(getFrame(delta));
 
+        lastX = getElement().getX();
+        lastVelocityY = getElement().getBody().getLinearVelocity().y;
+
+        if (getElement().getBody().getLinearVelocity().y == 0)
+            jumping = false;
     }
 
 

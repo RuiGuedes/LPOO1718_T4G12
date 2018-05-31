@@ -204,14 +204,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     private void drawGraphics(float delta) {
         drawHand();
         drawInteractiveButtons();
-        if(paused) {
-            GameView.getInstance(this.game).drawElements(delta);
-            drawBackground();
-        }
-        else {
-            drawBackground();
-            GameView.getInstance(this.game).drawElements(delta);
-        }
+        drawBackground(delta);
     }
 
     /**
@@ -307,16 +300,16 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     /**
      * Draws the all background elements (pause and focus)
      */
-    private void drawBackground() {
-
+    private void drawBackground(float delta) {
         if (paused) {
+            GameView.getInstance(this.game).drawElements(delta);
             Texture background = game.getAssetManager().get("backLoseFocus.png", Texture.class);
             game.getBatch().draw(background, 0, 0, VIRTUAL_SCREEN_WIDTH / PIXEL_TO_METER, VIRTUAL_SCREEN_HEIGHT / PIXEL_TO_METER);
-
-
             game.getBatch().draw(game.getAssetManager().get("pauseOn.png", Texture.class), VIRTUAL_SCREEN_WIDTH * 0.51f / PIXEL_TO_METER, VIRTUAL_SCREEN_HEIGHT * 0.205f / PIXEL_TO_METER, VIRTUAL_SCREEN_WIDTH * 0.1f / PIXEL_TO_METER, VIRTUAL_SCREEN_HEIGHT * 0.18f / PIXEL_TO_METER);
-        } else
+        } else {
             game.getBatch().draw(game.getAssetManager().get("pauseOff.png", Texture.class), VIRTUAL_SCREEN_WIDTH * 0.51f / PIXEL_TO_METER, VIRTUAL_SCREEN_HEIGHT * 0.205f / PIXEL_TO_METER, VIRTUAL_SCREEN_WIDTH * 0.1f / PIXEL_TO_METER, VIRTUAL_SCREEN_HEIGHT * 0.18f / PIXEL_TO_METER);
+            GameView.getInstance(this.game).drawElements(delta);
+        }
     }
 
     /**
@@ -446,10 +439,16 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         if (checkPause(screenX, screenY)) {
             paused = !paused;
 
+            if (GameController.getInstance(this.game).getState() == GameController.GameStatus.PLAYING)
+                GameController.getInstance(this.game).setState(GameController.GameStatus.PAUSE);
+            else
+                GameController.getInstance(this.game).setState(GameController.GameStatus.PLAYING);
+
             if (paused && SettingsScreen.soundActive)
                 SettingsScreen.playGameMusic.setVolume(SettingsScreen.playGameMusic.getVolume() / 10);
             else if (!paused && SettingsScreen.soundActive)
                 SettingsScreen.playGameMusic.setVolume(SettingsScreen.playGameMusic.getVolume() * 10);
+
         }
 
         if (paused)
@@ -458,13 +457,13 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         if (checkJumpButton(screenX, screenY)) {
             jumpButton = buttonTextures.get(5);
 
-            if ((selectedPlayer) && !((RobotView) GameView.getInstance(this.game).getRobot()).jumping) {
+            if ((selectedPlayer) && !((RobotView) GameView.getInstance(this.game).getRobot()).isJumping()) {
                 GameController.getInstance(this.game).getRobot().getBody().applyLinearImpulse(new Vector2(0, 4f), GameController.getInstance(this.game).getRobot().getBody().getWorldCenter(), true);
-                ((RobotView)GameView.getInstance(this.game).getRobot()).jumping = true;
-            }
-            else if ((!selectedPlayer) && (GameController.getInstance(this.game).getNinja().getBody().getLinearVelocity().y == 0))
+                ((RobotView) GameView.getInstance(this.game).getRobot()).setJumping(true);
+            } else if ((!selectedPlayer) && !((NinjaView) GameView.getInstance(this.game).getNinja()).isJumping()) {
                 GameController.getInstance(this.game).getNinja().getBody().applyLinearImpulse(new Vector2(0, 4f), GameController.getInstance(this.game).getNinja().getBody().getWorldCenter(), true);
-
+                ((NinjaView) GameView.getInstance(this.game).getNinja()).setJumping(true);
+            }
         }
 
         if (swapPlayers(screenX, screenY))
@@ -487,7 +486,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
         if (checkBulletButton(screenX, screenY)) {
             shootButton = buttonTextures.get(6);
-            ((RobotView) GameView.getInstance(this.game).getRobot()).shoot = false;
+            ((RobotView) GameView.getInstance(this.game).getRobot()).setShoot(false);
         }
 
         return true;

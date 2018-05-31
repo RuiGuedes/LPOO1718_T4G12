@@ -4,6 +4,11 @@ import com.ubros.game.View.Elements.ElementView;
 
 public class CharacterModel extends ElementModel {
 
+    /**
+     * Checks whether player is ready to complete level (true) or not (false)
+     */
+    private boolean ready;
+
     private ElementView elementView;
 
     private boolean onPlatform;
@@ -19,7 +24,15 @@ public class CharacterModel extends ElementModel {
      */
     public CharacterModel(float x, float y, float rotation) {
         super(x, y, rotation);
-        this.onPlatform = false;
+        this.onPlatform = this.ready = false;
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
     public boolean isOnPlatform() {

@@ -78,7 +78,7 @@ public class GameView {
      * Creates all mechanisms views
      */
     private void createMechanismView() {
-        List<MechanismBody> mechanisms = GameController.getInstance(this.game).getMechanismBodies();
+        List<MechanismBody> mechanisms = GameController.getInstance(this.game).getMechanisms();
         for (MechanismBody mechanism : mechanisms) {
             ((MechanismModel) mechanism.getModel()).setView(new MechanismView(this.game, null, mechanism));
         }
@@ -88,7 +88,7 @@ public class GameView {
      * Creates all platform views
      */
     private void createPlatformsView() {
-        List<PlatformBody> platforms = GameController.getInstance(this.game).getPlatformBodies();
+        List<PlatformBody> platforms = GameController.getInstance(this.game).getPlatforms();
         for (PlatformBody platformBody : platforms) {
             ((PlatformModel) platformBody.getModel()).setView(new PlatformView(this.game, null, platformBody, ((PlatformModel) platformBody.getModel()).getPlatformView()));
         }
@@ -98,7 +98,7 @@ public class GameView {
      * Creates all objects view
      */
     private void createObjectsView() {
-        List<ObjectBody> objects = GameController.getInstance(this.game).getObjectBodies();
+        List<ObjectBody> objects = GameController.getInstance(this.game).getObjects();
         for (ObjectBody objectBody : objects)
             ((ObjectModel) objectBody.getModel()).setView(new ObjectView(this.game, null, objectBody, ((ObjectModel) objectBody.getModel()).getData()));
     }
@@ -107,7 +107,7 @@ public class GameView {
      * Creates all objectives views
      */
     private void createObjectivesView() {
-        List<ObjectiveBody> objectives = GameController.getInstance(this.game).getObjectiveBodies();
+        List<ObjectiveBody> objectives = GameController.getInstance(this.game).getObjectives();
         for (ObjectiveBody objective : objectives) {
             ((ObjectiveModel) objective.getModel()).setView(new ObjectiveView(this.game, null, objective, ((ObjectiveModel) objective.getModel()).getObjectiveView()));
         }
@@ -117,7 +117,7 @@ public class GameView {
      * Creates all exit door views
      */
     private void createExitDoorsView() {
-        List<ExitDoorBody> exitDoorBodies = GameController.getInstance(this.game).getExitDoorBodies();
+        List<ExitDoorBody> exitDoorBodies = GameController.getInstance(this.game).getExitDoors();
         for (ExitDoorBody exitDoor : exitDoorBodies) {
             ((ExitDoorModel) exitDoor.getModel()).setView(new ExitDoorView(this.game, null, exitDoor));
         }
@@ -181,19 +181,19 @@ public class GameView {
      */
     public void drawElements(float delta) {
 
-        for (MechanismBody mechanism : GameController.getInstance(this.game).getMechanismBodies())
+        for (MechanismBody mechanism : GameController.getInstance(this.game).getMechanisms())
             ((MechanismModel) mechanism.getModel()).getView().draw(delta);
 
-        for (PlatformBody platformBody : GameController.getInstance(this.game).getPlatformBodies())
+        for (PlatformBody platformBody : GameController.getInstance(this.game).getPlatforms())
             ((PlatformModel) platformBody.getModel()).getView().draw(delta);
 
-        for (ObjectBody objectBody : GameController.getInstance(this.game).getObjectBodies())
+        for (ObjectBody objectBody : GameController.getInstance(this.game).getObjects())
             ((ObjectModel) objectBody.getModel()).getView().draw(delta);
 
-        for (ObjectiveBody objectiveBody : GameController.getInstance(this.game).getObjectiveBodies())
+        for (ObjectiveBody objectiveBody : GameController.getInstance(this.game).getObjectives())
             ((ObjectiveModel) objectiveBody.getModel()).getView().draw(delta);
 
-        for (ExitDoorBody exitDoorBody : GameController.getInstance(this.game).getExitDoorBodies())
+        for (ExitDoorBody exitDoorBody : GameController.getInstance(this.game).getExitDoors())
             ((ExitDoorModel) exitDoorBody.getModel()).getView().draw(delta);
 
         for (EnemyBody enemyBody : GameController.getInstance(this.game).getEnemyBodies())

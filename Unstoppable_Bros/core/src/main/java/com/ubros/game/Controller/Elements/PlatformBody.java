@@ -1,6 +1,8 @@
 package com.ubros.game.Controller.Elements;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -34,7 +36,23 @@ public class PlatformBody extends ElementBody {
         shape.set(vertexes);
         fdef.shape = shape;
         fdef.friction = 10;
-        body.createFixture(fdef).setUserData("Platform");
+        body.createFixture(fdef).setUserData("PlatformBody");
+
+        if(((PlatformModel)getModel()).getPlatformView().equals("barrel.png")) {
+
+            EdgeShape upSide = new EdgeShape();
+
+            float xPos = ((PlatformModel)getModel()).getPlatformWidth();
+            float yPos = ((PlatformModel)getModel()).getPlatformHeight()*1.1f;
+
+            upSide.set(new Vector2(xPos*0.1f,yPos), new Vector2(xPos*0.9f,yPos));
+
+            fdef.shape = upSide;
+            fdef.isSensor = true;
+            body.createFixture(fdef).setUserData("Platform");
+
+        }
+
     }
 
     /**

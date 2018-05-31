@@ -98,7 +98,7 @@ public class SettingsScreen extends ScreenAdapter {
     public SettingsScreen(UbrosGame game) {
 
         this.game = game;
-        soundActive = false;
+        soundActive = true;
 
         initializeTextures();
         initializeAudio();

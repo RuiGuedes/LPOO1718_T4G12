@@ -6,7 +6,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.ubros.game.Controller.Elements.BulletBody;
 import com.ubros.game.Controller.Elements.CharacterBody;
 import com.ubros.game.Controller.Elements.DangerZoneBody;
 import com.ubros.game.Controller.Elements.EnemyBody;
@@ -38,11 +37,22 @@ import java.util.List;
 
 public class GameController {
 
-    public enum GameStatus {PLAYING, PAUSE, GAMEOVER, VICTORY}
+    /**
+     * Possible game status
+     */
+    public enum GameStatus {
+        PLAYING, PAUSE, GAMEOVER, VICTORY
+    }
 
-    public final static float PLAYER_SPEED = 0.3f;
-
+    /**
+     * Actual game status
+     */
     private GameStatus state;
+
+    /**
+     * Player movement speed
+     */
+    public final static float PLAYER_SPEED = 0.3f;
 
     /**
      * World considered gravity value
@@ -50,9 +60,14 @@ public class GameController {
     private float GRAVITY = -10;
 
     /**
-     * World considered gravity value
+     * Time before robot takes it's next shot
      */
     private float TIME_FOR_NEXT_SHOOT = 0.2f;
+
+    /**
+     * Time that both characters have to wait before exit
+     */
+    private float TIME_BEFORE_EXIT = 1f;
 
     /**
      * The singleton instance of this controller
@@ -63,10 +78,6 @@ public class GameController {
      * Game object
      */
     private UbrosGame game;
-
-    public void setGame(UbrosGame game) {
-        this.game = game;
-    }
 
     /**
      * The physics world controlled by this controller.
@@ -79,31 +90,64 @@ public class GameController {
     private Box2DDebugRenderer debugRenderer;
 
     /**
-     *
+     * Number of objectives still waiting to be catched
      */
     private int remainingObjectives;
 
+    /**
+     * Variable use to control robot shooting time
+     */
     private float timeToNextShoot;
 
+    /**
+     * Variable use to control exit time
+     */
+    private float timeToExit;
+
+    /**
+     * Robot body
+     */
     private CharacterBody robot;
 
+    /**
+     * Ninja body
+     */
     private CharacterBody ninja;
 
-    private List<MechanismBody> mechanismBodies = new ArrayList<MechanismBody>();
+    /**
+     * List of all mechanism bodies
+     */
+    private List<MechanismBody> mechanisms = new ArrayList<MechanismBody>();
 
-    private List<PlatformBody> platformBodies = new ArrayList<PlatformBody>();
+    /**
+     * List of all platform bodies
+     */
+    private List<PlatformBody> platforms = new ArrayList<PlatformBody>();
 
-    private List<ObjectiveBody> objectiveBodies = new ArrayList<ObjectiveBody>();
+    /**
+     * List of all objective bodies
+     */
+    private List<ObjectiveBody> objectives = new ArrayList<ObjectiveBody>();
 
-    private List<PortalBody> portalBodies = new ArrayList<PortalBody>();
+    /**
+     * List of all portal bodies
+     */
+    private List<PortalBody> portals = new ArrayList<PortalBody>();
 
-    private List<ExitDoorBody> exitDoorBodies = new ArrayList<ExitDoorBody>();
+    /**
+     * List of all exit door bodies
+     */
+    private List<ExitDoorBody> exitDoors = new ArrayList<ExitDoorBody>();
 
+    /**
+     * List of all enemy bodies
+     */
     private List<EnemyBody> enemyBodies = new ArrayList<EnemyBody>();
 
-    private  List<ObjectBody> objectBodies = new ArrayList<ObjectBody>();
-
-    public List<BulletBody> bulletBodies = new ArrayList<BulletBody>();
+    /**
+     * List of all object bodies
+     */
+    private List<ObjectBody> objects = new ArrayList<ObjectBody>();
 
     /**
      * Creates a new GameController that controls the physics of a certain GameModel.
@@ -115,18 +159,139 @@ public class GameController {
         this.world = new World(new Vector2(0, GRAVITY), true);
         this.debugRenderer = new Box2DDebugRenderer();
 
+        createBodies();
+
+        this.world.setContactListener(new MyContactListener());
+    }
+
+    ////////////////////
+    // CREATE METHODS //
+    ////////////////////
+
+    /**
+     * Creates all world bodies
+     */
+    private void createBodies() {
         createCharacters();
         createGround();
-        createAcid();
+        createDangerZones();
         createMechanisms();
         createObjectives();
         createPortals();
         createExitDoors();
         createObjects();
         createEnemys();
-
-        this.world.setContactListener(new MyContactListener());
     }
+
+    /**
+     * Create character bodies
+     */
+    private void createCharacters() {
+        robot = new CharacterBody(this.world, GameModel.getInstance(this.game).getRobot(), "RobotBounds");
+        ninja = new CharacterBody(this.world, GameModel.getInstance(this.game).getNinja(), "NinjaBounds");
+    }
+
+    /**
+     * Create ground bodies
+     */
+    private void createGround() {
+        List<LimitModel> limits = GameModel.getInstance(this.game).getLimits();
+        for (LimitModel limit : limits)
+            new LimitBody(this.world, limit, limit.getShape().getVertices());
+    }
+
+    /**
+     * Create danger zone bodies
+     */
+    private void createDangerZones() {
+        List<DangerZoneModel> acidRegions = GameModel.getInstance(this.game).getDangerZones();
+        for (DangerZoneModel acid : acidRegions)
+            new DangerZoneBody(this.world, acid, acid.getShape().getVertices());
+    }
+
+    /**
+     * Create mechanism bodies
+     */
+    private void createMechanisms() {
+
+        int pointer = 0;
+        createPlatforms();
+
+        List<MechanismModel> mechanisms = GameModel.getInstance(this.game).getMechanisms();
+        for (MechanismModel mechanism : mechanisms) {
+            this.mechanisms.add(new MechanismBody(this.world, mechanism, mechanism.getShape().getVertices()));
+            mechanism.setPlatform(platforms.get(pointer++));
+        }
+    }
+
+    /**
+     * Create platform bodies
+     */
+    private void createPlatforms() {
+        List<PlatformModel> platforms = GameModel.getInstance(this.game).getPlatforms();
+        for (PlatformModel platform : platforms)
+            this.platforms.add(new PlatformBody(this.world, platform, platform.getShape().getVertices()));
+    }
+
+    /**
+     * Create objective bodies
+     */
+    private void createObjectives() {
+        List<ObjectiveModel> objectives = GameModel.getInstance(this.game).getObjectives();
+        for (ObjectiveModel objective : objectives)
+            this.objectives.add(new ObjectiveBody(this.world, objective, objective.getShape().getVertices()));
+
+        this.remainingObjectives = objectives.size();
+        this.remainingObjectives = 0;
+    }
+
+    /**
+     * Create portal bodies
+     */
+    private void createPortals() {
+        List<PortalModel> portalModels = GameModel.getInstance(this.game).getPortals();
+        for (PortalModel portal : portalModels)
+            portals.add(new PortalBody(this.world, portal, portal.getShape().getVertices()));
+
+        for (PortalBody portalBody : portals) {
+            for (PortalModel portalModel : portalModels) {
+                if ((portalModel.getName().charAt(0) == ((PortalModel) portalBody.getModel()).getName().charAt(0)) &&
+                        (portalModel.getName().charAt(1) != ((PortalModel) portalBody.getModel()).getName().charAt(1)))
+                    portalModel.setPortalDestiny(portalBody);
+            }
+        }
+    }
+
+    /**
+     * Create exit door bodies
+     */
+    private void createExitDoors() {
+        List<ExitDoorModel> exitDoorModels = GameModel.getInstance(this.game).getExitDoors();
+        for (ExitDoorModel exitDoor : exitDoorModels)
+            exitDoors.add(new ExitDoorBody(this.world, exitDoor, exitDoor.getShape().getVertices()));
+    }
+
+    /**
+     * Create object bodies
+     */
+    private void createObjects() {
+        List<ObjectModel> objectModels = GameModel.getInstance(this.game).getObjects();
+        for (ObjectModel object : objectModels)
+            objects.add(new ObjectBody(this.world, object, object.getShape().getVertices()));
+    }
+
+    /**
+     * Create enemy bodies
+     */
+    private void createEnemys() {
+        List<EnemyModel> enemyModels = GameModel.getInstance(this.game).getEnemys();
+        for (EnemyModel enemy : enemyModels)
+            enemyBodies.add(new EnemyBody(this.world, enemy));
+    }
+
+    /////////////////
+    // GET METHODS //
+    /////////////////
 
     /**
      * Returns a singleton instance of a game controller
@@ -139,92 +304,14 @@ public class GameController {
         return instance;
     }
 
+    /**
+     * Returns game state
+     *
+     * @return game state
+     */
     public GameStatus getState() {
         return state;
     }
-
-    public void setState(GameStatus state) {
-        this.state = state;
-    }
-
-    private void createCharacters() {
-        robot = new CharacterBody(this.world, GameModel.getInstance(this.game).getRobot(), "RobotBounds");
-        ninja = new CharacterBody(this.world, GameModel.getInstance(this.game).getNinja(), "NinjaBounds");
-    }
-
-    private void createGround() {
-        List<LimitModel> limits = GameModel.getInstance(this.game).getLimits();
-        for (LimitModel limit : limits)
-            new LimitBody(this.world, limit, limit.getShape().getVertices());
-    }
-
-    private void createAcid() {
-        List<DangerZoneModel> acidRegions = GameModel.getInstance(this.game).getDangerZones();
-        for (DangerZoneModel acid : acidRegions)
-            new DangerZoneBody(this.world, acid, acid.getShape().getVertices());
-    }
-
-    private void createMechanisms() {
-
-        int pointer = 0;
-        createPlatforms();
-
-        List<MechanismModel> mechanisms = GameModel.getInstance(this.game).getMechanisms();
-        for (MechanismModel mechanism : mechanisms) {
-            mechanismBodies.add(new MechanismBody(this.world, mechanism, mechanism.getShape().getVertices()));
-            mechanism.setPlatform(platformBodies.get(pointer++));
-        }
-    }
-
-    private void createPlatforms() {
-        List<PlatformModel> platforms = GameModel.getInstance(this.game).getPlatforms();
-        for (PlatformModel platform : platforms)
-            platformBodies.add(new PlatformBody(this.world, platform, platform.getShape().getVertices()));
-    }
-
-    private void createObjectives() {
-        List<ObjectiveModel> objectives = GameModel.getInstance(this.game).getObjectives();
-        for (ObjectiveModel objective : objectives)
-            objectiveBodies.add(new ObjectiveBody(this.world, objective, objective.getShape().getVertices()));
-
-        this.remainingObjectives = objectives.size();
-    }
-
-    private void createPortals() {
-        List<PortalModel> portalModels = GameModel.getInstance(this.game).getPortals();
-        for (PortalModel portal : portalModels)
-            portalBodies.add(new PortalBody(this.world, portal, portal.getShape().getVertices()));
-
-        for (PortalBody portalBody : portalBodies) {
-            for (PortalModel portalModel : portalModels) {
-                if ((portalModel.getName().charAt(0) == ((PortalModel) portalBody.getModel()).getName().charAt(0)) &&
-                        (portalModel.getName().charAt(1) != ((PortalModel) portalBody.getModel()).getName().charAt(1)))
-                    portalModel.setPortalDestiny(portalBody);
-            }
-        }
-    }
-
-    private void createExitDoors() {
-        List<ExitDoorModel> exitDoorModels = GameModel.getInstance(this.game).getExitDoors();
-        for (ExitDoorModel exitDoor : exitDoorModels)
-            exitDoorBodies.add(new ExitDoorBody(this.world, exitDoor, exitDoor.getShape().getVertices()));
-    }
-
-    private void createObjects() {
-        List<ObjectModel> objectModels = GameModel.getInstance(this.game).getObjects();
-        for (ObjectModel object : objectModels)
-            objectBodies.add(new ObjectBody(this.world, object, object.getShape().getVertices()));
-    }
-
-    private void createEnemys() {
-        List<EnemyModel> enemyModels = GameModel.getInstance(this.game).getEnemys();
-        for (EnemyModel enemy : enemyModels)
-            enemyBodies.add(new EnemyBody(this.world, enemy));
-    }
-
-    /////////////////
-    // GET METHODS //
-    /////////////////
 
     /**
      * Returns the world controlled by this controller. Needed for debugging purposes only.
@@ -235,57 +322,142 @@ public class GameController {
         return world;
     }
 
+    /**
+     * Returns world associated debug renderer
+     *
+     * @return world associated debug renderer
+     */
     public Box2DDebugRenderer getDebugRenderer() {
         return debugRenderer;
     }
 
+    /**
+     * Get's robot body
+     *
+     * @return robot body
+     */
     public CharacterBody getRobot() {
         return robot;
     }
 
-    public int getRemainingObjectives() {
-        return remainingObjectives;
-    }
-
-    public void setRemainingObjectives() {
-        this.remainingObjectives--;
-    }
-
+    /**
+     * Get's ninja body
+     *
+     * @return ninja
+     */
     public CharacterBody getNinja() {
         return ninja;
     }
 
-    public List<MechanismBody> getMechanismBodies() {
-        return mechanismBodies;
+    /**
+     * Returns the number of remaining objectives
+     *
+     * @return number of remaining objectives
+     */
+    public int getRemainingObjectives() {
+        return remainingObjectives;
     }
 
-    public List<PlatformBody> getPlatformBodies() {
-        return platformBodies;
+    /**
+     * Get's list of mechanism bodies
+     *
+     * @return mechanism bodies
+     */
+    public List<MechanismBody> getMechanisms() {
+        return mechanisms;
     }
 
-    public List<ObjectiveBody> getObjectiveBodies() {
-        return objectiveBodies;
+    /**
+     * Get's list of platform bodies
+     *
+     * @return platform bodies
+     */
+    public List<PlatformBody> getPlatforms() {
+        return platforms;
     }
 
+    /**
+     * Get's list of objectives bodies
+     *
+     * @return objectives bodies
+     */
+    public List<ObjectiveBody> getObjectives() {
+        return objectives;
+    }
+
+    /**
+     * Get's list of enemy bodies
+     *
+     * @return enemy bodies
+     */
     public List<EnemyBody> getEnemyBodies() {
         return enemyBodies;
     }
 
+    /**
+     * Get's list of exit door bodies
+     *
+     * @return exit door bodies
+     */
+    public List<ExitDoorBody> getExitDoors() {
+        return exitDoors;
+    }
+
+    /**
+     * Get's list of objects bodies
+     *
+     * @return mechanism bodies
+     */
+    public List<ObjectBody> getObjects() {
+        return objects;
+    }
+
+    /**
+     * Returns game instance
+     *
+     * @return game instance
+     */
     public UbrosGame getGame() {
         return game;
     }
 
-    public List<ExitDoorBody> getExitDoorBodies() {
-        return exitDoorBodies;
-    }
-
-    public List<ObjectBody> getObjectBodies() {
-        return objectBodies;
+    /**
+     * Get's remainingTimeToExit
+     *
+     * @return timeToExit
+     */
+    public float getTimeToExit() {
+        return timeToExit;
     }
 
     ////////////
     // OTHERS //
     ////////////
+
+    /**
+     * Set's a new state
+     *
+     * @param state new state
+     */
+    public void setState(GameStatus state) {
+        this.state = state;
+    }
+
+    /**
+     * Set's new instance of game
+     *
+     * @param game new game
+     */
+    public void setGame(UbrosGame game) {
+        this.game = game;
+    }
+
+    /**
+     * Decrements the number of remaining objectives
+     */
+    public void setRemainingObjectives() {
+        this.remainingObjectives--;
+    }
 
     /**
      * Updates this instance world bodies
@@ -313,6 +485,26 @@ public class GameController {
                 world.destroyBody(body);
             }
         }
+
+        updateExitVariables(delta);
+    }
+
+    /**
+     * Check's and updates exit possible status
+     */
+    private void updateExitVariables(float delta) {
+
+        for (ExitDoorModel doorModel : GameModel.getInstance(null).getExitDoors()) {
+            if (!doorModel.isCharacterContact()) {
+                timeToExit = TIME_BEFORE_EXIT;
+                return;
+            }
+        }
+
+        if (timeToExit <= 0)
+            this.state = GameStatus.VICTORY;
+        else
+            timeToExit -= delta;
     }
 
     /**
@@ -321,17 +513,18 @@ public class GameController {
     public void robotShoot() {
 
         if (GameController.getInstance(this.game).timeToNextShoot < 0) {
-            if(SettingsScreen.soundActive)
+            if (SettingsScreen.soundActive)
                 SettingsScreen.shootSound.play();
 
             GameModel.getInstance(this.game).createBullet(GameView.getInstance(this.game).getRobot().getElement().getX(), GameView.getInstance(this.game).getRobot().getElement().getY(), ((RobotView) GameView.getInstance(this.game).getRobot()).isRunningRight());
-            ((RobotView) GameView.getInstance(this.game).getRobot()).shoot = true;
+            ((RobotView) GameView.getInstance(this.game).getRobot()).setShoot(true);
             GameController.getInstance(this.game).timeToNextShoot = TIME_FOR_NEXT_SHOOT;
         }
     }
 
     /**
      * Disables a particular body
+     *
      * @param body body to disabled
      */
     public void disablesBody(Body body) {

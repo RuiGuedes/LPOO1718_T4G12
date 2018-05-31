@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ubros.game.Gui.PlayGameScreen;
 import com.ubros.game.Model.Elements.ElementModel;
@@ -13,9 +14,16 @@ import com.ubros.game.Model.Elements.ElementModel;
 public class CharacterBody extends ElementBody {
 
     /**
+     * Determines whether player is ready to complete level
+     */
+    private boolean ready;
+
+    /**
      * Body user data used to check contact with other bodies
      */
     private String userData;
+
+    private String bodyUserData = "RobotBody";
 
     public Vector3 newPosition;
 
@@ -31,6 +39,7 @@ public class CharacterBody extends ElementBody {
     public CharacterBody(World world, ElementModel model, String userData) {
         super(world, model);
 
+        this.ready = false;
         this.userData = userData;
         createFixture(getBody(),null,0,0,0f,0f,0f, (short)0, (short)0);
     }
@@ -53,37 +62,38 @@ public class CharacterBody extends ElementBody {
         CircleShape circle = new CircleShape();
         circle.setRadius(10/ PlayGameScreen.PIXEL_TO_METER);
         circle.setPosition(new Vector2(-8/PlayGameScreen.PIXEL_TO_METER,-25/PlayGameScreen.PIXEL_TO_METER));
+        //circle.setPosition(new Vector2(-14/PlayGameScreen.PIXEL_TO_METER,-25/PlayGameScreen.PIXEL_TO_METER));
 
         fdef.shape = circle;
-        body.createFixture(fdef).setUserData(userData);
+        body.createFixture(fdef).setUserData(bodyUserData);
 
         circle.setRadius(10/ PlayGameScreen.PIXEL_TO_METER);
         circle.setPosition(new Vector2(8/PlayGameScreen.PIXEL_TO_METER,-25/PlayGameScreen.PIXEL_TO_METER));
+        //circle.setPosition(new Vector2(14/PlayGameScreen.PIXEL_TO_METER,-25/PlayGameScreen.PIXEL_TO_METER));
+
         fdef.shape = circle;
-        body.createFixture(fdef).setUserData(userData);
+        body.createFixture(fdef).setUserData(bodyUserData);
 
         EdgeShape side = new EdgeShape();
 
         side.set(new Vector2(-24/PlayGameScreen.PIXEL_TO_METER, -20/PlayGameScreen.PIXEL_TO_METER), new Vector2(-24/PlayGameScreen.PIXEL_TO_METER, 35/PlayGameScreen.PIXEL_TO_METER));
         fdef.shape = side;
-        body.createFixture(fdef).setUserData(userData);
+        body.createFixture(fdef).setUserData(bodyUserData);
 
         side.set(new Vector2(24/PlayGameScreen.PIXEL_TO_METER, -20/PlayGameScreen.PIXEL_TO_METER), new Vector2(24/PlayGameScreen.PIXEL_TO_METER, 35/PlayGameScreen.PIXEL_TO_METER));
         fdef.shape = side;
-        body.createFixture(fdef).setUserData(userData);
+        body.createFixture(fdef).setUserData(bodyUserData);
 
         side.set(new Vector2(-24/PlayGameScreen.PIXEL_TO_METER, 35/PlayGameScreen.PIXEL_TO_METER), new Vector2(24/PlayGameScreen.PIXEL_TO_METER, 35/PlayGameScreen.PIXEL_TO_METER));
         fdef.shape = side;
-        body.createFixture(fdef).setUserData(userData);
-
-        /*FixtureDef fdef = new FixtureDef();
+        body.createFixture(fdef).setUserData(bodyUserData);
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(24/ PlayGameScreen.PIXEL_TO_METER, 35/PlayGameScreen.PIXEL_TO_METER);
 
         fdef.shape = shape;
-
-        body.createFixture(fdef).setUserData(userData);*/
+        fdef.isSensor = true;
+        body.createFixture(fdef).setUserData(userData);
 
     }
 }

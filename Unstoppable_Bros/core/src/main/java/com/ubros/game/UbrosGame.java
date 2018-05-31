@@ -11,9 +11,7 @@ import com.ubros.game.Gui.MainMenuScreen;
 import com.ubros.game.Gui.PlayGameScreen;
 import com.ubros.game.Gui.SettingsScreen;
 
-//TODO Menu de pause atras dos herois
-//TODO Portas de fim funcionais
-//TODO Questao do salto na parte superior do mapa
+//TODO Create characterView
 
 public class UbrosGame extends Game {
 

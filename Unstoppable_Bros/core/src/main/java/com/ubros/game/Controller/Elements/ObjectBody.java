@@ -44,7 +44,7 @@ public class ObjectBody extends ElementBody {
             shape.setRadius(((ObjectModel)getModel()).getRadius() * TILE_WIDTH/2);
 
             fdef.shape = shape;
-            body.setGravityScale(2f);
+            body.setGravityScale(4f);
             body.createFixture(fdef).setUserData("Ball");
         }
     }

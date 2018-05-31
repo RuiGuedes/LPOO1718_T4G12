@@ -21,11 +21,15 @@ import com.ubros.game.Model.Elements.PortalModel;
 import com.ubros.game.Model.GameModel;
 import com.ubros.game.View.Elements.ElementView;
 import com.ubros.game.View.Elements.EnemyView;
+import com.ubros.game.View.Elements.NinjaView;
+import com.ubros.game.View.Elements.RobotView;
+import com.ubros.game.View.GameView;
 
 public class MyContactListener implements ContactListener {
 
     /**
      * Checks collisions affecting every game element.
+     *
      * @param contact Contact object that contains fixtures about the bodies in contact
      */
     @Override
@@ -36,15 +40,17 @@ public class MyContactListener implements ContactListener {
         if (fixA.getUserData().equals("RobotBounds") || fixB.getUserData().equals("RobotBounds")) {
             Body bodyA = fixA.getUserData().equals("RobotBounds") ? fixA.getBody() : fixB.getBody();
             Body bodyB = bodyA == fixA.getBody() ? fixB.getBody() : fixA.getBody();
+            Fixture object = bodyA == fixA.getBody() ? fixB : fixA;
 
-            robotBeginContact(bodyA, bodyB);
+            robotBeginContact(bodyA, bodyB, object);
         }
 
         if (fixA.getUserData().equals("NinjaBounds") || fixB.getUserData().equals("NinjaBounds")) {
             Body bodyA = fixA.getUserData().equals("NinjaBounds") ? fixA.getBody() : fixB.getBody();
             Body bodyB = bodyA == fixA.getBody() ? fixB.getBody() : fixA.getBody();
+            Fixture object = bodyA == fixA.getBody() ? fixB : fixA;
 
-            ninjaBeginContact(bodyA, bodyB);
+            ninjaBeginContact(bodyA, bodyB, object);
         }
 
         if (fixA.getUserData().equals("Bullet") || fixB.getUserData().equals("Bullet")) {
@@ -58,10 +64,15 @@ public class MyContactListener implements ContactListener {
 
     /**
      * In case one of the body in contact is the robot, the remaining objects act accordingly
-     * @param robot Robot body
+     *
+     * @param robot  Robot body
      * @param object Other object body that is going to be determined
+     * @param fix    Fixture associated to the object
      */
-    private void robotBeginContact(Body robot, Body object) {
+    private void robotBeginContact(Body robot, Body object, Fixture fix) {
+
+        if ((object.getUserData()) instanceof LimitModel)
+            ((RobotView) GameView.getInstance(null).getRobot()).setJumping(false);
 
         if ((object.getUserData()) instanceof DangerZoneModel)
             dangerZoneCollision(GameController.getInstance(null).getRobot().getBody(), GameModel.getInstance(null).getRobot().getElementView());
@@ -70,9 +81,11 @@ public class MyContactListener implements ContactListener {
             mechanismCollision(object);
 
         if ((object.getUserData()) instanceof PlatformModel) {
-            platformCollision(robot, object);
-            //if (platformCollision(robot, object))
-              //  GameController.getInstance(null).getRobot().getBody().setLinearVelocity(0, 0);
+            if (fix.getUserData().equals("Platform")) {
+                platformCollision(robot, object);
+                if (platformCollision(robot, object))
+                    GameController.getInstance(null).getRobot().getBody().setLinearVelocity(0, 0);
+            }
         }
 
         if (((object.getUserData()) instanceof ObjectiveModel) && (((ObjectiveModel) object.getUserData()).getData().equals("R")))
@@ -81,18 +94,23 @@ public class MyContactListener implements ContactListener {
         if (((object.getUserData()) instanceof ExitDoorModel) && (((ExitDoorModel) object.getUserData()).getData().equals("RobotExitDoor")))
             exitDoorCollision(object, true);
 
-        if(((object.getUserData()) instanceof EnemyModel) && !((EnemyModel)object.getUserData()).isDead())
-            characterEnemyCollision(GameController.getInstance(null).getRobot().getBody(), GameModel.getInstance(null).getRobot().getElementView(), ((EnemyModel)object.getUserData()).getView());
+        if (((object.getUserData()) instanceof EnemyModel) && !((EnemyModel) object.getUserData()).isDead())
+            characterEnemyCollision(GameController.getInstance(null).getRobot().getBody(), GameModel.getInstance(null).getRobot().getElementView(), ((EnemyModel) object.getUserData()).getView());
 
 
     }
 
     /**
      * In case one of the body in contact is the ninja, the remaining objects act accordingly
-     * @param ninja Robot body
+     *
+     * @param ninja  Robot body
      * @param object Other object body that is going to be determined
+     * @param fix    Fixture associated to the object
      */
-    private void ninjaBeginContact(Body ninja, Body object) {
+    private void ninjaBeginContact(Body ninja, Body object, Fixture fix) {
+
+        if ((object.getUserData()) instanceof LimitModel)
+            ((NinjaView) GameView.getInstance(null).getNinja()).setJumping(false);
 
         if ((object.getUserData()) instanceof DangerZoneModel)
             dangerZoneCollision(GameController.getInstance(null).getNinja().getBody(), GameModel.getInstance(null).getNinja().getElementView());
@@ -100,8 +118,13 @@ public class MyContactListener implements ContactListener {
         if ((object.getUserData()) instanceof MechanismModel)
             mechanismCollision(object);
 
-        if ((object.getUserData()) instanceof PlatformModel)
-            platformCollision(ninja, object);
+        if ((object.getUserData()) instanceof PlatformModel) {
+            if (fix.getUserData().equals("Platform")) {
+                platformCollision(ninja, object);
+                if (platformCollision(ninja, object))
+                    GameController.getInstance(null).getNinja().getBody().setLinearVelocity(0, 0);
+            }
+        }
 
         if (((object.getUserData()) instanceof ObjectiveModel) && (((ObjectiveModel) object.getUserData()).getData().equals("N")))
             objectiveCollision(object);
@@ -112,12 +135,13 @@ public class MyContactListener implements ContactListener {
         if (((object.getUserData()) instanceof ExitDoorModel) && (((ExitDoorModel) object.getUserData()).getData().equals("NinjaExitDoor")))
             exitDoorCollision(object, true);
 
-        if(((object.getUserData()) instanceof EnemyModel) && !((EnemyModel)object.getUserData()).isDead())
-            characterEnemyCollision(GameController.getInstance(null).getNinja().getBody(), GameModel.getInstance(null).getNinja().getElementView(), ((EnemyModel)object.getUserData()).getView());
+        if (((object.getUserData()) instanceof EnemyModel) && !((EnemyModel) object.getUserData()).isDead())
+            characterEnemyCollision(GameController.getInstance(null).getNinja().getBody(), GameModel.getInstance(null).getNinja().getElementView(), ((EnemyModel) object.getUserData()).getView());
     }
 
     /**
      * Checks the end of collisions affecting every game element.
+     *
      * @param contact Contact object that contains fixtures about the bodies ending contact
      */
     @Override
@@ -142,13 +166,14 @@ public class MyContactListener implements ContactListener {
 
     /**
      * Both for robot and ninja the contact with this objects, their actions are the same
+     *
      * @param characterBody ninja or robot body
-     * @param object object that character was in contact with
+     * @param object        object that character was in contact with
      */
     private void characterEndContact(Body characterBody, Body object) {
 
         if ((object.getUserData()) instanceof LimitModel)
-            ((CharacterModel)characterBody.getUserData()).onGround = false;
+            ((CharacterModel) characterBody.getUserData()).onGround = false;
 
         if ((object.getUserData()) instanceof MechanismModel)
             mechanismCollision(object);
@@ -172,6 +197,7 @@ public class MyContactListener implements ContactListener {
 
     /**
      * Collision between a character and a danger zone
+     *
      * @param characterBody character body that is colliding
      * @param characterView character view
      */
@@ -182,9 +208,10 @@ public class MyContactListener implements ContactListener {
 
     /**
      * Collision between a character and an enemy
+     *
      * @param characterBody character body that is colliding
      * @param characterView character view
-     * @param enemy enemy view
+     * @param enemy         enemy view
      */
     private void characterEnemyCollision(Body characterBody, ElementView characterView, EnemyView enemy) {
         characterView.setCurrentState(ElementView.CharacterState.DEAD);
@@ -194,6 +221,7 @@ public class MyContactListener implements ContactListener {
 
     /**
      * Collision between a character and a mechanism. Same action for both characters
+     *
      * @param mechanismBody mechanism body
      */
     private void mechanismCollision(Body mechanismBody) {
@@ -207,8 +235,9 @@ public class MyContactListener implements ContactListener {
 
     /**
      * Collision between a character and a platform
+     *
      * @param character character body that is colliding
-     * @param platform platform body that character is colliding with
+     * @param platform  platform body that character is colliding with
      * @return true if it's a barrel, false otherwise
      */
     private boolean platformCollision(Body character, Body platform) {
@@ -218,6 +247,7 @@ public class MyContactListener implements ContactListener {
 
     /**
      * Collision between a character and a portal
+     *
      * @param portalBody portal body that character is colliding with
      */
     private void portalCollision(Body portalBody) {
@@ -229,13 +259,14 @@ public class MyContactListener implements ContactListener {
 
     /**
      * Collision between a character and an objective
+     *
      * @param objectiveBody objective body that character is colliding with
      */
     private void objectiveCollision(Body objectiveBody) {
         ObjectiveModel objectiveModel = (ObjectiveModel) objectiveBody.getUserData();
 
         if (!objectiveModel.isCatched()) {
-            if(SettingsScreen.soundActive)
+            if (SettingsScreen.soundActive)
                 SettingsScreen.pickObjectiveSound.play();
             objectiveModel.setCatched();
             GameController.getInstance(null).setRemainingObjectives();
@@ -244,8 +275,9 @@ public class MyContactListener implements ContactListener {
 
     /**
      * Collision between a character and an exit door
+     *
      * @param exitDoorBody exit door that character is colliding with
-     * @param status door new status
+     * @param status       door new status
      */
     private void exitDoorCollision(Body exitDoorBody, boolean status) {
         ((ExitDoorModel) exitDoorBody.getUserData()).setCharacterContact(status);
@@ -253,6 +285,7 @@ public class MyContactListener implements ContactListener {
 
     /**
      * Collision between a character and an exit door
+     *
      * @param bullet bullet that is colliding with object
      * @param object object that bullet is colliding with
      */
@@ -273,8 +306,9 @@ public class MyContactListener implements ContactListener {
 
     /**
      * Collision between an enemy and bullet
+     *
      * @param bullet bullet that is colliding with enemy
-     * @param enemy enemy that bullet is colliding with
+     * @param enemy  enemy that bullet is colliding with
      */
     private void enemyBulletCollision(Body bullet, Body enemy) {
 

@@ -34,27 +34,27 @@ public class MainMenuScreen extends ScreenAdapter {
     /**
      * Settings button width
      */
-    private static final int SETTINGS_BUTTON_WIDTH = (int)(SCREEN_WIDTH*0.4);
+    private static final int SETTINGS_BUTTON_WIDTH = (int) (SCREEN_WIDTH * 0.4);
 
     /**
      * Settings button yy position
      */
-    private static final int SETTINGS_BUTTON_YPOS = (int)(SCREEN_HEIGHT*0.31);
+    private static final int SETTINGS_BUTTON_YPOS = (int) (SCREEN_HEIGHT * 0.31);
 
     /**
      * Play button width
      */
-    private static final int PLAY_BUTTON_WIDTH = (int)(SCREEN_WIDTH*0.5);
+    private static final int PLAY_BUTTON_WIDTH = (int) (SCREEN_WIDTH * 0.5);
 
     /**
      * Play button yy position
      */
-    private static final int PLAY_BUTTON_YPOS = (int)(SCREEN_HEIGHT*0.5);
+    private static final int PLAY_BUTTON_YPOS = (int) (SCREEN_HEIGHT * 0.5);
 
     /**
      * Every button height
      */
-    private static final int BUTTON_HEIGHT = (int)(SCREEN_HEIGHT*0.13);
+    private static final int BUTTON_HEIGHT = (int) (SCREEN_HEIGHT * 0.13);
 
     /**
      * The game this screen belongs to.
@@ -62,7 +62,7 @@ public class MainMenuScreen extends ScreenAdapter {
     private final UbrosGame game;
 
     /**
-     *  Array that contains all textures to represent active and inactive buttons
+     * Array that contains all textures to represent active and inactive buttons
      */
     private Texture[] menuButtons = new Texture[6];
 
@@ -84,20 +84,20 @@ public class MainMenuScreen extends ScreenAdapter {
     private void loadAssets() {
         this.game.getAssetManager().load("background.jpg", Texture.class);
 
-        this.game.getAssetManager().load("MainMenuExitButtonOff.png",Texture.class);
-        this.game.getAssetManager().load("MainMenuSettingsButtonOff.png",Texture.class);
-        this.game.getAssetManager().load("MainMenuPlayButtonOff.png",Texture.class);
-        this.game.getAssetManager().load("MainMenuExitButtonOn.png",Texture.class);
-        this.game.getAssetManager().load("MainMenuSettingsButtonOn.png",Texture.class);
-        this.game.getAssetManager().load("MainMenuPlayButtonOn.png",Texture.class);
-        this.game.getAssetManager().load("gameTitle.png",Texture.class);
-        this.game.getAssetManager().load("victory.png",Texture.class);
-        this.game.getAssetManager().load("gameOver.png",Texture.class);
-        this.game.getAssetManager().load("retryOff.png",Texture.class);
-        this.game.getAssetManager().load("retryOn.png",Texture.class);
-        this.game.getAssetManager().load("backLoseFocus.png",Texture.class);
-        this.game.getAssetManager().load("pauseOff.png",Texture.class);
-        this.game.getAssetManager().load("pauseOn.png",Texture.class);
+        this.game.getAssetManager().load("MainMenuExitButtonOff.png", Texture.class);
+        this.game.getAssetManager().load("MainMenuSettingsButtonOff.png", Texture.class);
+        this.game.getAssetManager().load("MainMenuPlayButtonOff.png", Texture.class);
+        this.game.getAssetManager().load("MainMenuExitButtonOn.png", Texture.class);
+        this.game.getAssetManager().load("MainMenuSettingsButtonOn.png", Texture.class);
+        this.game.getAssetManager().load("MainMenuPlayButtonOn.png", Texture.class);
+        this.game.getAssetManager().load("gameTitle.png", Texture.class);
+        this.game.getAssetManager().load("victory.png", Texture.class);
+        this.game.getAssetManager().load("gameOver.png", Texture.class);
+        this.game.getAssetManager().load("retryOff.png", Texture.class);
+        this.game.getAssetManager().load("retryOn.png", Texture.class);
+        this.game.getAssetManager().load("backLoseFocus.png", Texture.class);
+        this.game.getAssetManager().load("pauseOff.png", Texture.class);
+        this.game.getAssetManager().load("pauseOn.png", Texture.class);
 
         this.game.getAssetManager().load("audio/music/BullyWalkingTheme.mp3", Music.class);
         this.game.getAssetManager().load("audio/music/BullyMainTheme.mp3", Music.class);
@@ -144,15 +144,15 @@ public class MainMenuScreen extends ScreenAdapter {
     }
 
     /**
-     *  Initializes textures array previously defined
+     * Initializes textures array previously defined
      */
     private void initializeTextures() {
         menuButtons[0] = game.getAssetManager().get("MainMenuExitButtonOff.png", Texture.class);
-        menuButtons[1] = game.getAssetManager().get("MainMenuSettingsButtonOff.png",Texture.class);
-        menuButtons[2] = game.getAssetManager().get("MainMenuPlayButtonOff.png",Texture.class);
+        menuButtons[1] = game.getAssetManager().get("MainMenuSettingsButtonOff.png", Texture.class);
+        menuButtons[2] = game.getAssetManager().get("MainMenuPlayButtonOff.png", Texture.class);
         menuButtons[3] = game.getAssetManager().get("MainMenuExitButtonOn.png", Texture.class);
-        menuButtons[4] = game.getAssetManager().get("MainMenuSettingsButtonOn.png",Texture.class);
-        menuButtons[5] = game.getAssetManager().get("MainMenuPlayButtonOn.png",Texture.class);
+        menuButtons[4] = game.getAssetManager().get("MainMenuSettingsButtonOn.png", Texture.class);
+        menuButtons[5] = game.getAssetManager().get("MainMenuPlayButtonOn.png", Texture.class);
     }
 
 
@@ -161,7 +161,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
         super.render(delta);
 
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         game.getBatch().begin();
         drawBackground();
@@ -176,8 +176,8 @@ public class MainMenuScreen extends ScreenAdapter {
     private void drawBackground() {
         Texture background = game.getAssetManager().get("background.jpg", Texture.class);
         Texture title = game.getAssetManager().get("gameTitle.png", Texture.class);
-        game.getBatch().draw(background, 0, 0,SCREEN_WIDTH,SCREEN_HEIGHT);
-        game.getBatch().draw(title, SCREEN_WIDTH*0.1f, SCREEN_HEIGHT*0.7f,SCREEN_WIDTH*0.8f,SCREEN_HEIGHT*0.2f);
+        game.getBatch().draw(background, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        game.getBatch().draw(title, SCREEN_WIDTH * 0.1f, SCREEN_HEIGHT * 0.7f, SCREEN_WIDTH * 0.8f, SCREEN_HEIGHT * 0.2f);
     }
 
     /**
@@ -185,39 +185,36 @@ public class MainMenuScreen extends ScreenAdapter {
      */
     private void drawButtons() {
 
-        if(Gdx.input.isTouched()) {
+        if (Gdx.input.isTouched()) {
 
             int x = Gdx.input.getX();
             int y = Gdx.input.getY();
 
-            if(checkExitButton(x,y)) {
+            if (checkExitButton(x, y)) {
                 activateExitButton();
                 Gdx.app.exit();
-            }
-            else if(checkSettingsButton(x,y)) {
-               activateSettingsButton();
-               game.setScreen(UbrosGame.settings);
-            }
-            else if(checkPlayButton(x,y)) {
+            } else if (checkSettingsButton(x, y)) {
+                activateSettingsButton();
+                game.setScreen(UbrosGame.settings);
+            } else if (checkPlayButton(x, y)) {
                 activatePlayButton();
 
                 UbrosGame.playGame = new PlayGameScreen(this.game, true);
-                if(SettingsScreen.soundActive) {
+                if (SettingsScreen.soundActive) {
                     SettingsScreen.menuMusic.stop();
                     SettingsScreen.playGameMusic.play();
                 }
                 game.setScreen(UbrosGame.playGame);
-            }
-            else
+            } else
                 defaultMainMenu();
-        }
-        else {
+        } else {
             defaultMainMenu();
         }
     }
 
     /**
      * Checks if play button is pressed or not
+     *
      * @param x X position on screen
      * @param y Y position on screen
      * @return true if pressed, false otherwise
@@ -229,6 +226,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
     /**
      * Checks if settings button is pressed or not
+     *
      * @param x X position on screen
      * @param y Y position on screen
      * @return true if pressed, false otherwise
@@ -241,6 +239,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
     /**
      * Checks if exit button is pressed or not
+     *
      * @param x X position on screen
      * @param y Y position on screen
      * @return true if pressed, false otherwise

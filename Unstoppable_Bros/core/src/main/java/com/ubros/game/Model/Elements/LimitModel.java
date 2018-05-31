@@ -24,7 +24,6 @@ public class LimitModel extends ElementModel {
 
     /**
      * Get's limit body shape
-     *
      * @return limit body shape
      */
     public Polygon getShape() {

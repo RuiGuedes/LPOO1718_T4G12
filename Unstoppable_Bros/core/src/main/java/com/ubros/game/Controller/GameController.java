@@ -242,7 +242,6 @@ public class GameController {
             this.objectives.add(new ObjectiveBody(this.world, objective, objective.getShape().getVertices()));
 
         this.remainingObjectives = objectives.size();
-        this.remainingObjectives = 0;
     }
 
     /**
@@ -419,15 +418,6 @@ public class GameController {
      */
     public UbrosGame getGame() {
         return game;
-    }
-
-    /**
-     * Get's remainingTimeToExit
-     *
-     * @return timeToExit
-     */
-    public float getTimeToExit() {
-        return timeToExit;
     }
 
     ////////////

@@ -59,6 +59,11 @@ public class TransitiveScreen extends ScreenAdapter {
      */
     private Texture[] menuButtons = new Texture[4];
 
+    /**
+     * Transitive screen constructor
+     * @param game Game object
+     * @param status Game end status: victory or gameover
+     */
     TransitiveScreen(UbrosGame game, GameController.GameStatus status) {
 
         this.game = game;

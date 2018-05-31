@@ -5,15 +5,14 @@ import com.ubros.game.View.Elements.ElementView;
 public class CharacterModel extends ElementModel {
 
     /**
-     * Checks whether player is ready to complete level (true) or not (false)
+     * Character associated view
      */
-    private boolean ready;
-
     private ElementView elementView;
 
+    /**
+     * Determines whether character is on is not on top of a certain platform
+     */
     private boolean onPlatform;
-
-    public boolean onGround = true;
 
     /**
      * Constructs a model with a position and a rotation.
@@ -24,33 +23,40 @@ public class CharacterModel extends ElementModel {
      */
     public CharacterModel(float x, float y, float rotation) {
         super(x, y, rotation);
-        this.onPlatform = this.ready = false;
+        this.onPlatform = false;
     }
 
-    public boolean isReady() {
-        return ready;
-    }
-
-    public void setReady(boolean ready) {
-        this.ready = ready;
-    }
-
-    public boolean isOnPlatform() {
-        return onPlatform;
-    }
-
-    public void setOnPlatform(boolean onPlatform) {
-        this.onPlatform = onPlatform;
-    }
-
+    /**
+     * Returns character view
+     * @return character view
+     */
     public ElementView getElementView() {
         return elementView;
     }
 
+    /**
+     * Set's character a new view
+     * @param elementView new view to be set
+     */
     public void setElementView(ElementView elementView) {
         this.elementView = elementView;
     }
 
+    /**
+     * Checks if character is on top of a certain platform
+     * @return true if it his, false otherwise
+     */
+    public boolean isOnPlatform() {
+        return onPlatform;
+    }
+
+    /**
+     * Set's onPlatform new value
+     * @param onPlatform new value to be set
+     */
+    public void setOnPlatform(boolean onPlatform) {
+        this.onPlatform = onPlatform;
+    }
 
     @Override
     public ModelType getType() {

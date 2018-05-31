@@ -52,6 +52,10 @@ public class GameView {
     private ElementView ninja;
 
 
+    /**
+     * Game view constructor
+     * @param game Instance of actual game being played
+     */
     private GameView(UbrosGame game) {
         this.game = game;
 
@@ -148,10 +152,18 @@ public class GameView {
         return instance;
     }
 
+    /**
+     * Get's robot view
+     * @return robot view
+     */
     public ElementView getRobot() {
         return robot;
     }
 
+    /**
+     * Get's ninja view
+     * @return ninja view
+     */
     public ElementView getNinja() {
         return ninja;
     }

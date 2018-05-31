@@ -11,17 +11,17 @@ public abstract class ElementBody {
     /**
      * Character character width
      */
-    private int CHARACTER_WIDTH = 48;
+    int CHARACTER_WIDTH = 48;
 
     /**
      * Character character height
      */
-    private int CHARACTER_HEIGHT = 70;
+    int CHARACTER_HEIGHT = 70;
 
     /**
      * Character object radius
      */
-    int CHARACTER_RADIUS = (Math.max(CHARACTER_WIDTH/2, CHARACTER_HEIGHT/2) - 1);
+    int CHARACTER_RADIUS = (Math.max(CHARACTER_WIDTH / 2, CHARACTER_HEIGHT / 2) - 1);
 
     /**
      * Tiled map associated width
@@ -33,6 +33,9 @@ public abstract class ElementBody {
      */
     private final Body body;
 
+    /**
+     * Model associated to the respective model
+     */
     private final ElementModel model;
 
     /**
@@ -46,7 +49,7 @@ public abstract class ElementBody {
         this.model = model;
         BodyDef bodyDef = new BodyDef();
 
-        if(model.getPhysicsType() == ElementModel.PhysicsType.STATIC)
+        if (model.getPhysicsType() == ElementModel.PhysicsType.STATIC)
             bodyDef.type = BodyDef.BodyType.StaticBody;
         else if (model.getPhysicsType() == ElementModel.PhysicsType.DYNAMIC)
             bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -60,6 +63,19 @@ public abstract class ElementBody {
         body.setUserData(model);
     }
 
+    /**
+     * Creates fixture and associates them to a certain body
+     *
+     * @param body        The body that fixture will be attached
+     * @param vertexes    The body shape vertexes
+     * @param width       The body shape width
+     * @param height      The body shape height
+     * @param density     The body density
+     * @param friction    The body friction
+     * @param restitution The body restitution
+     * @param category    The body category
+     * @param mask        The body mask
+     */
     public abstract void createFixture(Body body, float[] vertexes, int width, int height, float density, float friction, float restitution, short category, short mask);
 
     /**
@@ -92,8 +108,8 @@ public abstract class ElementBody {
     /**
      * Wraps the setTransform method from the Box2D body class.
      *
-     * @param x the new x-coordinate for this body
-     * @param y the new y-coordinate for this body
+     * @param x     the new x-coordinate for this body
+     * @param y     the new y-coordinate for this body
      * @param angle the new rotation angle for this body
      */
     public void setTransform(float x, float y, float angle) {
@@ -101,48 +117,18 @@ public abstract class ElementBody {
     }
 
     /**
-     * Sets the angular velocity of this object in the direction it is rotated.
-     *
-     * @param velocity the new linear velocity angle for this body
+     * Returns the world belonging body
+     * @return world belonging body
      */
-    //public void setLinearVelocity(float velocity) {
-      //  body.setLinearVelocity((float)(velocity * -Math.sin(getAngle())), (float) (velocity * Math.cos(getAngle())));
-    //}
-
-    /**
-     * Wraps the setAngularVelocity method from the Box2D body class.
-     *
-     * @param omega the new angular velocity angle for this body
-     */
-    public void setAngularVelocity(float omega) {
-        body.setAngularVelocity(omega);
-    }
-
-    /**
-     * Wraps the applyForceToCenter method from the Box2D body class.
-     *
-     * @param forceX the x-component of the force to be applied
-     * @param forceY the y-component of the force to be applied
-     * @param awake should the body be awaken
-     */
-    public void applyForceToCenter(float forceX, float forceY, boolean awake) {
-        body.applyForceToCenter(forceX, forceY, awake);
-    }
-
     public Body getBody() {
         return body;
     }
 
+    /**
+     * Get's the model associated to this body
+     * @return model associated to this body
+     */
     public ElementModel getModel() {
         return model;
-    }
-
-    /**
-     * Wraps the getUserData method from the Box2D body class.
-     *
-     * @return the user data
-     */
-    public Object getUserData() {
-        return body.getUserData();
     }
 }

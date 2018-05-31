@@ -172,9 +172,6 @@ public class MyContactListener implements ContactListener {
      */
     private void characterEndContact(Body characterBody, Body object) {
 
-        if ((object.getUserData()) instanceof LimitModel)
-            ((CharacterModel) characterBody.getUserData()).onGround = false;
-
         if ((object.getUserData()) instanceof MechanismModel)
             mechanismCollision(object);
 

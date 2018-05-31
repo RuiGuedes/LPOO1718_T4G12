@@ -2,27 +2,29 @@ package com.ubros.game.Model.Elements;
 
 public abstract class ElementModel {
 
-    public enum ModelType {LIMIT, HERO, ACID, MECHANISM, PLATFORM, OBJECTIVE, PORTAL, OBJECT, EXITDOOR, BULLET, ENEMY};
-
-    public enum PhysicsType {STATIC, DYNAMIC, KINEMATIC};
+    /**
+     * Game model possible model types
+     */
+    public enum ModelType {LIMIT, HERO, ACID, MECHANISM, PLATFORM, OBJECTIVE, PORTAL, OBJECT, EXITDOOR, BULLET, ENEMY}
 
     /**
-     *
+     * Game possible physics type
+     */
+    public enum PhysicsType {STATIC, DYNAMIC, KINEMATIC}
+
+    /**
+     * Tilemap used tile width
      */
     public final static float TILE_WIDTH = 32;
 
+    /**
+     * Tilemap used tile height
+     */
     public final static float TILE_HEIGHT = 30;
 
     /**
-     * Character character width
+     * Character body radius
      */
-    int CHARACTER_WIDTH = 48;
-
-    /**
-     * Character character height
-     */
-    int CHARACTER_HEIGHT = 70;
-
     int CHARACTER_RADIUS = 34;
 
     /**
@@ -91,7 +93,7 @@ public abstract class ElementModel {
      * @param x The x-coordinate of this entity in meters.
      * @param y The y-coordinate of this entity in meters.
      */
-    public void setPosition(float x, float y) {
+    void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
     }
@@ -108,7 +110,7 @@ public abstract class ElementModel {
     /**
      * Returns if this entity has been flagged for removal
      *
-     * @return
+     * @return true if it needs to be removed, false otherwise
      */
     public boolean isFlaggedToBeRemoved() {
         return flaggedForRemoval;
@@ -121,8 +123,16 @@ public abstract class ElementModel {
         this.flaggedForRemoval = flaggedForRemoval;
     }
 
+    /**
+     * Abstract function responsible to return model type
+     * @return model type
+     */
     public abstract ModelType getType();
 
+    /**
+     * Abstract function responsible to return model physics type
+     * @return model physics type
+     */
     public abstract PhysicsType getPhysicsType();
 
 }

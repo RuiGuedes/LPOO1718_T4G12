@@ -24,12 +24,13 @@ public class LimitBody extends ElementBody {
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
 
-        for(int i = 0; i < vertexes.length; i++)
-            vertexes[i] = vertexes[i]/ PlayGameScreen.PIXEL_TO_METER;
+        for(int i = 0; i < vertexes.length; i++) {
+            vertexes[i] = vertexes[i] / PlayGameScreen.PIXEL_TO_METER;
+        }
 
         shape.set(vertexes);
-        fdef.shape = shape;
 
+        fdef.shape = shape;
         body.createFixture(fdef).setUserData("Ground");
     }
 }

@@ -8,6 +8,8 @@ public class CharacterModel extends ElementModel {
 
     private boolean onPlatform;
 
+    public boolean onGround = true;
+
     /**
      * Constructs a model with a position and a rotation.
      *

@@ -207,4 +207,11 @@ public class GameView {
         ninja.draw(delta);
     }
 
+    /**
+     * Dispose game view
+     */
+    public void dispose() {
+        instance = null;
+    }
+
 }

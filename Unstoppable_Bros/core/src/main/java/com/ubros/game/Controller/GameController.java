@@ -17,6 +17,7 @@ import com.ubros.game.Controller.Elements.ObjectBody;
 import com.ubros.game.Controller.Elements.ObjectiveBody;
 import com.ubros.game.Controller.Elements.PlatformBody;
 import com.ubros.game.Controller.Elements.PortalBody;
+import com.ubros.game.Gui.SettingsScreen;
 import com.ubros.game.Model.Elements.DangerZoneModel;
 import com.ubros.game.Model.Elements.ElementModel;
 import com.ubros.game.Model.Elements.EnemyModel;
@@ -29,23 +30,29 @@ import com.ubros.game.Model.Elements.PlatformModel;
 import com.ubros.game.Model.Elements.PortalModel;
 import com.ubros.game.Model.GameModel;
 import com.ubros.game.UbrosGame;
+import com.ubros.game.View.Elements.RobotView;
+import com.ubros.game.View.GameView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
 
-    public static enum GameStatus {PLAYING, PAUSE, GAMEOVER, VICTORY}
+    public enum GameStatus {PLAYING, PAUSE, GAMEOVER, VICTORY}
 
     public final static float PLAYER_SPEED = 0.3f;
 
     private GameStatus state;
 
-
     /**
      * World considered gravity value
      */
     private float GRAVITY = -10;
+
+    /**
+     * World considered gravity value
+     */
+    private float TIME_FOR_NEXT_SHOOT = 0.2f;
 
     /**
      * The singleton instance of this controller
@@ -75,6 +82,8 @@ public class GameController {
      *
      */
     private int remainingObjectives;
+
+    private float timeToNextShoot;
 
     private CharacterBody robot;
 
@@ -274,7 +283,6 @@ public class GameController {
         return objectBodies;
     }
 
-
     ////////////
     // OTHERS //
     ////////////
@@ -282,7 +290,9 @@ public class GameController {
     /**
      * Updates this instance world bodies
      */
-    public void update() {
+    public void update(float delta) {
+
+        timeToNextShoot -= delta;
 
         if (GameController.getInstance(this.game).getNinja().setTransformFlag) {
             GameController.getInstance(this.game).getNinja().setTransform(GameController.getInstance(this.game).getNinja().newPosition.x, GameController.getInstance(this.game).getNinja().newPosition.y, 0);
@@ -302,6 +312,21 @@ public class GameController {
                 GameModel.getInstance(null).remove((ElementModel) body.getUserData());
                 world.destroyBody(body);
             }
+        }
+    }
+
+    /**
+     * Robot shoot action
+     */
+    public void robotShoot() {
+
+        if (GameController.getInstance(this.game).timeToNextShoot < 0) {
+            if(SettingsScreen.soundActive)
+                SettingsScreen.shootSound.play();
+
+            GameModel.getInstance(this.game).createBullet(GameView.getInstance(this.game).getRobot().getElement().getX(), GameView.getInstance(this.game).getRobot().getElement().getY(), ((RobotView) GameView.getInstance(this.game).getRobot()).isRunningRight());
+            ((RobotView) GameView.getInstance(this.game).getRobot()).shoot = true;
+            GameController.getInstance(this.game).timeToNextShoot = TIME_FOR_NEXT_SHOOT;
         }
     }
 

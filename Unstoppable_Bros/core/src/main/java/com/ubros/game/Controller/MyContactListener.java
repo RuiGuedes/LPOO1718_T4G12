@@ -70,8 +70,9 @@ public class MyContactListener implements ContactListener {
             mechanismCollision(object);
 
         if ((object.getUserData()) instanceof PlatformModel) {
-            if (platformCollision(robot, object))
-                GameController.getInstance(null).getRobot().getBody().setLinearVelocity(0, 0);
+            platformCollision(robot, object);
+            //if (platformCollision(robot, object))
+              //  GameController.getInstance(null).getRobot().getBody().setLinearVelocity(0, 0);
         }
 
         if (((object.getUserData()) instanceof ObjectiveModel) && (((ObjectiveModel) object.getUserData()).getData().equals("R")))
@@ -145,6 +146,9 @@ public class MyContactListener implements ContactListener {
      * @param object object that character was in contact with
      */
     private void characterEndContact(Body characterBody, Body object) {
+
+        if ((object.getUserData()) instanceof LimitModel)
+            ((CharacterModel)characterBody.getUserData()).onGround = false;
 
         if ((object.getUserData()) instanceof MechanismModel)
             mechanismCollision(object);

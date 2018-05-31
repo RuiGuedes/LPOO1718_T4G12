@@ -86,6 +86,11 @@ public class SettingsScreen extends ScreenAdapter {
     public static Sound pickObjectiveSound = null;
 
     /**
+     * Sound that represents picking up an object
+     */
+    public static Sound shootSound = null;
+
+    /**
      * Creates this screen.
      *
      * @param game The game this screen belongs to
@@ -93,7 +98,7 @@ public class SettingsScreen extends ScreenAdapter {
     public SettingsScreen(UbrosGame game) {
 
         this.game = game;
-        soundActive = true;
+        soundActive = false;
 
         initializeTextures();
         initializeAudio();
@@ -127,6 +132,7 @@ public class SettingsScreen extends ScreenAdapter {
 
         pickObjectiveSound = game.getAssetManager().get("audio/sounds/pickSound.wav", Sound.class);
 
+        shootSound = game.getAssetManager().get("audio/sounds/bulletSound.wav", Sound.class);
     }
 
     @Override

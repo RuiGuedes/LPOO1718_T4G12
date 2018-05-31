@@ -12,21 +12,23 @@ public class MechanismBody extends ElementBody {
     /**
      * Constructs a body representing a model in a certain world.
      *
-     * @param world The world this body lives on.
-     * @param model The model representing the body.
+     * @param world     The world this body lives on.
+     * @param model     The model representing the body.
+     * @param vertexSet The mechanism body shape vertexes
      */
     public MechanismBody(World world, ElementModel model, float[] vertexSet) {
         super(world, model);
-        createFixture(getBody(),vertexSet,0,0,0f,0f,0f, (short)0, (short)0);
+        createFixture(getBody(), vertexSet, 0, 0, 0f, 0f, 0f, (short) 0, (short) 0);
     }
 
+    @Override
     public void createFixture(Body body, float[] vertexes, int width, int height, float density, float friction, float restitution, short category, short mask) {
 
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
 
-        for(int i = 0; i < vertexes.length; i++)
-            vertexes[i] = vertexes[i]/ PlayGameScreen.PIXEL_TO_METER;
+        for (int i = 0; i < vertexes.length; i++)
+            vertexes[i] = vertexes[i] / PlayGameScreen.PIXEL_TO_METER;
 
         shape.set(vertexes);
         fdef.shape = shape;

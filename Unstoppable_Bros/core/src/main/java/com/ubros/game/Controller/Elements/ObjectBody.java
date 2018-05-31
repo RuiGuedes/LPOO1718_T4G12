@@ -14,12 +14,13 @@ public class ObjectBody extends ElementBody {
     /**
      * Constructs a body representing a model in a certain world.
      *
-     * @param world The world this body lives on.
-     * @param model The model representing the body.
+     * @param world     The world this body lives on.
+     * @param model     The model representing the body.
+     * @param vertexSet The object body shape vertexes
      */
     public ObjectBody(World world, ElementModel model, float[] vertexSet) {
         super(world, model);
-        createFixture(getBody(),vertexSet,0,0,0f,0f,0f, (short)0, (short)0);
+        createFixture(getBody(), vertexSet, 0, 0, 0f, 0f, 0f, (short) 0, (short) 0);
     }
 
     @Override
@@ -27,7 +28,7 @@ public class ObjectBody extends ElementBody {
 
         FixtureDef fdef = new FixtureDef();
 
-        if(((ObjectModel)getModel()).getData().contains("box")) {
+        if (((ObjectModel) getModel()).getData().contains("box")) {
 
             PolygonShape shape = new PolygonShape();
 
@@ -37,11 +38,10 @@ public class ObjectBody extends ElementBody {
             shape.set(vertexes);
             fdef.shape = shape;
             body.createFixture(fdef).setUserData("Box");
-        }
-        else {
+        } else {
 
             CircleShape shape = new CircleShape();
-            shape.setRadius(((ObjectModel)getModel()).getRadius() * TILE_WIDTH/2);
+            shape.setRadius(((ObjectModel) getModel()).getRadius() * TILE_WIDTH / 2);
 
             fdef.shape = shape;
             body.setGravityScale(4f);

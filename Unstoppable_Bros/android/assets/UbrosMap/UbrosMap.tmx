@@ -192,14 +192,14 @@
   </object>
  </objectgroup>
  <objectgroup name="DangerZone">
-  <object id="411" x="1326" y="690">
-   <polygon points="0,0 26.3611,30 131.806,30 158.167,0 0,0"/>
+  <object id="411" x="1330.25" y="690">
+   <polygon points="0,0 25.6944,30 128.473,30 154.167,0 0,0"/>
   </object>
   <object id="412" x="232" y="810">
    <polygon points="0,0 31,30 527,30 558,0 0,0"/>
   </object>
-  <object id="413" x="944" y="150">
-   <polygon points="0,0 22.2222,30 44.4444,30 66.6667,0 0,0"/>
+  <object id="413" x="945.091" y="150">
+   <polygon points="0,0 21.4343,30 42.8686,30 64.3031,0 0,0"/>
   </object>
  </objectgroup>
  <objectgroup name="Mechanism">

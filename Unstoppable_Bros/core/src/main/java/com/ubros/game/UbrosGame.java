@@ -12,6 +12,7 @@ import com.ubros.game.Gui.PlayGameScreen;
 import com.ubros.game.Gui.SettingsScreen;
 
 //TODO Create characterView
+//TODO Generalizar dimensões dos objectos
 
 public class UbrosGame extends Game {
 

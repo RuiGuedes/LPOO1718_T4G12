@@ -8,19 +8,20 @@ import com.ubros.game.UbrosGame;
 
 public class MechanismView extends ElementView {
 
+    /**
+     * Mechanism associated texture
+     */
     private Texture mechanism;
 
     /**
      * Creates a view belonging to a game.
      *
-     * @param game    the game this view belongs to. Needed to access the
-     *                asset manager to get textures.
-     * @param atlas
-     * @param element
+     * @param game    the game this view belongs to. Needed to access the asset manager to get textures.
+     * @param atlas   the texture atlas that contains mechanism possible animations
+     * @param element the mechanism body
      */
     public MechanismView(UbrosGame game, TextureAtlas atlas, ElementBody element) {
         super(game, atlas, element);
-
     }
 
     @Override

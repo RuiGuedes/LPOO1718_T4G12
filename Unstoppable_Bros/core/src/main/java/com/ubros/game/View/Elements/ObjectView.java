@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.ubros.game.Controller.Elements.ElementBody;
 import com.ubros.game.Gui.PlayGameScreen;
+import com.ubros.game.Model.Elements.ElementModel;
 import com.ubros.game.UbrosGame;
 
 public class ObjectView extends ElementView {
@@ -41,11 +42,11 @@ public class ObjectView extends ElementView {
         loadObjectView(objectView);
 
         this.view = game.getAssetManager().get(objectView, Texture.class);
-        this.width = this.height = 64 / PlayGameScreen.PIXEL_TO_METER;
+        this.width = this.height = (ElementModel.TILE_WIDTH*2) / PlayGameScreen.PIXEL_TO_METER;
         this.type = objectView;
 
         if(objectView.contains("ball"))
-            this.width = this.height = 32 / PlayGameScreen.PIXEL_TO_METER;
+            this.width = this.height = ElementModel.TILE_WIDTH / PlayGameScreen.PIXEL_TO_METER;
 
     }
 

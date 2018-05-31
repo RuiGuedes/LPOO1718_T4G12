@@ -7,7 +7,7 @@ import com.ubros.game.View.Elements.MechanismView;
 public class MechanismModel extends ElementModel {
 
     /**
-     *  Mechanism body shape
+     * Mechanism body shape
      */
     private Polygon shape;
 
@@ -21,6 +21,9 @@ public class MechanismModel extends ElementModel {
      */
     private MechanismView view;
 
+    /**
+     * Platform body associated to this mechanism
+     */
     private PlatformBody platform;
 
     /**
@@ -29,6 +32,7 @@ public class MechanismModel extends ElementModel {
      * @param x        The x-coordinate of this entity in meters.
      * @param y        The y-coordinate of this entity in meters.
      * @param rotation The current rotation of this entity in radians.
+     * @param shape    The mechanism body shape
      */
     public MechanismModel(float x, float y, float rotation, Polygon shape) {
         super(x, y, rotation);
@@ -37,7 +41,34 @@ public class MechanismModel extends ElementModel {
     }
 
     /**
+     * Get's mechanism body shape
+     * @return mechanism body shape
+     */
+    public Polygon getShape() {
+        return shape;
+    }
+
+    /**
+     * Checks if mechanism is active or not
+     *
+     * @return true if it is. Otherwise return false
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * Changes mechanism activation status
+     *
+     * @param active new active status
+     */
+    public void setActive(boolean active) {
+        platform.setLinearVelocity(this.active = active);
+    }
+
+    /**
      * Function responsible to retrieve mechanism view
+     *
      * @return mechanism view
      */
     public MechanismView getView() {
@@ -52,32 +83,19 @@ public class MechanismModel extends ElementModel {
     }
 
     /**
-     * Checks if mechanism is active or not
-     * @return true if it is. Otherwise return false
+     * Get's mechanism associated platform
+     * @return mechanism associated platform
      */
-    public boolean isActive() {
-        return active;
-    }
-
-    /**
-     * Changes mechanism activation status
-     * @param active new active status
-     */
-    public void setActive(boolean active) {
-        platform.setLinearVelocity(this.active = active);
-
-    }
-
     public PlatformBody getPlatform() {
         return platform;
     }
 
+    /**
+     * Set's mechanism new associated platform
+     * @param platform mechanism new associated platform
+     */
     public void setPlatform(PlatformBody platform) {
         this.platform = platform;
-    }
-
-    public Polygon getShape() {
-        return shape;
     }
 
     @Override

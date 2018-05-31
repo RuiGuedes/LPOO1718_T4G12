@@ -139,7 +139,7 @@ public class EnemyView extends ElementView {
             case DEAD:
                 region = enemyDying.getKeyFrame(stateTimer);
                 if (enemyDying.isAnimationFinished(stateTimer)) {
-                    GameController.getInstance(null).disablesBody(getElement().getBody());
+                    GameController.getInstance(getGame()).disablesBody(getElement().getBody());
                     ((EnemyModel)getElement().getModel()).setDead();
                 }
                 break;

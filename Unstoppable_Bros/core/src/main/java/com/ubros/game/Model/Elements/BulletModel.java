@@ -4,7 +4,9 @@ import com.ubros.game.View.Elements.BulletView;
 
 public class BulletModel extends ElementModel {
 
-
+    /**
+     * Bullet associated view
+     */
     private BulletView view;
 
     /**
@@ -18,10 +20,18 @@ public class BulletModel extends ElementModel {
         super(x, y, rotation);
     }
 
+    /**
+     * Get's bullet view
+     * @return bullet view
+     */
     public BulletView getView() {
         return view;
     }
 
+    /**
+     * Set's bullet new view
+     * @param view new bullet view
+     */
     public void setView(BulletView view) {
         this.view = view;
     }

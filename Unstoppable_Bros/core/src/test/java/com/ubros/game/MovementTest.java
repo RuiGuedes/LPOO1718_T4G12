@@ -42,7 +42,7 @@ public class MovementTest {
         EnemyBody body = new EnemyBody(world,model);
 
         body.getBody().setLinearVelocity(-0.5f, body.getBody().getLinearVelocity().y);
-        //body.updateEnemyPosition(2); // NÃO FUNCIONA !!!!!!!!!
+        body.updateEnemyPosition(2); // NÃO FUNCIONA !!!!!!!!!
 
         Assert.assertNotEquals(0,body.getBody().getLinearVelocity().x,delta);
         Assert.assertEquals(0,body.getBody().getLinearVelocity().y,delta);

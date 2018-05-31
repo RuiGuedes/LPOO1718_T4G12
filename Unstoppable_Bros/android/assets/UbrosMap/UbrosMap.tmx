@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="60" height="36" tilewidth="32" tileheight="30" infinite="0" nextobjectid="414">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="60" height="36" tilewidth="32" tileheight="30" infinite="0" nextobjectid="415">
  <tileset firstgid="1" source="Acid.tsx"/>
  <tileset firstgid="3" source="factoryGround.tsx"/>
  <tileset firstgid="12" source="ground.tsx"/>
@@ -18,7 +18,7 @@
  </layer>
  <layer name="Graphics - Ground" width="60" height="36">
   <data encoding="base64" compression="zlib">
-   eJzlmAtuwzAIhjnAtjRS1Oe6x/0vsaOt3molQgaDDQlbfwlVVRw7X3iYeACAoWBPAF+U1a5HNMz2evu93uzt/h8YDdzFoJruzFPDvbX3EVEn+PVTC+9f1Bkei/cCfrwv8BPzpD0rx1loWtSs0lo1ltZn2aFaOVbGce9Da1r/juhZd4p7vaTZK5KPpbyZNfsjv/+tmaV7hWY/wqxZUZgl2sPMjIXrCJfn+Rp1r6Q21MZb1K0DzPFcYqDqyFLY72NHD0PJKoaOoMtfLIo1/d93PhuWtFZzcdDTT3KsSYeGOXsliYOaf6lc5FiTjoW5RqJWWKrG3BPPSVTdxnNS49aWRf5Shut3L6tFve71b3Rp9lXLXj2K/oN/sQ9re9IavJKeyzuuPHohbh1JvfLqx5e1tcSr8Yfkm1NTm62Z8T4SMX9x/1iKcalPlmewUXmXwuchkrORkt4hrn899AGPxfsJM6/n3qDZH63X0pzXcXmjtShnXj3fwK3akjn3V6eV121lLsWrRpn3rLzPQtQZjWd+Z96L4xoaecf6Fvlbkydz1O9BL+aJyKEIxp1F9Mz5DXK2deA=
+   eJzlmAtuwzAIhjlAtzRS1Oe2dve/xI62equVChkMNnZJ80uoquLY+QIG4gEAhoRtAH4oy133aJjt4/b7ebOv+39gNHAXnWq6M08F9+beh0cd4d9PJbxL1AnWxXuGdrzv8BfzpL0px1loeshZqbVyLKXPskW5csyM496H1rT+HdGzbhX3tpKmVgQfS3kja/RHfP/PZpbWCk09wqxRXpgl2sHMjIXzCLfP4zXqXkluyI23yFt7mOM5xUDlkUdhv48VPQwlqxg6gG7/YlGs4f+u8tmwpLmai4OafpJjDdoXzFkrSRzk/EvtRY416JCYayRyhaVyzDXxHETlbTwnNa63LPYvZTh/17Ja5Ota/3qXpq5a9upe9Ar+xT7M1aQevJKeq0dc9eDV5ObW/TjFq/GH5JtTk5tbMnvdv7h/TMV4iU+WcH6Fz0MkZyMpXWAZvFa6wrp4v2HmbVkbNPXRei3N/uX2jda8nHnVfAOX6pnMsR4dO69bypyKV40i70l5n4WoM5oe/eS54Roa9egnvdWkNfeT1swTsYc8GHcWUTPnL5mTdMk=
   </data>
  </layer>
  <objectgroup name="Ground">
@@ -39,9 +39,6 @@
   </object>
   <object id="96" x="1280" y="180">
    <polygon points="0,0 608,0 608,30 0,30 0,0"/>
-  </object>
-  <object id="118" x="1792" y="690">
-   <polygon points="0,0 96,-90 96,30 0,30 0,0"/>
   </object>
   <object id="127" x="1344" y="480">
    <polygon points="0,0 0,30 128,30 96,0 0,0"/>
@@ -107,7 +104,7 @@
    <polygon points="0,0 32,-30 224,-30 224,0 0,0"/>
   </object>
   <object id="297" x="1472" y="720">
-   <polygon points="0,0 32,-30 320,-30 320,0 0,0"/>
+   <polygon points="0,0 41.6,-30 416,-30 416,0 0,0"/>
   </object>
   <object id="301" x="480" y="480">
    <polygon points="0,0 192,-180 192,-120 64,0 0,0"/>
@@ -189,6 +186,9 @@
   </object>
   <object id="408" x="672" y="180">
    <polygon points="0,0 32,-30 256,-30 288,0 0,0"/>
+  </object>
+  <object id="414" x="256" y="840">
+   <polygon points="0,0 576,0 544,30 32,30 0,0"/>
   </object>
  </objectgroup>
  <objectgroup name="DangerZone">
@@ -293,7 +293,7 @@
   </object>
  </objectgroup>
  <objectgroup name="Characters">
-  <object id="346" name="R" x="1408" y="1020">
+  <object id="346" name="R" x="1024" y="570">
    <polygon points="0,0 64,0 64,-90 0,-90 0,0"/>
   </object>
   <object id="347" name="N" x="832" y="1020">
@@ -304,7 +304,7 @@
   <object id="348" name="D-3-1" x="128" y="810">
    <polygon points="0,0 64,0 64,-90 0,-90 0,0"/>
   </object>
-  <object id="349" name="D-4-3" x="1632" y="690">
+  <object id="349" name="D-4-5" x="1632" y="690">
    <polygon points="0,0 64,0 64,-90 0,-90 0,0"/>
   </object>
   <object id="350" name="D-15-2" x="1184" y="300">

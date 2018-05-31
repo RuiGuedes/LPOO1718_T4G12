@@ -266,7 +266,7 @@ public class GameModel {
      */
     public void createBullet(float x, float y, boolean direction) {
 
-        float advance = direction ? 0.6f : -0.6f;
+        float advance = direction ? 0.3f : -0.3f;
 
         BulletModel bulletModel = new BulletModel(x + advance,y, 0);
 

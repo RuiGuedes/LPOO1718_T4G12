@@ -103,6 +103,10 @@ public class MainMenuScreen extends ScreenAdapter {
         this.game.getAssetManager().load("audio/music/BullyMainTheme.mp3", Music.class);
         this.game.getAssetManager().load("audio/sounds/pickSound.wav", Sound.class);
         this.game.getAssetManager().load("audio/sounds/bulletSound.wav", Sound.class);
+        this.game.getAssetManager().load("audio/sounds/jumpSound.wav", Sound.class);
+        this.game.getAssetManager().load("audio/sounds/robotJumpSound.wav", Sound.class);
+        this.game.getAssetManager().load("audio/sounds/loserSound.wav", Sound.class);
+        this.game.getAssetManager().load("audio/sounds/winnerSound.wav", Sound.class);
 
         this.game.getAssetManager().load("sound.png", Texture.class);
         this.game.getAssetManager().load("soundOff.png", Texture.class);

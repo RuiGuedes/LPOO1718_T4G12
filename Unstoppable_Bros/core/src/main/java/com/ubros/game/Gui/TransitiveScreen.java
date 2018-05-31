@@ -64,8 +64,14 @@ public class TransitiveScreen extends ScreenAdapter {
         this.game = game;
         this.status = status;
 
-        if (SettingsScreen.soundActive)
+        if (SettingsScreen.soundActive) {
             SettingsScreen.playGameMusic.stop();
+
+            if(status == GameController.GameStatus.VICTORY)
+                SettingsScreen.winnerSound.play();
+            else
+                SettingsScreen.loserSound.play();
+        }
 
         initializeTextures();
     }

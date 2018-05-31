@@ -91,6 +91,26 @@ public class SettingsScreen extends ScreenAdapter {
     public static Sound shootSound = null;
 
     /**
+     * Sound that represents ninja jump sound
+     */
+    public static Sound jumpSound = null;
+
+    /**
+     * Sound that represents robot jump sound
+     */
+    public static Sound robotJumpSound = null;
+
+    /**
+     * Sound that represents gameover
+     */
+    public static Sound loserSound = null;
+
+    /**
+     * Sound that represents victory
+     */
+    public static Sound winnerSound = null;
+
+    /**
      * Creates this screen.
      *
      * @param game The game this screen belongs to
@@ -131,8 +151,12 @@ public class SettingsScreen extends ScreenAdapter {
         playGameMusic.setVolume(menuMusic.getVolume() / 5);
 
         pickObjectiveSound = game.getAssetManager().get("audio/sounds/pickSound.wav", Sound.class);
-
         shootSound = game.getAssetManager().get("audio/sounds/bulletSound.wav", Sound.class);
+        jumpSound = game.getAssetManager().get("audio/sounds/jumpSound.wav", Sound.class);
+        robotJumpSound = game.getAssetManager().get("audio/sounds/robotJumpSound.wav", Sound.class);
+        winnerSound = game.getAssetManager().get("audio/sounds/winnerSound.wav", Sound.class);
+        loserSound = game.getAssetManager().get("audio/sounds/loserSound.wav", Sound.class);
+
     }
 
     @Override
@@ -201,6 +225,7 @@ public class SettingsScreen extends ScreenAdapter {
 
     /**
      * Checks if sound is pressed or not
+     *
      * @param x X position on screen
      * @param y Y position on screen
      * @return true if pressed, false otherwise
@@ -212,17 +237,19 @@ public class SettingsScreen extends ScreenAdapter {
 
     /**
      * Checks if tutorial button is pressed or not
+     *
      * @param x X position on screen
      * @param y Y position on screen
      * @return true if pressed, false otherwise
      */
     private boolean checkTutorialButton(int x, int y) {
         return (x <= (SCREEN_WIDTH / 2 + TUTORIAL_BUTTON_WIDTH / 2)) && (x >= (SCREEN_WIDTH / 2 - TUTORIAL_BUTTON_WIDTH / 2))
-                && (y <= (SCREEN_HEIGHT - TUTORIAL_BUTTON_YPOS)) && (y >= (SCREEN_HEIGHT - TUTORIAL_BUTTON_YPOS - BUTTON_HEIGHT/2));
+                && (y <= (SCREEN_HEIGHT - TUTORIAL_BUTTON_YPOS)) && (y >= (SCREEN_HEIGHT - TUTORIAL_BUTTON_YPOS - BUTTON_HEIGHT / 2));
     }
 
     /**
      * Checks if return button is pressed or not
+     *
      * @param x X position on screen
      * @param y Y position on screen
      * @return true if pressed, false otherwise

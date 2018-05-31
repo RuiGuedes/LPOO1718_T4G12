@@ -192,14 +192,14 @@
   </object>
  </objectgroup>
  <objectgroup name="DangerZone">
-  <object id="411" x="1330.25" y="690">
-   <polygon points="0,0 25.6944,30 128.473,30 154.167,0 0,0"/>
+  <object id="411" x="1334.25" y="690">
+   <polygon points="0,0 24.1389,30 120.695,30 144.834,0 0,0"/>
   </object>
-  <object id="412" x="232" y="810">
-   <polygon points="0,0 31,30 527,30 558,0 0,0"/>
+  <object id="412" x="246.667" y="810">
+   <polygon points="0,0 29.5926,30 503.074,30 532.667,0 0,0"/>
   </object>
-  <object id="413" x="945.091" y="150">
-   <polygon points="0,0 21.4343,30 42.8686,30 64.3031,0 0,0"/>
+  <object id="413" x="951.091" y="150">
+   <polygon points="0,0 16.601,30 33.202,30 49.8031,0 0,0"/>
   </object>
  </objectgroup>
  <objectgroup name="Mechanism">
@@ -217,7 +217,7 @@
   </object>
  </objectgroup>
  <objectgroup name="Platform">
-  <object id="246" name="L-14-barrel.png-3" x="694" y="810">
+  <object id="246" name="L-13-barrel.png-3" x="672" y="810">
    <polygon points="0,0 96,0 96,-30 0,-30 0,0"/>
   </object>
   <object id="247" name="L-4-platformDoor.png-4" x="928" y="330">
@@ -293,10 +293,10 @@
   </object>
  </objectgroup>
  <objectgroup name="Characters">
-  <object id="346" name="R" x="1024" y="570">
+  <object id="346" name="R" x="1376" y="1020">
    <polygon points="0,0 64,0 64,-90 0,-90 0,0"/>
   </object>
-  <object id="347" name="N" x="832" y="1020">
+  <object id="347" name="N" x="768" y="1020">
    <polygon points="0,0 64,0 64,-90 0,-90 0,0"/>
   </object>
  </objectgroup>

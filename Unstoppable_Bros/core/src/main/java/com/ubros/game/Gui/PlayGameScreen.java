@@ -457,6 +457,11 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         if (checkJumpButton(screenX, screenY)) {
             jumpButton = buttonTextures.get(5);
 
+            if (SettingsScreen.soundActive && !selectedPlayer)
+                SettingsScreen.jumpSound.play();
+            else
+                SettingsScreen.robotJumpSound.play();
+
             if ((selectedPlayer) && !((RobotView) GameView.getInstance(this.game).getRobot()).isJumping()) {
                 GameController.getInstance(this.game).getRobot().getBody().applyLinearImpulse(new Vector2(0, 4f), GameController.getInstance(this.game).getRobot().getBody().getWorldCenter(), true);
                 ((RobotView) GameView.getInstance(this.game).getRobot()).setJumping(true);

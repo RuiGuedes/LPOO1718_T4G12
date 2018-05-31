@@ -18,7 +18,6 @@ public class UbrosGame extends Game {
 
 	private SpriteBatch batch;
 
-
     private AssetManager assetManager;
 
 	/**

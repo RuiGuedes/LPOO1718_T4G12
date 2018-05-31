@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.ubros.game.Gui.PlayGameScreen;
 import com.ubros.game.View.Elements.EnemyView;
 
+import java.util.Random;
 import java.util.StringTokenizer;
 
 public class EnemyModel extends ElementModel {
@@ -41,7 +42,7 @@ public class EnemyModel extends ElementModel {
     /**
      * Enemy health
      */
-    private int health = 10;
+    private int health;
 
     /**
      * Determines whether enemy is dead or not
@@ -63,6 +64,9 @@ public class EnemyModel extends ElementModel {
         this.shape = shape;
         this.movementDir = true;
         this.leftX = this.rightX = x;
+
+        Random random = new Random();
+        this.health = random.nextInt(10 - 5 + 1) + 5;
 
         initializeRemainingVariables(data);
 
@@ -117,7 +121,7 @@ public class EnemyModel extends ElementModel {
 
     /**
      * Sets enemy movement direction
-     * @param movementDir
+     * @param movementDir new enemy movement direction
      */
     public void setMovementDir(boolean movementDir) {
         this.movementDir = movementDir;
@@ -125,7 +129,7 @@ public class EnemyModel extends ElementModel {
 
     /**
      * Get enemy associated view
-     * @return
+     * @return enemy associated view
      */
     public EnemyView getView() {
         return view;

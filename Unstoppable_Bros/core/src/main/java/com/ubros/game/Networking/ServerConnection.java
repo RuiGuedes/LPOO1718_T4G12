@@ -1,7 +1,5 @@
 package com.ubros.game.Networking;
 
-import com.badlogic.gdx.Gdx;
-
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ServerSocket;
@@ -37,6 +35,7 @@ public class ServerConnection {
 
     /**
      * Initializes server connection object
+     *
      * @param connect object that contains information about both server and client objects
      */
     ServerConnection(Connection connect) {
@@ -46,7 +45,7 @@ public class ServerConnection {
     }
 
     /**
-     *  Creates a new server socket and launch´s thread responsible to wait for clients
+     * Creates a new server socket and launch´s thread responsible to wait for clients
      */
     private void initializeServer() {
 
@@ -60,12 +59,12 @@ public class ServerConnection {
 
         } catch (IOException e) {
             System.out.println("Port number :: " + PORT_NUMBER + " :: may be occupied. Try another one");
-            //TODO Change connectingPlayersScream showing that connection could no be made. Try again or go back to main menu
         }
     }
 
     /**
      * Gets the server socket created
+     *
      * @return returns server
      */
     public ServerSocket getServer() {
@@ -74,6 +73,7 @@ public class ServerConnection {
 
     /**
      * Changes the server scanner
+     *
      * @param connection_from_client scanner used to communicate between server and client
      */
     public void setConnectionFromClient(Scanner connection_from_client) {
@@ -82,6 +82,7 @@ public class ServerConnection {
 
     /**
      * Gets server scanner
+     *
      * @return connection_from_client scanner
      */
     public Scanner getConnectionFromClient() {
@@ -90,6 +91,7 @@ public class ServerConnection {
 
     /**
      * Changes the server PrintStream
+     *
      * @param connection_to_client PrintStream used to communicate between server and client
      */
     public void setConnectionToClient(PrintStream connection_to_client) {
@@ -98,13 +100,13 @@ public class ServerConnection {
 
     /**
      * Gets server printStream
+     *
      * @return connection_to_client scanner
      */
     public PrintStream getConnectionToClient() {
         return connection_to_client;
     }
 }
-
 
 class WaitForClient extends Thread {
 
@@ -120,10 +122,11 @@ class WaitForClient extends Thread {
 
     /**
      * Initializes both connect and connection objects
-     * @param connect Connection object
+     *
+     * @param connect    Connection object
      * @param connection ServerConnection object
      */
-     WaitForClient(Connection connect, ServerConnection connection) {
+    WaitForClient(Connection connect, ServerConnection connection) {
         this.connect = connect;
         this.connection = connection;
     }
@@ -169,7 +172,8 @@ class CommunicateWithClient extends Thread {
 
     /**
      * Initializes all class parameters
-     * @param connect Connection object
+     *
+     * @param connect           Connection object
      * @param connection_server Scanner from server
      * @param connection_client PrintStream from server
      */
@@ -181,24 +185,9 @@ class CommunicateWithClient extends Thread {
 
 
     public void run() {
-        //TODO Create protocol to send and receive information between client-server
-        while(true) {
 
-
-            int number = connection_server.nextInt();
-            System.out.println("RECEIVED FROM CLIENT " + number);
-
-            if(Gdx.input.isTouched())
-                number = 0;
-
-            if (number == 0) {
-                connect.MENU_ID = false;
-                connection_client.println("0");
-            }
-            else {
-                connect.MENU_ID = true;
-                connection_client.println("1");
-            }
+        while (true) {
+            //Exchange information between server and client
         }
     }
 }

@@ -13,12 +13,12 @@ import java.util.Enumeration;
 public class Connection {
 
     /**
-     *  ServerConnection class where connections will be made
+     * ServerConnection class where connections will be made
      */
     private ServerConnection server;
 
     /**
-     *  ClientConnection class responsible to init a client instance and connect it to the server
+     * ClientConnection class responsible to init a client instance and connect it to the server
      */
     private ClientConnection client;
 
@@ -38,14 +38,7 @@ public class Connection {
     private String[] mySplittedIPAddress;
 
     /**
-     *
-     */
-    public boolean type = true;
-
-    public boolean MENU_ID = false;
-
-    /**
-     *  Creates both server and client objects
+     * Creates both server and client objects
      */
     public Connection(UbrosGame game) {
         this.game = game;
@@ -53,29 +46,28 @@ public class Connection {
         searchingMyIPAddress();
     }
 
+    /**
+     * Starts both server and client connection
+     */
     public void startConnection() {
         server = new ServerConnection(this);
         client = new ClientConnection(this);
     }
 
-    //TODO Criar função para inicializar apenas servidor
-    //TODO Criar função para inicializar apenas cliente
-
     /**
-     *  Responsible to determine this user IP Address
+     * Responsible to determine this user IP Address
      */
     private void searchingMyIPAddress() {
 
         try {
             Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
 
-            for(NetworkInterface ni : Collections.list(interfaces)){
-                for(InetAddress address : Collections.list(ni.getInetAddresses()))
-                {
-                    if(address instanceof Inet4Address){
+            for (NetworkInterface ni : Collections.list(interfaces)) {
+                for (InetAddress address : Collections.list(ni.getInetAddresses())) {
+                    if (address instanceof Inet4Address) {
                         String hostIPAddress = address.getHostAddress();
 
-                        if(!hostIPAddress.equals("127.0.0.1")) {
+                        if (!hostIPAddress.equals("127.0.0.1")) {
                             mySplittedIPAddress = hostIPAddress.split("\\.");
                             myIPAddress = hostIPAddress;
                             return;
@@ -90,6 +82,7 @@ public class Connection {
 
     /**
      * Function responsible to retrieve server object
+     *
      * @return server
      */
     public ServerConnection getServer() {
@@ -109,6 +102,7 @@ public class Connection {
 
     /**
      * Function responsible to access server connection established status
+     *
      * @return true if connection was already established false otherwise
      */
     public boolean getConnectionEstablishedStatus() {
@@ -117,28 +111,54 @@ public class Connection {
 
     /**
      * Function responsible to retrieve client object
+     *
      * @return client
      */
     public ClientConnection getClient() {
         return this.client;
     }
 
+    /**
+     * Set's server new client
+     *
+     * @param client new client
+     */
     public void setClient(ClientConnection client) {
         this.client = client;
     }
 
+    /**
+     * Ubros game instance
+     *
+     * @return game instance
+     */
     public UbrosGame getGame() {
         return game;
     }
 
+    /**
+     * Returns user IP address
+     *
+     * @return user IP address
+     */
     public String getMyIPAddress() {
         return myIPAddress;
     }
 
+    /**
+     * Ip address splitted in portions
+     *
+     * @return Ip address splitted in portions
+     */
     public String[] getMySplittedIPAddress() {
         return mySplittedIPAddress;
     }
 
+    /**
+     * Returns type of connection
+     *
+     * @return User connection (192.168 - true), false for private connections
+     */
     public boolean getTypeOfConnection() {
         return myIPAddress.contains("192.168");
     }

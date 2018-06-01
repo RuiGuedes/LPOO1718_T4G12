@@ -32,7 +32,7 @@ O setup/instalação da aplicação baseia-se somente na instalação do [apk](h
 
 O desenvolvimento do jogo, focou-se essencialmente para sistemas android, no entanto este encontra-se funcional para desktop, apesar de tal não ser recomendado uma vez que o jogo utiliza o conceito de multi-touching. Para além deste factor bem como todo o desenvolvimento do jogo em si, existem dois factores que são importantes de realçar:
 
-* **_Networking_** - Inicialmente para desenvolvimento do jogo especificou-se que este implementaria uma parte de networking que por sua vez iria permitir conectar dois jogadores, em que cada um era responsável por controlar um determinado personagem. No entanto após o desenvolvimento do jogo, dada a sua complexidade, não foi possível efetuar a troca de dados entre jogadores uma vez que o networking implementado possui um sistema de troca de informação muito simplista baseado em strings. No entanto o código relativo à implementação de networking encontra-se desenvolvido e totalmente documentado no package _Networking_.
+* **_Networking_** - Inicialmente para o desenvolvimento do jogo especificou-se que este implementaria uma parte de networking que por sua vez iria permitir conectar dois jogadores, em que cada um era responsável por controlar um determinado personagem. No entanto após o desenvolvimento do jogo, dada a sua complexidade, não foi possível efetuar a troca de dados entre jogadores uma vez que o networking implementado possui um sistema de troca de informação muito simplista baseado em strings. No entanto o código relativo à implementação de networking encontra-se desenvolvido e totalmente documentado no package _Networking_.
 
 * **_Tiled Maps_** - Ao longo do desenvolvimento deste projecto procurou-se generalizar ao máximo as suas opções, isto é, não restrigir as suas funcionalidades. Assim recorreu-se ao uso de tiled maps para construção do mundo, sendo que se pretendido, é possível criar uma infinidade de mundos para o jogo, pois este adapta-se aos diferentes mundos criados desde que um conjunto de determinadas condições sejam respeitadas. Estas condições encontram-se não só documentadas ao longo do código fonte do projeto mas também no próprio tiled map usado como mundo atual do jogo.
   
@@ -116,3 +116,13 @@ No desenvolvimento do jogo, com vista a aumentar a qualidade e simplicidade do c
 * **_Observer_** - Existem diversas relações entre os diferentes objetos no jogo, desde balas a inimigos, personagens, entre outros, que implicam por sua vez, a necessidade gerir a sua interação com os restantes objetos. Este design pattern encontra-se definido na classe _MyContactListener_.
 * **_Flyweight_** - Utilizado para representar os vários inimigos existentes no jogo, uma vez que, todos partilham entre si o mesmo tipo de representação gráfica.
 * **_Update Method_** - Os inimigos possuem movimento próprio, daí a necessidade deste padrão de desenho com vista a não bloquear o jogo aquando o movimento destes.
+
+## Test Design
+-----
+
+Com o objectivo de testar o presente jogo foram efetuados diversos testes incidentes nas classes de lógica do jogo, isto é, _GameController_ e _GameModel_. Estes testes tiveram particular foco no movimento de todos os objectos dinãmicos e as colisões existentes entre eles. Para correr estes testes foi criado um **_tiled map_** de teste permitindo assim não só mostrar a qualidade do código mas também separar a componente jogo da componente teste. Ainda relativamente aos testes há que ter em atenção os seguintes pormenores:
+
+* Utilização do **JUnit** versão **4.12**
+* Utilização do **Mockito** versão **2.2.7**
+
+**[NOTA]** Para efetuar/correr qualquer um dos testes desenvolvidos é necessário alterar as configurações de execução para que o _Working Directory_ incida na pasta _assets_, subpasta do módulo _android_.

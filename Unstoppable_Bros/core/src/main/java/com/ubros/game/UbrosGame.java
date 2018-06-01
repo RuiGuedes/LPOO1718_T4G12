@@ -71,6 +71,14 @@ public class UbrosGame extends Game {
 		return assetManager;
 	}
 
+    /**
+     * Set's new asset manager
+     * @param assetManager new asset manager
+     */
+	public void setAssetManager(AssetManager assetManager) {
+	    this.assetManager = assetManager;
+    }
+
 	/**
 	 * Returns the sprite batch used to improve drawing performance.
 	 *

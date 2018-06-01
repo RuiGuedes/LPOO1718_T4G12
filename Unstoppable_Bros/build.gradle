@@ -84,7 +84,7 @@ project(":android") {
 project(":core") {
     apply plugin: "java"
 
-    sourceSets.test.java.srcDirs = ["test/"]
+    sourceSets.test.java.srcDirs = ["tests/"]
 
     dependencies {
         implementation "com.badlogicgames.gdx:gdx:$gdxVersion"

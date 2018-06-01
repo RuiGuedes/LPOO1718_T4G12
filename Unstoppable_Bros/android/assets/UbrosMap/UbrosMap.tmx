@@ -293,7 +293,7 @@
   </object>
  </objectgroup>
  <objectgroup name="Characters">
-  <object id="346" name="R" x="1376" y="1020">
+  <object id="346" name="R" x="1408" y="1020">
    <polygon points="0,0 64,0 64,-90 0,-90 0,0"/>
   </object>
   <object id="347" name="N" x="768" y="1020">

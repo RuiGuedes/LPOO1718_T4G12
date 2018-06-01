@@ -11,5 +11,18 @@ eclipse.project {
     name = appName + "-core"
 }
 dependencies {
-    testImplementation 'junit:junit:4.12'
+
+    implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+    implementation "net.onedaybeard.artemis:artemis-odb-serializer-json-libgdx:2.0.0"
+
+    testImplementation "junit:junit:4.12"
+    testImplementation "org.mockito:mockito-core:2.2.7"
+
+    testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+    testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+    testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    testImplementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+    testImplementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
 }

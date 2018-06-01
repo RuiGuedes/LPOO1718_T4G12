@@ -198,8 +198,8 @@
   <object id="412" x="246.667" y="810">
    <polygon points="0,0 29.5926,30 503.074,30 532.667,0 0,0"/>
   </object>
-  <object id="413" x="951.091" y="150">
-   <polygon points="0,0 16.601,30 33.202,30 49.8031,0 0,0"/>
+  <object id="413" x="953.424" y="150">
+   <polygon points="0,0 14.601,30 29.202,30 43.8031,0 0,0"/>
   </object>
  </objectgroup>
  <objectgroup name="Mechanism">

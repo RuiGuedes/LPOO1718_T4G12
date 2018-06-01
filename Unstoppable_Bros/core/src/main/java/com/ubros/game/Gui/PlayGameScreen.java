@@ -189,7 +189,7 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         this.mapRenderer.render();
-        GameController.getInstance(this.game).getDebugRenderer().render(GameController.getInstance(this.game).getWorld(), gameCam.combined);
+        //GameController.getInstance(this.game).getDebugRenderer().render(GameController.getInstance(this.game).getWorld(), gameCam.combined);
 
         game.getBatch().begin();
         drawGraphics(delta);
@@ -463,10 +463,10 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
                 SettingsScreen.robotJumpSound.play();
 
             if ((selectedPlayer) && !((RobotView) GameView.getInstance(this.game).getRobot()).isJumping()) {
-                GameController.getInstance(this.game).getRobot().getBody().applyLinearImpulse(new Vector2(0, 4f), GameController.getInstance(this.game).getRobot().getBody().getWorldCenter(), true);
+                GameController.getInstance(this.game).getRobot().getBody().applyLinearImpulse(new Vector2(0, 4.5f), GameController.getInstance(this.game).getRobot().getBody().getWorldCenter(), true);
                 ((RobotView) GameView.getInstance(this.game).getRobot()).setJumping(true);
             } else if ((!selectedPlayer) && !((NinjaView) GameView.getInstance(this.game).getNinja()).isJumping()) {
-                GameController.getInstance(this.game).getNinja().getBody().applyLinearImpulse(new Vector2(0, 4f), GameController.getInstance(this.game).getNinja().getBody().getWorldCenter(), true);
+                GameController.getInstance(this.game).getNinja().getBody().applyLinearImpulse(new Vector2(0, 4.5f), GameController.getInstance(this.game).getNinja().getBody().getWorldCenter(), true);
                 ((NinjaView) GameView.getInstance(this.game).getNinja()).setJumping(true);
             }
         }

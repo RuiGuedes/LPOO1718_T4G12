@@ -66,6 +66,16 @@ public class SettingsScreen extends ScreenAdapter {
     private Texture[] menuButtons = new Texture[6];
 
     /**
+     * Array that contains all tutorial steps
+     */
+    private Texture[] tutorial = new Texture[6];
+
+    /**
+     * Points to a specific step on tutorial
+     */
+    private int tutorialPointer = 0;
+
+    /**
      * Determines whether sound is active or not
      */
     public static boolean soundActive;
@@ -134,6 +144,13 @@ public class SettingsScreen extends ScreenAdapter {
         menuButtons[3] = game.getAssetManager().get("tutorialOn.png", Texture.class);
         menuButtons[4] = game.getAssetManager().get("returnButtonOff.png", Texture.class);
         menuButtons[5] = game.getAssetManager().get("returnButtonOn.png", Texture.class);
+
+        tutorial[0] = game.getAssetManager().get("tutorial1.png", Texture.class);
+        tutorial[1] = game.getAssetManager().get("tutorial2.png", Texture.class);
+        tutorial[2] = game.getAssetManager().get("tutorial3.png", Texture.class);
+        tutorial[3] = game.getAssetManager().get("tutorial4.png", Texture.class);
+        tutorial[4] = game.getAssetManager().get("tutorial5.png", Texture.class);
+        tutorial[5] = game.getAssetManager().get("tutorial6.png", Texture.class);
     }
 
     /**
@@ -167,8 +184,20 @@ public class SettingsScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         game.getBatch().begin();
-        drawBackground();
-        drawButtons();
+
+        if(tutorialPointer != 0) {
+            drawTutorial();
+
+            if(Gdx.input.justTouched())
+                tutorialPointer++;
+
+            if(tutorialPointer == 7)
+                tutorialPointer = 0;
+        }
+        else {
+            drawBackground();
+            drawButtons();
+        }
         game.getBatch().end();
 
     }
@@ -187,6 +216,13 @@ public class SettingsScreen extends ScreenAdapter {
     }
 
     /**
+     * Draws a specific tutorial step on screen pointed by tutorial pointer
+     */
+    private void drawTutorial() {
+        game.getBatch().draw(tutorial[tutorialPointer - 1], 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    }
+
+    /**
      * Draws this menu buttons and handle's input
      */
     private void drawButtons() {
@@ -202,11 +238,13 @@ public class SettingsScreen extends ScreenAdapter {
             } else if (checkReturnButton(x, y)) {
                 activateReturnButton();
                 this.game.setScreen(UbrosGame.mainMenu);
-            } else
+            } else if (checkTutorialButton(Gdx.input.getX(), Gdx.input.getY())) {
+                activateTutorialButton();
+                tutorialPointer++;
+            }
+            else
                 defaultMainMenu();
-
-        } else if (Gdx.input.isTouched() && checkTutorialButton(Gdx.input.getX(), Gdx.input.getY()))
-            activateTutorialButton();
+        }
         else {
             defaultMainMenu();
         }

@@ -133,6 +133,12 @@ public class MainMenuScreen extends ScreenAdapter {
         this.game.getAssetManager().load("DoorUnlocked.png", Texture.class);
         this.game.getAssetManager().load("DoorOpen.png", Texture.class);
         this.game.getAssetManager().load("bullet.png", Texture.class);
+        this.game.getAssetManager().load("tutorial1.png", Texture.class);
+        this.game.getAssetManager().load("tutorial2.png", Texture.class);
+        this.game.getAssetManager().load("tutorial3.png", Texture.class);
+        this.game.getAssetManager().load("tutorial4.png", Texture.class);
+        this.game.getAssetManager().load("tutorial5.png", Texture.class);
+        this.game.getAssetManager().load("tutorial6.png", Texture.class);
 
         this.game.getAssetManager().load("Robot/Robot.pack", TextureAtlas.class);
         this.game.getAssetManager().load("Ninja/Ninja.pack", TextureAtlas.class);

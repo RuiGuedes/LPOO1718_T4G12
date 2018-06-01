@@ -13,8 +13,14 @@ import com.ubros.game.Gui.SettingsScreen;
 
 public class UbrosGame extends Game {
 
-	private SpriteBatch batch;
+    /**
+     * Game batch
+     */
+    private SpriteBatch batch;
 
+    /**
+     * Game asset manager
+     */
     private AssetManager assetManager;
 
 	/**
@@ -22,8 +28,19 @@ public class UbrosGame extends Game {
 	 */
 	public static TiledMap map;
 
+    /**
+     * Main menu screen
+     */
 	public static ScreenAdapter mainMenu;
+
+    /**
+     * Play game screen
+     */
 	public static ScreenAdapter playGame;
+
+    /**
+     * Settings screen
+     */
 	public static ScreenAdapter settings;
 
 	@Override

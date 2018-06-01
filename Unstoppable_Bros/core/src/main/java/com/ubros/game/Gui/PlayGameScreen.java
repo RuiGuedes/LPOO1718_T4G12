@@ -118,7 +118,8 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
     /**
      * Creates this screen.
      *
-     * @param game The game this screen belongs to
+     * @param game           The game this screen belongs to
+     * @param selectedPlayer True for robot, false for ninja
      */
     public PlayGameScreen(UbrosGame game, boolean selectedPlayer) {
 
@@ -200,6 +201,8 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     /**
      * Draws all game graphics on screen
+     *
+     * @param delta time since last renders in seconds.
      */
     private void drawGraphics(float delta) {
         drawHand();
@@ -209,6 +212,8 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     /**
      * Updates both world and all elements created
+     *
+     * @param delta time since last renders in seconds.
      */
     private void update(float delta) {
 
@@ -299,6 +304,8 @@ public class PlayGameScreen extends ScreenAdapter implements InputProcessor {
 
     /**
      * Draws the all background elements (pause and focus)
+     *
+     * @param delta time since last renders in seconds.
      */
     private void drawBackground(float delta) {
         if (paused) {

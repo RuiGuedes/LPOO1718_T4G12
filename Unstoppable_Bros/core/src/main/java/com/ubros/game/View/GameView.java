@@ -54,6 +54,7 @@ public class GameView {
 
     /**
      * Game view constructor
+     *
      * @param game Instance of actual game being played
      */
     private GameView(UbrosGame game) {
@@ -144,6 +145,7 @@ public class GameView {
     /**
      * Returns a singleton instance of the game model
      *
+     * @param game game object
      * @return the singleton instance
      */
     public static GameView getInstance(UbrosGame game) {
@@ -154,6 +156,7 @@ public class GameView {
 
     /**
      * Get's robot view
+     *
      * @return robot view
      */
     public ElementView getRobot() {
@@ -162,6 +165,7 @@ public class GameView {
 
     /**
      * Get's ninja view
+     *
      * @return ninja view
      */
     public ElementView getNinja() {

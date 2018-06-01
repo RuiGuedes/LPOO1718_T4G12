@@ -124,6 +124,8 @@ public class PlatformModel extends ElementModel {
 
     /**
      * Function responsible to set platform view
+     *
+     * @param view new view to be set
      */
     public void setView(PlatformView view) {
         this.view = view;
@@ -131,6 +133,7 @@ public class PlatformModel extends ElementModel {
 
     /**
      * Platform origin X position
+     *
      * @return x origin position
      */
     public float getOriginX() {
@@ -139,6 +142,7 @@ public class PlatformModel extends ElementModel {
 
     /**
      * Platform origin Y position
+     *
      * @return y origin position
      */
     public float getOriginY() {
@@ -147,6 +151,7 @@ public class PlatformModel extends ElementModel {
 
     /**
      * Platform destiny X position
+     *
      * @return x origin position
      */
     public float getDestinyX() {
@@ -155,6 +160,7 @@ public class PlatformModel extends ElementModel {
 
     /**
      * Platform destiny Y position
+     *
      * @return y destiny position
      */
     public float getDestinyY() {
@@ -163,6 +169,7 @@ public class PlatformModel extends ElementModel {
 
     /**
      * Checks type of platform movement
+     *
      * @return true for horizontal movement, false for vertical movement
      */
     public boolean isMovementDir() {
@@ -171,6 +178,7 @@ public class PlatformModel extends ElementModel {
 
     /**
      * Get's platform model texture name
+     *
      * @return texture name of the present object
      */
     public String getPlatformView() {
@@ -179,6 +187,7 @@ public class PlatformModel extends ElementModel {
 
     /**
      * Get's platform model width
+     *
      * @return model width
      */
     public float getPlatformWidth() {
@@ -187,6 +196,7 @@ public class PlatformModel extends ElementModel {
 
     /**
      * Get's platform model height
+     *
      * @return model height
      */
     public float getPlatformHeight() {

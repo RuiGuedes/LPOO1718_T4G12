@@ -5,12 +5,16 @@ public abstract class ElementModel {
     /**
      * Game model possible model types
      */
-    public enum ModelType {LIMIT, HERO, ACID, MECHANISM, PLATFORM, OBJECTIVE, PORTAL, OBJECT, EXITDOOR, BULLET, ENEMY}
+    public enum ModelType {
+        LIMIT, HERO, ACID, MECHANISM, PLATFORM, OBJECTIVE, PORTAL, OBJECT, EXITDOOR, BULLET, ENEMY
+    }
 
     /**
      * Game possible physics type
      */
-    public enum PhysicsType {STATIC, DYNAMIC, KINEMATIC}
+    public enum PhysicsType {
+        STATIC, DYNAMIC, KINEMATIC
+    }
 
     /**
      * Tilemap used tile width
@@ -50,8 +54,8 @@ public abstract class ElementModel {
     /**
      * Constructs a model with a position and a rotation.
      *
-     * @param x The x-coordinate of this entity in meters.
-     * @param y The y-coordinate of this entity in meters.
+     * @param x        The x-coordinate of this entity in meters.
+     * @param y        The y-coordinate of this entity in meters.
      * @param rotation The current rotation of this entity in radians.
      */
     public ElementModel(float x, float y, float rotation) {
@@ -118,6 +122,8 @@ public abstract class ElementModel {
 
     /**
      * Makes this model flagged for removal on next step
+     *
+     * @param flaggedForRemoval true for removal, false otherwise
      */
     public void setFlaggedForRemoval(boolean flaggedForRemoval) {
         this.flaggedForRemoval = flaggedForRemoval;
@@ -125,12 +131,14 @@ public abstract class ElementModel {
 
     /**
      * Abstract function responsible to return model type
+     *
      * @return model type
      */
     public abstract ModelType getType();
 
     /**
      * Abstract function responsible to return model physics type
+     *
      * @return model physics type
      */
     public abstract PhysicsType getPhysicsType();

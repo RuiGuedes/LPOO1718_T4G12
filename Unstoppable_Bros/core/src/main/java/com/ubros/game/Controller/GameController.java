@@ -151,6 +151,8 @@ public class GameController {
 
     /**
      * Creates a new GameController that controls the physics of a certain GameModel.
+     *
+     * @param game game object
      */
     private GameController(UbrosGame game) {
 
@@ -295,6 +297,7 @@ public class GameController {
     /**
      * Returns a singleton instance of a game controller
      *
+     * @param game Game object
      * @return the singleton instance
      */
     public static GameController getInstance(UbrosGame game) {
@@ -451,6 +454,8 @@ public class GameController {
 
     /**
      * Updates this instance world bodies
+     *
+     * @param delta time since last renders in seconds.
      */
     public void update(float delta) {
 
@@ -481,6 +486,8 @@ public class GameController {
 
     /**
      * Check's and updates exit possible status
+     *
+     * @param delta time since last renders in seconds.
      */
     private void updateExitVariables(float delta) {
 

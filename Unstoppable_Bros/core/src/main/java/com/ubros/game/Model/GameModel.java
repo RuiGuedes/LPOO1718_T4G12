@@ -111,8 +111,9 @@ public class GameModel {
     public List<BulletModel> bullets = new ArrayList<BulletModel>();
 
     /**
-     * Constructs a game with a.space ship in the middle of the
-     * arena and a certain number of asteroids in different sizes.
+     * Constructs the game model
+     *
+     * @param game game object
      */
     private GameModel(UbrosGame game) {
         this.game = game;
@@ -150,13 +151,12 @@ public class GameModel {
 
         for (MapObject object : UbrosGame.map.getLayers().get(CHARACTERS_BODY).getObjects().getByType(PolygonMapObject.class)) {
             Polygon polygon = ((PolygonMapObject) object).getPolygon();
-            if(object.getName().equals("R")) {
+            if (object.getName().equals("R")) {
                 robotX = polygon.getX();
-                robotY = polygon.getY() + robotHalfHeight/PlayGameScreen.PIXEL_TO_METER;
-            }
-            else {
+                robotY = polygon.getY() + robotHalfHeight / PlayGameScreen.PIXEL_TO_METER;
+            } else {
                 ninjaX = polygon.getX();
-                ninjaY = polygon.getY() + robotHalfHeight/PlayGameScreen.PIXEL_TO_METER;
+                ninjaY = polygon.getY() + robotHalfHeight / PlayGameScreen.PIXEL_TO_METER;
             }
         }
 
@@ -230,7 +230,7 @@ public class GameModel {
     private void createExitDoors() {
         for (MapObject object : UbrosGame.map.getLayers().get(EXIT_DOOR_BODY).getObjects().getByType(PolygonMapObject.class)) {
             Polygon polygon = ((PolygonMapObject) object).getPolygon();
-            if(object.getName().equals("R"))
+            if (object.getName().equals("R"))
                 exitDoors.add(new ExitDoorModel(polygon.getX() / PlayGameScreen.PIXEL_TO_METER, polygon.getY() / PlayGameScreen.PIXEL_TO_METER, 0, polygon, "RobotExitDoor"));
             else
                 exitDoors.add(new ExitDoorModel(polygon.getX() / PlayGameScreen.PIXEL_TO_METER, polygon.getY() / PlayGameScreen.PIXEL_TO_METER, 0, polygon, "NinjaExitDoor"));
@@ -260,19 +260,20 @@ public class GameModel {
 
     /**
      * Creates bullet model
-     * @param x x position
-     * @param y y position
+     *
+     * @param x         x position
+     * @param y         y position
      * @param direction true to set right direction. False to set left direction
      */
     public void createBullet(float x, float y, boolean direction) {
 
         float advance = direction ? 0.3f : -0.3f;
 
-        BulletModel bulletModel = new BulletModel(x + advance,y, 0);
+        BulletModel bulletModel = new BulletModel(x + advance, y, 0);
 
         BulletBody bulletBody = new BulletBody(GameController.getInstance(null).getWorld(), bulletModel, direction);
 
-        bulletModel.setView(new BulletView(this.game,null, bulletBody));
+        bulletModel.setView(new BulletView(this.game, null, bulletBody));
         bullets.add(bulletModel);
     }
 
@@ -283,6 +284,7 @@ public class GameModel {
     /**
      * Returns a singleton instance of the game model
      *
+     * @param game game object
      * @return the singleton instance
      */
     public static GameModel getInstance(UbrosGame game) {
@@ -365,6 +367,7 @@ public class GameModel {
 
     /**
      * Function responsible to retrieve list of exit door models
+     *
      * @return list of exit door models
      */
     public List<ExitDoorModel> getExitDoors() {
@@ -373,6 +376,7 @@ public class GameModel {
 
     /**
      * Function responsible to retrieve list of objects models
+     *
      * @return list of objects models
      */
     public List<ObjectModel> getObjects() {
@@ -381,6 +385,7 @@ public class GameModel {
 
     /**
      * Function responsible to retrieve list of enemy models
+     *
      * @return list of objects models
      */
     public List<EnemyModel> getEnemys() {
@@ -404,6 +409,7 @@ public class GameModel {
 
     /**
      * Set's instance of this class to another
+     *
      * @param instance new instance
      */
     public void setInstance(GameModel instance) {

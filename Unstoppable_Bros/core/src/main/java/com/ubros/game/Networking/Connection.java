@@ -39,6 +39,8 @@ public class Connection {
 
     /**
      * Creates both server and client objects
+     *
+     * @param game game object
      */
     public Connection(UbrosGame game) {
         this.game = game;

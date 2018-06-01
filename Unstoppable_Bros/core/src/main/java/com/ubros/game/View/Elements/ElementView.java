@@ -54,6 +54,8 @@ public abstract class ElementView extends Sprite {
 
     /**
      * Draws the sprite from this view using a sprite batch.
+     *
+     * @param delta time since last renders in seconds.
      */
     public abstract void draw(float delta);
 

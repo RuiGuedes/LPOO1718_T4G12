@@ -42,6 +42,7 @@ public class MechanismModel extends ElementModel {
 
     /**
      * Get's mechanism body shape
+     *
      * @return mechanism body shape
      */
     public Polygon getShape() {
@@ -77,6 +78,8 @@ public class MechanismModel extends ElementModel {
 
     /**
      * Function responsible to set mechanism view
+     *
+     * @param view new view to be set
      */
     public void setView(MechanismView view) {
         this.view = view;
@@ -84,6 +87,7 @@ public class MechanismModel extends ElementModel {
 
     /**
      * Get's mechanism associated platform
+     *
      * @return mechanism associated platform
      */
     public PlatformBody getPlatform() {
@@ -92,6 +96,7 @@ public class MechanismModel extends ElementModel {
 
     /**
      * Set's mechanism new associated platform
+     *
      * @param platform mechanism new associated platform
      */
     public void setPlatform(PlatformBody platform) {

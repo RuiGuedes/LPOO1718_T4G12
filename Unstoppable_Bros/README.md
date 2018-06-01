@@ -30,45 +30,32 @@ César Alexandre da Costa Pinho <br>
 ## User Manual - GUI Design 
 -----
 
-De seguida encontra-se especificado simultãneamente a interface gráfica do jogo desenvolvido bem como o seu manual de utilização, isto é, como proceder para utilização do mesmo. 
+  De seguida encontra-se especificado simultãneamente a interface gráfica do jogo desenvolvido bem como o seu manual de utilização, isto é, como proceder para utilização do mesmo. 
 
-* ### Main Menu Screen
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual1.png)
 
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/Delivery/MainMenuDesign.png)
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual2.png)
 
-* ### Play Game Screen
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual3.png)
 
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/Delivery/PlayGameDesign.png)
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual4.png)
 
-* ### Settings Screen
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual5.png)
 
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/Delivery/SettingsDesign.png)
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual6.png)
 
-* ### Tutorial Screens
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual7.png)
 
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/tree/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual1.png)
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual8.png)
 
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/tree/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual2.png)
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual9.png)
 
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/tree/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual3.png)
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual10.png)
 
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/tree/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual4.png)
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual11.png)
 
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/tree/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual5.png)
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual12.png)
 
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/tree/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual6.png)
-
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/tree/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual7.png)
-
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/tree/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual8.png)
-
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/tree/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual9.png)
-
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/tree/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual10.png)
-
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/tree/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual11.png)
-
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/tree/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual12.png)
 
 ## UML class diagram 
 -----
@@ -78,7 +65,7 @@ De seguida encontra-se especificado simultãneamente a interface gráfica do jog
 ## State diagram :: Behavioural aspects
 -----
 
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/tree/master/Unstoppable_Bros/FinalRelease/Screenshots/StateDiagram.png)
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/FinalRelease/Screenshots/StateDiagram.png)
 
 ## Design Patterns
 -----

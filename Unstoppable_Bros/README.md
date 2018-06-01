@@ -101,7 +101,7 @@ A edificação deste projeto contribuiu para o desenvolvimento das nossas capaci
 ## UML class diagram 
 -----
 
-![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/Delivery/Diagrama%20UML.png)
+![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/FinalRelease/Screenshots/UMLDiagram.png)
 
 ## State diagram :: Behavioural aspects
 -----

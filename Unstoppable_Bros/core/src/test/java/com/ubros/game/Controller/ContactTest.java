@@ -27,10 +27,14 @@ public class ContactTest {
         float[] dangerVertex = {0, -0, 1.28f, -0, 1.28f, 0.5f, 0, 0.5f ,0, -0};
         float[] limitVertex = {0, -0, 0, -1, 2000, -1, 2000, 0, 0, 0 };
 
+<<<<<<< Updated upstream
        // TmxMapLoader mapLoader = new TmxMapLoader();
        // UbrosGame.map = mapLoader.load("UbrosMap/UbrosMap.tmx");
        // UbrosGame.map = new TmxMapLoader(new ExternalFileHandleResolver()).load("UbrosMap/UbrosMap.tmx");
        // UbrosGame game = new UbrosGame();
+=======
+UbrosGame.map = new TmxMapLoader().load("assets/UbrosMap/UbrosMap.tmx");
+>>>>>>> Stashed changes
 
         World world = new World(new Vector2(0, -10), true);
         CharacterModel robotModel = new CharacterModel(x,y,0);

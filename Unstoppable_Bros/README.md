@@ -110,11 +110,9 @@ A edificação deste projeto contribuiu para o desenvolvimento das nossas capaci
 
 ## Design Patterns
 -----
-De seguida encontram-se os padrões de desenho que serão utilizados no desenvolvimento do jogo:
+No desenvolvimento do jogo, com vista a aumentar a qualidade e simplicidade do código, optaram-se por usar os seguintes **_design patterns_**:
 
-* Singleton - Do jogo irá apenas existir apenas uma única instância do mesmo.
-* Observer - Existem diversas relações entre os diferentes objetos no jogo, desde alancavas a balas, que implicam por sua vez, a necessidade gerir a sua interação com outros objetos.
-* Flyweight - Utilizado para representar os vários inimigos existentes no jogo, uma vez que, todos partilham entre si a mesma representação gráfica.
-* Strategy - Cada inimigo age de forma diferente sendo assim necessário gerir os diversos tipos de inimigos existentes no jogo.
-* Update Method - Os inimigos possuem movimento, daí a necessidade deste padrão de desenho com vista a não bloquear o jogo aquando o movimento destes.
-* Component - Os heróis constituem as entidades mais complexas do jogo daí a necessidade de fazer, separadamente, uma gestão das suas respetivas componentes.
+* **_Singleton_** - Utilizado nas classes _GameController_, _GameModel_ e _GameView_, uma vez que destas só se pretende ter uma instância das mesmas.
+* **_Observer_** - Existem diversas relações entre os diferentes objetos no jogo, desde balas a inimigos, personagens, entre outros, que implicam por sua vez, a necessidade gerir a sua interação com os restantes objetos. Este design pattern encontra-se definido na classe _MyContactListener_.
+* **_Flyweight_** - Utilizado para representar os vários inimigos existentes no jogo, uma vez que, todos partilham entre si o mesmo tipo de representação gráfica.
+* **_Update Method_** - Os inimigos possuem movimento próprio, daí a necessidade deste padrão de desenho com vista a não bloquear o jogo aquando o movimento destes.

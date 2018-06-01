@@ -18,6 +18,15 @@ César Alexandre da Costa Pinho <br>
 ## Setup/Installation
 -----
 
+O setup/instalação da aplicação baseia-se somente na instalação do apk entregue. No entanto é necessário ter em atenção as especificações utilizadas para desenvolvimento do projeto de forma a evitar eventuais erros a nível de compilação ou execução do jogo. Seguem-se então as especificações utilizadas:
+
+* Android Studio version = 3.1.2
+* Gradle version = 4.6
+* Gdx version = 1.9.8
+* CompileSdkVersion = 27
+* MinSdkVersion = 16
+* TargetSdkVersion = 27
+
 ## Relevant Design Decisions
 -----
 

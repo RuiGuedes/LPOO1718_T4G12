@@ -18,7 +18,7 @@ César Alexandre da Costa Pinho <br>
 ## Setup/Installation
 -----
 
-O setup/instalação da aplicação baseia-se somente na instalação do apk entregue. No entanto é necessário ter em atenção as especificações utilizadas para desenvolvimento do projeto de forma a evitar eventuais erros a nível de compilação ou execução do jogo. Seguem-se então as especificações utilizadas:
+O setup/instalação da aplicação baseia-se somente na instalação do [apk](https://github.com/RuiGuedes/LPOO1718_T4G12/tree/master/Unstoppable_Bros/FinalRelease/apk) entregue. No entanto é necessário ter em atenção as especificações utilizadas para desenvolvimento do projeto de forma a evitar eventuais erros a nível de compilação ou execução do jogo. Seguem-se então as especificações utilizadas:
 
 * Android Studio version = **3.1.2**
 * Gradle version = **4.6**
@@ -32,14 +32,14 @@ O setup/instalação da aplicação baseia-se somente na instalação do apk ent
 
 O desenvolvimento do jogo, focou-se essencialmente para sistemas android, no entanto este encontra-se funcional para desktop, apesar de tal não ser recomendado uma vez que o jogo utiliza o conceito de multi-touching. Para além deste factor bem como todo o desenvolvimento do jogo em si, existem dois factores que são importantes de realçar:
 
-* **Networking** - Inicialmente para desenvolvimento do jogo especificou-se que este implementaria uma parte de networking que por sua vez iria permitir conectar dois jogadores, em que cada um era responsável por controlar um determinado personagem. No entanto após o desenvolvimento do jogo, dada a sua complexidade, não foi possível efetuar a troca de dados entre jogadores uma vez que o networking implementado possui um sistema de troca de informação muito simplista baseado em strings. No entanto o código relativo à implementação de networking encontra-se desenvolvido e totalmente documentado no package "NetWorking".
+* **_Networking_** - Inicialmente para desenvolvimento do jogo especificou-se que este implementaria uma parte de networking que por sua vez iria permitir conectar dois jogadores, em que cada um era responsável por controlar um determinado personagem. No entanto após o desenvolvimento do jogo, dada a sua complexidade, não foi possível efetuar a troca de dados entre jogadores uma vez que o networking implementado possui um sistema de troca de informação muito simplista baseado em strings. No entanto o código relativo à implementação de networking encontra-se desenvolvido e totalmente documentado no package _Networking_.
 
-* **Tiled Maps** - Ao longo do desenvolvimento deste projecto procurou-se generalizar ao máximo as suas opções, isto é, não restrigir as suas funcionalidades. Assim recorreu-se ao uso de tiled maps para construção do mundo, sendo que se pretendido, é possível criar uma infinidade de mundos para o jogo, pois este adapta-se aos diferentes mundos criados desde que um conjunto de determinadas condições sejam respeitadas. Estas condições encontram-se não só documentadas ao longo do código fonte do projeto mas também no próprio tiled map usado como mundo atual do jogo.
+* **_Tiled Maps_** - Ao longo do desenvolvimento deste projecto procurou-se generalizar ao máximo as suas opções, isto é, não restrigir as suas funcionalidades. Assim recorreu-se ao uso de tiled maps para construção do mundo, sendo que se pretendido, é possível criar uma infinidade de mundos para o jogo, pois este adapta-se aos diferentes mundos criados desde que um conjunto de determinadas condições sejam respeitadas. Estas condições encontram-se não só documentadas ao longo do código fonte do projeto mas também no próprio tiled map usado como mundo atual do jogo.
   
 ## Major Difficulties
 -----
 
-Consideramos que todo o desenvolvimento deste projeto foi um constante desafio às nossas capacidades, uma vez que, lidamos com um ambiente de programação totalmente diferente do qual estavamos habituados. No entanto a parte de **Networking** foi a mais desafiante uma vez que toda ela consistiu apenas em pesquisa, dado que tal assunto não foi abordado em nenhuma das cadeiras até agora frequentadas.
+Consideramos que todo o desenvolvimento deste projeto foi um constante desafio às nossas capacidades, uma vez que, lidamos com um ambiente de programação totalmente diferente do qual estavamos habituados. No entanto a parte de **_Networking_** foi a mais desafiante uma vez que toda ela consistiu apenas em pesquisa, dado que tal assunto não foi abordado em nenhuma das cadeiras até agora frequentadas.
 
 ## Work Distribution - Overall Time Spent 
 -----
@@ -61,12 +61,12 @@ Na realização deste trabalho ambos os membros do grupo participaram ativamente
 
 A documentação do código fonte do presente projecto encontra-se disponível através do seguinte link:
 
-* **Github Pages** - https://ruiguedes.github.io/LPOO1718_T4G12/
+* **_Github Pages_** - https://ruiguedes.github.io/LPOO1718_T4G12/
 
 ## Lessons Learned
 -----
 
-
+A edificação deste projeto contribuiu para o desenvolvimento das nossas capacidades a nível de trabalho em equipa, pesquisa pro-ativa, estudo autodidato e, principalmente, para a aprendizagem de Android, Java e Networking.
 
 ## User Manual - GUI Design 
 -----

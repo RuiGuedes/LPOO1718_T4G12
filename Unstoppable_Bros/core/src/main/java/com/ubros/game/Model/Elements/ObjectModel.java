@@ -1,6 +1,7 @@
 package com.ubros.game.Model.Elements;
 
 import com.badlogic.gdx.math.Polygon;
+import com.ubros.game.Gui.PlayGameScreen;
 import com.ubros.game.View.Elements.ObjectView;
 
 import java.util.StringTokenizer;
@@ -21,6 +22,16 @@ public class ObjectModel extends ElementModel {
      * Radius for circle shape. 0 if it's not a circle shape
      */
     private int radius;
+
+    /**
+     * Object view width
+     */
+    private float objectViewWidth;
+
+    /**
+     * Object view height
+     */
+    private float objectViewHeight;
 
     /**
      * Object model view associated
@@ -52,6 +63,9 @@ public class ObjectModel extends ElementModel {
 
         this.data = tokenizer.nextToken();
         this.radius = Integer.parseInt(tokenizer.nextToken());
+
+        this.objectViewWidth =  (ElementModel.TILE_WIDTH*Integer.parseInt(tokenizer.nextToken())) / PlayGameScreen.PIXEL_TO_METER;
+        this.objectViewHeight = (ElementModel.TILE_HEIGHT*Integer.parseInt(tokenizer.nextToken())) / PlayGameScreen.PIXEL_TO_METER;
     }
 
     /**
@@ -92,6 +106,22 @@ public class ObjectModel extends ElementModel {
      */
     public void setView(ObjectView view) {
         this.view = view;
+    }
+
+    /**
+     * Returns object view width
+     * @return object view width
+     */
+    public float getObjectViewWidth() {
+        return objectViewWidth;
+    }
+
+    /**
+     * Returns object view height
+     * @return object view height
+     */
+    public float getObjectViewHeight() {
+        return objectViewHeight;
     }
 
     @Override

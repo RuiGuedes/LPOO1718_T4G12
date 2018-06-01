@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="60" height="36" tilewidth="32" tileheight="30" infinite="0" nextobjectid="25">
+ <tileset firstgid="1" source="factoryGround.tsx"/>
+ <tileset firstgid="10" source="yellowPortal.tsx"/>
+ <tileset firstgid="13" source="redPortal.tsx"/>
+ <tileset firstgid="16" source="Acid.tsx"/>
+ <imagelayer name="Background">
+  <image source="backgroundTest.jpg" width="1920" height="1080"/>
+ </imagelayer>
+ <layer name="DangerZone" width="60" height="36">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMA6BFeP+0T7AAAwUTAAAAgH1XAgAAACx4cNoAYQ==
+  </data>
+ </layer>
+ <layer name="Graphics" width="60" height="36">
+  <data encoding="base64" compression="zlib">
+   eJzt2EEKgCAUhOGJJEi7/3k8Whq9ZUQbjZn54e37KhfPBGABqsKkZt2hU7NWe3mzlzt7ubOXO3u5s5e32yrjzdD6vgVa3gNa3rfzu+K696Ca8KaH2T6/xX+n9D/37OXOXu7s5c5e7lS9Kubwtl2pzn6WEYW3iHmzmFfp/PY9d/YePmq69QQRKkxk
+  </data>
+ </layer>
+ <objectgroup name="Ground">
+  <object id="1" x="0" y="0">
+   <polygon points="0,0 0,1080 32,1080 32,0 0,0"/>
+  </object>
+  <object id="2" x="32" y="0">
+   <polygon points="0,0 1856,0 1856,30 0,30 0,0"/>
+  </object>
+  <object id="3" x="32" y="1050">
+   <polygon points="0,0 1824,0 1856,0 1856,30 0,30 0,0"/>
+  </object>
+  <object id="4" x="1888" y="0">
+   <polygon points="0,0 0,1080 32,1080 32,0 0,0"/>
+  </object>
+  <object id="16" x="192" y="570">
+   <polygon points="0,0 32,-30 1696,-30 1696,0 0,0"/>
+  </object>
+  <object id="17" x="32" y="570">
+   <polygon points="0,0 224,0 192,30 0,30 0,2"/>
+  </object>
+  <object id="19" x="32" y="1020">
+   <polygon points="0,0 32,0 32,30 0,30 0,0"/>
+  </object>
+  <object id="20" x="32" y="900">
+   <polygon points="0,0 32,0 32,30 0,30 0,0"/>
+  </object>
+  <object id="21" x="1856" y="510">
+   <polygon points="0,0 0,30 32,30 32,0 0,0"/>
+  </object>
+  <object id="22" x="1856" y="420">
+   <polygon points="0,0 32,0 32,-30 0,-30 0,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="DangerZone">
+  <object id="18" x="32" y="540">
+   <polygon points="0,0 0,30 160,30 192,0 0,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Mechanism">
+  <object id="23" x="736" y="540">
+   <polygon points="0,0 32,0 32,-90 0,-90 0,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Platform">
+  <object id="24" name="U-3-platformDoor.png-3" x="64" y="1020">
+   <polygon points="0,0 32,0 32,-90 0,-90 0,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Objective">
+  <object id="9" name="R-2-2-cog.png" x="576" y="540">
+   <polygon points="0,0 64,0 64,-60 0,-60 0,0"/>
+  </object>
+  <object id="10" name="N-2-2-star.png" x="576" y="1050">
+   <polygon points="0,0 64,0 64,-60 0,-60 0,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Portal">
+  <object id="11" name="Y1-R" x="32" y="1020">
+   <polygon points="0,0 32,0 32,-90 0,-90 0,0"/>
+  </object>
+  <object id="12" name="Y2-L" x="1856" y="510">
+   <polygon points="0,0 32,0 32,-90 0,-90 0,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Exit Door">
+  <object id="14" name="R" x="1024" y="540">
+   <polygon points="0,0 64,0 64,-90 0,-90 0,0"/>
+  </object>
+  <object id="15" name="N" x="1024" y="1050">
+   <polygon points="0,0 64,0 64,-90 0,-90 0,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Object">
+  <object id="13" name="box.png-0-2-2" x="1344" y="1050">
+   <polygon points="0,0 64,0 64,-60 0,-60 0,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Character">
+  <object id="5" name="R" x="832" y="510">
+   <polygon points="0,0 64,0 64,-90 0,-90 0,0"/>
+  </object>
+  <object id="8" name="N" x="832" y="1020">
+   <polygon points="0,0 64,0 64,-90 0,-90 0,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Enemy">
+  <object id="7" name="S-0-0" x="288" y="540">
+   <polygon points="0,0 64,0 64,-90 0,-90 0,0"/>
+  </object>
+ </objectgroup>
+</map>

@@ -28,7 +28,7 @@ public class MovementTest {
 
         World world = new World(new Vector2(0, 0), true);
         CharacterModel robotModel = new CharacterModel(x,y,0);
-        CharacterBody robotBody = new CharacterBody(world,robotModel,"R");
+        CharacterBody robotBody = new CharacterBody(world,robotModel,"RobotBounds");
 
         robotBody.getBody().applyLinearImpulse(new Vector2(-GameController.PLAYER_SPEED*3, 0), robotBody.getBody().getWorldCenter(), true);
         world.step(1, 6, 2);

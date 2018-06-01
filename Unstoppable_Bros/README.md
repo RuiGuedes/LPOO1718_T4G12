@@ -20,12 +20,12 @@ César Alexandre da Costa Pinho <br>
 
 O setup/instalação da aplicação baseia-se somente na instalação do apk entregue. No entanto é necessário ter em atenção as especificações utilizadas para desenvolvimento do projeto de forma a evitar eventuais erros a nível de compilação ou execução do jogo. Seguem-se então as especificações utilizadas:
 
-* Android Studio version = 3.1.2
-* Gradle version = 4.6
-* Gdx version = 1.9.8
-* CompileSdkVersion = 27
-* MinSdkVersion = 16
-* TargetSdkVersion = 27
+* Android Studio version = **3.1.2**
+* Gradle version = **4.6**
+* Gdx version = **1.9.8**
+* CompileSdkVersion = **27**
+* MinSdkVersion = **16**
+* TargetSdkVersion = **27**
 
 ## Relevant Design Decisions
 -----
@@ -39,17 +39,21 @@ O desenvolvimento do jogo, focou-se essencialmente para sistemas android, no ent
 ## Major Difficulties
 -----
 
+Consideramos que todo o desenvolvimento deste projeto foi um constante desafio às nossas capacidades, uma vez que, lidamos com um ambiente de programação totalmente diferente do qual estavamos habituados. No entanto a parte de **Networking** foi a mais desafiante uma vez que toda ela consistiu apenas em pesquisa, dado que tal assunto não foi abordado em nenhuma das cadeiras até agora frequentadas.
+
 ## Work Distribution - Overall Time Spent 
 -----
 
-### Rui Jorge Leão Guedes <br>
+Na realização deste trabalho ambos os membros do grupo participaram ativamente e cumpriram devidamente as suas tarefas. O grupo optou por distribuir as tarefas uniformemente com vista aumentar a produtividade, no entanto, esta distribuição teve em conta as áreas em que cada elemento se sentia mais à vontade, permitindo assim que a percentagem de esforço de cada elemento fosse igual. 
+
+#### Rui Jorge Leão Guedes <br>
 
 * Horas de trabalho = 120
 * Distribuição de tarefas = 50%
 
-### César Alexandre da Costa Pinho <br>
+#### César Alexandre da Costa Pinho <br>
 
-* Horas de trabalho = 
+* Horas de trabalho = 90
 * Distribuição de tarefas = 50%
 
 ## Online Project Documentation
@@ -58,6 +62,11 @@ O desenvolvimento do jogo, focou-se essencialmente para sistemas android, no ent
 A documentação do código fonte do presente projecto encontra-se disponível através do seguinte link:
 
 * **Github Pages** - https://ruiguedes.github.io/LPOO1718_T4G12/
+
+## Lessons Learned
+-----
+
+
 
 ## User Manual - GUI Design 
 -----

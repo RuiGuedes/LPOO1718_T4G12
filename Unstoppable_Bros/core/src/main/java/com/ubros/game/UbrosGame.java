@@ -11,8 +11,6 @@ import com.ubros.game.Gui.MainMenuScreen;
 import com.ubros.game.Gui.PlayGameScreen;
 import com.ubros.game.Gui.SettingsScreen;
 
-//TODO Create characterView
-
 public class UbrosGame extends Game {
 
 	private SpriteBatch batch;

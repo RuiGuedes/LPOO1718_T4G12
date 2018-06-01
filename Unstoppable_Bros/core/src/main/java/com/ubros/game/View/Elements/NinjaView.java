@@ -10,27 +10,7 @@ import com.ubros.game.Gui.PlayGameScreen;
 import com.ubros.game.Model.Elements.CharacterModel;
 import com.ubros.game.UbrosGame;
 
-public class NinjaView extends ElementView {
-
-    /**
-     * Robot current view state
-     */
-    private ElementView.CharacterState currentState;
-
-    /**
-     * Robot previous view state
-     */
-    private ElementView.CharacterState previousState;
-
-    /**
-     * Variable used to aid animation objects
-     */
-    private float stateTimer;
-
-    /**
-     * Boolean that indicates which side is robot facing
-     */
-    private boolean runningRight;
+public class NinjaView extends CharacterView {
 
     /**
      * Robot default view
@@ -51,21 +31,6 @@ public class NinjaView extends ElementView {
      * Robot dying animation
      */
     private Animation<TextureRegion> ninjaDying;
-
-    /**
-     * Robot last y velocity
-     */
-    private float lastVelocityY;
-
-    /**
-     * Is robot jumping (true) or not (false)
-     */
-    private boolean jumping;
-
-    /**
-     * Boolean that indicates if character is moving horizontally
-     */
-    private boolean horizontalMovement;
 
     /**
      * Creates a view belonging to a game.
@@ -138,33 +103,6 @@ public class NinjaView extends ElementView {
     }
 
     /**
-     * Sets horizontal movement with new value
-     *
-     * @param horizontalMovement true for horizontal movement, false otherwise
-     */
-    public void setHorizontalMovement(boolean horizontalMovement) {
-        this.horizontalMovement = horizontalMovement;
-    }
-
-    /**
-     * Check's if ninja is jumping or not
-     *
-     * @return true if it is, false otherwise
-     */
-    public boolean isJumping() {
-        return jumping;
-    }
-
-    /**
-     * Set's jumping new value
-     *
-     * @param jumping new boolean value
-     */
-    public void setJumping(boolean jumping) {
-        this.jumping = jumping;
-    }
-
-    /**
      * Function responsible to check ninja texture
      *
      * @param delta time since last renders in seconds
@@ -192,35 +130,9 @@ public class NinjaView extends ElementView {
                 break;
         }
 
-        updateNinjaVariables(region, delta);
+        updateVariables(region, delta);
 
         return region;
-    }
-
-    /**
-     * Constantly updates ninja view variables
-     *
-     * @param region ninja associated texture
-     * @param delta  time since last renders in seconds
-     */
-    private void updateNinjaVariables(TextureRegion region, float delta) {
-
-        if ((super.getElement().getBody().getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
-            region.flip(true, false);
-            runningRight = false;
-        } else if ((super.getElement().getBody().getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
-            region.flip(true, false);
-            runningRight = true;
-        }
-
-        if (currentState == previousState)
-            stateTimer += delta;
-        else {
-            stateTimer = 0;
-        }
-
-        previousState = currentState;
-
     }
 
     /**
@@ -241,19 +153,6 @@ public class NinjaView extends ElementView {
             return ElementView.CharacterState.RUNNING;
         else
             return ElementView.CharacterState.STANDING;
-    }
-
-    /**
-     * Check's if ninja is jumping or not
-     * @return true if it is, false otherwise
-     */
-    private boolean checkJumpState() {
-        if ((getElement().getBody().getLinearVelocity().y < 0) && (previousState == ElementView.CharacterState.JUMPING))
-            return true;
-        else if ((lastVelocityY == 0) && (getElement().getBody().getLinearVelocity().y > 0) && jumping)
-            return true;
-        else
-            return (getElement().getBody().getLinearVelocity().y > 0) && (previousState == CharacterState.JUMPING);
     }
 
     @Override
@@ -289,10 +188,5 @@ public class NinjaView extends ElementView {
             jumping = false;
     }
 
-
-    @Override
-    public void setCurrentState(ElementView.CharacterState state) {
-        this.currentState = state;
-    }
 }
 

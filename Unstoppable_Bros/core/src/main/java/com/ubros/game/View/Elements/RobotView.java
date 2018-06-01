@@ -10,27 +10,7 @@ import com.ubros.game.Gui.PlayGameScreen;
 import com.ubros.game.Model.Elements.CharacterModel;
 import com.ubros.game.UbrosGame;
 
-public class RobotView extends ElementView {
-
-    /**
-     * Robot current view state
-     */
-    private ElementView.CharacterState currentState;
-
-    /**
-     * Robot previous view state
-     */
-    private ElementView.CharacterState previousState;
-
-    /**
-     * Variable used to aid animation objects
-     */
-    private float stateTimer;
-
-    /**
-     * Boolean that indicates which side is robot facing
-     */
-    private boolean runningRight;
+public class RobotView extends CharacterView {
 
     /**
      * Robot default view
@@ -68,24 +48,9 @@ public class RobotView extends ElementView {
     private float lastX;
 
     /**
-     * Robot last y velocity
-     */
-    private float lastVelocityY;
-
-    /**
      * Is robot shooting (true) or not (false)
      */
     private boolean shoot;
-
-    /**
-     * Is robot jumping (true) or not (false)
-     */
-    private boolean jumping;
-
-    /**
-     * Boolean that indicates if character is moving horizontally
-     */
-    private boolean horizontalMovement;
 
     /**
      * Creates a view belonging to a game.
@@ -186,45 +151,12 @@ public class RobotView extends ElementView {
     }
 
     /**
-     * Checks whether robot is running right or not
-     *
-     * @return true if it is, false otherwise
-     */
-    public boolean isRunningRight() {
-        return runningRight;
-    }
-
-    /**
-     * Sets horizontal movement with new value
-     *
-     * @param horizontalMovement true for horizontal movement, false otherwise
-     */
-    public void setHorizontalMovement(boolean horizontalMovement) {
-        this.horizontalMovement = horizontalMovement;
-    }
-
-    /**
      * Set's shoot new value
+     *
      * @param shoot shoot new value
      */
     public void setShoot(boolean shoot) {
         this.shoot = shoot;
-    }
-
-    /**
-     * Check's if robot is jumping or not
-     * @return true if it is, false otherwise
-     */
-    public boolean isJumping() {
-        return jumping;
-    }
-
-    /**
-     * Set's jumping new value
-     * @param jumping new boolean value
-     */
-    public void setJumping(boolean jumping) {
-        this.jumping = jumping;
     }
 
     /**
@@ -261,35 +193,9 @@ public class RobotView extends ElementView {
                 break;
         }
 
-        updateRobotVariables(region, delta);
+        updateVariables(region, delta);
 
         return region;
-    }
-
-    /**
-     * Constantly updates robot view variables
-     *
-     * @param region robot associated texture
-     * @param delta  time since last renders in seconds
-     */
-    private void updateRobotVariables(TextureRegion region, float delta) {
-
-        if ((super.getElement().getBody().getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
-            region.flip(true, false);
-            runningRight = false;
-        } else if ((super.getElement().getBody().getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
-            region.flip(true, false);
-            runningRight = true;
-        }
-
-        if (currentState == previousState)
-            stateTimer += delta;
-        else {
-            stateTimer = 0;
-        }
-
-        previousState = currentState;
-
     }
 
     /**
@@ -321,28 +227,12 @@ public class RobotView extends ElementView {
         return ElementView.CharacterState.STANDING;
     }
 
-    /**
-     * Check's if robot is jumping or not
-     * @return true if it is, false otherwise
-     */
-    private boolean checkJumpState() {
-        if ((getElement().getBody().getLinearVelocity().y < 0) && (previousState == ElementView.CharacterState.JUMPING))
-            return true;
-        else if ((lastVelocityY == 0) && (getElement().getBody().getLinearVelocity().y > 0) && jumping)
-            return true;
-        else
-            return (getElement().getBody().getLinearVelocity().y > 0) && (previousState == CharacterState.JUMPING);
-    }
-
     @Override
     public void draw(float delta) {
         this.update(delta);
         super.draw(getGame().getBatch());
     }
 
-    /**
-     * Updates this view based on a certain model.
-     */
     @Override
     public void update(float delta) {
         ElementBody element = super.getElement();
@@ -367,11 +257,5 @@ public class RobotView extends ElementView {
 
         if (getElement().getBody().getLinearVelocity().y == 0)
             jumping = false;
-    }
-
-
-    @Override
-    public void setCurrentState(ElementView.CharacterState state) {
-        this.currentState = state;
     }
 }

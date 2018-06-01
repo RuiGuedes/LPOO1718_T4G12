@@ -10,6 +10,11 @@ import java.net.SocketException;
 import java.util.Collections;
 import java.util.Enumeration;
 
+/**
+ * Connection class
+ *
+ * @author Rui Guedes
+ */
 public class Connection {
 
     /**

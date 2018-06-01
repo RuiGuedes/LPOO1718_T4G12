@@ -12,6 +12,11 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Scanner;
 
+/**
+ * ClientConnection class
+ *
+ * @author Rui Guedes
+ */
 public class ClientConnection {
 
     /**
@@ -181,6 +186,11 @@ public class ClientConnection {
 
 }
 
+/**
+ * CommunicateWithServer class
+ *
+ * @author Rui Guedes
+ */
 class CommunicateWithServer extends Thread {
 
     /**

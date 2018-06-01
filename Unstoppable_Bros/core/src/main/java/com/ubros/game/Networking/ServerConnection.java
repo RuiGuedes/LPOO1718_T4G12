@@ -6,6 +6,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * ServerConnection class
+ *
+ * @author Rui Guedes
+ */
 public class ServerConnection {
 
     /**
@@ -108,6 +113,11 @@ public class ServerConnection {
     }
 }
 
+/**
+ * WaitForClient class
+ *
+ * @author Rui Guedes
+ */
 class WaitForClient extends Thread {
 
     /**
@@ -153,6 +163,11 @@ class WaitForClient extends Thread {
     }
 }
 
+/**
+ * CommunicateWithClient class
+ *
+ * @author Rui Guedes
+ */
 class CommunicateWithClient extends Thread {
 
     /**

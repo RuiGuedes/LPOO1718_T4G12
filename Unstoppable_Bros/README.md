@@ -30,11 +30,34 @@ O setup/instalação da aplicação baseia-se somente na instalação do apk ent
 ## Relevant Design Decisions
 -----
 
+O desenvolvimento do jogo, focou-se essencialmente para sistemas android, no entanto este encontra-se funcional para desktop, apesar de tal não ser recomendado uma vez que o jogo utiliza o conceito de multi-touching. Para além deste factor bem como todo o desenvolvimento do jogo em si, existem dois factores que são importantes de realçar:
+
+* **Networking** - Inicialmente para desenvolvimento do jogo especificou-se que este implementaria uma parte de networking que por sua vez iria permitir conectar dois jogadores, em que cada um era responsável por controlar um determinado personagem. No entanto após o desenvolvimento do jogo, dada a sua complexidade, não foi possível efetuar a troca de dados entre jogadores uma vez que o networking implementado possui um sistema de troca de informação muito simplista baseado em strings. No entanto o código relativo à implementação de networking encontra-se desenvolvido e totalmente documentado no package "NetWorking".
+
+* **Tiled Maps** - Ao longo do desenvolvimento deste projecto procurou-se generalizar ao máximo as suas opções, isto é, não restrigir as suas funcionalidades. Assim recorreu-se ao uso de tiled maps para construção do mundo, sendo que se pretendido, é possível criar uma infinidade de mundos para o jogo, pois este adapta-se aos diferentes mundos criados desde que um conjunto de determinadas condições sejam respeitadas. Estas condições encontram-se não só documentadas ao longo do código fonte do projeto mas também no próprio tiled map usado como mundo atual do jogo.
+  
 ## Major Difficulties
 -----
 
 ## Work Distribution - Overall Time Spent 
 -----
+
+### Rui Jorge Leão Guedes <br>
+
+* Horas de trabalho = 120
+* Distribuição de tarefas = 50%
+
+### César Alexandre da Costa Pinho <br>
+
+* Horas de trabalho = 
+* Distribuição de tarefas = 50%
+
+## Online Project Documentation
+-----
+
+A documentação do código fonte do presente projecto encontra-se disponível através do seguinte link:
+
+* **Github Pages** - https://ruiguedes.github.io/LPOO1718_T4G12/
 
 ## User Manual - GUI Design 
 -----

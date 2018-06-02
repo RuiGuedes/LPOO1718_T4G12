@@ -1,19 +1,16 @@
 package com.ubros.game.Controller;
 
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.ubros.game.Controller.Elements.CharacterBody;
-import com.ubros.game.Controller.Elements.EnemyBody;
-import com.ubros.game.Controller.Elements.ExitDoorBody;
-import com.ubros.game.Controller.Elements.LimitBody;
+import com.ubros.game.Controller.Elements.ObjectBody;
+import com.ubros.game.Controller.Elements.PlatformBody;
 import com.ubros.game.Gui.MainMenuScreen;
-import com.ubros.game.Model.Elements.CharacterModel;
 import com.ubros.game.Model.Elements.EnemyModel;
 import com.ubros.game.Model.Elements.ExitDoorModel;
-import com.ubros.game.Model.Elements.LimitModel;
+import com.ubros.game.Model.Elements.MechanismModel;
+import com.ubros.game.Model.GameModel;
 import com.ubros.game.UbrosGame;
 import com.ubros.game.View.GameView;
 
@@ -24,115 +21,169 @@ public class ContactTest extends GameTest{
 
     @Test
     public void RobotContactDangerTest(){
-        /*float x = 4, y = 1, delta = .00001f;
-        float[] dangerVertex = {0, -0, 1.28f, -0, 1.28f, 0.5f, 0, 0.5f ,0, -0};
-        float[] limitVertex = {0, -0, 0, -1, 2000, -1, 2000, 0, 0, 0 };
-
-        World world = new World(new Vector2(0, -10), true);
-        CharacterModel robotModel = new CharacterModel(x,y,0);
-        CharacterBody robotBody = new CharacterBody(world,robotModel,"RobotBounds");
-        DangerZoneModel dangerModel = new DangerZoneModel(x, y,0,new Polygon());
-        new DangerZoneBody(world, dangerModel, dangerVertex);
-        LimitModel limitModel = new LimitModel(0,0,0,new Polygon(limitVertex));
-        new LimitBody(world, limitModel, limitVertex);
-
-
-
-*/
         UbrosGame game = new UbrosGame();
         game.setAssetManager(new AssetManager());
         UbrosGame.mainMenu = new MainMenuScreen(game);
         TmxMapLoader mapLoader = new TmxMapLoader();
-        UbrosGame.map = mapLoader.load("UbrosMap/UbrosMap.tmx");
-
+        UbrosGame.map = mapLoader.load("UbrosMap/UbrosMapTest.tmx");
         GameController.getInstance(game);
         GameView.getInstance(game);
+        CharacterBody robotBody = GameController.getInstance(game).getRobot();
 
-        System.out.println( GameController.getInstance(game).getRobot().getX() + " -I- " +  GameController.getInstance(game).getRobot().getY());
-
-        GameController.getInstance(game).getRobot().getBody().applyLinearImpulse(new Vector2(-GameController.PLAYER_SPEED*3, 0), GameController.getInstance(game).getRobot().getBody().getWorldCenter(), true);
-
-
+        robotBody.getBody().setLinearVelocity(-GameController.PLAYER_SPEED, 0);
         GameController.getInstance(game).getWorld().step(1 / 60f, 6, 2);
 
-        while(GameController.getInstance(game).getRobot().getBody().getLinearVelocity().x != 0)
+        while (((EnemyModel)GameController.getInstance(game).getEnemyBodies().get(0).getModel()).getHealth() > 0) {
+            GameModel.getInstance(game).createBullet(GameView.getInstance(game).getRobot().getElement().getX(), GameView.getInstance(game).getRobot().getElement().getY(), false);
             GameController.getInstance(game).getWorld().step(1 / 60f, 6, 2);
+        }
 
-        System.out.println( GameController.getInstance(game).getRobot().getX() + " -E- " +  GameController.getInstance(game).getRobot().getY());
+        Assert.assertEquals(0,((EnemyModel)GameController.getInstance(game).getEnemyBodies().get(0).getModel()).getHealth());
 
-        Assert.assertEquals(0,GameController.getInstance(game).getRobot().getBody().getLinearVelocity().x, .00001f);
-        //Assert.assertEquals(0,GameController.getInstance(game).getRobot().getBody().getLinearVelocity().y, .00001f);
+        while(GameController.getInstance(game).getRobot().getBody().getLinearVelocity().x != 0){
+            robotBody.getBody().setLinearVelocity(-GameController.PLAYER_SPEED*5, 0);
+            GameController.getInstance(game).getWorld().step(1 / 60f, 6, 2);
+        }
 
-        /*
-        world.setContactListener(new MyContactListener());
-
-        robotBody.getBody().applyLinearImpulse(new Vector2(-GameController.PLAYER_SPEED*3, 0), robotBody.getBody().getWorldCenter(), true);
-        world.step(1/60f, 6, 2);
-        // Create a new handler
-
-
-        /*Assert.assertNotEquals(x,robotBody.getX(), delta);
-        Assert.assertNotEquals(y,robotBody.getY(), delta);
-        Assert.assertEquals(0,robotBody.getBody().getLinearVelocity().x, delta);
-        Assert.assertEquals(0,robotBody.getBody().getLinearVelocity().y, delta);*/
+        Assert.assertEquals(0,robotBody.getBody().getLinearVelocity().x, .0001f);
+        Assert.assertEquals(0,robotBody.getBody().getLinearVelocity().y, .0001f);
     }
 
     @Test
     public void CharacterContactEnemyTest(){
-        float x = 4, y = 1, delta = .1f;
-        float[] limitVertex = {0, -0, 0, -1, 2000, -1, 2000, 0, 0, 0 };
+        UbrosGame game = new UbrosGame();
+        game.setAssetManager(new AssetManager());
+        UbrosGame.mainMenu = new MainMenuScreen(game);
+        TmxMapLoader mapLoader = new TmxMapLoader();
+        UbrosGame.map = mapLoader.load("UbrosMap/UbrosMapTest.tmx");
+        GameController.getInstance(game);
+        GameView.getInstance(game);
+        CharacterBody robotBody = GameController.getInstance(game).getRobot();
 
-        World world = new World(new Vector2(0, -10), true);
-        CharacterModel robotModel = new CharacterModel(x,y,0);
-        CharacterBody robotBody = new CharacterBody(world,robotModel,"RobotBounds");
-        EnemyModel enemyModel = new EnemyModel(x+1,y,0,new Polygon(),"D-6-3");
-        new EnemyBody(world,enemyModel);
-        LimitModel limitModel = new LimitModel(0,0,0,new Polygon(limitVertex));
-        new LimitBody(world, limitModel, limitVertex);
+        robotBody.getBody().setLinearVelocity(-GameController.PLAYER_SPEED * 5, 0);
 
-        world.setContactListener(new MyContactListener());
-        robotBody.getBody().applyLinearImpulse(new Vector2(GameController.PLAYER_SPEED*5, 0), robotBody.getBody().getWorldCenter(), true);
-        world.step(1/60f, 6, 2);
+        while(robotBody.getBody().getLinearVelocity().x != 0) {
+            robotBody.getBody().setLinearVelocity(-GameController.PLAYER_SPEED * 5, 0);
+            GameController.getInstance(game).getWorld().step(1 / 60f, 6, 2);
+        }
 
-        //Assert.assertEquals(x,robotBody.getX(),delta);
-        //Assert.assertEquals(0,robotBody.getBody().getLinearVelocity().x, delta);
-        //Assert.assertEquals(0,robotBody.getBody().getLinearVelocity().y, delta);
+        Assert.assertEquals(GameController.getInstance(game).getEnemyBodies().get(0).getX(),robotBody.getX(),0.6f);
+        Assert.assertEquals(0,robotBody.getBody().getLinearVelocity().x, 0.0001f);
+        Assert.assertEquals(0,robotBody.getBody().getLinearVelocity().y, 0.0001f);
     }
 
     @Test
     public void CharacterContactExitDoorTest(){
-        float x = 4, y = 1, delta = .1f;
-        float[] limitVertex = {0, -0, 0, -1, 2000, -1, 2000, 0, 0, 0 };
-        float[] doorVertex = {0, 0, 200, 0, 200, 300, 0, 300, 0, 0};
+        UbrosGame game = new UbrosGame();
+        game.setAssetManager(new AssetManager());
+        UbrosGame.mainMenu = new MainMenuScreen(game);
+        TmxMapLoader mapLoader = new TmxMapLoader();
+        UbrosGame.map = mapLoader.load("UbrosMap/UbrosMapTest.tmx");
+        GameController.getInstance(game);
+        GameView.getInstance(game);
+        CharacterBody robotBody = GameController.getInstance(game).getRobot();
+        CharacterBody ninjaBody = GameController.getInstance(game).getNinja();
 
-        World world = new World(new Vector2(0, -10), true);
-        CharacterModel robotModel = new CharacterModel(x,y,0);
-        CharacterBody robotBody = new CharacterBody(world,robotModel,"RobotBounds");
-        ExitDoorModel doorModel = new ExitDoorModel(x+2,0,0,new Polygon(),"RobotExitDoor");
-        ExitDoorBody doorBody= new ExitDoorBody(world,doorModel, doorVertex);
-        LimitModel limitModel = new LimitModel(0,0,0,new Polygon(limitVertex));
-        new LimitBody(world, limitModel, limitVertex);
-
-        world.setContactListener(new MyContactListener());
-
-        //System.out.println(robotBody.getX() + "  ,   " + robotBody.getY());
-        while (doorModel.isCharacterContact()){
-            robotBody.getBody().applyLinearImpulse(new Vector2(GameController.PLAYER_SPEED*3, 0), robotBody.getBody().getWorldCenter(), true);
-            world.step(1/60f, 6, 2);
-            //System.out.println(robotBody.getX() + "  ,   " + robotBody.getY());
+        while (!((ExitDoorModel)GameController.getInstance(game).getExitDoors().get(0).getModel()).isCharacterContact()){
+            robotBody.getBody().setLinearVelocity(GameController.PLAYER_SPEED*3, 0);
+            GameController.getInstance(game).getWorld().step(1/60f, 6, 2);
         }
 
-        //Assert.assertTrue(doorModel.isCharacterContact());
+        Assert.assertEquals(GameController.getInstance(game).getExitDoors().get(0).getX(),robotBody.getX(),0.6f);
+        Assert.assertEquals(GameController.getInstance(game).getExitDoors().get(0).getY(),robotBody.getY(),0.5f);
 
-        //robotBody.getBody().applyLinearImpulse(new Vector2(GameController.PLAYER_SPEED*3, 0), robotBody.getBody().getWorldCenter(), true);
-        world.step(1, 6, 2);
-        System.out.println(robotBody.getX() + "  ,   " + robotBody.getY());
-        //Assert.assertFalse(doorModel.isCharacterContact());
+        while (!((ExitDoorModel)GameController.getInstance(game).getExitDoors().get(1).getModel()).isCharacterContact()){
+            ninjaBody.getBody().setLinearVelocity(GameController.PLAYER_SPEED*3, 0);
+            GameController.getInstance(game).getWorld().step(1/60f, 6, 2);
+        }
+
+        Assert.assertEquals(GameController.getInstance(game).getExitDoors().get(1).getX(),ninjaBody.getX(),0.6f);
+        Assert.assertEquals(GameController.getInstance(game).getExitDoors().get(1).getY(),ninjaBody.getY(),0.5f);
     }
 
     @Test
-    public void CharacterContactMechanismTest(){
+    public void CharacterContactMechanismAndPortalTest(){
+        UbrosGame game = new UbrosGame();
+        game.setAssetManager(new AssetManager());
+        UbrosGame.mainMenu = new MainMenuScreen(game);
+        TmxMapLoader mapLoader = new TmxMapLoader();
+        UbrosGame.map = mapLoader.load("UbrosMap/UbrosMapTest.tmx");
+        GameController.getInstance(game);
+        GameView.getInstance(game);
+        CharacterBody robotBody = GameController.getInstance(game).getRobot();
+        CharacterBody ninjaBody = GameController.getInstance(game).getNinja();
 
+        PlatformBody platformBody= GameController.getInstance(game).getPlatforms().get(0);
+        float platformX = platformBody.getX();
+        float platformY = platformBody.getY();
+
+        while (!((MechanismModel)GameController.getInstance(game).getMechanisms().get(0).getModel()).isActive()){
+            robotBody.getBody().setLinearVelocity(GameController.PLAYER_SPEED, 0);
+            GameController.getInstance(game).getWorld().step(1/60f, 6, 2);
+        }
+        robotBody.getBody().setLinearVelocity(0, 0);
+        for (int i=0; i<20; i++)
+            GameController.getInstance(game).getWorld().step(1/60f, 6, 2);
+
+        Assert.assertTrue(((MechanismModel)GameController.getInstance(game).getMechanisms().get(0).getModel()).isActive());
+
+        Assert.assertEquals(platformX,platformBody.getX(), 0.001f);
+        Assert.assertNotEquals(platformY,platformBody.getY(), 2f);
+
+        while (!ninjaBody.setTransformFlag){
+            ninjaBody.getBody().setLinearVelocity(-GameController.PLAYER_SPEED*10, 0);
+            GameController.getInstance(game).getWorld().step(1/60f, 6, 2);
+        }
+
+        Assert.assertEquals(robotBody.getY(), ninjaBody.newPosition.y, 0.1f);
     }
 
+    @Test
+    public void CharacterContactObjectiveTest(){
+        UbrosGame game = new UbrosGame();
+        game.setAssetManager(new AssetManager());
+        UbrosGame.mainMenu = new MainMenuScreen(game);
+        TmxMapLoader mapLoader = new TmxMapLoader();
+        UbrosGame.map = mapLoader.load("UbrosMap/UbrosMapTest.tmx");
+        GameController.getInstance(game);
+        GameView.getInstance(game);
+        CharacterBody robotBody = GameController.getInstance(game).getRobot();
+        CharacterBody ninjaBody = GameController.getInstance(game).getNinja();
+
+        robotBody.getBody().setLinearVelocity(-GameController.PLAYER_SPEED * 5, 0);
+        ninjaBody.getBody().setLinearVelocity(-GameController.PLAYER_SPEED * 5, 0);
+
+        while(robotBody.getBody().getLinearVelocity().x != 0 || ninjaBody.getBody().getLinearVelocity().x != 0) {
+            robotBody.getBody().setLinearVelocity(-GameController.PLAYER_SPEED * 5, 0);
+            ninjaBody.getBody().setLinearVelocity(-GameController.PLAYER_SPEED * 5, 0);
+            GameController.getInstance(game).getWorld().step(1 / 60f, 6, 2);
+        }
+
+        Assert.assertEquals(0,GameController.getInstance(game).getRemainingObjectives());
+        Assert.assertEquals(0,robotBody.getBody().getLinearVelocity().x, 0.0001f);
+        Assert.assertEquals(0,robotBody.getBody().getLinearVelocity().y, 0.0001f);
+        Assert.assertEquals(0,ninjaBody.getBody().getLinearVelocity().x, 0.0001f);
+        Assert.assertEquals(0,ninjaBody.getBody().getLinearVelocity().y, 0.0001f);
+    }
+
+    @Test
+    public void CharacterContactObjectTest(){
+        UbrosGame game = new UbrosGame();
+        game.setAssetManager(new AssetManager());
+        UbrosGame.mainMenu = new MainMenuScreen(game);
+        TmxMapLoader mapLoader = new TmxMapLoader();
+        UbrosGame.map = mapLoader.load("UbrosMap/UbrosMapTest.tmx");
+        GameController.getInstance(game);
+        GameView.getInstance(game);
+        CharacterBody ninjaBody = GameController.getInstance(game).getNinja();
+
+        ObjectBody objectBody = GameController.getInstance(game).getObjects().get(0);
+
+        while(objectBody.getBody().getLinearVelocity().x != 0) {
+            ninjaBody.getBody().setLinearVelocity(GameController.PLAYER_SPEED * 5, 0);
+            GameController.getInstance(game).getWorld().step(1 / 60f, 6, 2);
+        }
+
+        Assert.assertNotEquals(0, objectBody.getBody().getLinearVelocity().x);
+    }
 }

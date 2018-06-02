@@ -71,7 +71,7 @@ A edificação deste projeto contribuiu para o desenvolvimento das nossas capaci
 ## User Manual - GUI Design 
 -----
 
-  De seguida encontra-se especificado simultãneamente a interface gráfica do jogo desenvolvido bem como o seu manual de utilização, isto é, como proceder para utilização do mesmo. 
+  De seguida encontra-se especificado simultaneamente a interface gráfica do jogo desenvolvido bem como o seu manual de utilização, isto é, como proceder para utilização do mesmo. 
 
 ![alt text](https://github.com/RuiGuedes/LPOO1718_T4G12/blob/master/Unstoppable_Bros/FinalRelease/Screenshots/UserManual1.png)
 
